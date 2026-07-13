@@ -20,7 +20,7 @@ cd "$SITE"
 
 echo "▶ 從 vault 同步筆記到 Quartz content/ ..."
 # 只更新這三個來源資料夾，保留 content/index.md 等站台自訂檔
-for d in books articles tools; do
+for d in books articles tools moc; do
   rm -rf "content/$d"
   mkdir -p "content/$d"
   if compgen -G "$VAULT/$d/"*.md > /dev/null 2>&1; then

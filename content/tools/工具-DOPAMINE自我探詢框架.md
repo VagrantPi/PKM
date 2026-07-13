@@ -4,7 +4,7 @@ name: "DOPAMINE 自我探詢框架"
 source: "[[多巴胺國度]]"
 source_type: book
 tags: [psychology, addiction, habit, self-inquiry]
-triggers: [想系統性檢視某個行為, 懷疑自己上癮, 想戒某個習慣性行為, 審視壞習慣的代價, 該不該戒某樣東西]
+triggers: [想系統性檢視某個行為, 懷疑自己上癮, 審視壞習慣的代價, 該不該戒某樣東西, 稽核自己的習慣]
 ---
 
 ## 🎯 什麼情境該想到我
