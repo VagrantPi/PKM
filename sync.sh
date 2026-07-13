@@ -23,9 +23,8 @@ echo "▶ 從 vault 同步筆記到 Quartz content/ ..."
 for d in books articles tools moc; do
   rm -rf "content/$d"
   mkdir -p "content/$d"
-  if compgen -G "$VAULT/$d/"*.md > /dev/null 2>&1; then
-    cp "$VAULT/$d/"*.md "content/$d/"
-  fi
+  # 遞迴同步（保留子資料夾結構，例如 books/軟體工程/clean-code/），只複製 .md
+  rsync -a --prune-empty-dirs --include='*/' --include='*.md' --exclude='*' "$VAULT/$d/" "content/$d/"
 done
 echo "  已同步 $(find content -name '*.md' | wc -l | tr -d ' ') 篇筆記"
 
