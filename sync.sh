@@ -19,8 +19,8 @@ export PATH="$NODE_BIN:$PATH"
 cd "$SITE"
 
 echo "▶ 從 vault 同步筆記到 Quartz content/ ..."
-# 只更新這三個來源資料夾，保留 content/index.md 等站台自訂檔
-for d in books articles tools moc; do
+# 只更新這幾個來源資料夾，保留 content/index.md 等站台自訂檔
+for d in books articles tools moc reference; do
   rm -rf "content/$d"
   mkdir -p "content/$d"
   # 遞迴同步（保留子資料夾結構，例如 books/軟體工程/clean-code/），只複製 .md
