@@ -46,6 +46,7 @@
 - 收到「收一個網址」→ 走 `/ingest-url` 流程。
 - 收到「整個官方文件站／整站文件」→ 走 `/ingest-docs` 流程（爬完同路徑下所有頁面，做成文件地圖＋工具卡，最後重掃關聯與標籤）。
 - 定期健檢 → 走 `/lint-wiki` 流程。
+- 收到「幫某來源畫心智圖／Canvas」→ 走 `/canvas-map` 流程（生成 `.canvas` 心智圖並嵌回該來源）。
 （流程細節見 `.claude/commands/`）
 
 ## 鐵律
@@ -82,6 +83,6 @@ vault(books/articles/tools/moc/reference) --sync.sh 複製--> Quartz content/
 GitHub Actions 接手 build 與部署。網站首頁在 `~/WS/kais/Obsidian-quartz/content/index.md`（非 vault 內）。
 
 ### 注意
-- **只發布** `books/`、`articles/`、`tools/`、`moc/`、`reference/` 的 `.md`；PDF、`templates/`、`CLAUDE.md`、`.claude/` 都不會上站。
+- **只發布** `books/`、`articles/`、`tools/`、`moc/`、`reference/` 的 `.md` 與 `.canvas`（Quartz v5 原生支援 Canvas，`![[X.canvas]]` 會 render）；PDF、`templates/`、`CLAUDE.md`、`.claude/` 都不會上站。
 - GitHub Pages 是**公開**的，發布內容可能被搜尋引擎/網路檔案庫快取。放筆記前留意隱私。
 - 未來要轉為私密：Quartz build 產物不變，改部署到 Cloudflare Pages + Access 即可。

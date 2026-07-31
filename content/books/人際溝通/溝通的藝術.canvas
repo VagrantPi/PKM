@@ -1,0 +1,131 @@
+{
+  "nodes": [
+    {
+      "id": "center",
+      "type": "text",
+      "text": "# 溝通的藝術\nLooking Out, Looking In",
+      "x": -140,
+      "y": -40,
+      "width": 280,
+      "height": 90,
+      "color": "6"
+    },
+    {
+      "id": "leaf0",
+      "type": "file",
+      "file": "tools/工具-知覺檢核.md",
+      "x": 620,
+      "y": -280,
+      "width": 340,
+      "height": 110
+    },
+    {
+      "id": "leaf1",
+      "type": "file",
+      "file": "tools/工具-枕頭法.md",
+      "x": 620,
+      "y": -130,
+      "width": 340,
+      "height": 110
+    },
+    {
+      "id": "leaf2",
+      "type": "file",
+      "file": "tools/工具-我訊息清晰表達.md",
+      "x": 620,
+      "y": 20,
+      "width": 340,
+      "height": 110
+    },
+    {
+      "id": "leaf3",
+      "type": "file",
+      "file": "tools/工具-對批評不防衛回應.md",
+      "x": 620,
+      "y": 170,
+      "width": 340,
+      "height": 110
+    },
+    {
+      "id": "cat0",
+      "type": "text",
+      "text": "看入人裡（自我/知覺/情緒）",
+      "x": 320,
+      "y": -180,
+      "width": 220,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "cat1",
+      "type": "text",
+      "text": "看出人外（語言/非語言/傾聽）",
+      "x": 320,
+      "y": 45,
+      "width": 220,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "cat2",
+      "type": "text",
+      "text": "看人之間（關係/氣氛/衝突）",
+      "x": 320,
+      "y": 195,
+      "width": 220,
+      "height": 60,
+      "color": "5"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e_l0",
+      "fromNode": "cat0",
+      "toNode": "leaf0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_l1",
+      "fromNode": "cat0",
+      "toNode": "leaf1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_l2",
+      "fromNode": "cat1",
+      "toNode": "leaf2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_l3",
+      "fromNode": "cat2",
+      "toNode": "leaf3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_c0",
+      "fromNode": "center",
+      "toNode": "cat0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_c1",
+      "fromNode": "center",
+      "toNode": "cat1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_c2",
+      "fromNode": "center",
+      "toNode": "cat2",
+      "fromSide": "right",
+      "toSide": "left"
+    }
+  ]
+}

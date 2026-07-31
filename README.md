@@ -48,6 +48,7 @@ Obsidian vault(來源) --sync.sh 複製 .md--> content/ --git push--> GitHub Act
 | `/ingest-url` | 把一個網頁文章收進知識庫，做成文章筆記 + 可萃取工具卡 |
 | `/ingest-docs` | 爬完一整個官方文件站，做成「一頁文件地圖 + 工具卡」，最後重掃關聯與標籤 |
 | `/lint-wiki` | 健檢知識庫：找斷連結、孤兒卡、缺 triggers、trigger 重疊，並提供標準修法 |
+| `/canvas-map` | 為某來源畫一張 Obsidian Canvas 心智圖（節點連到實際工具卡），並嵌回該來源；Quartz v5 會在站上 render |
 
 ---
 
@@ -58,7 +59,7 @@ Obsidian vault(來源) --sync.sh 複製 .md--> content/ --git push--> GitHub Act
 ./sync.sh --serve  # 只在本機預覽 http://localhost:8099（不推送）
 ```
 
-`sync.sh` 只複製 `books/`、`articles/`、`tools/`、`moc/`、`reference/` 的 `.md`；PDF、`templates/`、`CLAUDE.md`、`.claude/` 不會上站。
+`sync.sh` 只複製 `books/`、`articles/`、`tools/`、`moc/`、`reference/` 的 `.md` 與 `.canvas`；PDF、`templates/`、`CLAUDE.md`、`.claude/` 不會上站。
 
 > ⚠️ 別直接編輯 `content/` 底下由 sync 管理的資料夾，下次同步會被整個刪除重建。真正的來源是 Obsidian vault。
 
