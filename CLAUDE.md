@@ -86,3 +86,22 @@ GitHub Actions 接手 build 與部署。網站首頁在 `~/WS/kais/Obsidian-quar
 - **只發布** `books/`、`articles/`、`tools/`、`moc/`、`reference/` 的 `.md` 與 `.canvas`（Quartz v5 原生支援 Canvas，`![[X.canvas]]` 會 render）；PDF、`templates/`、`CLAUDE.md`、`.claude/` 都不會上站。
 - GitHub Pages 是**公開**的，發布內容可能被搜尋引擎/網路檔案庫快取。放筆記前留意隱私。
 - 未來要轉為私密：Quartz build 產物不變，改部署到 Cloudflare Pages + Access 即可。
+
+### tag 頁面與 Graph View 的取捨（別再踩）
+`tag-page` 外掛必須維持 `enabled: true`，否則頁面上的 tag 全部連到不存在的 `/tags/xxx` → **整站 tag 連結 404**。
+
+但直接開啟會有副作用：全域圖譜的 `depth: -1` 會把 `contentIndex.json` 的**每一個 key** 變成節點，
+而 tag-page 開啟時會往 contentIndex 塞入數百筆 `tags/*`（且 `links: []`），於是圖上長出一堆孤兒白點。
+注意這與 graph 的 `showTags: false` **無關**——那個選項只擋「note→tag 的邊」，已經設好且有效。
+
+解法：`sync.sh` 會自動產生 `content/tags/<tag>.md` stub（`unlisted: true`）。
+tag-page 遇到已存在的真實檔就不產虛擬頁；`unlisted` 讓 contentIndex / search / explorer 略過它，
+但 HTML 照樣輸出。三者實測對照：
+
+| 設定 | contentIndex | 圖上 tag 節點 | `/tags/llm` |
+|---|---|---|---|
+| tag-page off | 706 | 0 | 404 ❌ |
+| tag-page on | 1040 | 334 ❌ | 200 |
+| tag-page on + unlisted stub | 706 | 0 ✅ | 200 ✅ |
+
+所以 `content/tags/` 是**產生物**，不要手動編輯，也不要放進 vault。

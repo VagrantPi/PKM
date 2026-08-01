@@ -1,0 +1,4 @@
+---
+title: "philosophy"
+unlisted: true
+---

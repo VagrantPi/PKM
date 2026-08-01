@@ -1,0 +1,4 @@
+---
+title: "mindset"
+unlisted: true
+---
