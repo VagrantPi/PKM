@@ -1,0 +1,64 @@
+{
+  "nodes": [
+    {
+      "id": "center",
+      "type": "text",
+      "text": "# 人月神話 The Mythical Man-Month",
+      "x": -160,
+      "y": -50,
+      "width": 320,
+      "height": 100,
+      "color": "6"
+    },
+    {
+      "id": "l0",
+      "type": "file",
+      "file": "tools/工具-布魯克斯定律.md",
+      "x": 320,
+      "y": -205,
+      "width": 360,
+      "height": 110
+    },
+    {
+      "id": "l1",
+      "type": "file",
+      "file": "tools/工具-概念完整性.md",
+      "x": 320,
+      "y": -55,
+      "width": 360,
+      "height": 110
+    },
+    {
+      "id": "l2",
+      "type": "file",
+      "file": "tools/工具-沒有銀彈.md",
+      "x": 320,
+      "y": 95,
+      "width": 360,
+      "height": 110
+    }
+  ],
+  "edges": [
+    {
+      "id": "e0",
+      "fromNode": "center",
+      "toNode": "l0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e1",
+      "fromNode": "center",
+      "toNode": "l1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e2",
+      "fromNode": "center",
+      "toNode": "l2",
+      "fromSide": "right",
+      "toSide": "left"
+    }
+  ]
+}

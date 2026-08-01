@@ -1,0 +1,235 @@
+{
+  "nodes": [
+    {
+      "id": "center",
+      "type": "text",
+      "text": "# 企業應用架構模式 Patterns of Enterprise Application Architecture (PoEAA)",
+      "x": -160,
+      "y": -50,
+      "width": 320,
+      "height": 100,
+      "color": "6"
+    },
+    {
+      "id": "n0",
+      "type": "text",
+      "text": "🧰 即用工具",
+      "x": 300,
+      "y": -1540,
+      "width": 260,
+      "height": 80,
+      "color": "5"
+    },
+    {
+      "id": "n0l0",
+      "type": "file",
+      "file": "tools/工具-領域邏輯組織模式.md",
+      "x": 660,
+      "y": -1630,
+      "width": 340,
+      "height": 110
+    },
+    {
+      "id": "n0l1",
+      "type": "file",
+      "file": "tools/工具-物件關聯映射模式.md",
+      "x": 660,
+      "y": -1480,
+      "width": 340,
+      "height": 110
+    },
+    {
+      "id": "n1",
+      "type": "text",
+      "text": "① 領域邏輯 Domain Logic\n（4 條，詳見書卡）",
+      "x": 300,
+      "y": -640,
+      "width": 260,
+      "height": 80,
+      "color": "5"
+    },
+    {
+      "id": "n2",
+      "type": "text",
+      "text": "② 資料源架構 Data Source Architectural\n（4 條，詳見書卡）",
+      "x": 300,
+      "y": -490,
+      "width": 260,
+      "height": 80,
+      "color": "5"
+    },
+    {
+      "id": "n3",
+      "type": "text",
+      "text": "③ 物件關聯行為 O-R Behavioral\n（3 條，詳見書卡）",
+      "x": 300,
+      "y": -340,
+      "width": 260,
+      "height": 80,
+      "color": "5"
+    },
+    {
+      "id": "n4",
+      "type": "text",
+      "text": "④ 物件關聯結構 O-R Structural\n（10 條，詳見書卡）",
+      "x": 300,
+      "y": -190,
+      "width": 260,
+      "height": 80,
+      "color": "5"
+    },
+    {
+      "id": "n5",
+      "type": "text",
+      "text": "⑤ 物件關聯中繼資料 O-R Metadata\n（3 條，詳見書卡）",
+      "x": 300,
+      "y": -40,
+      "width": 260,
+      "height": 80,
+      "color": "5"
+    },
+    {
+      "id": "n6",
+      "type": "text",
+      "text": "⑥ Web 表現層 Web Presentation\n（7 條，詳見書卡）",
+      "x": 300,
+      "y": 110,
+      "width": 260,
+      "height": 80,
+      "color": "5"
+    },
+    {
+      "id": "n7",
+      "type": "text",
+      "text": "⑦ 分散式 Distribution\n（2 條，詳見書卡）",
+      "x": 300,
+      "y": 260,
+      "width": 260,
+      "height": 80,
+      "color": "5"
+    },
+    {
+      "id": "n8",
+      "type": "text",
+      "text": "⑧ 離線並發 Offline Concurrency\n（4 條，詳見書卡）",
+      "x": 300,
+      "y": 410,
+      "width": 260,
+      "height": 80,
+      "color": "5"
+    },
+    {
+      "id": "n9",
+      "type": "text",
+      "text": "⑨ 會話狀態 Session State\n（3 條，詳見書卡）",
+      "x": 300,
+      "y": 560,
+      "width": 260,
+      "height": 80,
+      "color": "5"
+    },
+    {
+      "id": "n10",
+      "type": "text",
+      "text": "⑩ 基礎模式 Base Patterns\n（11 條，詳見書卡）",
+      "x": 300,
+      "y": 710,
+      "width": 260,
+      "height": 80,
+      "color": "5"
+    }
+  ],
+  "edges": [
+    {
+      "id": "ec0",
+      "fromNode": "center",
+      "toNode": "n0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "el0_0",
+      "fromNode": "n0",
+      "toNode": "n0l0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "el0_1",
+      "fromNode": "n0",
+      "toNode": "n0l1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "ec1",
+      "fromNode": "center",
+      "toNode": "n1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "ec2",
+      "fromNode": "center",
+      "toNode": "n2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "ec3",
+      "fromNode": "center",
+      "toNode": "n3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "ec4",
+      "fromNode": "center",
+      "toNode": "n4",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "ec5",
+      "fromNode": "center",
+      "toNode": "n5",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "ec6",
+      "fromNode": "center",
+      "toNode": "n6",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "ec7",
+      "fromNode": "center",
+      "toNode": "n7",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "ec8",
+      "fromNode": "center",
+      "toNode": "n8",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "ec9",
+      "fromNode": "center",
+      "toNode": "n9",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "ec10",
+      "fromNode": "center",
+      "toNode": "n10",
+      "fromSide": "right",
+      "toSide": "left"
+    }
+  ]
+}

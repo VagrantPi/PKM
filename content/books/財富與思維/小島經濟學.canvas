@@ -1,0 +1,112 @@
+{
+  "nodes": [
+    {
+      "id": "center",
+      "type": "text",
+      "text": "# 小島經濟學 How an Economy Grows and Why It Crashes",
+      "x": -160,
+      "y": -50,
+      "width": 320,
+      "height": 100,
+      "color": "6"
+    },
+    {
+      "id": "l0",
+      "type": "file",
+      "file": "tools/工具-延遲消費創造資本.md",
+      "x": 320,
+      "y": -430,
+      "width": 360,
+      "height": 110
+    },
+    {
+      "id": "l1",
+      "type": "file",
+      "file": "tools/工具-生產先於消費.md",
+      "x": 320,
+      "y": -280,
+      "width": 360,
+      "height": 110
+    },
+    {
+      "id": "l2",
+      "type": "file",
+      "file": "tools/工具-儲蓄是投資的燃料.md",
+      "x": 320,
+      "y": -130,
+      "width": 360,
+      "height": 110
+    },
+    {
+      "id": "l3",
+      "type": "file",
+      "file": "tools/工具-通貨膨脹的真相.md",
+      "x": 320,
+      "y": 20,
+      "width": 360,
+      "height": 110
+    },
+    {
+      "id": "l4",
+      "type": "file",
+      "file": "tools/工具-法定貨幣與硬通貨.md",
+      "x": 320,
+      "y": 170,
+      "width": 360,
+      "height": 110
+    },
+    {
+      "id": "l5",
+      "type": "file",
+      "file": "tools/工具-政府擔保吹大資產泡沫.md",
+      "x": 320,
+      "y": 320,
+      "width": 360,
+      "height": 110
+    }
+  ],
+  "edges": [
+    {
+      "id": "e0",
+      "fromNode": "center",
+      "toNode": "l0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e1",
+      "fromNode": "center",
+      "toNode": "l1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e2",
+      "fromNode": "center",
+      "toNode": "l2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e3",
+      "fromNode": "center",
+      "toNode": "l3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e4",
+      "fromNode": "center",
+      "toNode": "l4",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e5",
+      "fromNode": "center",
+      "toNode": "l5",
+      "fromSide": "right",
+      "toSide": "left"
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "nodes": [
+    {
+      "id": "center",
+      "type": "text",
+      "text": "# 窮查理的普通常識 Poor Charlie's Almanack",
+      "x": -160,
+      "y": -50,
+      "width": 320,
+      "height": 100,
+      "color": "6"
+    },
+    {
+      "id": "l0",
+      "type": "file",
+      "file": "tools/工具-多元思維模型.md",
+      "x": 320,
+      "y": -355,
+      "width": 360,
+      "height": 110
+    },
+    {
+      "id": "l1",
+      "type": "file",
+      "file": "tools/工具-反過來想.md",
+      "x": 320,
+      "y": -205,
+      "width": 360,
+      "height": 110
+    },
+    {
+      "id": "l2",
+      "type": "file",
+      "file": "tools/工具-能力圈.md",
+      "x": 320,
+      "y": -55,
+      "width": 360,
+      "height": 110
+    },
+    {
+      "id": "l3",
+      "type": "file",
+      "file": "tools/工具-誘因的力量.md",
+      "x": 320,
+      "y": 95,
+      "width": 360,
+      "height": 110
+    },
+    {
+      "id": "l4",
+      "type": "file",
+      "file": "tools/工具-人類誤判心理學.md",
+      "x": 320,
+      "y": 245,
+      "width": 360,
+      "height": 110
+    }
+  ],
+  "edges": [
+    {
+      "id": "e0",
+      "fromNode": "center",
+      "toNode": "l0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e1",
+      "fromNode": "center",
+      "toNode": "l1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e2",
+      "fromNode": "center",
+      "toNode": "l2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e3",
+      "fromNode": "center",
+      "toNode": "l3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e4",
+      "fromNode": "center",
+      "toNode": "l4",
+      "fromSide": "right",
+      "toSide": "left"
+    }
+  ]
+}

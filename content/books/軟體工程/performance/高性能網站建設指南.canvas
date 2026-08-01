@@ -1,0 +1,48 @@
+{
+  "nodes": [
+    {
+      "id": "center",
+      "type": "text",
+      "text": "# 高性能網站建設指南 High Performance Web Sites",
+      "x": -160,
+      "y": -50,
+      "width": 320,
+      "height": 100,
+      "color": "6"
+    },
+    {
+      "id": "l0",
+      "type": "file",
+      "file": "tools/工具-前端效能優化規則.md",
+      "x": 320,
+      "y": -130,
+      "width": 360,
+      "height": 110
+    },
+    {
+      "id": "l1",
+      "type": "file",
+      "file": "tools/工具-快取與資源優化.md",
+      "x": 320,
+      "y": 20,
+      "width": 360,
+      "height": 110
+    }
+  ],
+  "edges": [
+    {
+      "id": "e0",
+      "fromNode": "center",
+      "toNode": "l0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e1",
+      "fromNode": "center",
+      "toNode": "l1",
+      "fromSide": "right",
+      "toSide": "left"
+    }
+  ]
+}

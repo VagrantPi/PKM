@@ -1,0 +1,184 @@
+{
+  "nodes": [
+    {
+      "id": "center",
+      "type": "text",
+      "text": "# 高效程式設計師的45個習慣（敏捷開發修煉之道）",
+      "x": -160,
+      "y": -50,
+      "width": 320,
+      "height": 100,
+      "color": "6"
+    },
+    {
+      "id": "n0",
+      "type": "text",
+      "text": "🧰 即用工具",
+      "x": 300,
+      "y": -1090,
+      "width": 260,
+      "height": 80,
+      "color": "5"
+    },
+    {
+      "id": "n0l0",
+      "type": "file",
+      "file": "tools/工具-投資自己持續學習.md",
+      "x": 660,
+      "y": -1180,
+      "width": 340,
+      "height": 110
+    },
+    {
+      "id": "n0l1",
+      "type": "file",
+      "file": "tools/工具-對事不對人的協作.md",
+      "x": 660,
+      "y": -1030,
+      "width": 340,
+      "height": 110
+    },
+    {
+      "id": "n1",
+      "type": "text",
+      "text": "🧭 態度決定一切\n（4 條，詳見書卡）",
+      "x": 300,
+      "y": -415,
+      "width": 260,
+      "height": 80,
+      "color": "5"
+    },
+    {
+      "id": "n2",
+      "type": "text",
+      "text": "📚 學無止境\n（5 條，詳見書卡）",
+      "x": 300,
+      "y": -265,
+      "width": 260,
+      "height": 80,
+      "color": "5"
+    },
+    {
+      "id": "n3",
+      "type": "text",
+      "text": "📦 交付用戶想要的軟件\n（9 條，詳見書卡）",
+      "x": 300,
+      "y": -115,
+      "width": 260,
+      "height": 80,
+      "color": "5"
+    },
+    {
+      "id": "n4",
+      "type": "text",
+      "text": "🔁 敏捷反饋\n（6 條，詳見書卡）",
+      "x": 300,
+      "y": 35,
+      "width": 260,
+      "height": 80,
+      "color": "5"
+    },
+    {
+      "id": "n5",
+      "type": "text",
+      "text": "⌨️ 敏捷編碼\n（8 條，詳見書卡）",
+      "x": 300,
+      "y": 185,
+      "width": 260,
+      "height": 80,
+      "color": "5"
+    },
+    {
+      "id": "n6",
+      "type": "text",
+      "text": "🐞 敏捷調試\n（5 條，詳見書卡）",
+      "x": 300,
+      "y": 335,
+      "width": 260,
+      "height": 80,
+      "color": "5"
+    },
+    {
+      "id": "n7",
+      "type": "text",
+      "text": "🤝 敏捷協作\n（8 條，詳見書卡）",
+      "x": 300,
+      "y": 485,
+      "width": 260,
+      "height": 80,
+      "color": "5"
+    }
+  ],
+  "edges": [
+    {
+      "id": "ec0",
+      "fromNode": "center",
+      "toNode": "n0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "el0_0",
+      "fromNode": "n0",
+      "toNode": "n0l0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "el0_1",
+      "fromNode": "n0",
+      "toNode": "n0l1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "ec1",
+      "fromNode": "center",
+      "toNode": "n1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "ec2",
+      "fromNode": "center",
+      "toNode": "n2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "ec3",
+      "fromNode": "center",
+      "toNode": "n3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "ec4",
+      "fromNode": "center",
+      "toNode": "n4",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "ec5",
+      "fromNode": "center",
+      "toNode": "n5",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "ec6",
+      "fromNode": "center",
+      "toNode": "n6",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "ec7",
+      "fromNode": "center",
+      "toNode": "n7",
+      "fromSide": "right",
+      "toSide": "left"
+    }
+  ]
+}

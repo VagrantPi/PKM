@@ -1,0 +1,64 @@
+{
+  "nodes": [
+    {
+      "id": "center",
+      "type": "text",
+      "text": "# 演算法圖解 Algorithms（Illustrated for Curious Programmers）",
+      "x": -160,
+      "y": -50,
+      "width": 320,
+      "height": 100,
+      "color": "6"
+    },
+    {
+      "id": "l0",
+      "type": "file",
+      "file": "tools/工具-時間複雜度分析.md",
+      "x": 320,
+      "y": -205,
+      "width": 360,
+      "height": 110
+    },
+    {
+      "id": "l1",
+      "type": "file",
+      "file": "tools/工具-資料結構的選擇.md",
+      "x": 320,
+      "y": -55,
+      "width": 360,
+      "height": 110
+    },
+    {
+      "id": "l2",
+      "type": "file",
+      "file": "tools/工具-演算法設計策略.md",
+      "x": 320,
+      "y": 95,
+      "width": 360,
+      "height": 110
+    }
+  ],
+  "edges": [
+    {
+      "id": "e0",
+      "fromNode": "center",
+      "toNode": "l0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e1",
+      "fromNode": "center",
+      "toNode": "l1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e2",
+      "fromNode": "center",
+      "toNode": "l2",
+      "fromSide": "right",
+      "toSide": "left"
+    }
+  ]
+}

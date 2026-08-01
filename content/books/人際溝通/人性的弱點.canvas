@@ -1,0 +1,165 @@
+{
+  "nodes": [
+    {
+      "id": "center",
+      "type": "text",
+      "text": "# 人性的弱點",
+      "x": -160,
+      "y": -50,
+      "width": 320,
+      "height": 100,
+      "color": "6"
+    },
+    {
+      "id": "n0",
+      "type": "text",
+      "text": "🧰 即用工具",
+      "x": 300,
+      "y": -1240,
+      "width": 260,
+      "height": 80,
+      "color": "5"
+    },
+    {
+      "id": "n0l0",
+      "type": "file",
+      "file": "tools/工具-先讚賞再談對方要的.md",
+      "x": 660,
+      "y": -1480,
+      "width": 340,
+      "height": 110
+    },
+    {
+      "id": "n0l1",
+      "type": "file",
+      "file": "tools/工具-贏得好感六法.md",
+      "x": 660,
+      "y": -1330,
+      "width": 340,
+      "height": 110
+    },
+    {
+      "id": "n0l2",
+      "type": "file",
+      "file": "tools/工具-不引起反感地改變他人.md",
+      "x": 660,
+      "y": -1180,
+      "width": 340,
+      "height": 110
+    },
+    {
+      "id": "n0l3",
+      "type": "file",
+      "file": "tools/工具-請人幫小忙贏好感.md",
+      "x": 660,
+      "y": -1030,
+      "width": 340,
+      "height": 110
+    },
+    {
+      "id": "n1",
+      "type": "text",
+      "text": "① 為人處世基本技巧\n（3 條，詳見書卡）",
+      "x": 300,
+      "y": -190,
+      "width": 260,
+      "height": 80,
+      "color": "5"
+    },
+    {
+      "id": "n2",
+      "type": "text",
+      "text": "② 讓人喜歡你的六法\n（6 條，詳見書卡）",
+      "x": 300,
+      "y": -40,
+      "width": 260,
+      "height": 80,
+      "color": "5"
+    },
+    {
+      "id": "n3",
+      "type": "text",
+      "text": "③ 說服他人的十二法\n（12 條，詳見書卡）",
+      "x": 300,
+      "y": 110,
+      "width": 260,
+      "height": 80,
+      "color": "5"
+    },
+    {
+      "id": "n4",
+      "type": "text",
+      "text": "④ 不引起反感地改變他人\n（9 條，詳見書卡）",
+      "x": 300,
+      "y": 260,
+      "width": 260,
+      "height": 80,
+      "color": "5"
+    }
+  ],
+  "edges": [
+    {
+      "id": "ec0",
+      "fromNode": "center",
+      "toNode": "n0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "el0_0",
+      "fromNode": "n0",
+      "toNode": "n0l0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "el0_1",
+      "fromNode": "n0",
+      "toNode": "n0l1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "el0_2",
+      "fromNode": "n0",
+      "toNode": "n0l2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "el0_3",
+      "fromNode": "n0",
+      "toNode": "n0l3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "ec1",
+      "fromNode": "center",
+      "toNode": "n1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "ec2",
+      "fromNode": "center",
+      "toNode": "n2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "ec3",
+      "fromNode": "center",
+      "toNode": "n3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "ec4",
+      "fromNode": "center",
+      "toNode": "n4",
+      "fromSide": "right",
+      "toSide": "left"
+    }
+  ]
+}

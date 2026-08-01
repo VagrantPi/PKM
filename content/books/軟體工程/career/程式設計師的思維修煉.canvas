@@ -1,0 +1,80 @@
+{
+  "nodes": [
+    {
+      "id": "center",
+      "type": "text",
+      "text": "# 程式設計師的思維修煉：開發認知潛能的九堂課",
+      "x": -160,
+      "y": -50,
+      "width": 320,
+      "height": 100,
+      "color": "6"
+    },
+    {
+      "id": "l0",
+      "type": "file",
+      "file": "tools/工具-德雷福斯自我定位.md",
+      "x": 320,
+      "y": -280,
+      "width": 360,
+      "height": 110
+    },
+    {
+      "id": "l1",
+      "type": "file",
+      "file": "tools/工具-SQ3R主動閱讀.md",
+      "x": 320,
+      "y": -130,
+      "width": 360,
+      "height": 110
+    },
+    {
+      "id": "l2",
+      "type": "file",
+      "file": "tools/工具-心智圖.md",
+      "x": 320,
+      "y": 20,
+      "width": 360,
+      "height": 110
+    },
+    {
+      "id": "l3",
+      "type": "file",
+      "file": "tools/工具-務實學習投資計畫.md",
+      "x": 320,
+      "y": 170,
+      "width": 360,
+      "height": 110
+    }
+  ],
+  "edges": [
+    {
+      "id": "e0",
+      "fromNode": "center",
+      "toNode": "l0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e1",
+      "fromNode": "center",
+      "toNode": "l1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e2",
+      "fromNode": "center",
+      "toNode": "l2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e3",
+      "fromNode": "center",
+      "toNode": "l3",
+      "fromSide": "right",
+      "toSide": "left"
+    }
+  ]
+}

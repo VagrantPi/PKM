@@ -1,0 +1,185 @@
+{
+  "nodes": [
+    {
+      "id": "center",
+      "type": "text",
+      "text": "# 企業整合模式 Enterprise Integration Patterns",
+      "x": -160,
+      "y": -50,
+      "width": 320,
+      "height": 100,
+      "color": "6"
+    },
+    {
+      "id": "n0",
+      "type": "text",
+      "text": "🧰 即用工具",
+      "x": 300,
+      "y": -640,
+      "width": 260,
+      "height": 80,
+      "color": "5"
+    },
+    {
+      "id": "n0l0",
+      "type": "file",
+      "file": "tools/工具-訊息傳遞整合模式.md",
+      "x": 660,
+      "y": -655,
+      "width": 340,
+      "height": 110
+    },
+    {
+      "id": "n1",
+      "type": "text",
+      "text": "① 整合風格 Integration Styles\n（4 條，詳見書卡）",
+      "x": 300,
+      "y": -490,
+      "width": 260,
+      "height": 80,
+      "color": "5"
+    },
+    {
+      "id": "n2",
+      "type": "text",
+      "text": "② 訊息系統Messaging Systems\n（6 條，詳見書卡）",
+      "x": 300,
+      "y": -340,
+      "width": 260,
+      "height": 80,
+      "color": "5"
+    },
+    {
+      "id": "n3",
+      "type": "text",
+      "text": "③ 訊息通道 Messaging Channels\n（9 條，詳見書卡）",
+      "x": 300,
+      "y": -190,
+      "width": 260,
+      "height": 80,
+      "color": "5"
+    },
+    {
+      "id": "n4",
+      "type": "text",
+      "text": "④ 訊息建構 Message Construction\n（9 條，詳見書卡）",
+      "x": 300,
+      "y": -40,
+      "width": 260,
+      "height": 80,
+      "color": "5"
+    },
+    {
+      "id": "n5",
+      "type": "text",
+      "text": "⑤ 訊息路由 Message Routing\n（12 條，詳見書卡）",
+      "x": 300,
+      "y": 110,
+      "width": 260,
+      "height": 80,
+      "color": "5"
+    },
+    {
+      "id": "n6",
+      "type": "text",
+      "text": "⑥ 訊息轉換 Message Transformation\n（6 條，詳見書卡）",
+      "x": 300,
+      "y": 260,
+      "width": 260,
+      "height": 80,
+      "color": "5"
+    },
+    {
+      "id": "n7",
+      "type": "text",
+      "text": "⑦ 訊息端點 Messaging Endpoints\n（11 條，詳見書卡）",
+      "x": 300,
+      "y": 410,
+      "width": 260,
+      "height": 80,
+      "color": "5"
+    },
+    {
+      "id": "n8",
+      "type": "text",
+      "text": "⑧ 系統管理 System Management\n（8 條，詳見書卡）",
+      "x": 300,
+      "y": 560,
+      "width": 260,
+      "height": 80,
+      "color": "5"
+    }
+  ],
+  "edges": [
+    {
+      "id": "ec0",
+      "fromNode": "center",
+      "toNode": "n0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "el0_0",
+      "fromNode": "n0",
+      "toNode": "n0l0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "ec1",
+      "fromNode": "center",
+      "toNode": "n1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "ec2",
+      "fromNode": "center",
+      "toNode": "n2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "ec3",
+      "fromNode": "center",
+      "toNode": "n3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "ec4",
+      "fromNode": "center",
+      "toNode": "n4",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "ec5",
+      "fromNode": "center",
+      "toNode": "n5",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "ec6",
+      "fromNode": "center",
+      "toNode": "n6",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "ec7",
+      "fromNode": "center",
+      "toNode": "n7",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "ec8",
+      "fromNode": "center",
+      "toNode": "n8",
+      "fromSide": "right",
+      "toSide": "left"
+    }
+  ]
+}

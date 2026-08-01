@@ -1,0 +1,80 @@
+{
+  "nodes": [
+    {
+      "id": "center",
+      "type": "text",
+      "text": "# 如何正確吵架：發掘問題、解讀渴望、創造幸福的伴侶溝通術",
+      "x": -160,
+      "y": -50,
+      "width": 320,
+      "height": 100,
+      "color": "6"
+    },
+    {
+      "id": "l0",
+      "type": "file",
+      "file": "tools/工具-挖出爭吵底層渴望.md",
+      "x": 320,
+      "y": -280,
+      "width": 360,
+      "height": 110
+    },
+    {
+      "id": "l1",
+      "type": "file",
+      "file": "tools/工具-公平吵架七守則.md",
+      "x": 320,
+      "y": -130,
+      "width": 360,
+      "height": 110
+    },
+    {
+      "id": "l2",
+      "type": "file",
+      "file": "tools/工具-修復裂痕.md",
+      "x": 320,
+      "y": 20,
+      "width": 360,
+      "height": 110
+    },
+    {
+      "id": "l3",
+      "type": "file",
+      "file": "tools/工具-叫暫停冷靜.md",
+      "x": 320,
+      "y": 170,
+      "width": 360,
+      "height": 110
+    }
+  ],
+  "edges": [
+    {
+      "id": "e0",
+      "fromNode": "center",
+      "toNode": "l0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e1",
+      "fromNode": "center",
+      "toNode": "l1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e2",
+      "fromNode": "center",
+      "toNode": "l2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e3",
+      "fromNode": "center",
+      "toNode": "l3",
+      "fromSide": "right",
+      "toSide": "left"
+    }
+  ]
+}

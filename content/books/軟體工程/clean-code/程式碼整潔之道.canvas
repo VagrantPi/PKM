@@ -1,0 +1,80 @@
+{
+  "nodes": [
+    {
+      "id": "center",
+      "type": "text",
+      "text": "# 程式碼整潔之道 Clean Code",
+      "x": -160,
+      "y": -50,
+      "width": 320,
+      "height": 100,
+      "color": "6"
+    },
+    {
+      "id": "l0",
+      "type": "file",
+      "file": "tools/工具-有意義的命名.md",
+      "x": 320,
+      "y": -280,
+      "width": 360,
+      "height": 110
+    },
+    {
+      "id": "l1",
+      "type": "file",
+      "file": "tools/工具-函式短小且單一職責.md",
+      "x": 320,
+      "y": -130,
+      "width": 360,
+      "height": 110
+    },
+    {
+      "id": "l2",
+      "type": "file",
+      "file": "tools/工具-註解是必要之惡.md",
+      "x": 320,
+      "y": 20,
+      "width": 360,
+      "height": 110
+    },
+    {
+      "id": "l3",
+      "type": "file",
+      "file": "tools/工具-用例外處理錯誤.md",
+      "x": 320,
+      "y": 170,
+      "width": 360,
+      "height": 110
+    }
+  ],
+  "edges": [
+    {
+      "id": "e0",
+      "fromNode": "center",
+      "toNode": "l0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e1",
+      "fromNode": "center",
+      "toNode": "l1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e2",
+      "fromNode": "center",
+      "toNode": "l2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e3",
+      "fromNode": "center",
+      "toNode": "l3",
+      "fromSide": "right",
+      "toSide": "left"
+    }
+  ]
+}
