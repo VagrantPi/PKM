@@ -3,162 +3,272 @@
     {
       "id": "center",
       "type": "text",
-      "text": "# 重構：改善既有程式的設計 Refactoring",
+      "text": "# 🔧 重構\n**Refactoring** — Martin Fowler\n不改外部行為，只改內部結構",
       "x": -160,
-      "y": -50,
+      "y": 987,
       "width": 320,
-      "height": 100,
+      "height": 112,
       "color": "6"
     },
     {
-      "id": "n0",
-      "type": "text",
-      "text": "🧰 即用工具",
-      "x": 300,
-      "y": -1165,
-      "width": 260,
-      "height": 80,
-      "color": "5"
-    },
-    {
-      "id": "n0l0",
+      "id": "c1l1",
       "type": "file",
       "file": "tools/工具-程式碼壞味道.md",
       "x": 660,
-      "y": -1330,
-      "width": 340,
+      "y": 0,
+      "width": 440,
       "height": 110
     },
     {
-      "id": "n0l1",
+      "id": "c1l2",
       "type": "file",
       "file": "tools/工具-小步重構.md",
       "x": 660,
-      "y": -1180,
-      "width": 340,
+      "y": 150,
+      "width": 440,
       "height": 110
     },
     {
-      "id": "n0l2",
+      "id": "c1l3",
       "type": "file",
       "file": "tools/工具-提煉函式.md",
       "x": 660,
-      "y": -1030,
-      "width": 340,
+      "y": 300,
+      "width": 440,
       "height": 110
     },
     {
-      "id": "n1",
+      "id": "cat1",
       "type": "text",
-      "text": "組織函式與變數\n（8 條，詳見書卡）",
+      "text": "**🧰 即用工具**",
       "x": 300,
-      "y": -265,
-      "width": 260,
-      "height": 80,
+      "y": 150,
+      "width": 300,
+      "height": 110,
       "color": "5"
     },
     {
-      "id": "n2",
+      "id": "c2l1",
       "type": "text",
-      "text": "封裝\n（7 條，詳見書卡）",
+      "text": "**🦨 24 個壞味道**\n[[神秘命名]]・[[重複程式碼]]・[[過長函式]]・[[過長參數列]]・[[全域資料]]・[[可變資料]]・[[發散式變化]]・[[霰彈式修改]]・[[依戀情結]]・[[資料泥團]]・[[基本型別偏執]]・[[重複的 switch]]・[[迴圈]]・[[冗員元素]]・[[誇誇其談通用性]]・[[暫時欄位]]・[[訊息鏈]]・[[中間人]]・[[內幕交易]]・[[過大類別]]・[[異曲同工的類別]]・[[純資料類別]]・[[被拒絕的遺贈]]・[[註釋]]",
+      "x": 660,
+      "y": 520,
+      "width": 440,
+      "height": 216
+    },
+    {
+      "id": "cat2",
+      "type": "text",
+      "text": "**🦨 程式碼壞味道（24）**\n判斷「哪裡該重構」**",
       "x": 300,
-      "y": -115,
-      "width": 260,
-      "height": 80,
+      "y": 573,
+      "width": 300,
+      "height": 110,
       "color": "5"
     },
     {
-      "id": "n3",
+      "id": "c3l1",
       "type": "text",
-      "text": "搬移與迴圈\n（5 條，詳見書卡）",
+      "text": "**組織函式與變數（8）**\n[[提煉函式]]・[[行內函式]]・[[提煉變數]]・[[行內變數]]・[[改變函式宣告]]・[[封裝變數]]・[[引入參數物件]]・[[拆分階段]]",
+      "x": 660,
+      "y": 846,
+      "width": 440,
+      "height": 112
+    },
+    {
+      "id": "c3l2",
+      "type": "text",
+      "text": "**封裝（7）**\n[[封裝記錄]]・[[封裝集合]]・[[以物件取代基本型別]]・[[以查詢取代暫時變數]]・[[提煉類別]]・[[內聯類別]]・[[隱藏委託關係]]",
+      "x": 660,
+      "y": 998,
+      "width": 440,
+      "height": 112
+    },
+    {
+      "id": "c3l3",
+      "type": "text",
+      "text": "**搬移與迴圈（5）**\n[[搬移函式]]・[[搬移欄位]]・[[拆分迴圈]]・[[以管道取代迴圈]]・[[移除死程式碼]]",
+      "x": 660,
+      "y": 1150,
+      "width": 440,
+      "height": 112
+    },
+    {
+      "id": "c3l4",
+      "type": "text",
+      "text": "**簡化條件邏輯（5）**\n[[分解條件式]]・[[合併條件式]]・[[以衛述句取代嵌套條件式]]・[[以多型取代條件式]]・[[引入特例]]",
+      "x": 660,
+      "y": 1302,
+      "width": 440,
+      "height": 112
+    },
+    {
+      "id": "c3l5",
+      "type": "text",
+      "text": "**重構 API 與繼承（5）**\n[[將查詢與修改分離]]・[[移除旗標參數]]・[[以子類取代型別碼]]・[[提煉超類]]・[[函式上移]]",
+      "x": 660,
+      "y": 1454,
+      "width": 440,
+      "height": 112
+    },
+    {
+      "id": "cat3",
+      "type": "text",
+      "text": "**🔧 主要重構手法（30）**\n「怎麼改」**",
       "x": 300,
-      "y": 35,
-      "width": 260,
-      "height": 80,
+      "y": 1151,
+      "width": 300,
+      "height": 110,
       "color": "5"
     },
     {
-      "id": "n4",
+      "id": "c4l1",
       "type": "text",
-      "text": "簡化條件邏輯\n（5 條，詳見書卡）",
-      "x": 300,
-      "y": 185,
-      "width": 260,
-      "height": 80,
-      "color": "5"
+      "text": "**兩頂帽子**\n你要嘛在「加功能」、要嘛在「重構」，不要同時戴兩頂帽子。",
+      "x": 660,
+      "y": 1676,
+      "width": 440,
+      "height": 112
     },
     {
-      "id": "n5",
+      "id": "c4l2",
       "type": "text",
-      "text": "重構 API 與繼承\n（5 條，詳見書卡）",
+      "text": "**先重構再加功能**\n如果加功能很難，先重構到「容易加」，再加。",
+      "x": 660,
+      "y": 1828,
+      "width": 440,
+      "height": 110
+    },
+    {
+      "id": "c4l3",
+      "type": "text",
+      "text": "**前提是測試**\n沒有可靠測試就先補；遺留碼見 [[修改程式碼的藝術]]。",
+      "x": 660,
+      "y": 1978,
+      "width": 440,
+      "height": 110
+    },
+    {
+      "id": "cat4",
+      "type": "text",
+      "text": "**🧭 重構心法**",
       "x": 300,
-      "y": 335,
-      "width": 260,
-      "height": 80,
+      "y": 1827,
+      "width": 300,
+      "height": 110,
       "color": "5"
     }
   ],
   "edges": [
     {
-      "id": "ec0",
+      "id": "e_center_cat4",
       "fromNode": "center",
-      "toNode": "n0",
+      "toNode": "cat4",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "el0_0",
-      "fromNode": "n0",
-      "toNode": "n0l0",
-      "fromSide": "right",
-      "toSide": "left"
-    },
-    {
-      "id": "el0_1",
-      "fromNode": "n0",
-      "toNode": "n0l1",
-      "fromSide": "right",
-      "toSide": "left"
-    },
-    {
-      "id": "el0_2",
-      "fromNode": "n0",
-      "toNode": "n0l2",
-      "fromSide": "right",
-      "toSide": "left"
-    },
-    {
-      "id": "ec1",
+      "id": "e_center_cat3",
       "fromNode": "center",
-      "toNode": "n1",
+      "toNode": "cat3",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "ec2",
+      "id": "e_center_cat2",
       "fromNode": "center",
-      "toNode": "n2",
+      "toNode": "cat2",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "ec3",
+      "id": "e_center_cat1",
       "fromNode": "center",
-      "toNode": "n3",
+      "toNode": "cat1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "ec4",
-      "fromNode": "center",
-      "toNode": "n4",
+      "id": "e_cat1_c1l1",
+      "fromNode": "cat1",
+      "toNode": "c1l1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "ec5",
-      "fromNode": "center",
-      "toNode": "n5",
+      "id": "e_cat1_c1l2",
+      "fromNode": "cat1",
+      "toNode": "c1l2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_cat1_c1l3",
+      "fromNode": "cat1",
+      "toNode": "c1l3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_cat2_c2l1",
+      "fromNode": "cat2",
+      "toNode": "c2l1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_cat3_c3l1",
+      "fromNode": "cat3",
+      "toNode": "c3l1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_cat3_c3l2",
+      "fromNode": "cat3",
+      "toNode": "c3l2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_cat3_c3l3",
+      "fromNode": "cat3",
+      "toNode": "c3l3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_cat3_c3l4",
+      "fromNode": "cat3",
+      "toNode": "c3l4",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_cat3_c3l5",
+      "fromNode": "cat3",
+      "toNode": "c3l5",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_cat4_c4l1",
+      "fromNode": "cat4",
+      "toNode": "c4l1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_cat4_c4l2",
+      "fromNode": "cat4",
+      "toNode": "c4l2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_cat4_c4l3",
+      "fromNode": "cat4",
+      "toNode": "c4l3",
       "fromSide": "right",
       "toSide": "left"
     }
