@@ -3,76 +3,127 @@
     {
       "id": "center",
       "type": "text",
-      "text": "# 內向者溝通聖經",
+      "text": "# 內向者溝通聖經\n內向不是缺陷而是偏好——管理特質，而不是改造性格",
       "x": -160,
-      "y": -50,
+      "y": 0,
       "width": 320,
-      "height": 100,
+      "height": 110,
       "color": "6"
     },
     {
-      "id": "l0",
+      "id": "c0",
+      "type": "text",
+      "text": "## 🧠 認識內向（前提）\n內向 ≠ 害羞；能量來自獨處；先想後說，話語分量足\n四大陷阱：承受壓力・與外向者認知差異・不懂經營關係・成為職場隱形人",
+      "x": 300,
+      "y": -290,
+      "width": 300,
+      "height": 160,
+      "color": "5"
+    },
+    {
+      "id": "l1_0",
       "type": "file",
       "file": "tools/工具-4P流程.md",
-      "x": 320,
-      "y": -280,
+      "x": 660,
+      "y": -75,
       "width": 360,
       "height": 110
     },
     {
-      "id": "l1",
+      "id": "c1",
+      "type": "text",
+      "text": "## 🔁 核心解方：4P 流程\n準備 → 展示 → 推動 → 練習",
+      "x": 300,
+      "y": -75,
+      "width": 300,
+      "height": 110,
+      "color": "5"
+    },
+    {
+      "id": "l2_0",
       "type": "file",
       "file": "tools/工具-內向者會議策略.md",
-      "x": 320,
-      "y": -130,
+      "x": 660,
+      "y": 115,
       "width": 360,
       "height": 110
     },
     {
-      "id": "l2",
+      "id": "l2_1",
       "type": "file",
       "file": "tools/工具-內向者人脈網.md",
-      "x": 320,
-      "y": 20,
+      "x": 660,
+      "y": 265,
       "width": 360,
       "height": 110
     },
     {
-      "id": "l3",
+      "id": "l2_2",
       "type": "file",
       "file": "tools/工具-管理上司SAR.md",
-      "x": 320,
-      "y": 170,
+      "x": 660,
+      "y": 415,
       "width": 360,
       "height": 110
+    },
+    {
+      "id": "c2",
+      "type": "text",
+      "text": "## 💼 職場場景應用\n把沉默、深思、傾聽變成領導資產",
+      "x": 300,
+      "y": 265,
+      "width": 300,
+      "height": 110,
+      "color": "5"
     }
   ],
   "edges": [
     {
-      "id": "e0",
+      "id": "e_center_c0",
       "fromNode": "center",
-      "toNode": "l0",
+      "toNode": "c0",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e1",
-      "fromNode": "center",
-      "toNode": "l1",
+      "id": "e_c1_l0",
+      "fromNode": "c1",
+      "toNode": "l1_0",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e2",
+      "id": "e_center_c1",
       "fromNode": "center",
-      "toNode": "l2",
+      "toNode": "c1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e3",
+      "id": "e_c2_l0",
+      "fromNode": "c2",
+      "toNode": "l2_0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_c2_l1",
+      "fromNode": "c2",
+      "toNode": "l2_1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_c2_l2",
+      "fromNode": "c2",
+      "toNode": "l2_2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_center_c2",
       "fromNode": "center",
-      "toNode": "l3",
+      "toNode": "c2",
       "fromSide": "right",
       "toSide": "left"
     }

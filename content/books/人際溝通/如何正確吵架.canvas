@@ -3,76 +3,127 @@
     {
       "id": "center",
       "type": "text",
-      "text": "# 如何正確吵架：發掘問題、解讀渴望、創造幸福的伴侶溝通術",
+      "text": "# 如何正確吵架\n衝突是親密的養分——問題不在吵不吵，而在怎麼吵",
       "x": -160,
-      "y": -50,
+      "y": 0,
       "width": 320,
-      "height": 100,
+      "height": 110,
       "color": "6"
     },
     {
-      "id": "l0",
+      "id": "l0_0",
       "type": "file",
       "file": "tools/工具-挖出爭吵底層渴望.md",
-      "x": 320,
-      "y": -280,
+      "x": 660,
+      "y": -265,
       "width": 360,
       "height": 110
     },
     {
-      "id": "l1",
+      "id": "c0",
+      "type": "text",
+      "text": "## 🔍 吵之前：挖出底層渴望\n「想要（謬望）」≠「渴望」\n表面在吵的那件事，往往不是真正在爭取的東西",
+      "x": 300,
+      "y": -280,
+      "width": 300,
+      "height": 140,
+      "color": "5"
+    },
+    {
+      "id": "l1_0",
       "type": "file",
       "file": "tools/工具-公平吵架七守則.md",
-      "x": 320,
-      "y": -130,
+      "x": 660,
+      "y": -75,
       "width": 360,
       "height": 110
     },
     {
-      "id": "l2",
-      "type": "file",
-      "file": "tools/工具-修復裂痕.md",
-      "x": 320,
-      "y": 20,
-      "width": 360,
-      "height": 110
-    },
-    {
-      "id": "l3",
+      "id": "l1_1",
       "type": "file",
       "file": "tools/工具-叫暫停冷靜.md",
-      "x": 320,
-      "y": 170,
+      "x": 660,
+      "y": 75,
       "width": 360,
       "height": 110
+    },
+    {
+      "id": "c1",
+      "type": "text",
+      "text": "## ⚖️ 吵之中：吵得有建設性\n建設性:破壞性互動 ≈ 5:1\n由「你怎麼又…」的指責，轉向「我渴望…」的自我揭露",
+      "x": 300,
+      "y": -15,
+      "width": 300,
+      "height": 140,
+      "color": "5"
+    },
+    {
+      "id": "l2_0",
+      "type": "file",
+      "file": "tools/工具-修復裂痕.md",
+      "x": 660,
+      "y": 265,
+      "width": 360,
+      "height": 110
+    },
+    {
+      "id": "c2",
+      "type": "text",
+      "text": "## 🩹 吵之後：修復再連接\n調諧 → 連接 → 錯拍 → 斷開 → 修復 → 更深的連接\n出現裂痕沒什麼，不去修復才要命",
+      "x": 300,
+      "y": 250,
+      "width": 300,
+      "height": 140,
+      "color": "5"
     }
   ],
   "edges": [
     {
-      "id": "e0",
-      "fromNode": "center",
-      "toNode": "l0",
+      "id": "e_c0_l0",
+      "fromNode": "c0",
+      "toNode": "l0_0",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e1",
+      "id": "e_center_c0",
       "fromNode": "center",
-      "toNode": "l1",
+      "toNode": "c0",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e2",
-      "fromNode": "center",
-      "toNode": "l2",
+      "id": "e_c1_l0",
+      "fromNode": "c1",
+      "toNode": "l1_0",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e3",
+      "id": "e_c1_l1",
+      "fromNode": "c1",
+      "toNode": "l1_1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_center_c1",
       "fromNode": "center",
-      "toNode": "l3",
+      "toNode": "c1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_c2_l0",
+      "fromNode": "c2",
+      "toNode": "l2_0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_center_c2",
+      "fromNode": "center",
+      "toNode": "c2",
       "fromSide": "right",
       "toSide": "left"
     }

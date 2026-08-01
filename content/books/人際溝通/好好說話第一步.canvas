@@ -3,76 +3,127 @@
     {
       "id": "center",
       "type": "text",
-      "text": "# 好好說話第一步：學會傾聽",
+      "text": "# 好好說話第一步：學會傾聽\n傾聽是「聽進去」，而不是「取而代之」",
       "x": -160,
-      "y": -50,
+      "y": 0,
       "width": 320,
-      "height": 100,
+      "height": 110,
       "color": "6"
     },
     {
-      "id": "l0",
-      "type": "file",
-      "file": "tools/工具-反應式傾聽.md",
-      "x": 320,
-      "y": -280,
-      "width": 360,
-      "height": 110
-    },
-    {
-      "id": "l1",
-      "type": "file",
-      "file": "tools/工具-擱置自我傾聽.md",
-      "x": 320,
-      "y": -130,
-      "width": 360,
-      "height": 110
-    },
-    {
-      "id": "l2",
-      "type": "file",
-      "file": "tools/工具-抱怨而不引發爭吵.md",
-      "x": 320,
-      "y": 20,
-      "width": 360,
-      "height": 110
-    },
-    {
-      "id": "l3",
+      "id": "l0_0",
       "type": "file",
       "file": "tools/工具-管理情緒反應性.md",
-      "x": 320,
-      "y": 170,
+      "x": 660,
+      "y": -265,
       "width": 360,
       "height": 110
+    },
+    {
+      "id": "c0",
+      "type": "text",
+      "text": "## 🚧 傾聽的障礙\n自我中心・假裝傾聽・情緒反應性\n打敗我們的是自己的防衛性反應",
+      "x": 300,
+      "y": -275,
+      "width": 300,
+      "height": 130,
+      "color": "5"
+    },
+    {
+      "id": "l1_0",
+      "type": "file",
+      "file": "tools/工具-擱置自我傾聽.md",
+      "x": 660,
+      "y": -75,
+      "width": 360,
+      "height": 110
+    },
+    {
+      "id": "l1_1",
+      "type": "file",
+      "file": "tools/工具-反應式傾聽.md",
+      "x": 660,
+      "y": 75,
+      "width": 360,
+      "height": 110
+    },
+    {
+      "id": "c1",
+      "type": "text",
+      "text": "## 👂 傾聽的做法\n擱置對自我的過度關注，進入對方的經驗世界，讓他感到「被理解」",
+      "x": 300,
+      "y": -10,
+      "width": 300,
+      "height": 130,
+      "color": "5"
+    },
+    {
+      "id": "l2_0",
+      "type": "file",
+      "file": "tools/工具-抱怨而不引發爭吵.md",
+      "x": 660,
+      "y": 265,
+      "width": 360,
+      "height": 110
+    },
+    {
+      "id": "c2",
+      "type": "text",
+      "text": "## 🗣 換你開口的時候\n要「回應」（釋義、重述）而不是「反應」（糾正、辯解）",
+      "x": 300,
+      "y": 255,
+      "width": 300,
+      "height": 130,
+      "color": "5"
     }
   ],
   "edges": [
     {
-      "id": "e0",
-      "fromNode": "center",
-      "toNode": "l0",
+      "id": "e_c0_l0",
+      "fromNode": "c0",
+      "toNode": "l0_0",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e1",
+      "id": "e_center_c0",
       "fromNode": "center",
-      "toNode": "l1",
+      "toNode": "c0",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e2",
-      "fromNode": "center",
-      "toNode": "l2",
+      "id": "e_c1_l0",
+      "fromNode": "c1",
+      "toNode": "l1_0",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e3",
+      "id": "e_c1_l1",
+      "fromNode": "c1",
+      "toNode": "l1_1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_center_c1",
       "fromNode": "center",
-      "toNode": "l3",
+      "toNode": "c1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_c2_l0",
+      "fromNode": "c2",
+      "toNode": "l2_0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_center_c2",
+      "fromNode": "center",
+      "toNode": "c2",
       "fromSide": "right",
       "toSide": "left"
     }
