@@ -28,12 +28,45 @@ read_status: read
 - [[工具-LLM推論最佳化]] — 模型夠好但太慢太貴、長上下文就爆記憶體時
 - [[工具-LLM安全防護]] — LLM 功能要開放給外部輸入、上線前要盤點攻擊面時
 
-## 🗂 文件涵蓋範圍（已收錄 32 頁）
-- **總覽**：Overview（倉庫定位與導航模型）、Course Structure（三條路徑與相依關係）、Learning Resources（資源型態）
-- **🧩 LLM Fundamentals（選修）**：Mathematics for ML、Python for ML、Neural Networks、Natural Language Processing
-- **🧑‍🔬 The LLM Scientist（核心 8 題）**：LLM Architecture、Pre-Training Models、Post-Training Datasets、Supervised Fine-Tuning、Preference Alignment、Evaluation、Quantization、New Trends
-- **👷 The LLM Engineer（核心 8 題）**：Running LLMs、Vector Storage、Retrieval Augmented Generation、Advanced RAG、Agents、Inference Optimization、Deployment、Security
-- **實務資源**：Automated Tools（LLM AutoEval／LazyMergekit／LazyAxolotl／AutoQuant／Model Family Tree／ZeroSpace／AutoAbliteration／AutoDedup）、Fine-tuning Notebooks、Quantization Notebooks、Advanced Technique Notebooks、External Learning Resources
+## 🗂 文件涵蓋範圍（已收錄 32 頁，皆可點入原文）
+
+**總覽**
+- [Overview](https://deepwiki.com/mlabonne/llm-course/1-overview) —— 倉庫定位與導航模型
+- [Course Structure](https://deepwiki.com/mlabonne/llm-course/1.1-course-structure) —— 三條路徑與相依關係
+- [Learning Resources](https://deepwiki.com/mlabonne/llm-course/1.2-learning-resources) —— 資源型態（理論／notebook／外部參考）
+
+**🧩 [LLM Fundamentals](https://deepwiki.com/mlabonne/llm-course/2-llm-fundamentals)（選修，有底子可跳過）**
+- [Mathematics for Machine Learning](https://deepwiki.com/mlabonne/llm-course/2.1-mathematics-for-machine-learning)
+- [Python for Machine Learning](https://deepwiki.com/mlabonne/llm-course/2.2-python-for-machine-learning)
+- [Neural Networks](https://deepwiki.com/mlabonne/llm-course/2.3-neural-networks)
+- [Natural Language Processing](https://deepwiki.com/mlabonne/llm-course/2.4-natural-language-processing)
+
+**🧑‍🔬 [The LLM Scientist](https://deepwiki.com/mlabonne/llm-course/3-the-llm-scientist)（核心 8 題）**
+- [LLM Architecture](https://deepwiki.com/mlabonne/llm-course/3.1-llm-architecture)
+- [Pre-Training Models](https://deepwiki.com/mlabonne/llm-course/3.2-pre-training-models)
+- [Post-Training Datasets](https://deepwiki.com/mlabonne/llm-course/3.3-post-training-datasets)
+- [Supervised Fine-Tuning](https://deepwiki.com/mlabonne/llm-course/3.4-supervised-fine-tuning) → [[工具-LLM微調實作路線]]
+- [Preference Alignment](https://deepwiki.com/mlabonne/llm-course/3.5-preference-alignment) → [[工具-偏好對齊方法選擇]]
+- [Evaluation](https://deepwiki.com/mlabonne/llm-course/3.6-evaluation)
+- [Quantization](https://deepwiki.com/mlabonne/llm-course/3.7-quantization) → [[工具-模型量化格式選擇]]
+- [New Trends](https://deepwiki.com/mlabonne/llm-course/3.8-new-trends)
+
+**👷 [The LLM Engineer](https://deepwiki.com/mlabonne/llm-course/4-the-llm-engineer)（核心 8 題）**
+- [Running LLMs](https://deepwiki.com/mlabonne/llm-course/4.1-running-llms)
+- [Vector Storage](https://deepwiki.com/mlabonne/llm-course/4.2-vector-storage)
+- [Retrieval Augmented Generation](https://deepwiki.com/mlabonne/llm-course/4.3-retrieval-augmented-generation)
+- [Advanced RAG](https://deepwiki.com/mlabonne/llm-course/4.4-advanced-rag)
+- [Agents](https://deepwiki.com/mlabonne/llm-course/4.5-agents)
+- [Inference Optimization](https://deepwiki.com/mlabonne/llm-course/4.6-inference-optimization) → [[工具-LLM推論最佳化]]
+- [Deployment](https://deepwiki.com/mlabonne/llm-course/4.7-deployment)
+- [Security](https://deepwiki.com/mlabonne/llm-course/4.8-security) → [[工具-LLM安全防護]]
+
+**🧰 [Practical Resources](https://deepwiki.com/mlabonne/llm-course/5-practical-resources)**
+- [Automated Tools](https://deepwiki.com/mlabonne/llm-course/5.1-automated-tools) —— LLM AutoEval／LazyMergekit／LazyAxolotl／AutoQuant／Model Family Tree／ZeroSpace／AutoAbliteration／AutoDedup
+- [Fine-tuning Notebooks](https://deepwiki.com/mlabonne/llm-course/5.2-fine-tuning-notebooks)
+- [Quantization Notebooks](https://deepwiki.com/mlabonne/llm-course/5.3-quantization-notebooks)
+- [Advanced Technique Notebooks](https://deepwiki.com/mlabonne/llm-course/5.4-advanced-technique-notebooks)
+- [External Learning Resources](https://deepwiki.com/mlabonne/llm-course/5.5-external-learning-resources)
 
 ## ✨ 關鍵重點
 - **SFT 只是「重新啟用」預訓練裡已有的知識**，教不了模型全新的領域——想灌新知識該走預訓練或 RAG。這句話直接改寫了我對微調的期待值。
