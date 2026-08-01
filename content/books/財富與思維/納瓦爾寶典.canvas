@@ -3,108 +3,159 @@
     {
       "id": "center",
       "type": "text",
-      "text": "# 納瓦爾寶典 The Almanack of Naval Ravikant",
+      "text": "# 納瓦爾寶典\nNaval Ravikant｜財富與幸福都是可學的技能",
       "x": -160,
-      "y": -50,
-      "width": 320,
-      "height": 100,
+      "y": 480,
+      "width": 280,
+      "height": 80,
       "color": "6"
     },
     {
-      "id": "l0",
-      "type": "file",
-      "file": "tools/工具-三種槓桿.md",
-      "x": 320,
-      "y": -430,
-      "width": 360,
-      "height": 110
-    },
-    {
-      "id": "l1",
-      "type": "file",
-      "file": "tools/工具-累積特定知識.md",
-      "x": 320,
-      "y": -280,
-      "width": 360,
-      "height": 110
-    },
-    {
-      "id": "l2",
-      "type": "file",
-      "file": "tools/工具-擁有股權而非出租時間.md",
-      "x": 320,
-      "y": -130,
-      "width": 360,
-      "height": 110
-    },
-    {
-      "id": "l3",
-      "type": "file",
-      "file": "tools/工具-玩長期遊戲與複利.md",
-      "x": 320,
-      "y": 20,
-      "width": 360,
-      "height": 110
-    },
-    {
-      "id": "l4",
-      "type": "file",
-      "file": "tools/工具-用判斷力而非蠻力.md",
-      "x": 320,
+      "id": "cat1",
+      "type": "text",
+      "text": "💰 建立財富\n特定知識 × 槓桿 × 股權",
+      "x": 300,
       "y": 170,
-      "width": 360,
-      "height": 110
+      "width": 200,
+      "height": 70,
+      "color": "5"
     },
     {
-      "id": "l5",
+      "id": "cat1-l1",
+      "x": 660,
+      "y": 0,
+      "width": 320,
+      "height": 110,
       "type": "file",
-      "file": "tools/工具-幸福是可練習的技能.md",
-      "x": 320,
-      "y": 320,
-      "width": 360,
-      "height": 110
+      "file": "tools/工具-累積特定知識.md"
+    },
+    {
+      "id": "cat1-l2",
+      "x": 660,
+      "y": 150,
+      "width": 320,
+      "height": 110,
+      "type": "file",
+      "file": "tools/工具-三種槓桿.md"
+    },
+    {
+      "id": "cat1-l3",
+      "x": 660,
+      "y": 300,
+      "width": 320,
+      "height": 110,
+      "type": "file",
+      "file": "tools/工具-擁有股權而非出租時間.md"
+    },
+    {
+      "id": "cat2",
+      "type": "text",
+      "text": "🧠 打造判斷力\n長期賽局與複利",
+      "x": 300,
+      "y": 635,
+      "width": 200,
+      "height": 70,
+      "color": "5"
+    },
+    {
+      "id": "cat2-l1",
+      "x": 660,
+      "y": 540,
+      "width": 320,
+      "height": 110,
+      "type": "file",
+      "file": "tools/工具-用判斷力而非蠻力.md"
+    },
+    {
+      "id": "cat2-l2",
+      "x": 660,
+      "y": 690,
+      "width": 320,
+      "height": 110,
+      "type": "file",
+      "file": "tools/工具-玩長期遊戲與複利.md"
+    },
+    {
+      "id": "cat3",
+      "type": "text",
+      "text": "☮️ 幸福是一種技能",
+      "x": 300,
+      "y": 955,
+      "width": 200,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "cat3-l1",
+      "x": 660,
+      "y": 930,
+      "width": 320,
+      "height": 110,
+      "type": "file",
+      "file": "tools/工具-幸福是可練習的技能.md"
     }
   ],
   "edges": [
     {
-      "id": "e0",
+      "id": "e-center-cat1",
       "fromNode": "center",
-      "toNode": "l0",
+      "toNode": "cat1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e1",
-      "fromNode": "center",
-      "toNode": "l1",
+      "id": "e-cat1-cat1-l1",
+      "fromNode": "cat1",
+      "toNode": "cat1-l1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e2",
-      "fromNode": "center",
-      "toNode": "l2",
+      "id": "e-cat1-cat1-l2",
+      "fromNode": "cat1",
+      "toNode": "cat1-l2",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e3",
-      "fromNode": "center",
-      "toNode": "l3",
+      "id": "e-cat1-cat1-l3",
+      "fromNode": "cat1",
+      "toNode": "cat1-l3",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e4",
+      "id": "e-center-cat2",
       "fromNode": "center",
-      "toNode": "l4",
+      "toNode": "cat2",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e5",
+      "id": "e-cat2-cat2-l1",
+      "fromNode": "cat2",
+      "toNode": "cat2-l1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat2-cat2-l2",
+      "fromNode": "cat2",
+      "toNode": "cat2-l2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-center-cat3",
       "fromNode": "center",
-      "toNode": "l5",
+      "toNode": "cat3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat3-cat3-l1",
+      "fromNode": "cat3",
+      "toNode": "cat3-l1",
       "fromSide": "right",
       "toSide": "left"
     }
