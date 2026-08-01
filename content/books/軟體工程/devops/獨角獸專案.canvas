@@ -1,46 +1,276 @@
 {
   "nodes": [
     {
-      "id": "center",
+      "id": "root",
       "type": "text",
-      "text": "# 獨角獸專案 The Unicorn Project",
+      "text": "# 🦄 獨角獸專案\nThe Unicorn Project",
       "x": -160,
-      "y": -50,
-      "width": 320,
-      "height": 100,
+      "y": 927,
+      "width": 280,
+      "height": 80,
       "color": "6"
-    },
-    {
-      "id": "l0",
-      "type": "file",
-      "file": "tools/工具-五大理想.md",
-      "x": 320,
-      "y": -130,
-      "width": 360,
-      "height": 110
     },
     {
       "id": "l1",
       "type": "file",
-      "file": "tools/工具-心理安全感.md",
-      "x": 320,
-      "y": 20,
-      "width": 360,
+      "file": "tools/工具-五大理想.md",
+      "x": 660,
+      "y": 0,
+      "width": 320,
       "height": 110
+    },
+    {
+      "id": "l2",
+      "type": "text",
+      "text": "判斷「開發者能不能高效又快樂地創造價值」的準則",
+      "x": 660,
+      "y": 150,
+      "width": 400,
+      "height": 110
+    },
+    {
+      "id": "l3",
+      "type": "text",
+      "text": "能在自己範圍內完成事情，不必層層等待他人",
+      "x": 660,
+      "y": 380,
+      "width": 400,
+      "height": 110
+    },
+    {
+      "id": "l4",
+      "type": "text",
+      "text": "依賴糾纏是生產力殺手",
+      "x": 660,
+      "y": 530,
+      "width": 400,
+      "height": 110
+    },
+    {
+      "id": "l5",
+      "type": "text",
+      "text": "「當開發者能專注、進入心流，偉大的事情就會發生。」",
+      "x": 660,
+      "y": 760,
+      "width": 400,
+      "height": 110
+    },
+    {
+      "id": "l6",
+      "type": "text",
+      "text": "技術債與糟糕的開發環境是隱形的巨大成本",
+      "x": 660,
+      "y": 910,
+      "width": 400,
+      "height": 110
+    },
+    {
+      "id": "l7",
+      "type": "text",
+      "text": "改善日常工作，優先於日常工作本身",
+      "x": 660,
+      "y": 1140,
+      "width": 400,
+      "height": 110
+    },
+    {
+      "id": "l8",
+      "type": "file",
+      "file": "tools/工具-心理安全感.md",
+      "x": 660,
+      "y": 1370,
+      "width": 320,
+      "height": 110
+    },
+    {
+      "id": "l9",
+      "type": "text",
+      "text": "恐懼文化讓人隱藏問題；心理安全是一切改善的地基",
+      "x": 660,
+      "y": 1520,
+      "width": 400,
+      "height": 110
+    },
+    {
+      "id": "l10",
+      "type": "text",
+      "text": "以「是否真正為顧客創造價值」判斷工作的優先序",
+      "x": 660,
+      "y": 1750,
+      "width": 400,
+      "height": 110
+    },
+    {
+      "id": "c1",
+      "type": "text",
+      "text": "## 🌟 五大理想（診斷框架）",
+      "x": 300,
+      "y": 100,
+      "width": 260,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "c2",
+      "type": "text",
+      "text": "## ① 局部性與簡單性",
+      "x": 300,
+      "y": 480,
+      "width": 260,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "c3",
+      "type": "text",
+      "text": "## ② 專注、心流與愉悅",
+      "x": 300,
+      "y": 860,
+      "width": 260,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "c4",
+      "type": "text",
+      "text": "## ③ 改善日常工作",
+      "x": 300,
+      "y": 1165,
+      "width": 260,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "c5",
+      "type": "text",
+      "text": "## ④ 心理安全感",
+      "x": 300,
+      "y": 1470,
+      "width": 260,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "c6",
+      "type": "text",
+      "text": "## ⑤ 顧客至上",
+      "x": 300,
+      "y": 1775,
+      "width": 260,
+      "height": 60,
+      "color": "5"
     }
   ],
   "edges": [
     {
-      "id": "e0",
-      "fromNode": "center",
-      "toNode": "l0",
+      "id": "e1",
+      "fromNode": "root",
+      "toNode": "c1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e1",
-      "fromNode": "center",
+      "id": "e2",
+      "fromNode": "c1",
       "toNode": "l1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e3",
+      "fromNode": "c1",
+      "toNode": "l2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e4",
+      "fromNode": "root",
+      "toNode": "c2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e5",
+      "fromNode": "c2",
+      "toNode": "l3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e6",
+      "fromNode": "c2",
+      "toNode": "l4",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e7",
+      "fromNode": "root",
+      "toNode": "c3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e8",
+      "fromNode": "c3",
+      "toNode": "l5",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e9",
+      "fromNode": "c3",
+      "toNode": "l6",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e10",
+      "fromNode": "root",
+      "toNode": "c4",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e11",
+      "fromNode": "c4",
+      "toNode": "l7",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e12",
+      "fromNode": "root",
+      "toNode": "c5",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e13",
+      "fromNode": "c5",
+      "toNode": "l8",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e14",
+      "fromNode": "c5",
+      "toNode": "l9",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e15",
+      "fromNode": "root",
+      "toNode": "c6",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e16",
+      "fromNode": "c6",
+      "toNode": "l10",
       "fromSide": "right",
       "toSide": "left"
     }

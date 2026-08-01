@@ -1,182 +1,359 @@
 {
   "nodes": [
     {
-      "id": "center",
+      "id": "root",
       "type": "text",
-      "text": "# 高效程式設計師的45個習慣（敏捷開發修煉之道）",
+      "text": "# ⚡ 高效程式設計師的\n45 個習慣",
       "x": -160,
-      "y": -50,
-      "width": 320,
-      "height": 100,
+      "y": 1759,
+      "width": 280,
+      "height": 80,
       "color": "6"
     },
     {
-      "id": "n0",
+      "id": "l1",
       "type": "text",
-      "text": "🧰 即用工具",
-      "x": 300,
-      "y": -1090,
-      "width": 260,
-      "height": 80,
-      "color": "5"
+      "text": "**擁抱變化**\n需求會變是常態，用短迭代 + 持續回饋去適應",
+      "x": 660,
+      "y": 0,
+      "width": 400,
+      "height": 110
     },
     {
-      "id": "n0l0",
+      "id": "l2",
+      "type": "text",
+      "text": "**持續獲得回饋**\n小步交付、常給客戶看、自動化測試——越早發現偏差越便宜",
+      "x": 660,
+      "y": 150,
+      "width": 400,
+      "height": 136
+    },
+    {
+      "id": "l3",
+      "type": "text",
+      "text": "「敏捷不是做得更快，而是更快地發現自己做錯了。」",
+      "x": 660,
+      "y": 326,
+      "width": 400,
+      "height": 110
+    },
+    {
+      "id": "l4",
       "type": "file",
       "file": "tools/工具-投資自己持續學習.md",
       "x": 660,
-      "y": -1180,
-      "width": 340,
+      "y": 556,
+      "width": 320,
       "height": 110
     },
     {
-      "id": "n0l1",
+      "id": "l5",
       "type": "file",
       "file": "tools/工具-對事不對人的協作.md",
       "x": 660,
-      "y": -1030,
-      "width": 340,
+      "y": 706,
+      "width": 320,
       "height": 110
     },
     {
-      "id": "n1",
+      "id": "l6",
       "type": "text",
-      "text": "🧭 態度決定一切\n（4 條，詳見書卡）",
+      "text": "**🧭 態度決定一切**\n- [[做事]]\n- [[欲速則不達]]\n- [[對事不對人]]\n- [[排除萬難奮勇前進]]",
+      "x": 660,
+      "y": 936,
+      "width": 400,
+      "height": 196
+    },
+    {
+      "id": "l7",
+      "type": "text",
+      "text": "**📚 學無止境**\n- [[跟蹤變化]]\n- [[對團隊投資]]\n- [[懂得丟棄]]\n- [[打破砂鍋問到底]]\n- [[把握開發節奏]]",
+      "x": 660,
+      "y": 1252,
+      "width": 400,
+      "height": 226
+    },
+    {
+      "id": "l8",
+      "type": "text",
+      "text": "**📦 交付用戶想要的軟件**\n- [[讓客戶做決定]]\n- [[讓設計指導而不是操縱開發]]\n- [[合理地使用技術]]\n- [[保持可以發布]]\n- [[提早集成頻繁集成]]\n- [[提早實現自動化部署]]\n- [[使用演示獲得頻繁反饋]]\n- [[使用短迭代增量發布]]\n- [[固定價格就意味著背叛承諾]]",
+      "x": 660,
+      "y": 1598,
+      "width": 400,
+      "height": 346
+    },
+    {
+      "id": "l9",
+      "type": "text",
+      "text": "**🔁 敏捷反饋**\n- [[守護天使]]\n- [[先用它再實現它]]\n- [[不同環境就有不同問題]]\n- [[自動驗收測試]]\n- [[度量真實的進度]]\n- [[傾聽用戶的聲音]]",
+      "x": 660,
+      "y": 2064,
+      "width": 400,
+      "height": 256
+    },
+    {
+      "id": "l10",
+      "type": "text",
+      "text": "**⌨️ 敏捷編碼**\n- [[程式碼要清晰表達意圖]]\n- [[用程式碼溝通]]\n- [[動態評估取捨]]\n- [[增量式編程]]\n- [[保持簡單]]\n- [[編寫內聚的程式碼]]\n- [[告知不要詢問]]\n- [[根據契約進行替換]]",
+      "x": 660,
+      "y": 2440,
+      "width": 400,
+      "height": 316
+    },
+    {
+      "id": "l11",
+      "type": "text",
+      "text": "**🐞 敏捷調試**\n- [[記錄問題解決日誌]]\n- [[警告就是錯誤]]\n- [[對問題各個擊破]]\n- [[報告所有的異常]]\n- [[提供有用的錯誤信息]]",
+      "x": 660,
+      "y": 2876,
+      "width": 400,
+      "height": 226
+    },
+    {
+      "id": "l12",
+      "type": "text",
+      "text": "**🤝 敏捷協作**\n- [[定期安排會面時間]]\n- [[架構師必須寫代碼]]\n- [[實行代碼集體所有制]]\n- [[成為指導者]]\n- [[允許大家自己想辦法]]\n- [[準備好後再共享代碼]]\n- [[做代碼複查]]\n- [[及時通報進展與問題]]",
+      "x": 660,
+      "y": 3222,
+      "width": 400,
+      "height": 316
+    },
+    {
+      "id": "c1",
+      "type": "text",
+      "text": "## ✨ 核心精神",
       "x": 300,
-      "y": -415,
+      "y": 188,
       "width": 260,
-      "height": 80,
+      "height": 60,
       "color": "5"
     },
     {
-      "id": "n2",
+      "id": "c2",
       "type": "text",
-      "text": "📚 學無止境\n（5 條，詳見書卡）",
+      "text": "## 🧰 即用工具",
       "x": 300,
-      "y": -265,
+      "y": 656,
       "width": 260,
-      "height": 80,
+      "height": 60,
       "color": "5"
     },
     {
-      "id": "n3",
+      "id": "c3",
       "type": "text",
-      "text": "📦 交付用戶想要的軟件\n（9 條，詳見書卡）",
+      "text": "## 🧭 態度決定一切（4）",
       "x": 300,
-      "y": -115,
+      "y": 1004,
       "width": 260,
-      "height": 80,
+      "height": 60,
       "color": "5"
     },
     {
-      "id": "n4",
+      "id": "c4",
       "type": "text",
-      "text": "🔁 敏捷反饋\n（6 條，詳見書卡）",
+      "text": "## 📚 學無止境（5）",
       "x": 300,
-      "y": 35,
+      "y": 1335,
       "width": 260,
-      "height": 80,
+      "height": 60,
       "color": "5"
     },
     {
-      "id": "n5",
+      "id": "c5",
       "type": "text",
-      "text": "⌨️ 敏捷編碼\n（8 條，詳見書卡）",
+      "text": "## 📦 交付用戶想要的軟件（9）",
       "x": 300,
-      "y": 185,
+      "y": 1741,
       "width": 260,
-      "height": 80,
+      "height": 60,
       "color": "5"
     },
     {
-      "id": "n6",
+      "id": "c6",
       "type": "text",
-      "text": "🐞 敏捷調試\n（5 條，詳見書卡）",
+      "text": "## 🔁 敏捷反饋（6）",
       "x": 300,
-      "y": 335,
+      "y": 2162,
       "width": 260,
-      "height": 80,
+      "height": 60,
       "color": "5"
     },
     {
-      "id": "n7",
+      "id": "c7",
       "type": "text",
-      "text": "🤝 敏捷協作\n（8 條，詳見書卡）",
+      "text": "## ⌨️ 敏捷編碼（8）",
       "x": 300,
-      "y": 485,
+      "y": 2568,
       "width": 260,
-      "height": 80,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "c8",
+      "type": "text",
+      "text": "## 🐞 敏捷調試（5）",
+      "x": 300,
+      "y": 2959,
+      "width": 260,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "c9",
+      "type": "text",
+      "text": "## 🤝 敏捷協作（8）",
+      "x": 300,
+      "y": 3350,
+      "width": 260,
+      "height": 60,
       "color": "5"
     }
   ],
   "edges": [
     {
-      "id": "ec0",
-      "fromNode": "center",
-      "toNode": "n0",
+      "id": "e1",
+      "fromNode": "root",
+      "toNode": "c1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "el0_0",
-      "fromNode": "n0",
-      "toNode": "n0l0",
+      "id": "e2",
+      "fromNode": "c1",
+      "toNode": "l1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "el0_1",
-      "fromNode": "n0",
-      "toNode": "n0l1",
+      "id": "e3",
+      "fromNode": "c1",
+      "toNode": "l2",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "ec1",
-      "fromNode": "center",
-      "toNode": "n1",
+      "id": "e4",
+      "fromNode": "c1",
+      "toNode": "l3",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "ec2",
-      "fromNode": "center",
-      "toNode": "n2",
+      "id": "e5",
+      "fromNode": "root",
+      "toNode": "c2",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "ec3",
-      "fromNode": "center",
-      "toNode": "n3",
+      "id": "e6",
+      "fromNode": "c2",
+      "toNode": "l4",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "ec4",
-      "fromNode": "center",
-      "toNode": "n4",
+      "id": "e7",
+      "fromNode": "c2",
+      "toNode": "l5",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "ec5",
-      "fromNode": "center",
-      "toNode": "n5",
+      "id": "e8",
+      "fromNode": "root",
+      "toNode": "c3",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "ec6",
-      "fromNode": "center",
-      "toNode": "n6",
+      "id": "e9",
+      "fromNode": "c3",
+      "toNode": "l6",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "ec7",
-      "fromNode": "center",
-      "toNode": "n7",
+      "id": "e10",
+      "fromNode": "root",
+      "toNode": "c4",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e11",
+      "fromNode": "c4",
+      "toNode": "l7",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e12",
+      "fromNode": "root",
+      "toNode": "c5",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e13",
+      "fromNode": "c5",
+      "toNode": "l8",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e14",
+      "fromNode": "root",
+      "toNode": "c6",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e15",
+      "fromNode": "c6",
+      "toNode": "l9",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e16",
+      "fromNode": "root",
+      "toNode": "c7",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e17",
+      "fromNode": "c7",
+      "toNode": "l10",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e18",
+      "fromNode": "root",
+      "toNode": "c8",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e19",
+      "fromNode": "c8",
+      "toNode": "l11",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e20",
+      "fromNode": "root",
+      "toNode": "c9",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e21",
+      "fromNode": "c9",
+      "toNode": "l12",
       "fromSide": "right",
       "toSide": "left"
     }

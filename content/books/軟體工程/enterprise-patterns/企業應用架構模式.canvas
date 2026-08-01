@@ -1,233 +1,458 @@
 {
   "nodes": [
     {
-      "id": "center",
+      "id": "root",
       "type": "text",
-      "text": "# 企業應用架構模式 Patterns of Enterprise Application Architecture (PoEAA)",
+      "text": "# 🏛 企業應用架構模式\nPoEAA",
       "x": -160,
-      "y": -50,
-      "width": 320,
-      "height": 100,
+      "y": 2159,
+      "width": 280,
+      "height": 80,
       "color": "6"
     },
     {
-      "id": "n0",
+      "id": "l1",
       "type": "text",
-      "text": "🧰 即用工具",
-      "x": 300,
-      "y": -1540,
-      "width": 260,
-      "height": 80,
-      "color": "5"
+      "text": "**領域邏輯三選項**\nTransaction Script（程序式）／Domain Model（物件化）／Table Module",
+      "x": 660,
+      "y": 0,
+      "width": 400,
+      "height": 136
     },
     {
-      "id": "n0l0",
+      "id": "l2",
+      "type": "text",
+      "text": "**資料源二選一**\nActive Record（簡單）vs Data Mapper（乾淨但複雜）",
+      "x": 660,
+      "y": 176,
+      "width": 400,
+      "height": 136
+    },
+    {
+      "id": "l3",
+      "type": "text",
+      "text": "**分層**\n展現層／領域層／資料源層，各司其職",
+      "x": 660,
+      "y": 352,
+      "width": 400,
+      "height": 136
+    },
+    {
+      "id": "l4",
       "type": "file",
       "file": "tools/工具-領域邏輯組織模式.md",
       "x": 660,
-      "y": -1630,
-      "width": 340,
+      "y": 608,
+      "width": 320,
       "height": 110
     },
     {
-      "id": "n0l1",
+      "id": "l5",
       "type": "file",
       "file": "tools/工具-物件關聯映射模式.md",
       "x": 660,
-      "y": -1480,
-      "width": 340,
+      "y": 758,
+      "width": 320,
       "height": 110
     },
     {
-      "id": "n1",
+      "id": "l6",
       "type": "text",
-      "text": "① 領域邏輯 Domain Logic\n（4 條，詳見書卡）",
+      "text": "**① 領域邏輯 Domain Logic**\n- [[交易指令稿|交易指令稿 Transaction Script]]\n- [[領域模型|領域模型 Domain Model]]\n- [[表格模組|表格模組 Table Module]]\n- [[服務層|服務層 Service Layer]]",
+      "x": 660,
+      "y": 988,
+      "width": 400,
+      "height": 196
+    },
+    {
+      "id": "l7",
+      "type": "text",
+      "text": "**② 資料源架構 Data Source Architectural**\n- [[表格資料閘道|表格資料閘道 Table Data Gateway]]\n- [[列資料閘道|列資料閘道 Row Data Gateway]]\n- [[主動記錄|主動記錄 Active Record]]\n- [[資料對應器|資料對應器 Data Mapper]]",
+      "x": 660,
+      "y": 1304,
+      "width": 400,
+      "height": 196
+    },
+    {
+      "id": "l8",
+      "type": "text",
+      "text": "**③ 物件關聯行為 O-R Behavioral**\n- [[工作單元|工作單元 Unit of Work]]\n- [[識別對應|識別對應 Identity Map]]\n- [[延遲載入|延遲載入 Lazy Load]]",
+      "x": 660,
+      "y": 1620,
+      "width": 400,
+      "height": 166
+    },
+    {
+      "id": "l9",
+      "type": "text",
+      "text": "**④ 物件關聯結構 O-R Structural**\n- [[識別欄位|識別欄位 Identity Field]]\n- [[外鍵對應|外鍵對應 Foreign Key Mapping]]\n- [[關聯表對應|關聯表對應 Association Table Mapping]]\n- [[從屬對應|從屬對應 Dependent Mapping]]\n- [[內嵌值|內嵌值 Embedded Value]]\n- [[序列化大物件|序列化大物件 Serialized LOB]]\n- [[單表繼承|單表繼承 Single Table Inheritance]]\n- [[類別表繼承|類別表繼承 Class Table Inheritance]]\n- [[具象表繼承|具象表繼承 Concrete Table Inheritance]]\n- [[繼承對應器|繼承對應器 Inheritance Mappers]]",
+      "x": 660,
+      "y": 1906,
+      "width": 400,
+      "height": 376
+    },
+    {
+      "id": "l10",
+      "type": "text",
+      "text": "**⑤ 物件關聯中繼資料 O-R Metadata**\n- [[中繼資料對應|中繼資料對應 Metadata Mapping]]\n- [[查詢物件|查詢物件 Query Object]]\n- [[儲存庫|儲存庫 Repository]]",
+      "x": 660,
+      "y": 2402,
+      "width": 400,
+      "height": 166
+    },
+    {
+      "id": "l11",
+      "type": "text",
+      "text": "**⑥ Web 表現層 Web Presentation**\n- [[模型-視圖-控制器|模型-視圖-控制器 Model View Controller]]\n- [[頁面控制器|頁面控制器 Page Controller]]\n- [[前端控制器|前端控制器 Front Controller]]\n- [[樣板視圖|樣板視圖 Template View]]\n- [[轉換視圖|轉換視圖 Transform View]]\n- [[兩步驟視圖|兩步驟視圖 Two Step View]]\n- [[應用控制器|應用控制器 Application Controller]]",
+      "x": 660,
+      "y": 2688,
+      "width": 400,
+      "height": 286
+    },
+    {
+      "id": "l12",
+      "type": "text",
+      "text": "**⑦ 分散式 Distribution**\n- [[遠端外觀|遠端外觀 Remote Facade]]\n- [[資料傳輸物件|資料傳輸物件 Data Transfer Object]]",
+      "x": 660,
+      "y": 3094,
+      "width": 400,
+      "height": 136
+    },
+    {
+      "id": "l13",
+      "type": "text",
+      "text": "**⑧ 離線並發 Offline Concurrency**\n- [[樂觀離線鎖|樂觀離線鎖 Optimistic Offline Lock]]\n- [[悲觀離線鎖|悲觀離線鎖 Pessimistic Offline Lock]]\n- [[粗粒度鎖|粗粒度鎖 Coarse-Grained Lock]]\n- [[隱含鎖|隱含鎖 Implicit Lock]]",
+      "x": 660,
+      "y": 3350,
+      "width": 400,
+      "height": 196
+    },
+    {
+      "id": "l14",
+      "type": "text",
+      "text": "**⑨ 會話狀態 Session State**\n- [[用戶端會話狀態|用戶端會話狀態 Client Session State]]\n- [[伺服器會話狀態|伺服器會話狀態 Server Session State]]\n- [[資料庫會話狀態|資料庫會話狀態 Database Session State]]",
+      "x": 660,
+      "y": 3666,
+      "width": 400,
+      "height": 166
+    },
+    {
+      "id": "l15",
+      "type": "text",
+      "text": "**⑩ 基礎模式 Base Patterns**\n- [[閘道|閘道 Gateway]]\n- [[對應器|對應器 Mapper]]\n- [[層超型|層超型 Layer Supertype]]\n- [[分離介面|分離介面 Separated Interface]]\n- [[登錄器|登錄器 Registry]]\n- [[值物件|值物件 Value Object]]\n- [[金錢|金錢 Money]]\n- [[特例|特例 Special Case]]\n- [[外掛|外掛 Plugin]]\n- [[服務樁|服務樁 Service Stub]]\n- [[記錄集|記錄集 Record Set]]",
+      "x": 660,
+      "y": 3952,
+      "width": 400,
+      "height": 406
+    },
+    {
+      "id": "c1",
+      "type": "text",
+      "text": "## ✨ 關鍵取捨",
       "x": 300,
-      "y": -640,
+      "y": 214,
       "width": 260,
-      "height": 80,
+      "height": 60,
       "color": "5"
     },
     {
-      "id": "n2",
+      "id": "c2",
       "type": "text",
-      "text": "② 資料源架構 Data Source Architectural\n（4 條，詳見書卡）",
+      "text": "## 🧰 即用工具",
       "x": 300,
-      "y": -490,
+      "y": 708,
       "width": 260,
-      "height": 80,
+      "height": 60,
       "color": "5"
     },
     {
-      "id": "n3",
+      "id": "c3",
       "type": "text",
-      "text": "③ 物件關聯行為 O-R Behavioral\n（3 條，詳見書卡）",
+      "text": "## ① 領域邏輯（4）",
       "x": 300,
-      "y": -340,
+      "y": 1056,
       "width": 260,
-      "height": 80,
+      "height": 60,
       "color": "5"
     },
     {
-      "id": "n4",
+      "id": "c4",
       "type": "text",
-      "text": "④ 物件關聯結構 O-R Structural\n（10 條，詳見書卡）",
+      "text": "## ② 資料源架構（4）",
       "x": 300,
-      "y": -190,
+      "y": 1372,
       "width": 260,
-      "height": 80,
+      "height": 60,
       "color": "5"
     },
     {
-      "id": "n5",
+      "id": "c5",
       "type": "text",
-      "text": "⑤ 物件關聯中繼資料 O-R Metadata\n（3 條，詳見書卡）",
+      "text": "## ③ 物件關聯行為（3）",
       "x": 300,
-      "y": -40,
+      "y": 1673,
       "width": 260,
-      "height": 80,
+      "height": 60,
       "color": "5"
     },
     {
-      "id": "n6",
+      "id": "c6",
       "type": "text",
-      "text": "⑥ Web 表現層 Web Presentation\n（7 條，詳見書卡）",
+      "text": "## ④ 物件關聯結構（10）",
       "x": 300,
-      "y": 110,
+      "y": 2064,
       "width": 260,
-      "height": 80,
+      "height": 60,
       "color": "5"
     },
     {
-      "id": "n7",
+      "id": "c7",
       "type": "text",
-      "text": "⑦ 分散式 Distribution\n（2 條，詳見書卡）",
+      "text": "## ⑤ 物件關聯中繼資料（3）",
       "x": 300,
-      "y": 260,
+      "y": 2455,
       "width": 260,
-      "height": 80,
+      "height": 60,
       "color": "5"
     },
     {
-      "id": "n8",
+      "id": "c8",
       "type": "text",
-      "text": "⑧ 離線並發 Offline Concurrency\n（4 條，詳見書卡）",
+      "text": "## ⑥ Web 表現層（7）",
       "x": 300,
-      "y": 410,
+      "y": 2801,
       "width": 260,
-      "height": 80,
+      "height": 60,
       "color": "5"
     },
     {
-      "id": "n9",
+      "id": "c9",
       "type": "text",
-      "text": "⑨ 會話狀態 Session State\n（3 條，詳見書卡）",
+      "text": "## ⑦ 分散式（2）",
       "x": 300,
-      "y": 560,
+      "y": 3132,
       "width": 260,
-      "height": 80,
+      "height": 60,
       "color": "5"
     },
     {
-      "id": "n10",
+      "id": "c10",
       "type": "text",
-      "text": "⑩ 基礎模式 Base Patterns\n（11 條，詳見書卡）",
+      "text": "## ⑧ 離線並發（4）",
       "x": 300,
-      "y": 710,
+      "y": 3418,
       "width": 260,
-      "height": 80,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "c11",
+      "type": "text",
+      "text": "## ⑨ 會話狀態（3）",
+      "x": 300,
+      "y": 3719,
+      "width": 260,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "c12",
+      "type": "text",
+      "text": "## ⑩ 基礎模式（11）",
+      "x": 300,
+      "y": 4125,
+      "width": 260,
+      "height": 60,
       "color": "5"
     }
   ],
   "edges": [
     {
-      "id": "ec0",
-      "fromNode": "center",
-      "toNode": "n0",
+      "id": "e1",
+      "fromNode": "root",
+      "toNode": "c1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "el0_0",
-      "fromNode": "n0",
-      "toNode": "n0l0",
+      "id": "e2",
+      "fromNode": "c1",
+      "toNode": "l1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "el0_1",
-      "fromNode": "n0",
-      "toNode": "n0l1",
+      "id": "e3",
+      "fromNode": "c1",
+      "toNode": "l2",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "ec1",
-      "fromNode": "center",
-      "toNode": "n1",
+      "id": "e4",
+      "fromNode": "c1",
+      "toNode": "l3",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "ec2",
-      "fromNode": "center",
-      "toNode": "n2",
+      "id": "e5",
+      "fromNode": "root",
+      "toNode": "c2",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "ec3",
-      "fromNode": "center",
-      "toNode": "n3",
+      "id": "e6",
+      "fromNode": "c2",
+      "toNode": "l4",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "ec4",
-      "fromNode": "center",
-      "toNode": "n4",
+      "id": "e7",
+      "fromNode": "c2",
+      "toNode": "l5",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "ec5",
-      "fromNode": "center",
-      "toNode": "n5",
+      "id": "e8",
+      "fromNode": "root",
+      "toNode": "c3",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "ec6",
-      "fromNode": "center",
-      "toNode": "n6",
+      "id": "e9",
+      "fromNode": "c3",
+      "toNode": "l6",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "ec7",
-      "fromNode": "center",
-      "toNode": "n7",
+      "id": "e10",
+      "fromNode": "root",
+      "toNode": "c4",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "ec8",
-      "fromNode": "center",
-      "toNode": "n8",
+      "id": "e11",
+      "fromNode": "c4",
+      "toNode": "l7",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "ec9",
-      "fromNode": "center",
-      "toNode": "n9",
+      "id": "e12",
+      "fromNode": "root",
+      "toNode": "c5",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "ec10",
-      "fromNode": "center",
-      "toNode": "n10",
+      "id": "e13",
+      "fromNode": "c5",
+      "toNode": "l8",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e14",
+      "fromNode": "root",
+      "toNode": "c6",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e15",
+      "fromNode": "c6",
+      "toNode": "l9",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e16",
+      "fromNode": "root",
+      "toNode": "c7",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e17",
+      "fromNode": "c7",
+      "toNode": "l10",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e18",
+      "fromNode": "root",
+      "toNode": "c8",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e19",
+      "fromNode": "c8",
+      "toNode": "l11",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e20",
+      "fromNode": "root",
+      "toNode": "c9",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e21",
+      "fromNode": "c9",
+      "toNode": "l12",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e22",
+      "fromNode": "root",
+      "toNode": "c10",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e23",
+      "fromNode": "c10",
+      "toNode": "l13",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e24",
+      "fromNode": "root",
+      "toNode": "c11",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e25",
+      "fromNode": "c11",
+      "toNode": "l14",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e26",
+      "fromNode": "root",
+      "toNode": "c12",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e27",
+      "fromNode": "c12",
+      "toNode": "l15",
       "fromSide": "right",
       "toSide": "left"
     }
