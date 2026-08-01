@@ -3,60 +3,321 @@
     {
       "id": "center",
       "type": "text",
-      "text": "# 人月神話 The Mythical Man-Month",
+      "text": "# 📓 人月神話\nThe Mythical Man-Month",
       "x": -160,
-      "y": -50,
+      "y": -40,
       "width": 320,
-      "height": 100,
+      "height": 80,
       "color": "6"
     },
     {
-      "id": "l0",
-      "type": "file",
-      "file": "tools/工具-布魯克斯定律.md",
-      "x": 320,
-      "y": -205,
-      "width": 360,
-      "height": 110
+      "id": "cat1",
+      "type": "text",
+      "text": "## ⏳ 人月與進度",
+      "x": 300,
+      "y": -820,
+      "width": 320,
+      "height": 60,
+      "color": "5"
     },
     {
-      "id": "l1",
+      "id": "l1-1",
+      "x": 660,
+      "y": -1070,
+      "width": 320,
+      "height": 110,
       "type": "file",
-      "file": "tools/工具-概念完整性.md",
-      "x": 320,
-      "y": -55,
-      "width": 360,
-      "height": 110
+      "file": "tools/工具-布魯克斯定律.md"
     },
     {
-      "id": "l2",
+      "id": "l1-2",
+      "x": 660,
+      "y": -920,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "**人月是神話**\n人力與時間不可簡單互換"
+    },
+    {
+      "id": "l1-3",
+      "x": 660,
+      "y": -770,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "**溝通成本呈平方成長**\nn 人有 n(n-1)/2 條溝通路徑"
+    },
+    {
+      "id": "l1-4",
+      "x": 660,
+      "y": -620,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "**新人要訓練**\n加人到落後專案，短期只會更慢"
+    },
+    {
+      "id": "cat2",
+      "type": "text",
+      "text": "## 🏛 概念完整性",
+      "x": 300,
+      "y": -275,
+      "width": 320,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "l2-1",
+      "x": 660,
+      "y": -450,
+      "width": 320,
+      "height": 110,
       "type": "file",
-      "file": "tools/工具-沒有銀彈.md",
-      "x": 320,
-      "y": 95,
-      "width": 360,
-      "height": 110
+      "file": "tools/工具-概念完整性.md"
+    },
+    {
+      "id": "l2-2",
+      "x": 660,
+      "y": -300,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "**架構與實作分離**\n由少數架構師守護一致的設計理念"
+    },
+    {
+      "id": "l2-3",
+      "x": 660,
+      "y": -150,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "**寧可少幾個功能**\n也要維持統一的設計理念"
+    },
+    {
+      "id": "cat3",
+      "type": "text",
+      "text": "## ⚠️ 第二系統效應",
+      "x": 300,
+      "y": 120,
+      "width": 320,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "l3-1",
+      "x": 660,
+      "y": 20,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "**設計第二個系統時最危險**\n第一個保守、第二個放縱"
+    },
+    {
+      "id": "l3-2",
+      "x": 660,
+      "y": 170,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "**過度設計、堆砌功能**\n把所有壓抑的點子一次塞進去"
+    },
+    {
+      "id": "cat4",
+      "type": "text",
+      "text": "## 🔫 沒有銀彈",
+      "x": 300,
+      "y": 515,
+      "width": 320,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "l4-1",
+      "x": 660,
+      "y": 340,
+      "width": 320,
+      "height": 110,
+      "type": "file",
+      "file": "tools/工具-沒有銀彈.md"
+    },
+    {
+      "id": "l4-2",
+      "x": 660,
+      "y": 490,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "**本質複雜度**\n軟體固有的複雜，無法靠工具消除"
+    },
+    {
+      "id": "l4-3",
+      "x": 660,
+      "y": 640,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "**附屬複雜度**\n工具與語言可解的那一部分"
+    },
+    {
+      "id": "cat5",
+      "type": "text",
+      "text": "## 👥 外科手術隊伍",
+      "x": 300,
+      "y": 910,
+      "width": 320,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "l5-1",
+      "x": 660,
+      "y": 810,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "**小而精的團隊**\n圍繞少數頂尖者組織"
+    },
+    {
+      "id": "l5-2",
+      "x": 660,
+      "y": 960,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "**明確分工**\n其餘成員支援「主刀者」，而非平均分攤"
     }
   ],
   "edges": [
     {
-      "id": "e0",
+      "id": "e-c-1",
       "fromNode": "center",
-      "toNode": "l0",
+      "toNode": "cat1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e1",
-      "fromNode": "center",
-      "toNode": "l1",
+      "id": "e-1-1",
+      "fromNode": "cat1",
+      "toNode": "l1-1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e2",
+      "id": "e-1-2",
+      "fromNode": "cat1",
+      "toNode": "l1-2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-1-3",
+      "fromNode": "cat1",
+      "toNode": "l1-3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-1-4",
+      "fromNode": "cat1",
+      "toNode": "l1-4",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c-2",
       "fromNode": "center",
-      "toNode": "l2",
+      "toNode": "cat2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-2-1",
+      "fromNode": "cat2",
+      "toNode": "l2-1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-2-2",
+      "fromNode": "cat2",
+      "toNode": "l2-2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-2-3",
+      "fromNode": "cat2",
+      "toNode": "l2-3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c-3",
+      "fromNode": "center",
+      "toNode": "cat3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-3-1",
+      "fromNode": "cat3",
+      "toNode": "l3-1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-3-2",
+      "fromNode": "cat3",
+      "toNode": "l3-2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c-4",
+      "fromNode": "center",
+      "toNode": "cat4",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-4-1",
+      "fromNode": "cat4",
+      "toNode": "l4-1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-4-2",
+      "fromNode": "cat4",
+      "toNode": "l4-2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-4-3",
+      "fromNode": "cat4",
+      "toNode": "l4-3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c-5",
+      "fromNode": "center",
+      "toNode": "cat5",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-5-1",
+      "fromNode": "cat5",
+      "toNode": "l5-1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-5-2",
+      "fromNode": "cat5",
+      "toNode": "l5-2",
       "fromSide": "right",
       "toSide": "left"
     }

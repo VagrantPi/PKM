@@ -3,44 +3,257 @@
     {
       "id": "center",
       "type": "text",
-      "text": "# 程式設計師的自我修養：連結、裝載與庫",
+      "text": "# 📘 程式設計師的自我修養\n連結、裝載與庫",
       "x": -160,
-      "y": -50,
+      "y": -40,
       "width": 320,
-      "height": 100,
+      "height": 80,
       "color": "6"
     },
     {
-      "id": "l0",
-      "type": "file",
-      "file": "tools/工具-編譯連結與裝載.md",
-      "x": 320,
-      "y": -130,
-      "width": 360,
-      "height": 110
+      "id": "cat1",
+      "type": "text",
+      "text": "## ⚙️ 編譯：四階段",
+      "x": 300,
+      "y": -670,
+      "width": 320,
+      "height": 60,
+      "color": "5"
     },
     {
-      "id": "l1",
+      "id": "l1-1",
+      "x": 660,
+      "y": -770,
+      "width": 320,
+      "height": 110,
       "type": "file",
-      "file": "tools/工具-靜態庫與動態庫.md",
-      "x": 320,
+      "file": "tools/工具-編譯連結與裝載.md"
+    },
+    {
+      "id": "l1-2",
+      "x": 660,
+      "y": -620,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "**預處理 → 編譯 → 連結 → 裝載**\n原始碼變成能跑的程式的完整路徑"
+    },
+    {
+      "id": "cat2",
+      "type": "text",
+      "text": "## 🔗 連結：符號與重定位",
+      "x": 300,
+      "y": -350,
+      "width": 320,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "l2-1",
+      "x": 660,
+      "y": -450,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "**符號解析**\n連結器把「函式/變數引用」對應到定義"
+    },
+    {
+      "id": "l2-2",
+      "x": 660,
+      "y": -300,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "**重定位**\n對應不到 → undefined symbol 的根源"
+    },
+    {
+      "id": "cat3",
+      "type": "text",
+      "text": "## 📦 可執行檔格式",
+      "x": 300,
+      "y": -30,
+      "width": 320,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "l3-1",
+      "x": 660,
+      "y": -130,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "**ELF / PE**\nELF（Linux）、PE（Windows）"
+    },
+    {
+      "id": "l3-2",
+      "x": 660,
       "y": 20,
-      "width": 360,
-      "height": 110
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "**段 Sections**\n.text（碼）/ .data（初始化資料）/ .bss"
+    },
+    {
+      "id": "cat4",
+      "type": "text",
+      "text": "## 📚 靜態庫 vs 動態庫",
+      "x": 300,
+      "y": 290,
+      "width": 320,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "l4-1",
+      "x": 660,
+      "y": 190,
+      "width": 320,
+      "height": 110,
+      "type": "file",
+      "file": "tools/工具-靜態庫與動態庫.md"
+    },
+    {
+      "id": "l4-2",
+      "x": 660,
+      "y": 340,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "**動態庫**\n執行期載入共享（.so / .dll），省空間但有版本衝突"
+    },
+    {
+      "id": "cat5",
+      "type": "text",
+      "text": "## 🚀 程式啟動與裝載",
+      "x": 300,
+      "y": 610,
+      "width": 320,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "l5-1",
+      "x": 660,
+      "y": 510,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "**映射進記憶體**\n作業系統把程式段映射到行程位址空間"
+    },
+    {
+      "id": "l5-2",
+      "x": 660,
+      "y": 660,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "**跳到進入點**\n交棒給執行庫，再進 main()"
     }
   ],
   "edges": [
     {
-      "id": "e0",
+      "id": "e-c-1",
       "fromNode": "center",
-      "toNode": "l0",
+      "toNode": "cat1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e1",
+      "id": "e-1-1",
+      "fromNode": "cat1",
+      "toNode": "l1-1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-1-2",
+      "fromNode": "cat1",
+      "toNode": "l1-2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c-2",
       "fromNode": "center",
-      "toNode": "l1",
+      "toNode": "cat2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-2-1",
+      "fromNode": "cat2",
+      "toNode": "l2-1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-2-2",
+      "fromNode": "cat2",
+      "toNode": "l2-2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c-3",
+      "fromNode": "center",
+      "toNode": "cat3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-3-1",
+      "fromNode": "cat3",
+      "toNode": "l3-1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-3-2",
+      "fromNode": "cat3",
+      "toNode": "l3-2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c-4",
+      "fromNode": "center",
+      "toNode": "cat4",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-4-1",
+      "fromNode": "cat4",
+      "toNode": "l4-1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-4-2",
+      "fromNode": "cat4",
+      "toNode": "l4-2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c-5",
+      "fromNode": "center",
+      "toNode": "cat5",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-5-1",
+      "fromNode": "cat5",
+      "toNode": "l5-1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-5-2",
+      "fromNode": "cat5",
+      "toNode": "l5-2",
       "fromSide": "right",
       "toSide": "left"
     }
