@@ -1,0 +1,196 @@
+{
+  "nodes": [
+    {
+      "id": "l0_0",
+      "type": "file",
+      "file": "tools/工具-LLM微調實作路線.md",
+      "x": 660,
+      "y": 0,
+      "width": 340,
+      "height": 150
+    },
+    {
+      "id": "l0_1",
+      "type": "file",
+      "file": "tools/工具-偏好對齊方法選擇.md",
+      "x": 660,
+      "y": 190,
+      "width": 340,
+      "height": 150
+    },
+    {
+      "id": "c0",
+      "type": "text",
+      "text": "## 🧑‍🔬 訓練與調校",
+      "x": 300,
+      "y": 140,
+      "width": 320,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "l1_0",
+      "type": "file",
+      "file": "tools/工具-模型量化格式選擇.md",
+      "x": 660,
+      "y": 430,
+      "width": 340,
+      "height": 150
+    },
+    {
+      "id": "l1_1",
+      "type": "file",
+      "file": "tools/工具-LLM推論最佳化.md",
+      "x": 660,
+      "y": 620,
+      "width": 340,
+      "height": 150
+    },
+    {
+      "id": "c1",
+      "type": "text",
+      "text": "## ⚙️ 跑得動、跑得快",
+      "x": 300,
+      "y": 570,
+      "width": 320,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "l2_0",
+      "type": "file",
+      "file": "tools/工具-LLM安全防護.md",
+      "x": 660,
+      "y": 860,
+      "width": 340,
+      "height": 150
+    },
+    {
+      "id": "c2",
+      "type": "text",
+      "text": "## 🛡 上線安全",
+      "x": 300,
+      "y": 905,
+      "width": 320,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "l3_0",
+      "type": "file",
+      "file": "tools/工具-微調與RAG的取捨.md",
+      "x": 660,
+      "y": 1100,
+      "width": 340,
+      "height": 150
+    },
+    {
+      "id": "l3_1",
+      "type": "file",
+      "file": "tools/工具-AI系統評估.md",
+      "x": 660,
+      "y": 1290,
+      "width": 340,
+      "height": 150
+    },
+    {
+      "id": "c3",
+      "type": "text",
+      "text": "## 🔗 銜接《AI工程》",
+      "x": 300,
+      "y": 1240,
+      "width": 320,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "center",
+      "type": "text",
+      "text": "# LLM Course 課程文件\nmlabonne/llm-course",
+      "x": -160,
+      "y": 675,
+      "width": 320,
+      "height": 90,
+      "color": "6"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e_c0_l0",
+      "fromNode": "c0",
+      "toNode": "l0_0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_c0_l1",
+      "fromNode": "c0",
+      "toNode": "l0_1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_c1_l0",
+      "fromNode": "c1",
+      "toNode": "l1_0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_c1_l1",
+      "fromNode": "c1",
+      "toNode": "l1_1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_c2_l0",
+      "fromNode": "c2",
+      "toNode": "l2_0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_c3_l0",
+      "fromNode": "c3",
+      "toNode": "l3_0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_c3_l1",
+      "fromNode": "c3",
+      "toNode": "l3_1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_center_c0",
+      "fromNode": "center",
+      "toNode": "c0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_center_c1",
+      "fromNode": "center",
+      "toNode": "c1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_center_c2",
+      "fromNode": "center",
+      "toNode": "c2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_center_c3",
+      "fromNode": "center",
+      "toNode": "c3",
+      "fromSide": "right",
+      "toSide": "left"
+    }
+  ]
+}
