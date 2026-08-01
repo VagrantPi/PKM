@@ -3,7 +3,7 @@
     {
       "id": "center",
       "type": "text",
-      "text": "# 高性能網站建設指南 High Performance Web Sites",
+      "text": "# 高性能網站建設指南\nHigh Performance Web Sites — Steve Souders",
       "x": -160,
       "y": -50,
       "width": 320,
@@ -11,36 +11,280 @@
       "color": "6"
     },
     {
-      "id": "l0",
-      "type": "file",
-      "file": "tools/工具-前端效能優化規則.md",
-      "x": 320,
-      "y": -130,
-      "width": 360,
-      "height": 110
+      "id": "c1",
+      "type": "text",
+      "text": "🥇 黃金法則：前端優先",
+      "x": 300,
+      "y": -840,
+      "width": 240,
+      "height": 60,
+      "color": "5"
     },
     {
-      "id": "l1",
-      "type": "file",
-      "file": "tools/工具-快取與資源優化.md",
-      "x": 320,
-      "y": 20,
+      "id": "c1-l1",
+      "x": 660,
+      "y": -1015,
       "width": 360,
-      "height": 110
+      "height": 110,
+      "type": "file",
+      "file": "tools/工具-前端效能優化規則.md"
+    },
+    {
+      "id": "c1-l2",
+      "x": 660,
+      "y": -865,
+      "width": 360,
+      "height": 110,
+      "type": "text",
+      "text": "**80–90% 的使用者等待時間發生在前端**\n優化前端的投報率遠高於優化後端"
+    },
+    {
+      "id": "c1-l3",
+      "x": 660,
+      "y": -715,
+      "width": 360,
+      "height": 110,
+      "type": "text",
+      "text": "**先量測再優化**\n用開發者工具／效能瀑布圖找出真正的瓶頸資源"
+    },
+    {
+      "id": "c2",
+      "type": "text",
+      "text": "📉 減少 HTTP 請求",
+      "x": 300,
+      "y": -350,
+      "width": 240,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "c2-l1",
+      "x": 660,
+      "y": -525,
+      "width": 360,
+      "height": 110,
+      "type": "text",
+      "text": "**合併檔案**\n多支 JS／CSS 合併成一支，減少往返次數"
+    },
+    {
+      "id": "c2-l2",
+      "x": 660,
+      "y": -375,
+      "width": 360,
+      "height": 110,
+      "type": "text",
+      "text": "**CSS Sprites**\n把多張小圖併成一張，用背景位移取用"
+    },
+    {
+      "id": "c2-l3",
+      "x": 660,
+      "y": -225,
+      "width": 360,
+      "height": 110,
+      "type": "text",
+      "text": "**行內小資源**\n極小的圖／樣式直接 inline，省掉一次請求"
+    },
+    {
+      "id": "c3",
+      "type": "text",
+      "text": "🗄 快取與 CDN",
+      "x": 300,
+      "y": 215,
+      "width": 240,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "c3-l1",
+      "x": 660,
+      "y": -35,
+      "width": 360,
+      "height": 110,
+      "type": "file",
+      "file": "tools/工具-快取與資源優化.md"
+    },
+    {
+      "id": "c3-l2",
+      "x": 660,
+      "y": 115,
+      "width": 360,
+      "height": 110,
+      "type": "text",
+      "text": "**加 Expires／Cache-Control 標頭**\n讓重複造訪直接用本地副本，不再重抓"
+    },
+    {
+      "id": "c3-l3",
+      "x": 660,
+      "y": 265,
+      "width": 360,
+      "height": 110,
+      "type": "text",
+      "text": "**內容雜湊檔名（cache busting）**\n`app.9f3c.js`：可放心永久快取，更新自動失效"
+    },
+    {
+      "id": "c3-l4",
+      "x": 660,
+      "y": 415,
+      "width": 360,
+      "height": 110,
+      "type": "text",
+      "text": "**使用 CDN**\n靜態資源就近提供，降低網路延遲"
+    },
+    {
+      "id": "c4",
+      "type": "text",
+      "text": "📦 壓縮與資源擺放位置",
+      "x": 300,
+      "y": 780,
+      "width": 240,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "c4-l1",
+      "x": 660,
+      "y": 605,
+      "width": 360,
+      "height": 110,
+      "type": "text",
+      "text": "**Gzip 壓縮傳輸內容**\n文字類資源壓縮後體積大幅下降"
+    },
+    {
+      "id": "c4-l2",
+      "x": 660,
+      "y": 755,
+      "width": 360,
+      "height": 110,
+      "type": "text",
+      "text": "**CSS 放頁面頂部**\n讓瀏覽器盡早開始漸進渲染，避免白畫面"
+    },
+    {
+      "id": "c4-l3",
+      "x": 660,
+      "y": 905,
+      "width": 360,
+      "height": 110,
+      "type": "text",
+      "text": "**JS 放頁面底部**\n腳本下載與執行會阻塞渲染，往後擺"
     }
   ],
   "edges": [
     {
-      "id": "e0",
+      "id": "e-center-c1",
       "fromNode": "center",
-      "toNode": "l0",
+      "toNode": "c1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e1",
+      "id": "e-c1-c1-l1",
+      "fromNode": "c1",
+      "toNode": "c1-l1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c1-c1-l2",
+      "fromNode": "c1",
+      "toNode": "c1-l2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c1-c1-l3",
+      "fromNode": "c1",
+      "toNode": "c1-l3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-center-c2",
       "fromNode": "center",
-      "toNode": "l1",
+      "toNode": "c2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c2-c2-l1",
+      "fromNode": "c2",
+      "toNode": "c2-l1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c2-c2-l2",
+      "fromNode": "c2",
+      "toNode": "c2-l2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c2-c2-l3",
+      "fromNode": "c2",
+      "toNode": "c2-l3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-center-c3",
+      "fromNode": "center",
+      "toNode": "c3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c3-c3-l1",
+      "fromNode": "c3",
+      "toNode": "c3-l1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c3-c3-l2",
+      "fromNode": "c3",
+      "toNode": "c3-l2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c3-c3-l3",
+      "fromNode": "c3",
+      "toNode": "c3-l3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c3-c3-l4",
+      "fromNode": "c3",
+      "toNode": "c3-l4",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-center-c4",
+      "fromNode": "center",
+      "toNode": "c4",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c4-c4-l1",
+      "fromNode": "c4",
+      "toNode": "c4-l1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c4-c4-l2",
+      "fromNode": "c4",
+      "toNode": "c4-l2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c4-c4-l3",
+      "fromNode": "c4",
+      "toNode": "c4-l3",
       "fromSide": "right",
       "toSide": "left"
     }

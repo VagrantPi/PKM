@@ -3,7 +3,7 @@
     {
       "id": "center",
       "type": "text",
-      "text": "# 測試驅動開發 Test-Driven Development",
+      "text": "# 測試驅動開發\nTest-Driven Development — Kent Beck",
       "x": -160,
       "y": -50,
       "width": 320,
@@ -11,36 +11,296 @@
       "color": "6"
     },
     {
-      "id": "l0",
-      "type": "file",
-      "file": "tools/工具-紅綠重構循環.md",
-      "x": 320,
-      "y": -130,
-      "width": 360,
-      "height": 110
+      "id": "c1",
+      "type": "text",
+      "text": "🔁 紅 → 綠 → 重構",
+      "x": 300,
+      "y": -840,
+      "width": 240,
+      "height": 60,
+      "color": "5"
     },
     {
-      "id": "l1",
-      "type": "file",
-      "file": "tools/工具-測試先行的設計.md",
-      "x": 320,
-      "y": 20,
+      "id": "c1-l1",
+      "x": 660,
+      "y": -1090,
       "width": 360,
-      "height": 110
+      "height": 110,
+      "type": "file",
+      "file": "tools/工具-紅綠重構循環.md"
+    },
+    {
+      "id": "c1-l2",
+      "x": 660,
+      "y": -940,
+      "width": 360,
+      "height": 110,
+      "type": "text",
+      "text": "**🔴 紅**\n先寫一個描述「要什麼行為」的測試，它現在會失敗"
+    },
+    {
+      "id": "c1-l3",
+      "x": 660,
+      "y": -790,
+      "width": 360,
+      "height": 110,
+      "type": "text",
+      "text": "**🟢 綠**\n用最快、最簡單的方式讓它通過（可以先醜、先寫死）"
+    },
+    {
+      "id": "c1-l4",
+      "x": 660,
+      "y": -640,
+      "width": 360,
+      "height": 110,
+      "type": "text",
+      "text": "**♻️ 重構**\n在綠燈保護下去除重複、整理結構，每步都保持綠"
+    },
+    {
+      "id": "c2",
+      "type": "text",
+      "text": "👣 小步前進",
+      "x": 300,
+      "y": -275,
+      "width": 240,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "c2-l1",
+      "x": 660,
+      "y": -450,
+      "width": 360,
+      "height": 110,
+      "type": "text",
+      "text": "**每步小到「幾乎不可能出錯」**\n隨時都有綠燈保護，出錯範圍極小"
+    },
+    {
+      "id": "c2-l2",
+      "x": 660,
+      "y": -300,
+      "width": 360,
+      "height": 110,
+      "type": "text",
+      "text": "**不確定就把步子切更小**\n步伐大小是可調節的旋鈕，不是固定值"
+    },
+    {
+      "id": "c2-l3",
+      "x": 660,
+      "y": -150,
+      "width": 360,
+      "height": 110,
+      "type": "text",
+      "text": "「先讓它動，再讓它對，最後讓它快。」\n程式碼在「可運作」與「乾淨」兩態間小步移動"
+    },
+    {
+      "id": "c3",
+      "type": "text",
+      "text": "🟩 讓測試變綠的策略",
+      "x": 300,
+      "y": 215,
+      "width": 240,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "c3-l1",
+      "x": 660,
+      "y": 40,
+      "width": 360,
+      "height": 110,
+      "type": "text",
+      "text": "**假實作 Fake It**\n先直接寫死回傳值讓燈變綠，再逐步一般化"
+    },
+    {
+      "id": "c3-l2",
+      "x": 660,
+      "y": 190,
+      "width": 360,
+      "height": 110,
+      "type": "text",
+      "text": "**三角測量 Triangulation**\n加第二、第三個例子，逼出真正的通用解"
+    },
+    {
+      "id": "c3-l3",
+      "x": 660,
+      "y": 340,
+      "width": 360,
+      "height": 110,
+      "type": "text",
+      "text": "**顯明實作 Obvious Implementation**\n答案很明顯時就直接寫對，別繞路"
+    },
+    {
+      "id": "c4",
+      "type": "text",
+      "text": "🎨 TDD 是設計工具",
+      "x": 300,
+      "y": 780,
+      "width": 240,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "c4-l1",
+      "x": 660,
+      "y": 530,
+      "width": 360,
+      "height": 110,
+      "type": "file",
+      "file": "tools/工具-測試先行的設計.md"
+    },
+    {
+      "id": "c4-l2",
+      "x": 660,
+      "y": 680,
+      "width": 360,
+      "height": 110,
+      "type": "text",
+      "text": "**先寫測試＝從使用端設計介面**\n被迫先想「這東西怎麼被呼叫最順」"
+    },
+    {
+      "id": "c4-l3",
+      "x": 660,
+      "y": 830,
+      "width": 360,
+      "height": 110,
+      "type": "text",
+      "text": "**難測就是設計警報**\n要 mock 一大票 → 耦合太緊，該解耦"
+    },
+    {
+      "id": "c4-l4",
+      "x": 660,
+      "y": 980,
+      "width": 360,
+      "height": 110,
+      "type": "text",
+      "text": "**測試即規格與活文件**\n讀測試就知道這段程式該有什麼行為"
     }
   ],
   "edges": [
     {
-      "id": "e0",
+      "id": "e-center-c1",
       "fromNode": "center",
-      "toNode": "l0",
+      "toNode": "c1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e1",
+      "id": "e-c1-c1-l1",
+      "fromNode": "c1",
+      "toNode": "c1-l1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c1-c1-l2",
+      "fromNode": "c1",
+      "toNode": "c1-l2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c1-c1-l3",
+      "fromNode": "c1",
+      "toNode": "c1-l3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c1-c1-l4",
+      "fromNode": "c1",
+      "toNode": "c1-l4",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-center-c2",
       "fromNode": "center",
-      "toNode": "l1",
+      "toNode": "c2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c2-c2-l1",
+      "fromNode": "c2",
+      "toNode": "c2-l1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c2-c2-l2",
+      "fromNode": "c2",
+      "toNode": "c2-l2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c2-c2-l3",
+      "fromNode": "c2",
+      "toNode": "c2-l3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-center-c3",
+      "fromNode": "center",
+      "toNode": "c3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c3-c3-l1",
+      "fromNode": "c3",
+      "toNode": "c3-l1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c3-c3-l2",
+      "fromNode": "c3",
+      "toNode": "c3-l2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c3-c3-l3",
+      "fromNode": "c3",
+      "toNode": "c3-l3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-center-c4",
+      "fromNode": "center",
+      "toNode": "c4",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c4-c4-l1",
+      "fromNode": "c4",
+      "toNode": "c4-l1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c4-c4-l2",
+      "fromNode": "c4",
+      "toNode": "c4-l2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c4-c4-l3",
+      "fromNode": "c4",
+      "toNode": "c4-l3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c4-c4-l4",
+      "fromNode": "c4",
+      "toNode": "c4-l4",
       "fromSide": "right",
       "toSide": "left"
     }
