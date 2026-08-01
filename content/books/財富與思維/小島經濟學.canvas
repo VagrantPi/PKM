@@ -3,108 +3,176 @@
     {
       "id": "center",
       "type": "text",
-      "text": "# 小島經濟學 How an Economy Grows and Why It Crashes",
+      "text": "# 小島經濟學\nPeter & Andrew Schiff｜經濟如何成長與崩潰",
       "x": -160,
-      "y": -50,
-      "width": 320,
-      "height": 100,
+      "y": 517,
+      "width": 280,
+      "height": 80,
       "color": "6"
     },
     {
-      "id": "l0",
+      "id": "cat1",
+      "type": "text",
+      "text": "🎣 生產與資本形成\n消費不足＋冒險",
+      "x": 300,
+      "y": 100,
+      "width": 200,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "cat1-l1",
       "type": "file",
       "file": "tools/工具-延遲消費創造資本.md",
-      "x": 320,
-      "y": -430,
-      "width": 360,
+      "x": 660,
+      "y": 0,
+      "width": 320,
       "height": 110
     },
     {
-      "id": "l1",
+      "id": "cat1-l2",
       "type": "file",
       "file": "tools/工具-生產先於消費.md",
-      "x": 320,
-      "y": -280,
-      "width": 360,
+      "x": 660,
+      "y": 150,
+      "width": 320,
       "height": 110
     },
     {
-      "id": "l2",
+      "id": "cat2",
+      "type": "text",
+      "text": "🏦 儲蓄、利率\n與投資",
+      "x": 300,
+      "y": 385,
+      "width": 200,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "cat2-l1",
       "type": "file",
       "file": "tools/工具-儲蓄是投資的燃料.md",
-      "x": 320,
-      "y": -130,
-      "width": 360,
+      "x": 660,
+      "y": 360,
+      "width": 320,
       "height": 110
     },
     {
-      "id": "l3",
+      "id": "cat3",
+      "type": "text",
+      "text": "💵 貨幣與通膨",
+      "x": 300,
+      "y": 670,
+      "width": 200,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "cat3-l1",
       "type": "file",
       "file": "tools/工具-通貨膨脹的真相.md",
-      "x": 320,
-      "y": 20,
-      "width": 360,
+      "x": 660,
+      "y": 570,
+      "width": 320,
       "height": 110
     },
     {
-      "id": "l4",
+      "id": "cat3-l2",
       "type": "file",
       "file": "tools/工具-法定貨幣與硬通貨.md",
-      "x": 320,
-      "y": 170,
-      "width": 360,
+      "x": 660,
+      "y": 720,
+      "width": 320,
       "height": 110
     },
     {
-      "id": "l5",
+      "id": "cat4",
+      "type": "text",
+      "text": "🏚 政府干預\n與泡沫崩盤",
+      "x": 300,
+      "y": 955,
+      "width": 200,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "cat4-l1",
       "type": "file",
       "file": "tools/工具-政府擔保吹大資產泡沫.md",
-      "x": 320,
-      "y": 320,
-      "width": 360,
+      "x": 660,
+      "y": 930,
+      "width": 320,
       "height": 110
     }
   ],
   "edges": [
     {
-      "id": "e0",
+      "id": "e-c-cat1",
       "fromNode": "center",
-      "toNode": "l0",
+      "toNode": "cat1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e1",
-      "fromNode": "center",
-      "toNode": "l1",
+      "id": "e-cat1-l1",
+      "fromNode": "cat1",
+      "toNode": "cat1-l1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e2",
-      "fromNode": "center",
-      "toNode": "l2",
+      "id": "e-cat1-l2",
+      "fromNode": "cat1",
+      "toNode": "cat1-l2",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e3",
+      "id": "e-c-cat2",
       "fromNode": "center",
-      "toNode": "l3",
+      "toNode": "cat2",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e4",
-      "fromNode": "center",
-      "toNode": "l4",
+      "id": "e-cat2-l1",
+      "fromNode": "cat2",
+      "toNode": "cat2-l1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e5",
+      "id": "e-c-cat3",
       "fromNode": "center",
-      "toNode": "l5",
+      "toNode": "cat3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat3-l1",
+      "fromNode": "cat3",
+      "toNode": "cat3-l1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat3-l2",
+      "fromNode": "cat3",
+      "toNode": "cat3-l2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c-cat4",
+      "fromNode": "center",
+      "toNode": "cat4",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat4-l1",
+      "fromNode": "cat4",
+      "toNode": "cat4-l1",
       "fromSide": "right",
       "toSide": "left"
     }

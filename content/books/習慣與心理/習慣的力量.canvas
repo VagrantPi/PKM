@@ -3,76 +3,127 @@
     {
       "id": "center",
       "type": "text",
-      "text": "# 習慣的力量",
+      "text": "# 習慣的力量\nCharles Duhigg｜為什麼我們這樣生活",
       "x": -160,
-      "y": -50,
-      "width": 320,
-      "height": 100,
+      "y": 250,
+      "width": 280,
+      "height": 80,
       "color": "6"
     },
     {
-      "id": "l0",
+      "id": "cat1",
+      "type": "text",
+      "text": "🔁 習慣迴路\n提示→慣性行為→獎賞",
+      "x": 300,
+      "y": 25,
+      "width": 200,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "cat1-l1",
       "type": "file",
       "file": "tools/工具-習慣迴路改造四步.md",
-      "x": 320,
-      "y": -280,
-      "width": 360,
+      "x": 660,
+      "y": 0,
+      "width": 320,
       "height": 110
     },
     {
-      "id": "l1",
+      "id": "cat2",
+      "type": "text",
+      "text": "🔧 改造方法\n黃金法則",
+      "x": 300,
+      "y": 235,
+      "width": 200,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "cat2-l1",
       "type": "file",
       "file": "tools/工具-黃金法則替換法.md",
-      "x": 320,
-      "y": -130,
-      "width": 360,
+      "x": 660,
+      "y": 210,
+      "width": 320,
       "height": 110
     },
     {
-      "id": "l2",
+      "id": "cat3",
+      "type": "text",
+      "text": "🗝 核心習慣\n意志力與信念",
+      "x": 300,
+      "y": 520,
+      "width": 200,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "cat3-l1",
       "type": "file",
       "file": "tools/工具-核心習慣.md",
-      "x": 320,
-      "y": 20,
-      "width": 360,
+      "x": 660,
+      "y": 420,
+      "width": 320,
       "height": 110
     },
     {
-      "id": "l3",
+      "id": "cat3-l2",
       "type": "file",
       "file": "tools/工具-意志力執行意圖.md",
-      "x": 320,
-      "y": 170,
-      "width": 360,
+      "x": 660,
+      "y": 570,
+      "width": 320,
       "height": 110
     }
   ],
   "edges": [
     {
-      "id": "e0",
+      "id": "e-c-cat1",
       "fromNode": "center",
-      "toNode": "l0",
+      "toNode": "cat1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e1",
-      "fromNode": "center",
-      "toNode": "l1",
+      "id": "e-cat1-l1",
+      "fromNode": "cat1",
+      "toNode": "cat1-l1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e2",
+      "id": "e-c-cat2",
       "fromNode": "center",
-      "toNode": "l2",
+      "toNode": "cat2",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e3",
+      "id": "e-cat2-l1",
+      "fromNode": "cat2",
+      "toNode": "cat2-l1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c-cat3",
       "fromNode": "center",
-      "toNode": "l3",
+      "toNode": "cat3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat3-l1",
+      "fromNode": "cat3",
+      "toNode": "cat3-l1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat3-l2",
+      "fromNode": "cat3",
+      "toNode": "cat3-l2",
       "fromSide": "right",
       "toSide": "left"
     }

@@ -3,92 +3,143 @@
     {
       "id": "center",
       "type": "text",
-      "text": "# 富爸爸,窮爸爸 Rich Dad Poor Dad",
+      "text": "# 富爸爸，窮爸爸\nRobert Kiyosaki｜讓錢為你工作",
       "x": -160,
-      "y": -50,
-      "width": 320,
-      "height": 100,
+      "y": 275,
+      "width": 280,
+      "height": 80,
       "color": "6"
     },
     {
-      "id": "l0",
+      "id": "cat1",
+      "type": "text",
+      "text": "💡 金錢觀\n富人不為錢工作",
+      "x": 300,
+      "y": 25,
+      "width": 200,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "cat1-l1",
       "type": "file",
       "file": "tools/工具-富人不為錢工作.md",
-      "x": 320,
-      "y": -355,
-      "width": 360,
+      "x": 660,
+      "y": 0,
+      "width": 320,
       "height": 110
     },
     {
-      "id": "l1",
+      "id": "cat2",
+      "type": "text",
+      "text": "📊 財商核心\n資產與負債",
+      "x": 300,
+      "y": 235,
+      "width": 200,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "cat2-l1",
       "type": "file",
       "file": "tools/工具-資產與負債.md",
-      "x": 320,
-      "y": -205,
-      "width": 360,
+      "x": 660,
+      "y": 210,
+      "width": 320,
       "height": 110
     },
     {
-      "id": "l2",
+      "id": "cat3",
+      "type": "text",
+      "text": "🏗 實踐\n累積自己的資產欄",
+      "x": 300,
+      "y": 595,
+      "width": 200,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "cat3-l1",
       "type": "file",
       "file": "tools/工具-建立資產欄.md",
-      "x": 320,
-      "y": -55,
-      "width": 360,
+      "x": 660,
+      "y": 420,
+      "width": 320,
       "height": 110
     },
     {
-      "id": "l3",
+      "id": "cat3-l2",
       "type": "file",
       "file": "tools/工具-先支付自己.md",
-      "x": 320,
-      "y": 95,
-      "width": 360,
+      "x": 660,
+      "y": 570,
+      "width": 320,
       "height": 110
     },
     {
-      "id": "l4",
+      "id": "cat3-l3",
       "type": "file",
       "file": "tools/工具-為學習而工作.md",
-      "x": 320,
-      "y": 245,
-      "width": 360,
+      "x": 660,
+      "y": 720,
+      "width": 320,
       "height": 110
     }
   ],
   "edges": [
     {
-      "id": "e0",
+      "id": "e-c-cat1",
       "fromNode": "center",
-      "toNode": "l0",
+      "toNode": "cat1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e1",
-      "fromNode": "center",
-      "toNode": "l1",
+      "id": "e-cat1-l1",
+      "fromNode": "cat1",
+      "toNode": "cat1-l1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e2",
+      "id": "e-c-cat2",
       "fromNode": "center",
-      "toNode": "l2",
+      "toNode": "cat2",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e3",
-      "fromNode": "center",
-      "toNode": "l3",
+      "id": "e-cat2-l1",
+      "fromNode": "cat2",
+      "toNode": "cat2-l1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e4",
+      "id": "e-c-cat3",
       "fromNode": "center",
-      "toNode": "l4",
+      "toNode": "cat3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat3-l1",
+      "fromNode": "cat3",
+      "toNode": "cat3-l1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat3-l2",
+      "fromNode": "cat3",
+      "toNode": "cat3-l2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat3-l3",
+      "fromNode": "cat3",
+      "toNode": "cat3-l3",
       "fromSide": "right",
       "toSide": "left"
     }

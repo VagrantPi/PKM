@@ -3,108 +3,176 @@
     {
       "id": "center",
       "type": "text",
-      "text": "# 原子習慣 Atomic Habits",
+      "text": "# 原子習慣\nJames Clear｜微小改變．驚人成效",
       "x": -160,
-      "y": -50,
-      "width": 320,
-      "height": 100,
+      "y": 555,
+      "width": 280,
+      "height": 80,
       "color": "6"
     },
     {
-      "id": "l0",
+      "id": "cat1",
+      "type": "text",
+      "text": "🧭 系統與身分\n（總框架）",
+      "x": 300,
+      "y": 100,
+      "width": 200,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "cat1-l1",
       "type": "file",
       "file": "tools/工具-行為改變四法則.md",
-      "x": 320,
-      "y": -430,
-      "width": 360,
+      "x": 660,
+      "y": 0,
+      "width": 320,
       "height": 110
     },
     {
-      "id": "l1",
+      "id": "cat1-l2",
       "type": "file",
       "file": "tools/工具-身分認同習慣.md",
-      "x": 320,
-      "y": -280,
-      "width": 360,
+      "x": 660,
+      "y": 150,
+      "width": 320,
       "height": 110
     },
     {
-      "id": "l2",
+      "id": "cat2",
+      "type": "text",
+      "text": "👀 法則一\n讓提示顯而易見",
+      "x": 300,
+      "y": 460,
+      "width": 200,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "cat2-l1",
       "type": "file",
       "file": "tools/工具-習慣堆疊.md",
-      "x": 320,
-      "y": -130,
-      "width": 360,
+      "x": 660,
+      "y": 360,
+      "width": 320,
       "height": 110
     },
     {
-      "id": "l3",
-      "type": "file",
-      "file": "tools/工具-兩分鐘法則.md",
-      "x": 320,
-      "y": 20,
-      "width": 360,
-      "height": 110
-    },
-    {
-      "id": "l4",
+      "id": "cat2-l2",
       "type": "file",
       "file": "tools/工具-環境設計.md",
-      "x": 320,
-      "y": 170,
-      "width": 360,
+      "x": 660,
+      "y": 510,
+      "width": 320,
       "height": 110
     },
     {
-      "id": "l5",
+      "id": "cat3",
+      "type": "text",
+      "text": "🪶 法則三\n讓行動輕而易舉",
+      "x": 300,
+      "y": 745,
+      "width": 200,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "cat3-l1",
+      "type": "file",
+      "file": "tools/工具-兩分鐘法則.md",
+      "x": 660,
+      "y": 720,
+      "width": 320,
+      "height": 110
+    },
+    {
+      "id": "cat4",
+      "type": "text",
+      "text": "🎯 法則四\n讓獎賞令人滿足",
+      "x": 300,
+      "y": 955,
+      "width": 200,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "cat4-l1",
       "type": "file",
       "file": "tools/工具-習慣追蹤與絕不錯過兩次.md",
-      "x": 320,
-      "y": 320,
-      "width": 360,
+      "x": 660,
+      "y": 930,
+      "width": 320,
       "height": 110
     }
   ],
   "edges": [
     {
-      "id": "e0",
+      "id": "e-c-cat1",
       "fromNode": "center",
-      "toNode": "l0",
+      "toNode": "cat1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e1",
-      "fromNode": "center",
-      "toNode": "l1",
+      "id": "e-cat1-l1",
+      "fromNode": "cat1",
+      "toNode": "cat1-l1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e2",
-      "fromNode": "center",
-      "toNode": "l2",
+      "id": "e-cat1-l2",
+      "fromNode": "cat1",
+      "toNode": "cat1-l2",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e3",
+      "id": "e-c-cat2",
       "fromNode": "center",
-      "toNode": "l3",
+      "toNode": "cat2",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e4",
-      "fromNode": "center",
-      "toNode": "l4",
+      "id": "e-cat2-l1",
+      "fromNode": "cat2",
+      "toNode": "cat2-l1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e5",
+      "id": "e-cat2-l2",
+      "fromNode": "cat2",
+      "toNode": "cat2-l2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c-cat3",
       "fromNode": "center",
-      "toNode": "l5",
+      "toNode": "cat3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat3-l1",
+      "fromNode": "cat3",
+      "toNode": "cat3-l1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c-cat4",
+      "fromNode": "center",
+      "toNode": "cat4",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat4-l1",
+      "fromNode": "cat4",
+      "toNode": "cat4-l1",
       "fromSide": "right",
       "toSide": "left"
     }
