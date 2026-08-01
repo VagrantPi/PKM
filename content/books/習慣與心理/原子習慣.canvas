@@ -5,9 +5,9 @@
       "type": "text",
       "text": "# 原子習慣\nJames Clear｜微小改變．驚人成效",
       "x": -160,
-      "y": 555,
-      "width": 280,
-      "height": 80,
+      "y": 551,
+      "width": 320,
+      "height": 147,
       "color": "6"
     },
     {
@@ -15,9 +15,9 @@
       "type": "text",
       "text": "🧭 系統與身分\n（總框架）",
       "x": 300,
-      "y": 100,
-      "width": 200,
-      "height": 60,
+      "y": 118,
+      "width": 320,
+      "height": 104,
       "color": "5"
     },
     {
@@ -26,26 +26,26 @@
       "file": "tools/工具-行為改變四法則.md",
       "x": 660,
       "y": 0,
-      "width": 320,
-      "height": 110
+      "width": 340,
+      "height": 150
     },
     {
       "id": "cat1-l2",
       "type": "file",
       "file": "tools/工具-身分認同習慣.md",
       "x": 660,
-      "y": 150,
-      "width": 320,
-      "height": 110
+      "y": 190,
+      "width": 340,
+      "height": 150
     },
     {
       "id": "cat2",
       "type": "text",
       "text": "👀 法則一\n讓提示顯而易見",
       "x": 300,
-      "y": 460,
-      "width": 200,
-      "height": 60,
+      "y": 548,
+      "width": 320,
+      "height": 104,
       "color": "5"
     },
     {
@@ -53,27 +53,27 @@
       "type": "file",
       "file": "tools/工具-習慣堆疊.md",
       "x": 660,
-      "y": 360,
-      "width": 320,
-      "height": 110
+      "y": 430,
+      "width": 340,
+      "height": 150
     },
     {
       "id": "cat2-l2",
       "type": "file",
       "file": "tools/工具-環境設計.md",
       "x": 660,
-      "y": 510,
-      "width": 320,
-      "height": 110
+      "y": 620,
+      "width": 340,
+      "height": 150
     },
     {
       "id": "cat3",
       "type": "text",
       "text": "🪶 法則三\n讓行動輕而易舉",
       "x": 300,
-      "y": 745,
-      "width": 200,
-      "height": 60,
+      "y": 883,
+      "width": 320,
+      "height": 104,
       "color": "5"
     },
     {
@@ -81,18 +81,18 @@
       "type": "file",
       "file": "tools/工具-兩分鐘法則.md",
       "x": 660,
-      "y": 720,
-      "width": 320,
-      "height": 110
+      "y": 860,
+      "width": 340,
+      "height": 150
     },
     {
       "id": "cat4",
       "type": "text",
       "text": "🎯 法則四\n讓獎賞令人滿足",
       "x": 300,
-      "y": 955,
-      "width": 200,
-      "height": 60,
+      "y": 1123,
+      "width": 320,
+      "height": 104,
       "color": "5"
     },
     {
@@ -100,9 +100,9 @@
       "type": "file",
       "file": "tools/工具-習慣追蹤與絕不錯過兩次.md",
       "x": 660,
-      "y": 930,
-      "width": 320,
-      "height": 110
+      "y": 1100,
+      "width": 340,
+      "height": 150
     }
   ],
   "edges": [

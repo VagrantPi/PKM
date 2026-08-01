@@ -5,9 +5,9 @@
       "type": "text",
       "text": "# 刻意練習\n傑出不是天賦，是可以掌握的技巧",
       "x": -160,
-      "y": 322,
+      "y": 341,
       "width": 320,
-      "height": 110,
+      "height": 147,
       "color": "6"
     },
     {
@@ -15,17 +15,17 @@
       "type": "file",
       "x": 660,
       "y": 0,
-      "width": 360,
-      "height": 110,
+      "width": 340,
+      "height": 150,
       "file": "tools/工具-有目的的練習.md"
     },
     {
       "id": "l0_1",
       "type": "file",
       "x": 660,
-      "y": 150,
-      "width": 360,
-      "height": 110,
+      "y": 190,
+      "width": 340,
+      "height": 150,
       "file": "tools/工具-3F自我練習法.md"
     },
     {
@@ -33,18 +33,18 @@
       "type": "text",
       "text": "## 🎯 練習方法\n有目的的練習：明確目標・專注・即時回饋・走出舒適區",
       "x": 300,
-      "y": 70,
-      "width": 300,
-      "height": 120,
+      "y": 85,
+      "width": 320,
+      "height": 170,
       "color": "5"
     },
     {
       "id": "l1_0",
       "type": "file",
       "x": 660,
-      "y": 360,
-      "width": 360,
-      "height": 110,
+      "y": 430,
+      "width": 340,
+      "height": 150,
       "file": "tools/工具-心理表徵.md"
     },
     {
@@ -52,18 +52,18 @@
       "type": "text",
       "text": "## 🧠 心理表徵\n高手與新手的關鍵差異：心智模型的質與量",
       "x": 300,
-      "y": 355,
-      "width": 300,
-      "height": 120,
+      "y": 433,
+      "width": 320,
+      "height": 144,
       "color": "5"
     },
     {
       "id": "l2_0",
       "type": "file",
       "x": 660,
-      "y": 570,
-      "width": 360,
-      "height": 110,
+      "y": 670,
+      "width": 340,
+      "height": 150,
       "file": "tools/工具-找對導師與模仿頂尖.md"
     },
     {
@@ -71,9 +71,9 @@
       "type": "text",
       "text": "## 🧭 導師與典範\n照著頂尖者走過的路徑練，才是刻意練習的黃金標準",
       "x": 300,
-      "y": 565,
-      "width": 300,
-      "height": 120,
+      "y": 660,
+      "width": 320,
+      "height": 170,
       "color": "5"
     }
   ],

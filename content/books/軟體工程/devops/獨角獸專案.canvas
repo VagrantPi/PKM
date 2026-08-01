@@ -5,9 +5,9 @@
       "type": "text",
       "text": "# 🦄 獨角獸專案\nThe Unicorn Project",
       "x": -160,
-      "y": 927,
-      "width": 280,
-      "height": 80,
+      "y": 732,
+      "width": 320,
+      "height": 147,
       "color": "6"
     },
     {
@@ -16,98 +16,98 @@
       "file": "tools/工具-五大理想.md",
       "x": 660,
       "y": 0,
-      "width": 320,
-      "height": 110
+      "width": 340,
+      "height": 150
     },
     {
       "id": "l2",
       "type": "text",
       "text": "判斷「開發者能不能高效又快樂地創造價值」的準則",
       "x": 660,
-      "y": 150,
-      "width": 400,
-      "height": 110
+      "y": 190,
+      "width": 340,
+      "height": 104
     },
     {
       "id": "l3",
       "type": "text",
       "text": "能在自己範圍內完成事情，不必層層等待他人",
       "x": 660,
-      "y": 380,
-      "width": 400,
-      "height": 110
+      "y": 384,
+      "width": 340,
+      "height": 78
     },
     {
       "id": "l4",
       "type": "text",
       "text": "依賴糾纏是生產力殺手",
       "x": 660,
-      "y": 530,
-      "width": 400,
-      "height": 110
+      "y": 502,
+      "width": 340,
+      "height": 78
     },
     {
       "id": "l5",
       "type": "text",
       "text": "「當開發者能專注、進入心流，偉大的事情就會發生。」",
       "x": 660,
-      "y": 760,
-      "width": 400,
-      "height": 110
+      "y": 670,
+      "width": 340,
+      "height": 104
     },
     {
       "id": "l6",
       "type": "text",
       "text": "技術債與糟糕的開發環境是隱形的巨大成本",
       "x": 660,
-      "y": 910,
-      "width": 400,
-      "height": 110
+      "y": 814,
+      "width": 340,
+      "height": 78
     },
     {
       "id": "l7",
       "type": "text",
       "text": "改善日常工作，優先於日常工作本身",
       "x": 660,
-      "y": 1140,
-      "width": 400,
-      "height": 110
+      "y": 982,
+      "width": 340,
+      "height": 78
     },
     {
       "id": "l8",
       "type": "file",
       "file": "tools/工具-心理安全感.md",
       "x": 660,
-      "y": 1370,
-      "width": 320,
-      "height": 110
+      "y": 1150,
+      "width": 340,
+      "height": 150
     },
     {
       "id": "l9",
       "type": "text",
       "text": "恐懼文化讓人隱藏問題；心理安全是一切改善的地基",
       "x": 660,
-      "y": 1520,
-      "width": 400,
-      "height": 110
+      "y": 1340,
+      "width": 340,
+      "height": 104
     },
     {
       "id": "l10",
       "type": "text",
       "text": "以「是否真正為顧客創造價值」判斷工作的優先序",
       "x": 660,
-      "y": 1750,
-      "width": 400,
-      "height": 110
+      "y": 1534,
+      "width": 340,
+      "height": 78
     },
     {
       "id": "c1",
       "type": "text",
       "text": "## 🌟 五大理想（診斷框架）",
       "x": 300,
-      "y": 100,
-      "width": 260,
-      "height": 60,
+      "y": 113,
+      "width": 320,
+      "height": 68,
       "color": "5"
     },
     {
@@ -115,9 +115,9 @@
       "type": "text",
       "text": "## ① 局部性與簡單性",
       "x": 300,
-      "y": 480,
-      "width": 260,
-      "height": 60,
+      "y": 448,
+      "width": 320,
+      "height": 68,
       "color": "5"
     },
     {
@@ -125,9 +125,9 @@
       "type": "text",
       "text": "## ② 專注、心流與愉悅",
       "x": 300,
-      "y": 860,
-      "width": 260,
-      "height": 60,
+      "y": 747,
+      "width": 320,
+      "height": 68,
       "color": "5"
     },
     {
@@ -135,9 +135,9 @@
       "type": "text",
       "text": "## ③ 改善日常工作",
       "x": 300,
-      "y": 1165,
-      "width": 260,
-      "height": 60,
+      "y": 987,
+      "width": 320,
+      "height": 68,
       "color": "5"
     },
     {
@@ -145,9 +145,9 @@
       "type": "text",
       "text": "## ④ 心理安全感",
       "x": 300,
-      "y": 1470,
-      "width": 260,
-      "height": 60,
+      "y": 1263,
+      "width": 320,
+      "height": 68,
       "color": "5"
     },
     {
@@ -155,9 +155,9 @@
       "type": "text",
       "text": "## ⑤ 顧客至上",
       "x": 300,
-      "y": 1775,
-      "width": 260,
-      "height": 60,
+      "y": 1539,
+      "width": 320,
+      "height": 68,
       "color": "5"
     }
   ],

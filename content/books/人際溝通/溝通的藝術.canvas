@@ -5,9 +5,9 @@
       "type": "text",
       "text": "# 溝通的藝術\n溝通不是「對別人做」，而是「與人共創」的歷程",
       "x": -160,
-      "y": 0,
+      "y": 328,
       "width": 320,
-      "height": 110,
+      "height": 173,
       "color": "6"
     },
     {
@@ -15,18 +15,18 @@
       "type": "file",
       "file": "tools/工具-知覺檢核.md",
       "x": 660,
-      "y": -227,
-      "width": 360,
-      "height": 110
+      "y": 0,
+      "width": 340,
+      "height": 150
     },
     {
       "id": "c0",
       "type": "text",
       "text": "## 👁 看入人裡\n自我概念與認同管理・知覺會出錯・情緒要辨識與負責",
       "x": 300,
-      "y": -232,
-      "width": 300,
-      "height": 120,
+      "y": -10,
+      "width": 320,
+      "height": 170,
       "color": "5"
     },
     {
@@ -34,18 +34,18 @@
       "type": "file",
       "file": "tools/工具-我訊息清晰表達.md",
       "x": 660,
-      "y": -37,
-      "width": 360,
-      "height": 110
+      "y": 250,
+      "width": 340,
+      "height": 150
     },
     {
       "id": "c1",
       "type": "text",
       "text": "## 🗣 看出人外\n清楚且負責地表達・傾聽與回應（釋義、支持、提問、分析）",
       "x": 300,
-      "y": -42,
-      "width": 300,
-      "height": 120,
+      "y": 240,
+      "width": 320,
+      "height": 170,
       "color": "5"
     },
     {
@@ -53,27 +53,27 @@
       "type": "file",
       "file": "tools/工具-枕頭法.md",
       "x": 660,
-      "y": 153,
-      "width": 360,
-      "height": 110
+      "y": 500,
+      "width": 340,
+      "height": 150
     },
     {
       "id": "l2_1",
       "type": "file",
       "file": "tools/工具-對批評不防衛回應.md",
       "x": 660,
-      "y": 303,
-      "width": 360,
-      "height": 110
+      "y": 690,
+      "width": 340,
+      "height": 150
     },
     {
       "id": "c2",
       "type": "text",
       "text": "## 🤝 看人之間\n防衛 vs 支持的氣氛・親密關係・衝突五型，目標是雙贏",
       "x": 300,
-      "y": 218,
-      "width": 300,
-      "height": 130,
+      "y": 585,
+      "width": 320,
+      "height": 170,
       "color": "5"
     }
   ],

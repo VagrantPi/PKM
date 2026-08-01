@@ -5,9 +5,9 @@
       "type": "text",
       "text": "# 習慣的力量\nCharles Duhigg｜為什麼我們這樣生活",
       "x": -160,
-      "y": 250,
-      "width": 280,
-      "height": 80,
+      "y": 336,
+      "width": 320,
+      "height": 147,
       "color": "6"
     },
     {
@@ -15,9 +15,9 @@
       "type": "text",
       "text": "🔁 習慣迴路\n提示→慣性行為→獎賞",
       "x": 300,
-      "y": 25,
-      "width": 200,
-      "height": 60,
+      "y": 23,
+      "width": 320,
+      "height": 104,
       "color": "5"
     },
     {
@@ -26,17 +26,17 @@
       "file": "tools/工具-習慣迴路改造四步.md",
       "x": 660,
       "y": 0,
-      "width": 320,
-      "height": 110
+      "width": 340,
+      "height": 150
     },
     {
       "id": "cat2",
       "type": "text",
       "text": "🔧 改造方法\n黃金法則",
       "x": 300,
-      "y": 235,
-      "width": 200,
-      "height": 60,
+      "y": 263,
+      "width": 320,
+      "height": 104,
       "color": "5"
     },
     {
@@ -44,18 +44,18 @@
       "type": "file",
       "file": "tools/工具-黃金法則替換法.md",
       "x": 660,
-      "y": 210,
-      "width": 320,
-      "height": 110
+      "y": 240,
+      "width": 340,
+      "height": 150
     },
     {
       "id": "cat3",
       "type": "text",
       "text": "🗝 核心習慣\n意志力與信念",
       "x": 300,
-      "y": 520,
-      "width": 200,
-      "height": 60,
+      "y": 598,
+      "width": 320,
+      "height": 104,
       "color": "5"
     },
     {
@@ -63,18 +63,18 @@
       "type": "file",
       "file": "tools/工具-核心習慣.md",
       "x": 660,
-      "y": 420,
-      "width": 320,
-      "height": 110
+      "y": 480,
+      "width": 340,
+      "height": 150
     },
     {
       "id": "cat3-l2",
       "type": "file",
       "file": "tools/工具-意志力執行意圖.md",
       "x": 660,
-      "y": 570,
-      "width": 320,
-      "height": 110
+      "y": 670,
+      "width": 340,
+      "height": 150
     }
   ],
   "edges": [

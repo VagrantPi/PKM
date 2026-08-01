@@ -5,9 +5,9 @@
       "type": "text",
       "text": "# 多巴胺國度\nAnna Lembke｜快樂—痛苦的蹺蹺板",
       "x": -160,
-      "y": 423,
-      "width": 280,
-      "height": 80,
+      "y": 456,
+      "width": 320,
+      "height": 147,
       "color": "6"
     },
     {
@@ -15,9 +15,9 @@
       "type": "text",
       "text": "🧠 成癮機制\n（看懂蹺蹺板）",
       "x": 300,
-      "y": 25,
-      "width": 200,
-      "height": 60,
+      "y": 23,
+      "width": 320,
+      "height": 104,
       "color": "5"
     },
     {
@@ -26,17 +26,17 @@
       "file": "tools/工具-DOPAMINE自我探詢框架.md",
       "x": 660,
       "y": 0,
-      "width": 320,
-      "height": 110
+      "width": 340,
+      "height": 150
     },
     {
       "id": "cat2",
       "type": "text",
       "text": "🚫 戒斷與重置\n基準線",
       "x": 300,
-      "y": 310,
-      "width": 200,
-      "height": 60,
+      "y": 358,
+      "width": 320,
+      "height": 104,
       "color": "5"
     },
     {
@@ -44,27 +44,27 @@
       "type": "file",
       "file": "tools/工具-多巴胺禁食.md",
       "x": 660,
-      "y": 210,
-      "width": 320,
-      "height": 110
+      "y": 240,
+      "width": 340,
+      "height": 150
     },
     {
       "id": "cat2-l2",
       "type": "file",
       "file": "tools/工具-自我束縛.md",
       "x": 660,
-      "y": 360,
-      "width": 320,
-      "height": 110
+      "y": 430,
+      "width": 340,
+      "height": 150
     },
     {
       "id": "cat3",
       "type": "text",
       "text": "⚖️ 往痛苦端施壓\n（主動平衡）",
       "x": 300,
-      "y": 595,
-      "width": 200,
-      "height": 60,
+      "y": 693,
+      "width": 320,
+      "height": 104,
       "color": "5"
     },
     {
@@ -72,18 +72,18 @@
       "type": "file",
       "file": "tools/工具-往痛苦端施壓.md",
       "x": 660,
-      "y": 570,
-      "width": 320,
-      "height": 110
+      "y": 670,
+      "width": 340,
+      "height": 150
     },
     {
       "id": "cat4",
       "type": "text",
       "text": "🤝 誠實與社群\n（防復發）",
       "x": 300,
-      "y": 805,
-      "width": 200,
-      "height": 60,
+      "y": 933,
+      "width": 320,
+      "height": 104,
       "color": "5"
     },
     {
@@ -91,9 +91,9 @@
       "type": "file",
       "file": "tools/工具-徹底誠實.md",
       "x": 660,
-      "y": 780,
-      "width": 320,
-      "height": 110
+      "y": 910,
+      "width": 340,
+      "height": 150
     }
   ],
   "edges": [

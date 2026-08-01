@@ -5,9 +5,9 @@
       "type": "text",
       "text": "# 🛠 DevOps 手冊\nThe DevOps Handbook",
       "x": -160,
-      "y": 885,
-      "width": 280,
-      "height": 80,
+      "y": 847,
+      "width": 320,
+      "height": 147,
       "color": "6"
     },
     {
@@ -16,116 +16,116 @@
       "file": "tools/工具-三步工作法.md",
       "x": 660,
       "y": 0,
-      "width": 320,
-      "height": 110
+      "width": 340,
+      "height": 150
     },
     {
       "id": "l2",
       "type": "text",
       "text": "**價值流 Value Stream**\n從想法到上線的整條流程，找出並縮短前置時間",
       "x": 660,
-      "y": 150,
-      "width": 400,
-      "height": 110
+      "y": 190,
+      "width": 340,
+      "height": 105
     },
     {
       "id": "l3",
       "type": "file",
       "file": "tools/工具-部署管線與持續交付.md",
       "x": 660,
-      "y": 380,
-      "width": 320,
-      "height": 110
+      "y": 385,
+      "width": 340,
+      "height": 150
     },
     {
       "id": "l4",
       "type": "text",
       "text": "版本控管一切・持續整合・自動化部署管線",
       "x": 660,
-      "y": 530,
-      "width": 400,
-      "height": 110
+      "y": 575,
+      "width": 340,
+      "height": 78
     },
     {
       "id": "l5",
       "type": "text",
       "text": "小批量發布・去除交接等待",
       "x": 660,
-      "y": 680,
-      "width": 400,
-      "height": 110
+      "y": 693,
+      "width": 340,
+      "height": 78
     },
     {
       "id": "l6",
       "type": "file",
       "file": "tools/工具-遙測與監控.md",
       "x": 660,
-      "y": 910,
-      "width": 320,
-      "height": 110
+      "y": 861,
+      "width": 340,
+      "height": 150
     },
     {
       "id": "l7",
       "type": "text",
       "text": "全面遙測・監控告警・A/B 測試",
       "x": 660,
-      "y": 1060,
-      "width": 400,
-      "height": 110
+      "y": 1051,
+      "width": 340,
+      "height": 78
     },
     {
       "id": "l8",
       "type": "text",
       "text": "讓部署與生產狀態可見",
       "x": 660,
-      "y": 1210,
-      "width": 400,
-      "height": 110
+      "y": 1169,
+      "width": 340,
+      "height": 78
     },
     {
       "id": "l9",
       "type": "file",
       "file": "tools/工具-無指責事後檢討.md",
       "x": 660,
-      "y": 1440,
-      "width": 320,
-      "height": 110
+      "y": 1337,
+      "width": 340,
+      "height": 150
     },
     {
       "id": "l10",
       "type": "text",
       "text": "無指責文化・把學習制度化",
       "x": 660,
-      "y": 1590,
-      "width": 400,
-      "height": 110
+      "y": 1527,
+      "width": 340,
+      "height": 78
     },
     {
       "id": "l11",
       "type": "text",
       "text": "注入故障演練",
       "x": 660,
-      "y": 1740,
-      "width": 400,
-      "height": 110
+      "y": 1645,
+      "width": 340,
+      "height": 78
     },
     {
       "id": "l12",
       "type": "text",
       "text": "安全與合規左移 Shift Left",
       "x": 660,
-      "y": 1890,
-      "width": 400,
-      "height": 110
+      "y": 1763,
+      "width": 340,
+      "height": 78
     },
     {
       "id": "c1",
       "type": "text",
       "text": "## 🧭 總綱：三步工作法",
       "x": 300,
-      "y": 100,
-      "width": 260,
-      "height": 60,
+      "y": 113,
+      "width": 320,
+      "height": 68,
       "color": "5"
     },
     {
@@ -133,9 +133,9 @@
       "type": "text",
       "text": "## ① 流動 Flow",
       "x": 300,
-      "y": 555,
-      "width": 260,
-      "height": 60,
+      "y": 544,
+      "width": 320,
+      "height": 68,
       "color": "5"
     },
     {
@@ -143,9 +143,9 @@
       "type": "text",
       "text": "## ② 回饋 Feedback",
       "x": 300,
-      "y": 1085,
-      "width": 260,
-      "height": 60,
+      "y": 1020,
+      "width": 320,
+      "height": 68,
       "color": "5"
     },
     {
@@ -153,9 +153,9 @@
       "type": "text",
       "text": "## ③ 持續學習與實驗",
       "x": 300,
-      "y": 1690,
-      "width": 260,
-      "height": 60,
+      "y": 1555,
+      "width": 320,
+      "height": 68,
       "color": "5"
     }
   ],

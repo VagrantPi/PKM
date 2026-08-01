@@ -5,9 +5,9 @@
       "type": "text",
       "text": "# ⚙️ 資料庫底層原理\n**Database Internals** — Alex Petrov\n打開引擎蓋看它怎麼做出來",
       "x": -160,
-      "y": 670,
+      "y": 775,
       "width": 320,
-      "height": 112,
+      "height": 174,
       "color": "6"
     },
     {
@@ -15,27 +15,27 @@
       "type": "file",
       "file": "tools/工具-儲存引擎B-Tree與LSM-Tree.md",
       "x": 660,
-      "y": 0,
-      "width": 440,
-      "height": 110
+      "y": 1404,
+      "width": 340,
+      "height": 150
     },
     {
       "id": "c1l2",
       "type": "text",
       "text": "**三種放大的取捨**\n讀放大 / 寫放大 / 空間放大——沒有一種資料結構能同時最佳化三者，只能取捨。",
       "x": 660,
-      "y": 150,
-      "width": 440,
-      "height": 112
+      "y": 1594,
+      "width": 340,
+      "height": 131
     },
     {
       "id": "cat1",
       "type": "text",
       "text": "**💾 第一部：儲存引擎結構**",
       "x": 300,
-      "y": 76,
-      "width": 300,
-      "height": 110,
+      "y": 1525,
+      "width": 320,
+      "height": 79,
       "color": "5"
     },
     {
@@ -43,27 +43,27 @@
       "type": "file",
       "file": "tools/工具-預寫日誌與崩潰復原.md",
       "x": 660,
-      "y": 372,
-      "width": 440,
-      "height": 110
+      "y": 993,
+      "width": 340,
+      "height": 150
     },
     {
       "id": "c2l2",
       "type": "text",
       "text": "**ARIES 復原三階段**\n分析（找出當機時的狀態）→ 重做（重放日誌）→ 回復（撤銷未提交交易）。",
       "x": 660,
-      "y": 522,
-      "width": 440,
-      "height": 112
+      "y": 1183,
+      "width": 340,
+      "height": 131
     },
     {
       "id": "cat2",
       "type": "text",
       "text": "**🛡 交易處理與崩潰復原**",
       "x": 300,
-      "y": 448,
-      "width": 300,
-      "height": 110,
+      "y": 1114,
+      "width": 320,
+      "height": 79,
       "color": "5"
     },
     {
@@ -71,27 +71,27 @@
       "type": "file",
       "file": "tools/工具-故障偵測.md",
       "x": 660,
-      "y": 744,
-      "width": 440,
-      "height": 110
+      "y": 563,
+      "width": 340,
+      "height": 150
     },
     {
       "id": "c3l2",
       "type": "file",
       "file": "tools/工具-反熵與Gossip傳播.md",
       "x": 660,
-      "y": 894,
-      "width": 440,
-      "height": 110
+      "y": 753,
+      "width": 340,
+      "height": 150
     },
     {
       "id": "cat3",
       "type": "text",
       "text": "**🔎 第二部：故障偵測與狀態擴散**",
       "x": 300,
-      "y": 819,
-      "width": 300,
-      "height": 110,
+      "y": 693,
+      "width": 320,
+      "height": 79,
       "color": "5"
     },
     {
@@ -99,36 +99,36 @@
       "type": "text",
       "text": "**Paxos / Multi-Paxos**\n讓多節點對一個值達成一致；Multi-Paxos 用穩定領導者攤平多輪成本。",
       "x": 660,
-      "y": 1114,
-      "width": 440,
-      "height": 112
+      "y": 0,
+      "width": 340,
+      "height": 131
     },
     {
       "id": "c4l2",
       "type": "text",
       "text": "**Raft：領導者選舉 + 日誌複製**\n把共識拆成好懂的三塊：選舉、日誌複製、安全性。",
       "x": 660,
-      "y": 1266,
-      "width": 440,
-      "height": 110
+      "y": 171,
+      "width": 340,
+      "height": 131
     },
     {
       "id": "c4l3",
       "type": "text",
       "text": "**概念層對照**\n一致性模型與 CAP 取捨見 [[工具-線性一致性與共識]]（[[設計資料密集型應用]]）。",
       "x": 660,
-      "y": 1416,
-      "width": 440,
-      "height": 112
+      "y": 342,
+      "width": 340,
+      "height": 131
     },
     {
       "id": "cat4",
       "type": "text",
       "text": "**🤝 分散式共識**",
       "x": 300,
-      "y": 1266,
-      "width": 300,
-      "height": 110,
+      "y": 197,
+      "width": 320,
+      "height": 79,
       "color": "5"
     }
   ],

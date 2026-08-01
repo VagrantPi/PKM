@@ -5,9 +5,9 @@
       "type": "text",
       "text": "# 富爸爸，窮爸爸\nRobert Kiyosaki｜讓錢為你工作",
       "x": -160,
-      "y": 275,
-      "width": 280,
-      "height": 80,
+      "y": 431,
+      "width": 320,
+      "height": 147,
       "color": "6"
     },
     {
@@ -15,9 +15,9 @@
       "type": "text",
       "text": "💡 金錢觀\n富人不為錢工作",
       "x": 300,
-      "y": 25,
-      "width": 200,
-      "height": 60,
+      "y": 23,
+      "width": 320,
+      "height": 104,
       "color": "5"
     },
     {
@@ -26,17 +26,17 @@
       "file": "tools/工具-富人不為錢工作.md",
       "x": 660,
       "y": 0,
-      "width": 320,
-      "height": 110
+      "width": 340,
+      "height": 150
     },
     {
       "id": "cat2",
       "type": "text",
       "text": "📊 財商核心\n資產與負債",
       "x": 300,
-      "y": 235,
-      "width": 200,
-      "height": 60,
+      "y": 263,
+      "width": 320,
+      "height": 104,
       "color": "5"
     },
     {
@@ -44,18 +44,18 @@
       "type": "file",
       "file": "tools/工具-資產與負債.md",
       "x": 660,
-      "y": 210,
-      "width": 320,
-      "height": 110
+      "y": 240,
+      "width": 340,
+      "height": 150
     },
     {
       "id": "cat3",
       "type": "text",
       "text": "🏗 實踐\n累積自己的資產欄",
       "x": 300,
-      "y": 595,
-      "width": 200,
-      "height": 60,
+      "y": 693,
+      "width": 320,
+      "height": 104,
       "color": "5"
     },
     {
@@ -63,27 +63,27 @@
       "type": "file",
       "file": "tools/工具-建立資產欄.md",
       "x": 660,
-      "y": 420,
-      "width": 320,
-      "height": 110
+      "y": 480,
+      "width": 340,
+      "height": 150
     },
     {
       "id": "cat3-l2",
       "type": "file",
       "file": "tools/工具-先支付自己.md",
       "x": 660,
-      "y": 570,
-      "width": 320,
-      "height": 110
+      "y": 670,
+      "width": 340,
+      "height": 150
     },
     {
       "id": "cat3-l3",
       "type": "file",
       "file": "tools/工具-為學習而工作.md",
       "x": 660,
-      "y": 720,
-      "width": 320,
-      "height": 110
+      "y": 860,
+      "width": 340,
+      "height": 150
     }
   ],
   "edges": [

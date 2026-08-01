@@ -5,9 +5,9 @@
       "type": "text",
       "text": "# 小島經濟學\nPeter & Andrew Schiff｜經濟如何成長與崩潰",
       "x": -160,
-      "y": 517,
-      "width": 280,
-      "height": 80,
+      "y": 551,
+      "width": 320,
+      "height": 147,
       "color": "6"
     },
     {
@@ -15,9 +15,9 @@
       "type": "text",
       "text": "🎣 生產與資本形成\n消費不足＋冒險",
       "x": 300,
-      "y": 100,
-      "width": 200,
-      "height": 60,
+      "y": 118,
+      "width": 320,
+      "height": 104,
       "color": "5"
     },
     {
@@ -26,26 +26,26 @@
       "file": "tools/工具-延遲消費創造資本.md",
       "x": 660,
       "y": 0,
-      "width": 320,
-      "height": 110
+      "width": 340,
+      "height": 150
     },
     {
       "id": "cat1-l2",
       "type": "file",
       "file": "tools/工具-生產先於消費.md",
       "x": 660,
-      "y": 150,
-      "width": 320,
-      "height": 110
+      "y": 190,
+      "width": 340,
+      "height": 150
     },
     {
       "id": "cat2",
       "type": "text",
       "text": "🏦 儲蓄、利率\n與投資",
       "x": 300,
-      "y": 385,
-      "width": 200,
-      "height": 60,
+      "y": 453,
+      "width": 320,
+      "height": 104,
       "color": "5"
     },
     {
@@ -53,18 +53,18 @@
       "type": "file",
       "file": "tools/工具-儲蓄是投資的燃料.md",
       "x": 660,
-      "y": 360,
-      "width": 320,
-      "height": 110
+      "y": 430,
+      "width": 340,
+      "height": 150
     },
     {
       "id": "cat3",
       "type": "text",
       "text": "💵 貨幣與通膨",
       "x": 300,
-      "y": 670,
-      "width": 200,
-      "height": 60,
+      "y": 801,
+      "width": 320,
+      "height": 78,
       "color": "5"
     },
     {
@@ -72,27 +72,27 @@
       "type": "file",
       "file": "tools/工具-通貨膨脹的真相.md",
       "x": 660,
-      "y": 570,
-      "width": 320,
-      "height": 110
+      "y": 670,
+      "width": 340,
+      "height": 150
     },
     {
       "id": "cat3-l2",
       "type": "file",
       "file": "tools/工具-法定貨幣與硬通貨.md",
       "x": 660,
-      "y": 720,
-      "width": 320,
-      "height": 110
+      "y": 860,
+      "width": 340,
+      "height": 150
     },
     {
       "id": "cat4",
       "type": "text",
       "text": "🏚 政府干預\n與泡沫崩盤",
       "x": 300,
-      "y": 955,
-      "width": 200,
-      "height": 60,
+      "y": 1123,
+      "width": 320,
+      "height": 104,
       "color": "5"
     },
     {
@@ -100,9 +100,9 @@
       "type": "file",
       "file": "tools/工具-政府擔保吹大資產泡沫.md",
       "x": 660,
-      "y": 930,
-      "width": 320,
-      "height": 110
+      "y": 1100,
+      "width": 340,
+      "height": 150
     }
   ],
   "edges": [
