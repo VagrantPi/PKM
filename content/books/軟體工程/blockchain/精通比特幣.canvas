@@ -3,60 +3,256 @@
     {
       "id": "center",
       "type": "text",
-      "text": "# 精通比特幣 Mastering Bitcoin",
+      "text": "# 精通比特幣\nMastering Bitcoin",
       "x": -160,
-      "y": -50,
-      "width": 320,
-      "height": 100,
+      "y": 982,
+      "width": 280,
+      "height": 80,
       "color": "6"
     },
     {
-      "id": "l0",
-      "type": "file",
-      "file": "tools/工具-去中心化共識與PoW.md",
-      "x": 320,
-      "y": -205,
-      "width": 360,
-      "height": 110
+      "id": "cat1",
+      "type": "text",
+      "text": "## 🔑 所有權：金鑰與地址",
+      "x": 300,
+      "y": 175,
+      "width": 220,
+      "height": 60,
+      "color": "5"
     },
     {
-      "id": "l1",
+      "id": "leaf1-1",
+      "x": 660,
+      "y": 0,
+      "width": 320,
+      "height": 110,
       "type": "file",
-      "file": "tools/工具-UTXO交易模型.md",
-      "x": 320,
-      "y": -55,
-      "width": 360,
-      "height": 110
+      "file": "tools/工具-金鑰地址與錢包.md"
     },
     {
-      "id": "l2",
+      "id": "leaf1-2",
+      "x": 660,
+      "y": 150,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "私鑰簽章證明所有權\n→ 公鑰 → 地址"
+    },
+    {
+      "id": "leaf1-3",
+      "x": 660,
+      "y": 300,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "「Not your keys, not your coins」"
+    },
+    {
+      "id": "cat2",
+      "type": "text",
+      "text": "## 🧾 記帳：UTXO 模型",
+      "x": 300,
+      "y": 745,
+      "width": 220,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "leaf2-1",
+      "x": 660,
+      "y": 570,
+      "width": 320,
+      "height": 110,
       "type": "file",
-      "file": "tools/工具-金鑰地址與錢包.md",
-      "x": 320,
-      "y": 95,
-      "width": 360,
-      "height": 110
+      "file": "tools/工具-UTXO交易模型.md"
+    },
+    {
+      "id": "leaf2-2",
+      "x": 660,
+      "y": 720,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "帳本不是餘額\n而是一堆「未花費交易輸出」"
+    },
+    {
+      "id": "leaf2-3",
+      "x": 660,
+      "y": 870,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "花錢＝消耗舊 UTXO、產生新 UTXO"
+    },
+    {
+      "id": "cat3",
+      "type": "text",
+      "text": "## ⛏️ 共識：PoW 與最長鏈",
+      "x": 300,
+      "y": 1315,
+      "width": 220,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "leaf3-1",
+      "x": 660,
+      "y": 1140,
+      "width": 320,
+      "height": 110,
+      "type": "file",
+      "file": "tools/工具-去中心化共識與PoW.md"
+    },
+    {
+      "id": "leaf3-2",
+      "x": 660,
+      "y": 1290,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "節點各自驗證，最長鏈為準\n無需中央機構"
+    },
+    {
+      "id": "leaf3-3",
+      "x": 660,
+      "y": 1440,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "工作量證明讓竄改成本極高"
+    },
+    {
+      "id": "cat4",
+      "type": "text",
+      "text": "## 🌳 驗證與誘因設計",
+      "x": 300,
+      "y": 1810,
+      "width": 220,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "leaf4-1",
+      "x": 660,
+      "y": 1710,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "**默克爾樹**\n讓輕節點高效驗證交易是否在區塊中"
+    },
+    {
+      "id": "leaf4-2",
+      "x": 660,
+      "y": 1860,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "**誘因設計**\n區塊獎勵＋手續費，誠實挖礦才有利可圖"
     }
   ],
   "edges": [
     {
-      "id": "e0",
+      "id": "e-center-cat1",
       "fromNode": "center",
-      "toNode": "l0",
+      "toNode": "cat1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e1",
-      "fromNode": "center",
-      "toNode": "l1",
+      "id": "e-cat1-leaf1-1",
+      "fromNode": "cat1",
+      "toNode": "leaf1-1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e2",
+      "id": "e-cat1-leaf1-2",
+      "fromNode": "cat1",
+      "toNode": "leaf1-2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat1-leaf1-3",
+      "fromNode": "cat1",
+      "toNode": "leaf1-3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-center-cat2",
       "fromNode": "center",
-      "toNode": "l2",
+      "toNode": "cat2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat2-leaf2-1",
+      "fromNode": "cat2",
+      "toNode": "leaf2-1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat2-leaf2-2",
+      "fromNode": "cat2",
+      "toNode": "leaf2-2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat2-leaf2-3",
+      "fromNode": "cat2",
+      "toNode": "leaf2-3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-center-cat3",
+      "fromNode": "center",
+      "toNode": "cat3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat3-leaf3-1",
+      "fromNode": "cat3",
+      "toNode": "leaf3-1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat3-leaf3-2",
+      "fromNode": "cat3",
+      "toNode": "leaf3-2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat3-leaf3-3",
+      "fromNode": "cat3",
+      "toNode": "leaf3-3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-center-cat4",
+      "fromNode": "center",
+      "toNode": "cat4",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat4-leaf4-1",
+      "fromNode": "cat4",
+      "toNode": "leaf4-1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat4-leaf4-2",
+      "fromNode": "cat4",
+      "toNode": "leaf4-2",
       "fromSide": "right",
       "toSide": "left"
     }

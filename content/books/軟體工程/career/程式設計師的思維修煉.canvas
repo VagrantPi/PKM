@@ -3,76 +3,321 @@
     {
       "id": "center",
       "type": "text",
-      "text": "# 程式設計師的思維修煉：開發認知潛能的九堂課",
+      "text": "# 程式設計師的思維修煉\n開發認知潛能的九堂課",
       "x": -160,
-      "y": -50,
-      "width": 320,
-      "height": 100,
+      "y": 1305,
+      "width": 280,
+      "height": 80,
       "color": "6"
     },
     {
-      "id": "l0",
-      "type": "file",
-      "file": "tools/工具-德雷福斯自我定位.md",
-      "x": 320,
-      "y": -280,
-      "width": 360,
-      "height": 110
+      "id": "cat1",
+      "type": "text",
+      "text": "## 🎚 從新手到專家",
+      "x": 300,
+      "y": 250,
+      "width": 220,
+      "height": 60,
+      "color": "5"
     },
     {
-      "id": "l1",
+      "id": "leaf1-1",
+      "x": 660,
+      "y": 0,
+      "width": 320,
+      "height": 110,
       "type": "file",
-      "file": "tools/工具-SQ3R主動閱讀.md",
-      "x": 320,
-      "y": -130,
-      "width": 360,
-      "height": 110
+      "file": "tools/工具-德雷福斯自我定位.md"
     },
     {
-      "id": "l2",
-      "type": "file",
-      "file": "tools/工具-心智圖.md",
-      "x": 320,
-      "y": 20,
-      "width": 360,
-      "height": 110
+      "id": "leaf1-2",
+      "x": 660,
+      "y": 150,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "德雷福斯五階\n新手使用規則，專家使用直覺"
     },
     {
-      "id": "l3",
+      "id": "leaf1-3",
+      "x": 660,
+      "y": 300,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "多數人一生停在「高級新手」\n能辦事，但不想理解全局"
+    },
+    {
+      "id": "leaf1-4",
+      "x": 660,
+      "y": 450,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "逼專家講死規則\n反而會讓他表現變差"
+    },
+    {
+      "id": "cat2",
+      "type": "text",
+      "text": "## 🧠 認識並調試你的大腦",
+      "x": 300,
+      "y": 895,
+      "width": 220,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "leaf2-1",
+      "x": 660,
+      "y": 720,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "雙 CPU：**L 模式**線性語言\n／**R 模式**整體直覺"
+    },
+    {
+      "id": "leaf2-2",
+      "x": 660,
+      "y": 870,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "好點子常來自被忽略的 R 模式"
+    },
+    {
+      "id": "leaf2-3",
+      "x": 660,
+      "y": 1020,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "**神經可塑性**：大腦終生可重塑\n成年人也能靠刻意練習長出新能力"
+    },
+    {
+      "id": "cat3",
+      "type": "text",
+      "text": "## 📖 主動學習",
+      "x": 300,
+      "y": 1465,
+      "width": 220,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "leaf3-1",
+      "x": 660,
+      "y": 1290,
+      "width": 320,
+      "height": 110,
       "type": "file",
-      "file": "tools/工具-務實學習投資計畫.md",
-      "x": 320,
-      "y": 170,
-      "width": 360,
-      "height": 110
+      "file": "tools/工具-SQ3R主動閱讀.md"
+    },
+    {
+      "id": "leaf3-2",
+      "x": 660,
+      "y": 1440,
+      "width": 320,
+      "height": 110,
+      "type": "file",
+      "file": "tools/工具-心智圖.md"
+    },
+    {
+      "id": "leaf3-3",
+      "x": 660,
+      "y": 1590,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "大腦不是等著被填滿的容器\n而是需要被點燃的火焰"
+    },
+    {
+      "id": "cat4",
+      "type": "text",
+      "text": "## 🎯 經營學習投資",
+      "x": 300,
+      "y": 1960,
+      "width": 220,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "leaf4-1",
+      "x": 660,
+      "y": 1860,
+      "width": 320,
+      "height": 110,
+      "type": "file",
+      "file": "tools/工具-務實學習投資計畫.md"
+    },
+    {
+      "id": "leaf4-2",
+      "x": 660,
+      "y": 2010,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "用 SMART 目標與投資組合心態\n管理知識，別靠碰運氣"
+    },
+    {
+      "id": "cat5",
+      "type": "text",
+      "text": "## ⏱ 控制注意力",
+      "x": 300,
+      "y": 2380,
+      "width": 220,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "leaf5-1",
+      "x": 660,
+      "y": 2280,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "情境切換成本高昂\n被打斷後重載心智情境約需 20 分鐘"
+    },
+    {
+      "id": "leaf5-2",
+      "x": 660,
+      "y": 2430,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "時間無法創造或銷毀，只能分配\n多工其實是效率殺手"
     }
   ],
   "edges": [
     {
-      "id": "e0",
+      "id": "e-center-cat1",
       "fromNode": "center",
-      "toNode": "l0",
+      "toNode": "cat1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e1",
-      "fromNode": "center",
-      "toNode": "l1",
+      "id": "e-cat1-leaf1-1",
+      "fromNode": "cat1",
+      "toNode": "leaf1-1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e2",
-      "fromNode": "center",
-      "toNode": "l2",
+      "id": "e-cat1-leaf1-2",
+      "fromNode": "cat1",
+      "toNode": "leaf1-2",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e3",
+      "id": "e-cat1-leaf1-3",
+      "fromNode": "cat1",
+      "toNode": "leaf1-3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat1-leaf1-4",
+      "fromNode": "cat1",
+      "toNode": "leaf1-4",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-center-cat2",
       "fromNode": "center",
-      "toNode": "l3",
+      "toNode": "cat2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat2-leaf2-1",
+      "fromNode": "cat2",
+      "toNode": "leaf2-1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat2-leaf2-2",
+      "fromNode": "cat2",
+      "toNode": "leaf2-2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat2-leaf2-3",
+      "fromNode": "cat2",
+      "toNode": "leaf2-3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-center-cat3",
+      "fromNode": "center",
+      "toNode": "cat3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat3-leaf3-1",
+      "fromNode": "cat3",
+      "toNode": "leaf3-1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat3-leaf3-2",
+      "fromNode": "cat3",
+      "toNode": "leaf3-2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat3-leaf3-3",
+      "fromNode": "cat3",
+      "toNode": "leaf3-3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-center-cat4",
+      "fromNode": "center",
+      "toNode": "cat4",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat4-leaf4-1",
+      "fromNode": "cat4",
+      "toNode": "leaf4-1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat4-leaf4-2",
+      "fromNode": "cat4",
+      "toNode": "leaf4-2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-center-cat5",
+      "fromNode": "center",
+      "toNode": "cat5",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat5-leaf5-1",
+      "fromNode": "cat5",
+      "toNode": "leaf5-1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat5-leaf5-2",
+      "fromNode": "cat5",
+      "toNode": "leaf5-2",
       "fromSide": "right",
       "toSide": "left"
     }

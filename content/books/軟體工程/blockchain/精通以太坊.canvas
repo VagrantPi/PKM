@@ -3,60 +3,288 @@
     {
       "id": "center",
       "type": "text",
-      "text": "# 精通以太坊 Mastering Ethereum",
+      "text": "# 精通以太坊\nMastering Ethereum",
       "x": -160,
-      "y": -50,
-      "width": 320,
-      "height": 100,
+      "y": 1058,
+      "width": 280,
+      "height": 80,
       "color": "6"
     },
     {
-      "id": "l0",
-      "type": "file",
-      "file": "tools/工具-智能合約.md",
-      "x": 320,
-      "y": -205,
-      "width": 360,
-      "height": 110
+      "id": "cat1",
+      "type": "text",
+      "text": "## 🧾 帳戶與狀態模型",
+      "x": 300,
+      "y": 175,
+      "width": 220,
+      "height": 60,
+      "color": "5"
     },
     {
-      "id": "l1",
-      "type": "file",
-      "file": "tools/工具-Gas與EVM.md",
-      "x": 320,
-      "y": -55,
-      "width": 360,
-      "height": 110
+      "id": "leaf1-1",
+      "x": 660,
+      "y": 0,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "**外部帳戶 EOA**\n由私鑰控制，可主動發起交易"
     },
     {
-      "id": "l2",
+      "id": "leaf1-2",
+      "x": 660,
+      "y": 150,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "**合約帳戶**\n由程式碼控制，被呼叫才執行"
+    },
+    {
+      "id": "leaf1-3",
+      "x": 660,
+      "y": 300,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "採帳戶／餘額模型\n（非比特幣的 UTXO）"
+    },
+    {
+      "id": "cat2",
+      "type": "text",
+      "text": "## ⚙️ EVM 與 Gas",
+      "x": 300,
+      "y": 745,
+      "width": 220,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "leaf2-1",
+      "x": 660,
+      "y": 570,
+      "width": 320,
+      "height": 110,
       "type": "file",
-      "file": "tools/工具-代幣標準與DApp.md",
-      "x": 320,
-      "y": 95,
-      "width": 360,
-      "height": 110
+      "file": "tools/工具-Gas與EVM.md"
+    },
+    {
+      "id": "leaf2-2",
+      "x": 660,
+      "y": 720,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "所有節點跑同一套虛擬機\n→ 得出相同結果、世界狀態一致"
+    },
+    {
+      "id": "leaf2-3",
+      "x": 660,
+      "y": 870,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "每個操作都有 gas 成本\n防止無窮迴圈與資源濫用"
+    },
+    {
+      "id": "cat3",
+      "type": "text",
+      "text": "## 📜 智能合約",
+      "x": 300,
+      "y": 1315,
+      "width": 220,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "leaf3-1",
+      "x": 660,
+      "y": 1140,
+      "width": 320,
+      "height": 110,
+      "type": "file",
+      "file": "tools/工具-智能合約.md"
+    },
+    {
+      "id": "leaf3-2",
+      "x": 660,
+      "y": 1290,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "用 Solidity 等語言撰寫\n部署上鏈後不可變"
+    },
+    {
+      "id": "leaf3-3",
+      "x": 660,
+      "y": 1440,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "公開可驗證、自動執行\n程式碼即合約"
+    },
+    {
+      "id": "cat4",
+      "type": "text",
+      "text": "## 🪙 代幣標準與 DApp",
+      "x": 300,
+      "y": 1960,
+      "width": 220,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "leaf4-1",
+      "x": 660,
+      "y": 1710,
+      "width": 320,
+      "height": 110,
+      "type": "file",
+      "file": "tools/工具-代幣標準與DApp.md"
+    },
+    {
+      "id": "leaf4-2",
+      "x": 660,
+      "y": 1860,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "**ERC-20**：同質化代幣"
+    },
+    {
+      "id": "leaf4-3",
+      "x": 660,
+      "y": 2010,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "**ERC-721**：NFT 非同質化代幣"
+    },
+    {
+      "id": "leaf4-4",
+      "x": 660,
+      "y": 2160,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "生態應用：DeFi、NFT、DApp"
     }
   ],
   "edges": [
     {
-      "id": "e0",
+      "id": "e-center-cat1",
       "fromNode": "center",
-      "toNode": "l0",
+      "toNode": "cat1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e1",
-      "fromNode": "center",
-      "toNode": "l1",
+      "id": "e-cat1-leaf1-1",
+      "fromNode": "cat1",
+      "toNode": "leaf1-1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e2",
+      "id": "e-cat1-leaf1-2",
+      "fromNode": "cat1",
+      "toNode": "leaf1-2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat1-leaf1-3",
+      "fromNode": "cat1",
+      "toNode": "leaf1-3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-center-cat2",
       "fromNode": "center",
-      "toNode": "l2",
+      "toNode": "cat2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat2-leaf2-1",
+      "fromNode": "cat2",
+      "toNode": "leaf2-1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat2-leaf2-2",
+      "fromNode": "cat2",
+      "toNode": "leaf2-2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat2-leaf2-3",
+      "fromNode": "cat2",
+      "toNode": "leaf2-3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-center-cat3",
+      "fromNode": "center",
+      "toNode": "cat3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat3-leaf3-1",
+      "fromNode": "cat3",
+      "toNode": "leaf3-1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat3-leaf3-2",
+      "fromNode": "cat3",
+      "toNode": "leaf3-2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat3-leaf3-3",
+      "fromNode": "cat3",
+      "toNode": "leaf3-3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-center-cat4",
+      "fromNode": "center",
+      "toNode": "cat4",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat4-leaf4-1",
+      "fromNode": "cat4",
+      "toNode": "leaf4-1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat4-leaf4-2",
+      "fromNode": "cat4",
+      "toNode": "leaf4-2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat4-leaf4-3",
+      "fromNode": "cat4",
+      "toNode": "leaf4-3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat4-leaf4-4",
+      "fromNode": "cat4",
+      "toNode": "leaf4-4",
       "fromSide": "right",
       "toSide": "left"
     }

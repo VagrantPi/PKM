@@ -3,44 +3,305 @@
     {
       "id": "center",
       "type": "text",
-      "text": "# 程式設計師的職業素養 The Clean Coder",
+      "text": "# 程式設計師的職業素養\nThe Clean Coder",
       "x": -160,
-      "y": -50,
-      "width": 320,
-      "height": 100,
+      "y": 1155,
+      "width": 280,
+      "height": 80,
       "color": "6"
     },
     {
-      "id": "l0",
-      "type": "file",
-      "file": "tools/工具-專業地說不與承諾.md",
-      "x": 320,
-      "y": -130,
-      "width": 360,
-      "height": 110
+      "id": "cat1",
+      "type": "text",
+      "text": "## 🎖 專業＝負責",
+      "x": 300,
+      "y": 100,
+      "width": 220,
+      "height": 60,
+      "color": "5"
     },
     {
-      "id": "l1",
+      "id": "leaf1-1",
+      "x": 660,
+      "y": 0,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "對品質、對承諾、對錯誤負責"
+    },
+    {
+      "id": "leaf1-2",
+      "x": 660,
+      "y": 150,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "不確定就說不確定\n別用模糊搪塞掩飾"
+    },
+    {
+      "id": "cat2",
+      "type": "text",
+      "text": "## 🙅 說不與說是",
+      "x": 300,
+      "y": 595,
+      "width": 220,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "leaf2-1",
+      "x": 660,
+      "y": 420,
+      "width": 320,
+      "height": 110,
       "type": "file",
-      "file": "tools/工具-估算的藝術.md",
-      "x": 320,
-      "y": 20,
-      "width": 360,
-      "height": 110
+      "file": "tools/工具-專業地說不與承諾.md"
+    },
+    {
+      "id": "leaf2-2",
+      "x": 660,
+      "y": 570,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "專業人敢對不合理要求說「不」"
+    },
+    {
+      "id": "leaf2-3",
+      "x": 660,
+      "y": 720,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "**承諾語言**：我會在 X 前完成 Y"
+    },
+    {
+      "id": "cat3",
+      "type": "text",
+      "text": "## 📊 估算",
+      "x": 300,
+      "y": 1165,
+      "width": 220,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "leaf3-1",
+      "x": 660,
+      "y": 990,
+      "width": 320,
+      "height": 110,
+      "type": "file",
+      "file": "tools/工具-估算的藝術.md"
+    },
+    {
+      "id": "leaf3-2",
+      "x": 660,
+      "y": 1140,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "估算是機率分佈，不是拍胸脯保證"
+    },
+    {
+      "id": "leaf3-3",
+      "x": 660,
+      "y": 1290,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "**三點估算**：樂觀／正常／悲觀\n誠實溝通不確定性"
+    },
+    {
+      "id": "cat4",
+      "type": "text",
+      "text": "## 🥋 紀律與練習",
+      "x": 300,
+      "y": 1735,
+      "width": 220,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "leaf4-1",
+      "x": 660,
+      "y": 1560,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "**TDD**：用測試驅動維持品質"
+    },
+    {
+      "id": "leaf4-2",
+      "x": 660,
+      "y": 1710,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "持續練習：程式道場 kata"
+    },
+    {
+      "id": "leaf4-3",
+      "x": 660,
+      "y": 1860,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "疲累或趕工時，不犧牲品質"
+    },
+    {
+      "id": "cat5",
+      "type": "text",
+      "text": "## ⏳ 時間與壓力管理",
+      "x": 300,
+      "y": 2230,
+      "width": 220,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "leaf5-1",
+      "x": 660,
+      "y": 2130,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "學會拒絕加班陷阱"
+    },
+    {
+      "id": "leaf5-2",
+      "x": 660,
+      "y": 2280,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "避免進入「泥沼」\n察覺並及早脫身"
     }
   ],
   "edges": [
     {
-      "id": "e0",
+      "id": "e-center-cat1",
       "fromNode": "center",
-      "toNode": "l0",
+      "toNode": "cat1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e1",
+      "id": "e-cat1-leaf1-1",
+      "fromNode": "cat1",
+      "toNode": "leaf1-1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat1-leaf1-2",
+      "fromNode": "cat1",
+      "toNode": "leaf1-2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-center-cat2",
       "fromNode": "center",
-      "toNode": "l1",
+      "toNode": "cat2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat2-leaf2-1",
+      "fromNode": "cat2",
+      "toNode": "leaf2-1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat2-leaf2-2",
+      "fromNode": "cat2",
+      "toNode": "leaf2-2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat2-leaf2-3",
+      "fromNode": "cat2",
+      "toNode": "leaf2-3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-center-cat3",
+      "fromNode": "center",
+      "toNode": "cat3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat3-leaf3-1",
+      "fromNode": "cat3",
+      "toNode": "leaf3-1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat3-leaf3-2",
+      "fromNode": "cat3",
+      "toNode": "leaf3-2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat3-leaf3-3",
+      "fromNode": "cat3",
+      "toNode": "leaf3-3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-center-cat4",
+      "fromNode": "center",
+      "toNode": "cat4",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat4-leaf4-1",
+      "fromNode": "cat4",
+      "toNode": "leaf4-1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat4-leaf4-2",
+      "fromNode": "cat4",
+      "toNode": "leaf4-2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat4-leaf4-3",
+      "fromNode": "cat4",
+      "toNode": "leaf4-3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-center-cat5",
+      "fromNode": "center",
+      "toNode": "cat5",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat5-leaf5-1",
+      "fromNode": "cat5",
+      "toNode": "leaf5-1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat5-leaf5-2",
+      "fromNode": "cat5",
+      "toNode": "leaf5-2",
       "fromSide": "right",
       "toSide": "left"
     }

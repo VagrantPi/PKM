@@ -3,60 +3,240 @@
     {
       "id": "center",
       "type": "text",
-      "text": "# 程式設計師修煉之道 The Pragmatic Programmer",
+      "text": "# 程式設計師修煉之道\nThe Pragmatic Programmer",
       "x": -160,
-      "y": -50,
-      "width": 320,
-      "height": 100,
+      "y": 832,
+      "width": 280,
+      "height": 80,
       "color": "6"
     },
     {
-      "id": "l0",
-      "type": "file",
-      "file": "tools/工具-DRY原則.md",
-      "x": 320,
-      "y": -205,
-      "width": 360,
-      "height": 110
+      "id": "cat1",
+      "type": "text",
+      "text": "## 🧭 務實的哲學：對自己負責",
+      "x": 300,
+      "y": 100,
+      "width": 220,
+      "height": 60,
+      "color": "5"
     },
     {
-      "id": "l1",
-      "type": "file",
-      "file": "tools/工具-破窗理論與軟體熵.md",
-      "x": 320,
-      "y": -55,
-      "width": 360,
-      "height": 110
+      "id": "leaf1-1",
+      "x": 660,
+      "y": 0,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "提供選項，而非找藉口"
     },
     {
-      "id": "l2",
+      "id": "leaf1-2",
+      "x": 660,
+      "y": 150,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "持續學習，經營自己的知識資產"
+    },
+    {
+      "id": "cat2",
+      "type": "text",
+      "text": "## 🧱 DRY 與正交性",
+      "x": 300,
+      "y": 595,
+      "width": 220,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "leaf2-1",
+      "x": 660,
+      "y": 420,
+      "width": 320,
+      "height": 110,
       "type": "file",
-      "file": "tools/工具-曳光彈開發.md",
-      "x": 320,
-      "y": 95,
-      "width": 360,
-      "height": 110
+      "file": "tools/工具-DRY原則.md"
+    },
+    {
+      "id": "leaf2-2",
+      "x": 660,
+      "y": 570,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "每一項知識在系統中\n都應只有單一、明確、權威的表述"
+    },
+    {
+      "id": "leaf2-3",
+      "x": 660,
+      "y": 720,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "**正交性**：降低元件耦合\n改一處不牽動全身"
+    },
+    {
+      "id": "cat3",
+      "type": "text",
+      "text": "## 🪟 別放任破窗（軟體熵）",
+      "x": 300,
+      "y": 1090,
+      "width": 220,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "leaf3-1",
+      "x": 660,
+      "y": 990,
+      "width": 320,
+      "height": 110,
+      "type": "file",
+      "file": "tools/工具-破窗理論與軟體熵.md"
+    },
+    {
+      "id": "leaf3-2",
+      "x": 660,
+      "y": 1140,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "放任一個小爛攤子\n會招來更多——看到就修"
+    },
+    {
+      "id": "cat4",
+      "type": "text",
+      "text": "## 🎯 曳光彈與原型",
+      "x": 300,
+      "y": 1585,
+      "width": 220,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "leaf4-1",
+      "x": 660,
+      "y": 1410,
+      "width": 320,
+      "height": 110,
+      "type": "file",
+      "file": "tools/工具-曳光彈開發.md"
+    },
+    {
+      "id": "leaf4-2",
+      "x": 660,
+      "y": 1560,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "**曳光彈**：能保留的端到端骨架\n（walking skeleton）"
+    },
+    {
+      "id": "leaf4-3",
+      "x": 660,
+      "y": 1710,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "**原型**：用完即丟的探索"
     }
   ],
   "edges": [
     {
-      "id": "e0",
+      "id": "e-center-cat1",
       "fromNode": "center",
-      "toNode": "l0",
+      "toNode": "cat1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e1",
-      "fromNode": "center",
-      "toNode": "l1",
+      "id": "e-cat1-leaf1-1",
+      "fromNode": "cat1",
+      "toNode": "leaf1-1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e2",
+      "id": "e-cat1-leaf1-2",
+      "fromNode": "cat1",
+      "toNode": "leaf1-2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-center-cat2",
       "fromNode": "center",
-      "toNode": "l2",
+      "toNode": "cat2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat2-leaf2-1",
+      "fromNode": "cat2",
+      "toNode": "leaf2-1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat2-leaf2-2",
+      "fromNode": "cat2",
+      "toNode": "leaf2-2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat2-leaf2-3",
+      "fromNode": "cat2",
+      "toNode": "leaf2-3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-center-cat3",
+      "fromNode": "center",
+      "toNode": "cat3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat3-leaf3-1",
+      "fromNode": "cat3",
+      "toNode": "leaf3-1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat3-leaf3-2",
+      "fromNode": "cat3",
+      "toNode": "leaf3-2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-center-cat4",
+      "fromNode": "center",
+      "toNode": "cat4",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat4-leaf4-1",
+      "fromNode": "cat4",
+      "toNode": "leaf4-1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat4-leaf4-2",
+      "fromNode": "cat4",
+      "toNode": "leaf4-2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat4-leaf4-3",
+      "fromNode": "cat4",
+      "toNode": "leaf4-3",
       "fromSide": "right",
       "toSide": "left"
     }
