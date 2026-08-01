@@ -3,76 +3,127 @@
     {
       "id": "center",
       "type": "text",
-      "text": "# 刻意練習：如何從新手到大師",
+      "text": "# 刻意練習\n傑出不是天賦，是可以掌握的技巧",
       "x": -160,
-      "y": -50,
+      "y": 322,
       "width": 320,
-      "height": 100,
+      "height": 110,
       "color": "6"
     },
     {
-      "id": "l0",
+      "id": "l0_0",
       "type": "file",
-      "file": "tools/工具-有目的的練習.md",
-      "x": 320,
-      "y": -280,
+      "x": 660,
+      "y": 0,
       "width": 360,
-      "height": 110
+      "height": 110,
+      "file": "tools/工具-有目的的練習.md"
     },
     {
-      "id": "l1",
+      "id": "l0_1",
       "type": "file",
-      "file": "tools/工具-心理表徵.md",
-      "x": 320,
-      "y": -130,
+      "x": 660,
+      "y": 150,
       "width": 360,
-      "height": 110
+      "height": 110,
+      "file": "tools/工具-3F自我練習法.md"
     },
     {
-      "id": "l2",
-      "type": "file",
-      "file": "tools/工具-3F自我練習法.md",
-      "x": 320,
-      "y": 20,
-      "width": 360,
-      "height": 110
+      "id": "c0",
+      "type": "text",
+      "text": "## 🎯 練習方法\n有目的的練習：明確目標・專注・即時回饋・走出舒適區",
+      "x": 300,
+      "y": 70,
+      "width": 300,
+      "height": 120,
+      "color": "5"
     },
     {
-      "id": "l3",
+      "id": "l1_0",
       "type": "file",
-      "file": "tools/工具-找對導師與模仿頂尖.md",
-      "x": 320,
-      "y": 170,
+      "x": 660,
+      "y": 360,
       "width": 360,
-      "height": 110
+      "height": 110,
+      "file": "tools/工具-心理表徵.md"
+    },
+    {
+      "id": "c1",
+      "type": "text",
+      "text": "## 🧠 心理表徵\n高手與新手的關鍵差異：心智模型的質與量",
+      "x": 300,
+      "y": 355,
+      "width": 300,
+      "height": 120,
+      "color": "5"
+    },
+    {
+      "id": "l2_0",
+      "type": "file",
+      "x": 660,
+      "y": 570,
+      "width": 360,
+      "height": 110,
+      "file": "tools/工具-找對導師與模仿頂尖.md"
+    },
+    {
+      "id": "c2",
+      "type": "text",
+      "text": "## 🧭 導師與典範\n照著頂尖者走過的路徑練，才是刻意練習的黃金標準",
+      "x": 300,
+      "y": 565,
+      "width": 300,
+      "height": 120,
+      "color": "5"
     }
   ],
   "edges": [
     {
-      "id": "e0",
-      "fromNode": "center",
-      "toNode": "l0",
+      "id": "e_c0_l0",
+      "fromNode": "c0",
+      "toNode": "l0_0",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e1",
-      "fromNode": "center",
-      "toNode": "l1",
+      "id": "e_c0_l1",
+      "fromNode": "c0",
+      "toNode": "l0_1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e2",
+      "id": "e_root_c0",
       "fromNode": "center",
-      "toNode": "l2",
+      "toNode": "c0",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e3",
+      "id": "e_c1_l0",
+      "fromNode": "c1",
+      "toNode": "l1_0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_root_c1",
       "fromNode": "center",
-      "toNode": "l3",
+      "toNode": "c1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_c2_l0",
+      "fromNode": "c2",
+      "toNode": "l2_0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_root_c2",
+      "fromNode": "center",
+      "toNode": "c2",
       "fromSide": "right",
       "toSide": "left"
     }

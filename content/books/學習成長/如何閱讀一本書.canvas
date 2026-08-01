@@ -3,76 +3,160 @@
     {
       "id": "center",
       "type": "text",
-      "text": "# 如何閱讀一本書 How to Read a Book",
+      "text": "# 如何閱讀一本書\n閱讀是一門可以精進的技藝：四個層次層層遞進",
       "x": -160,
-      "y": -50,
+      "y": 390,
       "width": 320,
-      "height": 100,
+      "height": 110,
       "color": "6"
     },
     {
-      "id": "l0",
-      "type": "file",
-      "file": "tools/工具-檢視閱讀.md",
-      "x": 320,
-      "y": -280,
+      "id": "l0_0",
+      "type": "text",
+      "x": 660,
+      "y": 0,
       "width": 360,
-      "height": 110
+      "height": 110,
+      "text": "### 識字・理解句子\n看得懂「這個句子在說什麼」，是其他三層的前提"
     },
     {
-      "id": "l1",
-      "type": "file",
-      "file": "tools/工具-透視一本書.md",
-      "x": 320,
-      "y": -130,
-      "width": 360,
-      "height": 110
+      "id": "c0",
+      "type": "text",
+      "text": "## ① 基礎閱讀\n識字、讀懂句子——本書視為起點，著墨最少",
+      "x": 300,
+      "y": -5,
+      "width": 300,
+      "height": 120,
+      "color": "5"
     },
     {
-      "id": "l2",
+      "id": "l1_0",
       "type": "file",
-      "file": "tools/工具-分析閱讀四層次.md",
-      "x": 320,
-      "y": 20,
+      "x": 660,
+      "y": 210,
       "width": 360,
-      "height": 110
+      "height": 110,
+      "file": "tools/工具-檢視閱讀.md"
     },
     {
-      "id": "l3",
+      "id": "c1",
+      "type": "text",
+      "text": "## ② 檢視閱讀\n有系統地略讀，快速判斷這本書值不值得細讀",
+      "x": 300,
+      "y": 205,
+      "width": 300,
+      "height": 120,
+      "color": "5"
+    },
+    {
+      "id": "l2_0",
       "type": "file",
-      "file": "tools/工具-主題閱讀.md",
-      "x": 320,
-      "y": 170,
+      "x": 660,
+      "y": 420,
       "width": 360,
-      "height": 110
+      "height": 110,
+      "file": "tools/工具-透視一本書.md"
+    },
+    {
+      "id": "l2_1",
+      "type": "file",
+      "x": 660,
+      "y": 570,
+      "width": 360,
+      "height": 110,
+      "file": "tools/工具-分析閱讀四層次.md"
+    },
+    {
+      "id": "c2",
+      "type": "text",
+      "text": "## ③ 分析閱讀\n把一本書讀透：抓骨架、找主旨、與作者對話",
+      "x": 300,
+      "y": 490,
+      "width": 300,
+      "height": 120,
+      "color": "5"
+    },
+    {
+      "id": "l3_0",
+      "type": "file",
+      "x": 660,
+      "y": 780,
+      "width": 360,
+      "height": 110,
+      "file": "tools/工具-主題閱讀.md"
+    },
+    {
+      "id": "c3",
+      "type": "text",
+      "text": "## ④ 主題閱讀\n同時讀多本書、比較觀點，建立自己的理解",
+      "x": 300,
+      "y": 775,
+      "width": 300,
+      "height": 120,
+      "color": "5"
     }
   ],
   "edges": [
     {
-      "id": "e0",
-      "fromNode": "center",
-      "toNode": "l0",
+      "id": "e_c0_l0",
+      "fromNode": "c0",
+      "toNode": "l0_0",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e1",
+      "id": "e_root_c0",
       "fromNode": "center",
-      "toNode": "l1",
+      "toNode": "c0",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e2",
-      "fromNode": "center",
-      "toNode": "l2",
+      "id": "e_c1_l0",
+      "fromNode": "c1",
+      "toNode": "l1_0",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e3",
+      "id": "e_root_c1",
       "fromNode": "center",
-      "toNode": "l3",
+      "toNode": "c1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_c2_l0",
+      "fromNode": "c2",
+      "toNode": "l2_0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_c2_l1",
+      "fromNode": "c2",
+      "toNode": "l2_1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_root_c2",
+      "fromNode": "center",
+      "toNode": "c2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_c3_l0",
+      "fromNode": "c3",
+      "toNode": "l3_0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e_root_c3",
+      "fromNode": "center",
+      "toNode": "c3",
       "fromSide": "right",
       "toSide": "left"
     }
