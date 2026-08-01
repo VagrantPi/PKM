@@ -3,44 +3,209 @@
     {
       "id": "center",
       "type": "text",
-      "text": "# 系統設計面試 System Design Interview（Vol. 2）",
+      "text": "# 系統設計面試（卷二）\nAlex Xu、Sahn Lam｜把大哉問拆成可討論的設計",
       "x": -160,
-      "y": -50,
-      "width": 320,
+      "y": 575,
+      "width": 280,
       "height": 100,
       "color": "6"
     },
     {
-      "id": "l0",
-      "type": "file",
-      "file": "tools/工具-系統設計思考框架.md",
-      "x": 320,
-      "y": -130,
-      "width": 360,
-      "height": 110
+      "id": "cat1",
+      "type": "text",
+      "text": "🧭 四步框架\n面對「設計一個 X」的流程",
+      "x": 300,
+      "y": 105,
+      "width": 200,
+      "height": 70,
+      "color": "5"
     },
     {
-      "id": "l1",
+      "id": "cat1-l1",
+      "x": 660,
+      "y": 0,
+      "width": 320,
+      "height": 110,
       "type": "file",
-      "file": "tools/工具-容量估算.md",
-      "x": 320,
-      "y": 20,
-      "width": 360,
-      "height": 110
+      "file": "tools/工具-系統設計思考框架.md"
+    },
+    {
+      "id": "cat1-l2",
+      "x": 660,
+      "y": 150,
+      "width": 320,
+      "height": 130,
+      "type": "text",
+      "text": "① 釐清需求與範圍（功能／非功能／規模）\n② 粗略容量估算\n③ 高層設計（畫方塊圖）\n④ 深入設計 ＋ 討論瓶頸與取捨"
+    },
+    {
+      "id": "cat2",
+      "type": "text",
+      "text": "📏 粗估規模\n先算再選型",
+      "x": 300,
+      "y": 390,
+      "width": 200,
+      "height": 70,
+      "color": "5"
+    },
+    {
+      "id": "cat2-l1",
+      "x": 660,
+      "y": 370,
+      "width": 320,
+      "height": 110,
+      "type": "file",
+      "file": "tools/工具-容量估算.md"
+    },
+    {
+      "id": "cat3",
+      "type": "text",
+      "text": "🧱 反覆用到的元件",
+      "x": 300,
+      "y": 595,
+      "width": 200,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "cat3-l1",
+      "x": 660,
+      "y": 570,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "負載均衡 × 快取 × CDN\n訊息佇列 × 分區 × 複製\n資料庫選型"
+    },
+    {
+      "id": "cat4",
+      "type": "text",
+      "text": "⚖️ 取捨心法\n考的是推理過程",
+      "x": 300,
+      "y": 870,
+      "width": 200,
+      "height": 70,
+      "color": "5"
+    },
+    {
+      "id": "cat4-l1",
+      "x": 660,
+      "y": 770,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "**沒有標準答案**\n面試考的是「取捨的推理過程」，\n不是背某個架構"
+    },
+    {
+      "id": "cat4-l2",
+      "x": 660,
+      "y": 920,
+      "width": 320,
+      "height": 120,
+      "type": "text",
+      "text": "**先簡單再擴展**\n從能動的最小設計出發，\n隨規模逐步加元件\n（呼應 [[工具-透明多級分流]]）"
+    },
+    {
+      "id": "cat5",
+      "type": "text",
+      "text": "📚 案例演練場",
+      "x": 300,
+      "y": 1160,
+      "width": 200,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "cat5-l1",
+      "x": 660,
+      "y": 1130,
+      "width": 320,
+      "height": 120,
+      "type": "text",
+      "text": "近距離服務 × 通知系統 × 支付\n搜尋自動補全 × 聊天系統\n把 [[設計資料密集型應用]]、[[鳳凰架構]]\n的知識實戰化"
     }
   ],
   "edges": [
     {
-      "id": "e0",
+      "id": "e-center-cat1",
       "fromNode": "center",
-      "toNode": "l0",
+      "toNode": "cat1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e1",
+      "id": "e-cat1-cat1-l1",
+      "fromNode": "cat1",
+      "toNode": "cat1-l1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat1-cat1-l2",
+      "fromNode": "cat1",
+      "toNode": "cat1-l2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-center-cat2",
       "fromNode": "center",
-      "toNode": "l1",
+      "toNode": "cat2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat2-cat2-l1",
+      "fromNode": "cat2",
+      "toNode": "cat2-l1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-center-cat3",
+      "fromNode": "center",
+      "toNode": "cat3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat3-cat3-l1",
+      "fromNode": "cat3",
+      "toNode": "cat3-l1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-center-cat4",
+      "fromNode": "center",
+      "toNode": "cat4",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat4-cat4-l1",
+      "fromNode": "cat4",
+      "toNode": "cat4-l1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat4-cat4-l2",
+      "fromNode": "cat4",
+      "toNode": "cat4-l2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-center-cat5",
+      "fromNode": "center",
+      "toNode": "cat5",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat5-cat5-l1",
+      "fromNode": "cat5",
+      "toNode": "cat5-l1",
       "fromSide": "right",
       "toSide": "left"
     }

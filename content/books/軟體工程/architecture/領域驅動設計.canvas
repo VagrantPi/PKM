@@ -3,128 +3,176 @@
     {
       "id": "center",
       "type": "text",
-      "text": "# 領域驅動設計 Domain-Driven Design",
+      "text": "# 領域驅動設計 DDD\nEric Evans｜用領域模型馴服業務複雜度",
       "x": -160,
-      "y": -50,
-      "width": 320,
+      "y": 555,
+      "width": 280,
       "height": 100,
       "color": "6"
     },
     {
-      "id": "n0",
+      "id": "cat1",
       "type": "text",
-      "text": "🧰 即用工具",
+      "text": "⚡ 即用工具\n三張可直接上手的卡",
       "x": 300,
-      "y": -715,
-      "width": 260,
-      "height": 80,
+      "y": 170,
+      "width": 200,
+      "height": 70,
       "color": "5"
     },
     {
-      "id": "n0l0",
-      "type": "file",
-      "file": "tools/工具-通用語言.md",
+      "id": "cat1-l1",
       "x": 660,
-      "y": -880,
-      "width": 340,
-      "height": 110
-    },
-    {
-      "id": "n0l1",
+      "y": 0,
+      "width": 320,
+      "height": 110,
       "type": "file",
-      "file": "tools/工具-限界上下文.md",
-      "x": 660,
-      "y": -730,
-      "width": 340,
-      "height": 110
+      "file": "tools/工具-通用語言.md"
     },
     {
-      "id": "n0l2",
+      "id": "cat1-l2",
+      "x": 660,
+      "y": 150,
+      "width": 320,
+      "height": 110,
       "type": "file",
-      "file": "tools/工具-實體值物件與聚合.md",
+      "file": "tools/工具-限界上下文.md"
+    },
+    {
+      "id": "cat1-l3",
       "x": 660,
-      "y": -580,
-      "width": 340,
-      "height": 110
+      "y": 300,
+      "width": 320,
+      "height": 110,
+      "type": "file",
+      "file": "tools/工具-實體值物件與聚合.md"
     },
     {
-      "id": "n1",
+      "id": "cat2",
       "type": "text",
-      "text": "🧱 建構元件 Building Blocks\n（9 條，詳見書卡）",
+      "text": "🧱 建構元件\nBuilding Blocks（9）",
       "x": 300,
-      "y": -115,
-      "width": 260,
-      "height": 80,
+      "y": 550,
+      "width": 200,
+      "height": 70,
       "color": "5"
     },
     {
-      "id": "n2",
+      "id": "cat2-l1",
+      "x": 660,
+      "y": 500,
+      "width": 320,
+      "height": 170,
       "type": "text",
-      "text": "🗺 戰略設計 Strategic Design\n（6 條，詳見書卡）",
+      "text": "[[實體|實體 Entity]] ・ [[值物件（DDD）|值物件 Value Object]]\n[[聚合|聚合 Aggregate]] ・ [[儲存庫（DDD）|儲存庫 Repository]]\n[[工廠|工廠 Factory]] ・ [[領域服務|領域服務 Domain Service]]\n[[領域事件|領域事件 Domain Event]] ・ [[模組|模組 Module]]\n[[規格|規格 Specification]]"
+    },
+    {
+      "id": "cat3",
+      "type": "text",
+      "text": "🗺 戰略設計\nStrategic Design（6）",
       "x": 300,
-      "y": 35,
-      "width": 260,
-      "height": 80,
+      "y": 810,
+      "width": 200,
+      "height": 70,
       "color": "5"
     },
     {
-      "id": "n3",
+      "id": "cat3-l1",
+      "x": 660,
+      "y": 760,
+      "width": 320,
+      "height": 170,
       "type": "text",
-      "text": "🔗 上下文對應模式 Context Map Patterns\n（9 條，詳見書卡）",
+      "text": "[[通用語言|通用語言 Ubiquitous Language]]\n[[限界上下文|限界上下文 Bounded Context]]\n[[上下文對應|上下文對應 Context Map]]\n[[核心子領域|核心子領域 Core Domain]]\n[[支撐子領域|支撐子領域 Supporting Subdomain]]\n[[通用子領域|通用子領域 Generic Subdomain]]"
+    },
+    {
+      "id": "cat4",
+      "type": "text",
+      "text": "🔗 上下文對應模式\nContext Map Patterns（9）",
       "x": 300,
-      "y": 185,
-      "width": 260,
-      "height": 80,
+      "y": 1080,
+      "width": 200,
+      "height": 70,
       "color": "5"
+    },
+    {
+      "id": "cat4-l1",
+      "x": 660,
+      "y": 1020,
+      "width": 320,
+      "height": 190,
+      "type": "text",
+      "text": "[[合作關係|合作關係 Partnership]] ・ [[共享核心|共享核心 Shared Kernel]]\n[[客戶-供應商|客戶-供應商 Customer-Supplier]] ・ [[追隨者|追隨者 Conformist]]\n[[防腐層|防腐層 Anticorruption Layer]]\n[[開放主機服務|開放主機服務 Open Host Service]]\n[[發布語言|發布語言 Published Language]]\n[[各行其道|各行其道 Separate Ways]] ・ [[大泥球|大泥球 Big Ball of Mud]]"
     }
   ],
   "edges": [
     {
-      "id": "ec0",
+      "id": "e-center-cat1",
       "fromNode": "center",
-      "toNode": "n0",
+      "toNode": "cat1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "el0_0",
-      "fromNode": "n0",
-      "toNode": "n0l0",
+      "id": "e-cat1-cat1-l1",
+      "fromNode": "cat1",
+      "toNode": "cat1-l1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "el0_1",
-      "fromNode": "n0",
-      "toNode": "n0l1",
+      "id": "e-cat1-cat1-l2",
+      "fromNode": "cat1",
+      "toNode": "cat1-l2",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "el0_2",
-      "fromNode": "n0",
-      "toNode": "n0l2",
+      "id": "e-cat1-cat1-l3",
+      "fromNode": "cat1",
+      "toNode": "cat1-l3",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "ec1",
+      "id": "e-center-cat2",
       "fromNode": "center",
-      "toNode": "n1",
+      "toNode": "cat2",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "ec2",
-      "fromNode": "center",
-      "toNode": "n2",
+      "id": "e-cat2-cat2-l1",
+      "fromNode": "cat2",
+      "toNode": "cat2-l1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "ec3",
+      "id": "e-center-cat3",
       "fromNode": "center",
-      "toNode": "n3",
+      "toNode": "cat3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat3-cat3-l1",
+      "fromNode": "cat3",
+      "toNode": "cat3-l1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-center-cat4",
+      "fromNode": "center",
+      "toNode": "cat4",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat4-cat4-l1",
+      "fromNode": "cat4",
+      "toNode": "cat4-l1",
       "fromSide": "right",
       "toSide": "left"
     }

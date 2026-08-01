@@ -3,76 +3,241 @@
     {
       "id": "center",
       "type": "text",
-      "text": "# 鳳凰架構 The Fenix Project（構建可靠的大型分散式系統）",
+      "text": "# 鳳凰架構\n周志明｜用不可靠的部件構造可靠的系統",
       "x": -160,
-      "y": -50,
-      "width": 320,
+      "y": 725,
+      "width": 280,
       "height": 100,
       "color": "6"
     },
     {
-      "id": "l0",
-      "type": "file",
-      "file": "tools/工具-服務架構的演進與拆分.md",
-      "x": 320,
-      "y": -280,
-      "width": 360,
-      "height": 110
+      "id": "cat1",
+      "type": "text",
+      "text": "🏗 架構演進\n單體 → SOA → 微服務 → 雲原生",
+      "x": 300,
+      "y": 90,
+      "width": 200,
+      "height": 80,
+      "color": "5"
     },
     {
-      "id": "l1",
+      "id": "cat1-l1",
+      "x": 660,
+      "y": 0,
+      "width": 320,
+      "height": 110,
       "type": "file",
-      "file": "tools/工具-分散式事務的取捨.md",
-      "x": 320,
-      "y": -130,
-      "width": 360,
-      "height": 110
+      "file": "tools/工具-服務架構的演進與拆分.md"
     },
     {
-      "id": "l2",
-      "type": "file",
-      "file": "tools/工具-服務容錯設計.md",
-      "x": 320,
-      "y": 20,
-      "width": 360,
-      "height": 110
+      "id": "cat1-l2",
+      "x": 660,
+      "y": 150,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "各有適用場景，\n**微服務不是免費的**——\n拆分帶來的分散式成本要先算清楚"
     },
     {
-      "id": "l3",
+      "id": "cat2",
+      "type": "text",
+      "text": "🌊 透明多級分流\n流量怎麼進入系統",
+      "x": 300,
+      "y": 445,
+      "width": 200,
+      "height": 70,
+      "color": "5"
+    },
+    {
+      "id": "cat2-l1",
+      "x": 660,
+      "y": 350,
+      "width": 320,
+      "height": 110,
       "type": "file",
-      "file": "tools/工具-透明多級分流.md",
-      "x": 320,
-      "y": 170,
-      "width": 360,
-      "height": 110
+      "file": "tools/工具-透明多級分流.md"
+    },
+    {
+      "id": "cat2-l2",
+      "x": 660,
+      "y": 500,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "DNS → CDN → 負載均衡\n→ 網關 → 服務發現\n一層層把請求導到對的節點"
+    },
+    {
+      "id": "cat3",
+      "type": "text",
+      "text": "🔄 分散式事務\n跨服務怎麼保證一致",
+      "x": 300,
+      "y": 805,
+      "width": 200,
+      "height": 70,
+      "color": "5"
+    },
+    {
+      "id": "cat3-l1",
+      "x": 660,
+      "y": 700,
+      "width": 320,
+      "height": 110,
+      "type": "file",
+      "file": "tools/工具-分散式事務的取捨.md"
+    },
+    {
+      "id": "cat3-l2",
+      "x": 660,
+      "y": 850,
+      "width": 320,
+      "height": 130,
+      "type": "text",
+      "text": "2PC／3PC × TCC × Saga\n可靠訊息佇列（本地訊息表＝Outbox）\n**沒有銀彈**，按一致性需求選\n（見 [[工具-Transactional-Outbox-Pattern]]）"
+    },
+    {
+      "id": "cat4",
+      "type": "text",
+      "text": "🛡 服務容錯\n讓局部故障不擴散",
+      "x": 300,
+      "y": 1165,
+      "width": 200,
+      "height": 70,
+      "color": "5"
+    },
+    {
+      "id": "cat4-l1",
+      "x": 660,
+      "y": 1070,
+      "width": 320,
+      "height": 110,
+      "type": "file",
+      "file": "tools/工具-服務容錯設計.md"
+    },
+    {
+      "id": "cat4-l2",
+      "x": 660,
+      "y": 1220,
+      "width": 320,
+      "height": 110,
+      "type": "text",
+      "text": "熔斷 × 艙壁隔離 × 重試\n降級 × 流量控制\n目的：防止故障擴散成雪崩"
+    },
+    {
+      "id": "cat5",
+      "type": "text",
+      "text": "☁️ 雲原生\n把關注點下沉到基礎設施",
+      "x": 300,
+      "y": 1450,
+      "width": 200,
+      "height": 70,
+      "color": "5"
+    },
+    {
+      "id": "cat5-l1",
+      "x": 660,
+      "y": 1420,
+      "width": 320,
+      "height": 130,
+      "type": "text",
+      "text": "容器 × Kubernetes × 服務網格（Service Mesh）\n把分散式關注點從應用碼\n下沉到基礎設施\n（本書一大主題，尚無獨立工具卡）"
     }
   ],
   "edges": [
     {
-      "id": "e0",
+      "id": "e-center-cat1",
       "fromNode": "center",
-      "toNode": "l0",
+      "toNode": "cat1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e1",
-      "fromNode": "center",
-      "toNode": "l1",
+      "id": "e-cat1-cat1-l1",
+      "fromNode": "cat1",
+      "toNode": "cat1-l1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e2",
-      "fromNode": "center",
-      "toNode": "l2",
+      "id": "e-cat1-cat1-l2",
+      "fromNode": "cat1",
+      "toNode": "cat1-l2",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e3",
+      "id": "e-center-cat2",
       "fromNode": "center",
-      "toNode": "l3",
+      "toNode": "cat2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat2-cat2-l1",
+      "fromNode": "cat2",
+      "toNode": "cat2-l1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat2-cat2-l2",
+      "fromNode": "cat2",
+      "toNode": "cat2-l2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-center-cat3",
+      "fromNode": "center",
+      "toNode": "cat3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat3-cat3-l1",
+      "fromNode": "cat3",
+      "toNode": "cat3-l1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat3-cat3-l2",
+      "fromNode": "cat3",
+      "toNode": "cat3-l2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-center-cat4",
+      "fromNode": "center",
+      "toNode": "cat4",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat4-cat4-l1",
+      "fromNode": "cat4",
+      "toNode": "cat4-l1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat4-cat4-l2",
+      "fromNode": "cat4",
+      "toNode": "cat4-l2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-center-cat5",
+      "fromNode": "center",
+      "toNode": "cat5",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-cat5-cat5-l1",
+      "fromNode": "cat5",
+      "toNode": "cat5-l1",
       "fromSide": "right",
       "toSide": "left"
     }
