@@ -4,7 +4,7 @@ name: "DRY 原則 Don't Repeat Yourself"
 source: "[[程式設計師修煉之道]]"
 source_type: book
 tags: [software, craftsmanship, maintainability]
-triggers: [程式碼重複, 改一處要改很多地方, 複製貼上, 知識重複表述, 邏輯散落各處, 維護容易漏改]
+triggers: [程式碼重複, 改一處要改很多地方, 複製貼上, 知識重複表述, 改一處就要同步改好幾個地方, 維護容易漏改]
 ---
 
 ## 🎯 什麼情境該想到我

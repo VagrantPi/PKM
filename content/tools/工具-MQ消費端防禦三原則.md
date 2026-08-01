@@ -4,7 +4,7 @@ name: "MQ 消費端防禦三原則"
 source: "[[擋下用Upsert修RaceCondition的PR]]"
 source_type: article
 tags: [backend, message-queue, idempotency, reliability]
-triggers: [寫MQ worker, 寫message consumer, 處理重複訊息, worker查不到資料, replication lag, at-least-once]
+triggers: [寫MQ worker, 寫message consumer, 處理重複訊息, worker查不到資料, worker收到訊息卻查不到對應資料, at-least-once]
 ---
 
 ## 🎯 什麼情境該想到我
