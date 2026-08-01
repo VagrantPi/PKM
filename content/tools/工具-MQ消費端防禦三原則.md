@@ -28,4 +28,6 @@ triggers: [寫MQ worker, 寫message consumer, 處理重複訊息, worker查不�
 - 「worker 找不到資料 → 自己補一筆」是**反模式**，會造出殘缺／幽靈資料。
 
 ## 🔗 相關工具
-- [[工具-Transactional-Outbox-Pattern]]、[[工具-區分修復與掩蓋症狀]]
+- [[工具-Transactional-Outbox-Pattern]] —— 從生產端根治同一個問題：這張防的是「訊息比 commit 早到」的症狀，Outbox 讓它一開始就不會發生
+- [[工具-區分修復與掩蓋症狀]] —— 判準卡：consumer 端加 retry 或 upsert 到底是真修好還是把症狀藏起來，用它檢查
+

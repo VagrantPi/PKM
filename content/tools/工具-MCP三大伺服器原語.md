@@ -24,4 +24,7 @@ triggers: [搞不清楚MCP的tools resources prompts差在哪, 要在MCP server�
 - 別把唯讀資料硬做成 tool；resource 才是給脈絡的正解。
 
 ## 🔗 相關工具
-- [[工具-MCP用戶端原語]]、[[工具-MCP架構與資料流]]、[[工具-建一個MCP-server的起手式]]
+- [[工具-MCP用戶端原語]] —— 反方向的三個能力（Sampling/Elicitation/Roots），是 client 提供給 server 的，配成一組看才完整
+- [[工具-MCP架構與資料流]] —— 上位圖，先知道 Host/Client/Server 怎麼連，才知道這三個原語掛在哪一層
+- [[工具-建一個MCP-server的起手式]] —— 實作面：決定好暴露什麼之後，照這張的步驟把它做出來
+

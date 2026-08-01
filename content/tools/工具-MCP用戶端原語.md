@@ -23,4 +23,7 @@ triggers: [MCP server想用LLM但不想綁模型, server想跟使用者要輸入
 - Sampling/Elicitation 都應保留使用者審核關卡，避免 server 藉此偷渡敏感操作。
 
 ## 🔗 相關工具
-- [[工具-MCP三大伺服器原語]]、[[工具-MCP架構與資料流]]、[[工具-AI-Agent設計]]
+- [[工具-MCP三大伺服器原語]] —— 對稱的另一半，server 端的 Tools/Resources/Prompts，兩張配成完整的能力表
+- [[工具-MCP架構與資料流]] —— 上位圖，解釋為什麼這三個能力是 client 反過來提供給 server 的
+- [[工具-AI-Agent設計]] —— Sampling 的實際用途：讓 server 借用 client 的模型做多步推理，就落在 agent 這一塊
+
