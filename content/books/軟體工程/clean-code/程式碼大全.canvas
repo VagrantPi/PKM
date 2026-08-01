@@ -3,60 +3,192 @@
     {
       "id": "center",
       "type": "text",
-      "text": "# 程式碼大全 Code Complete",
+      "text": "# 程式碼大全",
       "x": -160,
-      "y": -50,
+      "y": 560,
       "width": 320,
       "height": 100,
       "color": "6"
     },
     {
-      "id": "l0",
-      "type": "file",
-      "file": "tools/工具-管理複雜度.md",
-      "x": 320,
-      "y": -205,
-      "width": 360,
-      "height": 110
+      "id": "n0",
+      "type": "text",
+      "text": "🎯 首要技術使命",
+      "x": 300,
+      "y": 90,
+      "width": 260,
+      "height": 80,
+      "color": "5"
     },
     {
-      "id": "l1",
-      "type": "file",
-      "file": "tools/工具-防禦式編程.md",
-      "x": 320,
-      "y": -55,
-      "width": 360,
-      "height": 110
+      "id": "n1",
+      "type": "text",
+      "text": "🏗 建構（Construction）",
+      "x": 300,
+      "y": 460,
+      "width": 260,
+      "height": 80,
+      "color": "5"
     },
     {
-      "id": "l2",
+      "id": "n2",
+      "type": "text",
+      "text": "🧱 高品質常式與類別",
+      "x": 300,
+      "y": 755,
+      "width": 260,
+      "height": 80,
+      "color": "5"
+    },
+    {
+      "id": "n3",
+      "type": "text",
+      "text": "🛡 防禦式編程",
+      "x": 300,
+      "y": 1050,
+      "width": 260,
+      "height": 80,
+      "color": "5"
+    },
+    {
+      "id": "n0l0",
       "type": "file",
-      "file": "tools/工具-偽代碼編程流程.md",
-      "x": 320,
-      "y": 95,
-      "width": 360,
-      "height": 110
+      "x": 660,
+      "y": 0,
+      "width": 340,
+      "height": 110,
+      "file": "tools/工具-管理複雜度.md"
+    },
+    {
+      "id": "n0l1",
+      "type": "text",
+      "x": 660,
+      "y": 150,
+      "width": 340,
+      "height": 110,
+      "text": "降低**任一時刻需要理解的量**——\n所有設計取捨的最高準則"
+    },
+    {
+      "id": "n1l0",
+      "type": "file",
+      "x": 660,
+      "y": 370,
+      "width": 340,
+      "height": 110,
+      "file": "tools/工具-偽代碼編程流程.md"
+    },
+    {
+      "id": "n1l1",
+      "type": "text",
+      "x": 660,
+      "y": 520,
+      "width": 340,
+      "height": 110,
+      "text": "設計、編碼、除錯、單元測試\n都屬於 construction"
+    },
+    {
+      "id": "n2l0",
+      "type": "text",
+      "x": 660,
+      "y": 740,
+      "width": 340,
+      "height": 110,
+      "text": "內聚、命名清楚、單一目的、\n參數合理"
+    },
+    {
+      "id": "n3l0",
+      "type": "file",
+      "x": 660,
+      "y": 960,
+      "width": 340,
+      "height": 110,
+      "file": "tools/工具-防禦式編程.md"
+    },
+    {
+      "id": "n3l1",
+      "type": "text",
+      "x": 660,
+      "y": 1110,
+      "width": 340,
+      "height": 110,
+      "text": "斷言、驗證輸入、決定錯誤處理策略\n（garbage in → 不讓 garbage out）"
     }
   ],
   "edges": [
     {
-      "id": "e0",
+      "id": "ec0",
       "fromNode": "center",
-      "toNode": "l0",
+      "toNode": "n0",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e1",
+      "id": "ec1",
       "fromNode": "center",
-      "toNode": "l1",
+      "toNode": "n1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e2",
+      "id": "ec2",
       "fromNode": "center",
-      "toNode": "l2",
+      "toNode": "n2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "ec3",
+      "fromNode": "center",
+      "toNode": "n3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "en0l0",
+      "fromNode": "n0",
+      "toNode": "n0l0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "en0l1",
+      "fromNode": "n0",
+      "toNode": "n0l1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "en1l0",
+      "fromNode": "n1",
+      "toNode": "n1l0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "en1l1",
+      "fromNode": "n1",
+      "toNode": "n1l1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "en2l0",
+      "fromNode": "n2",
+      "toNode": "n2l0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "en3l0",
+      "fromNode": "n3",
+      "toNode": "n3l0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "en3l1",
+      "fromNode": "n3",
+      "toNode": "n3l1",
       "fromSide": "right",
       "toSide": "left"
     }
