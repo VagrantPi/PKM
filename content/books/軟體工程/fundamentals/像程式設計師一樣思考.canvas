@@ -3,44 +3,207 @@
     {
       "id": "center",
       "type": "text",
-      "text": "# 像程式設計師一樣思考 Think Like a Programmer",
+      "text": "# 像程式設計師一樣思考",
       "x": -160,
-      "y": -50,
+      "y": 645,
       "width": 320,
       "height": 100,
       "color": "6"
     },
     {
-      "id": "l0",
-      "type": "file",
-      "file": "tools/工具-程式問題解決策略.md",
-      "x": 320,
-      "y": -130,
-      "width": 360,
-      "height": 110
+      "id": "cat1",
+      "type": "text",
+      "text": "## 🧭 有計畫地解題",
+      "x": 300,
+      "y": 100,
+      "width": 280,
+      "height": 60,
+      "color": "5"
     },
     {
-      "id": "l1",
-      "type": "file",
-      "file": "tools/工具-用類比解決新問題.md",
-      "x": 320,
-      "y": 20,
+      "id": "l1_1",
+      "x": 660,
+      "y": 0,
       "width": 360,
-      "height": 110
+      "height": 110,
+      "type": "file",
+      "file": "tools/工具-程式問題解決策略.md"
+    },
+    {
+      "id": "l1_2",
+      "x": 660,
+      "y": 150,
+      "width": 360,
+      "height": 110,
+      "type": "text",
+      "text": "**Polya 四步**\n理解問題 → 擬定計畫 → 執行 → 回顧"
+    },
+    {
+      "id": "cat2",
+      "type": "text",
+      "text": "## 🧩 五大解題策略",
+      "x": 300,
+      "y": 665,
+      "width": 280,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "l2_1",
+      "x": 660,
+      "y": 340,
+      "width": 360,
+      "height": 110,
+      "type": "text",
+      "text": "**減少／放寬約束**\n先解一個簡化版的問題，再把約束加回來"
+    },
+    {
+      "id": "l2_2",
+      "x": 660,
+      "y": 490,
+      "width": 360,
+      "height": 110,
+      "type": "text",
+      "text": "**拆成子問題**\n把大問題切成能各自解掉的小塊"
+    },
+    {
+      "id": "l2_3",
+      "x": 660,
+      "y": 640,
+      "width": 360,
+      "height": 110,
+      "type": "file",
+      "file": "tools/工具-用類比解決新問題.md"
+    },
+    {
+      "id": "l2_4",
+      "x": 660,
+      "y": 790,
+      "width": 360,
+      "height": 110,
+      "type": "text",
+      "text": "**從已知會做的部分開始**\n先寫出你確定會寫的那一段，逐步逼近"
+    },
+    {
+      "id": "l2_5",
+      "x": 660,
+      "y": 940,
+      "width": 360,
+      "height": 110,
+      "type": "text",
+      "text": "**逆向推理**\n從想要的結果往回推導需要的步驟"
+    },
+    {
+      "id": "cat3",
+      "type": "text",
+      "text": "## 🛠 執行原則",
+      "x": 300,
+      "y": 1230,
+      "width": 280,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "l3_1",
+      "x": 660,
+      "y": 1130,
+      "width": 360,
+      "height": 110,
+      "type": "text",
+      "text": "**先讓它能動，再讓它好**\n先求可運作的解，再談優化"
+    },
+    {
+      "id": "l3_2",
+      "x": 660,
+      "y": 1280,
+      "width": 360,
+      "height": 110,
+      "type": "text",
+      "text": "**建立可重用的心智工具箱**\n把解過的問題模式內化，下次直接調用"
     }
   ],
   "edges": [
     {
-      "id": "e0",
+      "id": "e1",
       "fromNode": "center",
-      "toNode": "l0",
+      "toNode": "cat1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e1",
+      "id": "e2",
+      "fromNode": "cat1",
+      "toNode": "l1_1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e3",
+      "fromNode": "cat1",
+      "toNode": "l1_2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e4",
       "fromNode": "center",
-      "toNode": "l1",
+      "toNode": "cat2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e5",
+      "fromNode": "cat2",
+      "toNode": "l2_1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e6",
+      "fromNode": "cat2",
+      "toNode": "l2_2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e7",
+      "fromNode": "cat2",
+      "toNode": "l2_3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e8",
+      "fromNode": "cat2",
+      "toNode": "l2_4",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e9",
+      "fromNode": "cat2",
+      "toNode": "l2_5",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e10",
+      "fromNode": "center",
+      "toNode": "cat3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e11",
+      "fromNode": "cat3",
+      "toNode": "l3_1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e12",
+      "fromNode": "cat3",
+      "toNode": "l3_2",
       "fromSide": "right",
       "toSide": "left"
     }

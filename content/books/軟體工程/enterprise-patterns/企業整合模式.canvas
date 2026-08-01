@@ -3,181 +3,309 @@
     {
       "id": "center",
       "type": "text",
-      "text": "# 企業整合模式 Enterprise Integration Patterns",
+      "text": "# 企業整合模式",
       "x": -160,
-      "y": -50,
+      "y": 1395,
       "width": 320,
       "height": 100,
       "color": "6"
     },
     {
-      "id": "n0",
+      "id": "cat1",
       "type": "text",
-      "text": "🧰 即用工具",
+      "text": "## 🧰 即用工具",
       "x": 300,
-      "y": -640,
-      "width": 260,
-      "height": 80,
+      "y": 25,
+      "width": 280,
+      "height": 60,
       "color": "5"
     },
     {
-      "id": "n0l0",
-      "type": "file",
-      "file": "tools/工具-訊息傳遞整合模式.md",
+      "id": "l1_1",
       "x": 660,
-      "y": -655,
-      "width": 340,
-      "height": 110
+      "y": 0,
+      "width": 360,
+      "height": 110,
+      "type": "file",
+      "file": "tools/工具-訊息傳遞整合模式.md"
     },
     {
-      "id": "n1",
+      "id": "cat2",
       "type": "text",
-      "text": "① 整合風格 Integration Styles\n（4 條，詳見書卡）",
+      "text": "## ① 整合風格 Integration Styles",
       "x": 300,
-      "y": -490,
-      "width": 260,
-      "height": 80,
+      "y": 237,
+      "width": 280,
+      "height": 60,
       "color": "5"
     },
     {
-      "id": "n2",
+      "id": "l2_1",
+      "x": 660,
+      "y": 190,
+      "width": 400,
+      "height": 154,
       "type": "text",
-      "text": "② 訊息系統Messaging Systems\n（6 條，詳見書卡）",
+      "text": "- [[檔案傳輸]]\n- [[共享資料庫]]\n- [[遠端程序呼叫]]\n- [[訊息傳遞]]"
+    },
+    {
+      "id": "cat3",
+      "type": "text",
+      "text": "## ② 訊息系統（根模式）Messaging Systems",
       "x": 300,
-      "y": -340,
-      "width": 260,
-      "height": 80,
+      "y": 501,
+      "width": 280,
+      "height": 60,
       "color": "5"
     },
     {
-      "id": "n3",
+      "id": "l3_1",
+      "x": 660,
+      "y": 424,
+      "width": 400,
+      "height": 214,
       "type": "text",
-      "text": "③ 訊息通道 Messaging Channels\n（9 條，詳見書卡）",
+      "text": "- [[訊息通道]]\n- [[訊息]]\n- [[管道與過濾器]]\n- [[訊息路由器]]\n- [[訊息轉換器]]\n- [[訊息端點]]"
+    },
+    {
+      "id": "cat4",
+      "type": "text",
+      "text": "## ③ 訊息通道 Messaging Channels",
       "x": 300,
-      "y": -190,
-      "width": 260,
-      "height": 80,
+      "y": 840,
+      "width": 280,
+      "height": 60,
       "color": "5"
     },
     {
-      "id": "n4",
+      "id": "l4_1",
+      "x": 660,
+      "y": 718,
+      "width": 400,
+      "height": 304,
       "type": "text",
-      "text": "④ 訊息建構 Message Construction\n（9 條，詳見書卡）",
+      "text": "- [[點對點通道]]\n- [[發布訂閱通道]]\n- [[資料型別通道]]\n- [[無效訊息通道]]\n- [[死信通道]]\n- [[保證投遞]]\n- [[通道配接器]]\n- [[訊息橋接]]\n- [[訊息匯流排]]"
+    },
+    {
+      "id": "cat5",
+      "type": "text",
+      "text": "## ④ 訊息建構 Message Construction",
       "x": 300,
-      "y": -40,
-      "width": 260,
-      "height": 80,
+      "y": 1224,
+      "width": 280,
+      "height": 60,
       "color": "5"
     },
     {
-      "id": "n5",
+      "id": "l5_1",
+      "x": 660,
+      "y": 1102,
+      "width": 400,
+      "height": 304,
       "type": "text",
-      "text": "⑤ 訊息路由 Message Routing\n（12 條，詳見書卡）",
+      "text": "- [[命令訊息]]\n- [[文件訊息]]\n- [[事件訊息]]\n- [[請求-回覆]]\n- [[回覆位址]]\n- [[關聯識別碼]]\n- [[訊息序列]]\n- [[訊息過期]]\n- [[格式指示器]]"
+    },
+    {
+      "id": "cat6",
+      "type": "text",
+      "text": "## ⑤ 訊息路由 Message Routing",
       "x": 300,
-      "y": 110,
-      "width": 260,
-      "height": 80,
+      "y": 1653,
+      "width": 280,
+      "height": 60,
       "color": "5"
     },
     {
-      "id": "n6",
+      "id": "l6_1",
+      "x": 660,
+      "y": 1486,
+      "width": 400,
+      "height": 394,
       "type": "text",
-      "text": "⑥ 訊息轉換 Message Transformation\n（6 條，詳見書卡）",
+      "text": "- [[內容路由器]]\n- [[訊息過濾器]]\n- [[動態路由器]]\n- [[收件人清單]]\n- [[分割器]]\n- [[聚合器]]\n- [[重排序器]]\n- [[組合訊息處理器]]\n- [[散發-聚集]]\n- [[路由單]]\n- [[流程管理器]]\n- [[訊息代理器]]"
+    },
+    {
+      "id": "cat7",
+      "type": "text",
+      "text": "## ⑥ 訊息轉換 Message Transformation",
       "x": 300,
-      "y": 260,
-      "width": 260,
-      "height": 80,
+      "y": 2037,
+      "width": 280,
+      "height": 60,
       "color": "5"
     },
     {
-      "id": "n7",
+      "id": "l7_1",
+      "x": 660,
+      "y": 1960,
+      "width": 400,
+      "height": 214,
       "type": "text",
-      "text": "⑦ 訊息端點 Messaging Endpoints\n（11 條，詳見書卡）",
+      "text": "- [[信封包裝器]]\n- [[內容擴充器]]\n- [[內容過濾器]]\n- [[寄物單]]\n- [[正規化器]]\n- [[標準資料模型]]"
+    },
+    {
+      "id": "cat8",
+      "type": "text",
+      "text": "## ⑦ 訊息端點 Messaging Endpoints",
       "x": 300,
-      "y": 410,
-      "width": 260,
-      "height": 80,
+      "y": 2406,
+      "width": 280,
+      "height": 60,
       "color": "5"
     },
     {
-      "id": "n8",
+      "id": "l8_1",
+      "x": 660,
+      "y": 2254,
+      "width": 400,
+      "height": 364,
       "type": "text",
-      "text": "⑧ 系統管理 System Management\n（8 條，詳見書卡）",
+      "text": "- [[訊息閘道]]\n- [[訊息對應器]]\n- [[交易式用戶端]]\n- [[輪詢式消費者]]\n- [[事件驅動消費者]]\n- [[競爭消費者]]\n- [[訊息分派器]]\n- [[選擇性消費者]]\n- [[持久訂閱者]]\n- [[冪等接收者]]\n- [[服務啟動器]]"
+    },
+    {
+      "id": "cat9",
+      "type": "text",
+      "text": "## ⑧ 系統管理 System Management",
       "x": 300,
-      "y": 560,
-      "width": 260,
-      "height": 80,
+      "y": 2805,
+      "width": 280,
+      "height": 60,
       "color": "5"
+    },
+    {
+      "id": "l9_1",
+      "x": 660,
+      "y": 2698,
+      "width": 400,
+      "height": 274,
+      "type": "text",
+      "text": "- [[控制匯流排]]\n- [[繞道]]\n- [[竊聽器]]\n- [[訊息歷史]]\n- [[訊息存放區]]\n- [[智慧代理]]\n- [[測試訊息]]\n- [[通道清除器]]"
     }
   ],
   "edges": [
     {
-      "id": "ec0",
+      "id": "e1",
       "fromNode": "center",
-      "toNode": "n0",
+      "toNode": "cat1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "el0_0",
-      "fromNode": "n0",
-      "toNode": "n0l0",
+      "id": "e2",
+      "fromNode": "cat1",
+      "toNode": "l1_1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "ec1",
+      "id": "e3",
       "fromNode": "center",
-      "toNode": "n1",
+      "toNode": "cat2",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "ec2",
-      "fromNode": "center",
-      "toNode": "n2",
+      "id": "e4",
+      "fromNode": "cat2",
+      "toNode": "l2_1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "ec3",
+      "id": "e5",
       "fromNode": "center",
-      "toNode": "n3",
+      "toNode": "cat3",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "ec4",
-      "fromNode": "center",
-      "toNode": "n4",
+      "id": "e6",
+      "fromNode": "cat3",
+      "toNode": "l3_1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "ec5",
+      "id": "e7",
       "fromNode": "center",
-      "toNode": "n5",
+      "toNode": "cat4",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "ec6",
-      "fromNode": "center",
-      "toNode": "n6",
+      "id": "e8",
+      "fromNode": "cat4",
+      "toNode": "l4_1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "ec7",
+      "id": "e9",
       "fromNode": "center",
-      "toNode": "n7",
+      "toNode": "cat5",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "ec8",
+      "id": "e10",
+      "fromNode": "cat5",
+      "toNode": "l5_1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e11",
       "fromNode": "center",
-      "toNode": "n8",
+      "toNode": "cat6",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e12",
+      "fromNode": "cat6",
+      "toNode": "l6_1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e13",
+      "fromNode": "center",
+      "toNode": "cat7",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e14",
+      "fromNode": "cat7",
+      "toNode": "l7_1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e15",
+      "fromNode": "center",
+      "toNode": "cat8",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e16",
+      "fromNode": "cat8",
+      "toNode": "l8_1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e17",
+      "fromNode": "center",
+      "toNode": "cat9",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e18",
+      "fromNode": "cat9",
+      "toNode": "l9_1",
       "fromSide": "right",
       "toSide": "left"
     }

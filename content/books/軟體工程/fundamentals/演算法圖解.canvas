@@ -3,60 +3,288 @@
     {
       "id": "center",
       "type": "text",
-      "text": "# 演算法圖解 Algorithms（Illustrated for Curious Programmers）",
+      "text": "# 演算法圖解",
       "x": -160,
-      "y": -50,
+      "y": 928,
       "width": 320,
       "height": 100,
       "color": "6"
     },
     {
-      "id": "l0",
-      "type": "file",
-      "file": "tools/工具-時間複雜度分析.md",
-      "x": 320,
-      "y": -205,
-      "width": 360,
-      "height": 110
+      "id": "cat1",
+      "type": "text",
+      "text": "## 📈 Big-O 成本分析",
+      "x": 300,
+      "y": 100,
+      "width": 280,
+      "height": 60,
+      "color": "5"
     },
     {
-      "id": "l1",
-      "type": "file",
-      "file": "tools/工具-資料結構的選擇.md",
-      "x": 320,
-      "y": -55,
+      "id": "l1_1",
+      "x": 660,
+      "y": 0,
       "width": 360,
-      "height": 110
+      "height": 110,
+      "type": "file",
+      "file": "tools/工具-時間複雜度分析.md"
     },
     {
-      "id": "l2",
-      "type": "file",
-      "file": "tools/工具-演算法設計策略.md",
-      "x": 320,
-      "y": 95,
+      "id": "l1_2",
+      "x": 660,
+      "y": 150,
       "width": 360,
-      "height": 110
+      "height": 110,
+      "type": "text",
+      "text": "**成長趨勢排序**\nO(1) < O(log n) < O(n) < O(n log n) < O(n²) < O(2ⁿ)"
+    },
+    {
+      "id": "cat2",
+      "type": "text",
+      "text": "## 🗂 資料結構取捨",
+      "x": 300,
+      "y": 590,
+      "width": 280,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "l2_1",
+      "x": 660,
+      "y": 340,
+      "width": 360,
+      "height": 110,
+      "type": "file",
+      "file": "tools/工具-資料結構的選擇.md"
+    },
+    {
+      "id": "l2_2",
+      "x": 660,
+      "y": 490,
+      "width": 360,
+      "height": 110,
+      "type": "text",
+      "text": "**陣列 vs 鏈結串列**\n陣列隨機存取快、插入慢；鏈結串列插入快、查找慢"
+    },
+    {
+      "id": "l2_3",
+      "x": 660,
+      "y": 640,
+      "width": 360,
+      "height": 110,
+      "type": "text",
+      "text": "**雜湊表**\n平均 O(1) 查找，代價是無序與雜湊衝突"
+    },
+    {
+      "id": "l2_4",
+      "x": 660,
+      "y": 790,
+      "width": 360,
+      "height": 110,
+      "type": "text",
+      "text": "**樹／堆積／圖**\n有序查找、取極值、關係網路各有專屬結構"
+    },
+    {
+      "id": "cat3",
+      "type": "text",
+      "text": "## 🧠 演算法設計策略",
+      "x": 300,
+      "y": 1230,
+      "width": 280,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "l3_1",
+      "x": 660,
+      "y": 980,
+      "width": 360,
+      "height": 110,
+      "type": "file",
+      "file": "tools/工具-演算法設計策略.md"
+    },
+    {
+      "id": "l3_2",
+      "x": 660,
+      "y": 1130,
+      "width": 360,
+      "height": 110,
+      "type": "text",
+      "text": "**分治**\n拆小再合併，如快速排序／合併排序"
+    },
+    {
+      "id": "l3_3",
+      "x": 660,
+      "y": 1280,
+      "width": 360,
+      "height": 110,
+      "type": "text",
+      "text": "**貪婪**\n每步取當下最佳，簡單但不一定全域最佳"
+    },
+    {
+      "id": "l3_4",
+      "x": 660,
+      "y": 1430,
+      "width": 360,
+      "height": 110,
+      "type": "text",
+      "text": "**動態規劃**\n重疊子問題記憶化，避免重複計算"
+    },
+    {
+      "id": "cat4",
+      "type": "text",
+      "text": "## 🔎 搜尋與排序",
+      "x": 300,
+      "y": 1795,
+      "width": 280,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "l4_1",
+      "x": 660,
+      "y": 1620,
+      "width": 360,
+      "height": 110,
+      "type": "text",
+      "text": "**二分搜尋**\n有序資料下 O(log n)"
+    },
+    {
+      "id": "l4_2",
+      "x": 660,
+      "y": 1770,
+      "width": 360,
+      "height": 110,
+      "type": "text",
+      "text": "**遞迴**\n用基準情形＋自我呼叫描述問題"
+    },
+    {
+      "id": "l4_3",
+      "x": 660,
+      "y": 1920,
+      "width": 360,
+      "height": 110,
+      "type": "text",
+      "text": "**常見排序的複雜度**\n快排／合併 O(n log n)、氣泡／插入 O(n²)"
     }
   ],
   "edges": [
     {
-      "id": "e0",
-      "fromNode": "center",
-      "toNode": "l0",
-      "fromSide": "right",
-      "toSide": "left"
-    },
-    {
       "id": "e1",
       "fromNode": "center",
-      "toNode": "l1",
+      "toNode": "cat1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
       "id": "e2",
+      "fromNode": "cat1",
+      "toNode": "l1_1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e3",
+      "fromNode": "cat1",
+      "toNode": "l1_2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e4",
       "fromNode": "center",
-      "toNode": "l2",
+      "toNode": "cat2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e5",
+      "fromNode": "cat2",
+      "toNode": "l2_1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e6",
+      "fromNode": "cat2",
+      "toNode": "l2_2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e7",
+      "fromNode": "cat2",
+      "toNode": "l2_3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e8",
+      "fromNode": "cat2",
+      "toNode": "l2_4",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e9",
+      "fromNode": "center",
+      "toNode": "cat3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e10",
+      "fromNode": "cat3",
+      "toNode": "l3_1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e11",
+      "fromNode": "cat3",
+      "toNode": "l3_2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e12",
+      "fromNode": "cat3",
+      "toNode": "l3_3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e13",
+      "fromNode": "cat3",
+      "toNode": "l3_4",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e14",
+      "fromNode": "center",
+      "toNode": "cat4",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e15",
+      "fromNode": "cat4",
+      "toNode": "l4_1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e16",
+      "fromNode": "cat4",
+      "toNode": "l4_2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e17",
+      "fromNode": "cat4",
+      "toNode": "l4_3",
       "fromSide": "right",
       "toSide": "left"
     }
