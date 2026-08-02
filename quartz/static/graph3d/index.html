@@ -1,0 +1,740 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>3D 知識圖譜</title>
+    <style>
+      :root {
+        --bg: #faf8f8;
+        --fg: #2b2b2b;
+        --muted: #646464;
+        --panel: rgba(255, 255, 255, 0.86);
+        --border: #e5e5e5;
+      }
+      html[data-theme="dark"] {
+        --bg: #161618;
+        --fg: #ebebec;
+        --muted: #9a9a9a;
+        --panel: rgba(30, 30, 33, 0.86);
+        --border: #393639;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+        background: var(--bg);
+        color: var(--fg);
+        font-family: system-ui, -apple-system, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei",
+          sans-serif;
+      }
+      #graph {
+        position: absolute;
+        inset: 0;
+      }
+      #labels {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+      }
+      .lbl {
+        position: absolute;
+        transform: translate(-50%, -100%);
+        white-space: nowrap;
+        font-size: 11px;
+        line-height: 1;
+        color: var(--fg);
+        text-shadow:
+          0 0 3px var(--bg),
+          0 0 3px var(--bg),
+          0 0 3px var(--bg);
+        will-change: transform, left, top;
+      }
+      .panel {
+        position: absolute;
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        backdrop-filter: blur(6px);
+        font-size: 12px;
+      }
+      #controls {
+        top: 12px;
+        left: 12px;
+        width: 218px;
+        padding: 10px 12px;
+      }
+      #controls h1 {
+        margin: 0 0 8px;
+        font-size: 13px;
+        font-weight: 600;
+      }
+      #search {
+        width: 100%;
+        padding: 5px 8px;
+        margin-bottom: 8px;
+        border: 1px solid var(--border);
+        border-radius: 5px;
+        background: var(--bg);
+        color: var(--fg);
+        font: inherit;
+      }
+      #search:focus {
+        outline: 1px solid var(--muted);
+      }
+      .row {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 2px 0;
+        cursor: pointer;
+        user-select: none;
+      }
+      .row input {
+        margin: 0;
+        cursor: pointer;
+      }
+      .dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        flex: none;
+      }
+      .row .cnt {
+        margin-left: auto;
+        color: var(--muted);
+        font-variant-numeric: tabular-nums;
+      }
+      hr {
+        border: 0;
+        border-top: 1px solid var(--border);
+        margin: 8px 0;
+      }
+      select {
+        width: 100%;
+        padding: 4px 6px;
+        border: 1px solid var(--border);
+        border-radius: 5px;
+        background: var(--bg);
+        color: var(--fg);
+        font: inherit;
+      }
+      label.field {
+        display: block;
+        color: var(--muted);
+        margin-bottom: 3px;
+      }
+      #stats {
+        margin-top: 8px;
+        color: var(--muted);
+      }
+      #hint {
+        right: 12px;
+        bottom: 12px;
+        padding: 6px 10px;
+        color: var(--muted);
+      }
+      #hover {
+        left: 12px;
+        bottom: 12px;
+        padding: 8px 12px;
+        max-width: 340px;
+        display: none;
+      }
+      #hover b {
+        font-weight: 600;
+      }
+      #hover .sub {
+        color: var(--muted);
+        margin-top: 3px;
+      }
+      #status {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--muted);
+        font-size: 14px;
+        text-align: center;
+        padding: 20px;
+      }
+      /* display:flex 會蓋掉 [hidden] 的 display:none，要明寫回來 */
+      #status[hidden] {
+        display: none;
+      }
+      @media (max-width: 640px) {
+        #controls {
+          width: 168px;
+          font-size: 11px;
+        }
+        #hint {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="graph"></div>
+    <div id="labels"></div>
+    <div id="status">載入中…</div>
+
+    <div id="controls" class="panel" hidden>
+      <h1>3D 知識圖譜</h1>
+      <input id="search" type="search" placeholder="搜尋筆記標題…" autocomplete="off" />
+      <div id="cats"></div>
+      <hr />
+      <label class="field" for="labelMode">標籤</label>
+      <select id="labelMode">
+        <option value="hub">只顯示樞紐節點</option>
+        <option value="all">全部顯示</option>
+        <option value="none">關閉</option>
+      </select>
+      <div id="stats"></div>
+    </div>
+
+    <div id="hover" class="panel"></div>
+    <div id="hint" class="panel">拖曳旋轉 · 滾輪縮放 · 右鍵平移 · 點節點開筆記</div>
+
+    <script>
+      ;(function () {
+        var CDN = "https://cdn.jsdelivr.net/npm/3d-force-graph@1.80.0/dist/3d-force-graph.min.js"
+
+        // 依 slug 第一段分類。順序即圖例順序。
+        var CATS = [
+          { key: "books", name: "書卡", color: "#e8834a" },
+          { key: "tools", name: "工具卡", color: "#4aa3e8" },
+          { key: "moc", name: "主題地圖", color: "#c678dd" },
+          { key: "reference", name: "條目", color: "#6fb86f" },
+          { key: "articles", name: "文章", color: "#e0b23c" },
+          { key: "other", name: "其他", color: "#e05561" },
+        ]
+        var COLOR = {}
+        CATS.forEach(function (c) {
+          COLOR[c.key] = c.color
+        })
+
+        // 站台套了 quartz-themes（absolutegruv 只支援深色），所以不能只看 localStorage。
+        // 嵌在 iframe 裡時直接讀父頁算好的 CSS 變數，配色才會跟站台一致；
+        // 獨立開啟時才退回下面這組預設值。
+        var FALLBACK = {
+          light: { bg: "#faf8f8", fg: "#2b2b2b", link: "#cfcfcf", dim: "#e4e4e4" },
+          dark: { bg: "#161618", fg: "#ebebec", link: "#4a474a", dim: "#2c2a2c" },
+        }
+        var PAL = FALLBACK.light
+
+        var el = {
+          graph: document.getElementById("graph"),
+          labels: document.getElementById("labels"),
+          status: document.getElementById("status"),
+          controls: document.getElementById("controls"),
+          search: document.getElementById("search"),
+          cats: document.getElementById("cats"),
+          labelMode: document.getElementById("labelMode"),
+          stats: document.getElementById("stats"),
+          hover: document.getElementById("hover"),
+        }
+
+        function fail(msg) {
+          el.status.hidden = false
+          el.status.textContent = msg
+        }
+
+        // 站台的 base path：本檔位於 <base>/static/graph3d/（目錄索引，
+        // 因為 crawl-links 會把 .html 副檔名吃掉，用目錄形式才不會被改壞）
+        var BASE = location.pathname.replace(/\/static\/graph3d\/?(index\.html)?$/, "")
+
+        function urlFor(slug) {
+          return slug === "index" ? BASE + "/" : BASE + "/" + slug
+        }
+
+        function catOf(slug) {
+          var head = slug.split("/")[0]
+          return COLOR[head] ? head : "other"
+        }
+
+        // ---- 主題 ----
+        var theme = "light"
+
+        function parentDoc() {
+          try {
+            return window.parent !== window && window.parent.document ? window.parent.document : null
+          } catch (e) {
+            return null // 跨來源，讀不到就算了
+          }
+        }
+
+        // --light 之類的值可能含 calc()/var()，丟給瀏覽器的 CSS 引擎去算
+        function resolveColor(doc, value) {
+          var d = doc.createElement("div")
+          d.style.cssText = "position:absolute;visibility:hidden;color:" + value
+          doc.body.appendChild(d)
+          var out = getComputedStyle(d).color
+          d.remove()
+          return out
+        }
+
+        function readPalette() {
+          var doc = parentDoc()
+          if (doc && doc.body) {
+            try {
+              var cs = getComputedStyle(doc.documentElement)
+              var pick = function (name) {
+                var v = cs.getPropertyValue(name).trim()
+                return v ? resolveColor(doc, v) : null
+              }
+              var bg = pick("--light"),
+                fg = pick("--dark"),
+                lg = pick("--lightgray"),
+                gy = pick("--gray")
+              if (bg && fg && lg) {
+                theme = doc.documentElement.getAttribute("saved-theme") === "dark" ? "dark" : "light"
+                return { bg: bg, fg: fg, link: gy || lg, dim: lg }
+              }
+            } catch (e) {
+              /* 讀不到就用 fallback */
+            }
+          }
+          var t = "light"
+          try {
+            t =
+              localStorage.getItem("theme") ||
+              (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+          } catch (e) {}
+          theme = t === "dark" ? "dark" : "light"
+          return FALLBACK[theme]
+        }
+
+        function applyTheme() {
+          PAL = readPalette()
+          var root = document.documentElement
+          root.setAttribute("data-theme", theme)
+          root.style.setProperty("--bg", PAL.bg)
+          root.style.setProperty("--fg", PAL.fg)
+          if (Graph) {
+            Graph.backgroundColor(PAL.bg)
+            refreshColors()
+          }
+        }
+
+        // ---- 載入 3d-force-graph（同 upstream graph plugin 的 CDN 載入模式） ----
+        function loadScript(src) {
+          return new Promise(function (resolve, reject) {
+            var s = document.createElement("script")
+            s.src = src
+            s.crossOrigin = "anonymous"
+            s.onload = resolve
+            s.onerror = reject
+            document.head.appendChild(s)
+          })
+        }
+
+        var Graph = null
+        var ALL = { nodes: [], links: [] }
+        var enabled = {}
+        var hoverNode = null
+        var fitted = false
+        var neighbours = new Set()
+        var matched = null // Set of slugs，搜尋結果；null = 沒在搜尋
+
+        // 3D 圖靠 WebGL，先確認瀏覽器給得出 context，才不會把「沒有 WebGL」
+        // 誤報成「網路載入失敗」。
+        function hasWebGL() {
+          try {
+            var c = document.createElement("canvas")
+            return !!(c.getContext("webgl2") || c.getContext("webgl"))
+          } catch (e) {
+            return false
+          }
+        }
+
+        if (!hasWebGL()) {
+          fail("這個瀏覽器（或環境）沒有可用的 WebGL，無法顯示 3D 圖譜。可改看右側欄的 2D 圖譜。")
+        } else {
+          Promise.all([
+            loadScript(CDN),
+            fetch(BASE + "/static/contentIndex.json").then(function (r) {
+              if (!r.ok) throw new Error("contentIndex.json " + r.status)
+              return r.json()
+            }),
+          ])
+            .then(function (res) {
+              build(res[1])
+            })
+            .catch(function (err) {
+              console.error("[Graph3D]", err)
+              fail("3D 圖譜載入失敗（" + (err && err.message ? err.message : err) + "），請重新整理。")
+            })
+        }
+
+        function build(index) {
+          if (!window.ForceGraph3D) return fail("3D 圖譜函式庫載入失敗。")
+
+          var valid = new Set(Object.keys(index))
+          var nodeMap = new Map()
+          valid.forEach(function (slug) {
+            var d = index[slug] || {}
+            nodeMap.set(slug, {
+              id: slug,
+              title: d.title || slug,
+              cat: catOf(slug),
+              degree: 0,
+            })
+          })
+
+          // 只保留目標也在 index 裡的連結，並把雙向重複邊去掉
+          var seen = new Set()
+          var links = []
+          valid.forEach(function (slug) {
+            var outgoing = (index[slug] && index[slug].links) || []
+            for (var i = 0; i < outgoing.length; i++) {
+              var dest = outgoing[i]
+              if (!valid.has(dest) || dest === slug) continue
+              var key = slug < dest ? slug + " " + dest : dest + " " + slug
+              if (seen.has(key)) continue
+              seen.add(key)
+              links.push({ source: slug, target: dest })
+              nodeMap.get(slug).degree++
+              nodeMap.get(dest).degree++
+            }
+          })
+
+          ALL.nodes = Array.from(nodeMap.values())
+          ALL.links = links
+
+          // 樞紐節點門檻：連結度前 30 名
+          var degrees = ALL.nodes
+            .map(function (n) {
+              return n.degree
+            })
+            .sort(function (a, b) {
+              return b - a
+            })
+          var hubCut = degrees[Math.min(29, degrees.length - 1)] || 1
+
+          buildLegend()
+          applyTheme()
+
+          Graph = ForceGraph3D()(el.graph)
+            .backgroundColor(PAL.bg)
+            .showNavInfo(false)
+            // 球半徑 = nodeRelSize * cbrt(val)，所以 val 開三次方回推成
+            // 跟 2D 圖同一條公式：radius = 2 + sqrt(degree)
+            .nodeRelSize(2.2)
+            .nodeVal(function (n) {
+              return Math.pow(2 + Math.sqrt(n.degree), 3)
+            })
+            .nodeColor(nodeColor)
+            .nodeOpacity(0.92)
+            .nodeLabel(function (n) {
+              return n.title
+            })
+            .linkColor(linkColor)
+            .linkWidth(function (l) {
+              return isActiveLink(l) ? 1.6 : 0.5
+            })
+            .linkOpacity(0.42)
+            .onNodeHover(function (n) {
+              hoverNode = n
+              neighbours = new Set()
+              if (n) {
+                neighbours.add(n.id)
+                for (var i = 0; i < ALL.links.length; i++) {
+                  var l = ALL.links[i]
+                  var s = idOf(l.source),
+                    t = idOf(l.target)
+                  if (s === n.id) neighbours.add(t)
+                  else if (t === n.id) neighbours.add(s)
+                }
+                el.hover.style.display = "block"
+                el.hover.innerHTML =
+                  "<b></b><div class='sub'></div>"
+                el.hover.querySelector("b").textContent = n.title
+                el.hover.querySelector(".sub").textContent =
+                  catName(n.cat) + " · " + n.degree + " 條連結 · " + n.id
+              } else {
+                el.hover.style.display = "none"
+              }
+              el.graph.style.cursor = n ? "pointer" : ""
+              refreshColors()
+            })
+            .onNodeClick(function (n) {
+              window.top.location.href = urlFor(n.id)
+            })
+            .onEngineStop(function () {
+              if (fitted) return
+              fitted = true
+              fitView()
+            })
+            .cooldownTicks(220)
+            .graphData({ nodes: [], links: [] })
+
+          Graph.d3Force("charge").strength(-60)
+          Graph.d3Force("link").distance(28)
+
+          // 除錯用把手（在 console 裡可直接操作圖）
+          window.__graph3d = { graph: Graph, urlFor: urlFor, base: BASE, data: ALL }
+
+          el.status.hidden = true
+          el.controls.hidden = false
+          render()
+          startLabels(hubCut)
+
+          window.addEventListener("resize", function () {
+            Graph.width(window.innerWidth).height(window.innerHeight)
+          })
+          Graph.width(window.innerWidth).height(window.innerHeight)
+        }
+
+        // 佈局收斂後把視野框到主體上。刻意只框最靠中心的 92%——
+        // 少數飄很遠的孤立節點若也算進去，整團會被縮成一小點。
+        function fitView() {
+          var ns = Graph.graphData().nodes.filter(function (n) {
+            return n.x !== undefined
+          })
+          if (!ns.length) return
+          var ds = ns
+            .map(function (n) {
+              return Math.sqrt(n.x * n.x + n.y * n.y + (n.z || 0) * (n.z || 0))
+            })
+            .sort(function (a, b) {
+              return a - b
+            })
+          var cut = ds[Math.floor(ds.length * 0.92)] || ds[ds.length - 1]
+          Graph.zoomToFit(700, 30, function (n) {
+            return Math.sqrt(n.x * n.x + n.y * n.y + (n.z || 0) * (n.z || 0)) <= cut
+          })
+        }
+
+        function idOf(x) {
+          return typeof x === "object" ? x.id : x
+        }
+        function catName(key) {
+          for (var i = 0; i < CATS.length; i++) if (CATS[i].key === key) return CATS[i].name
+          return key
+        }
+
+        function isActiveLink(l) {
+          if (!hoverNode) return false
+          return idOf(l.source) === hoverNode.id || idOf(l.target) === hoverNode.id
+        }
+
+        function nodeColor(n) {
+          if (matched) return matched.has(n.id) ? COLOR[n.cat] : PAL.dim
+          if (hoverNode) return neighbours.has(n.id) ? COLOR[n.cat] : PAL.dim
+          return COLOR[n.cat]
+        }
+
+        function linkColor(l) {
+          if (hoverNode) return isActiveLink(l) ? COLOR[hoverNode.cat] : PAL.dim
+          return PAL.link
+        }
+
+        function refreshColors() {
+          if (!Graph) return
+          Graph.nodeColor(nodeColor).linkColor(linkColor).linkWidth(function (l) {
+            return isActiveLink(l) ? 1.2 : 0.4
+          })
+        }
+
+        // ---- 圖例 / 篩選 ----
+        function buildLegend() {
+          var counts = {}
+          CATS.forEach(function (c) {
+            counts[c.key] = 0
+            enabled[c.key] = true
+          })
+          ALL.nodes.forEach(function (n) {
+            counts[n.cat]++
+          })
+
+          CATS.forEach(function (c) {
+            if (!counts[c.key]) return
+            var row = document.createElement("label")
+            row.className = "row"
+            row.innerHTML =
+              "<input type='checkbox' checked><span class='dot' style='background:" +
+              c.color +
+              "'></span><span></span><span class='cnt'>" +
+              counts[c.key] +
+              "</span>"
+            row.querySelectorAll("span")[1].textContent = c.name
+            row.querySelector("input").addEventListener("change", function (e) {
+              enabled[c.key] = e.target.checked
+              render()
+            })
+            el.cats.appendChild(row)
+          })
+        }
+
+        function render() {
+          fitted = false // 換過篩選條件就重新框一次視野
+          var keep = ALL.nodes.filter(function (n) {
+            return enabled[n.cat]
+          })
+          var ids = new Set(
+            keep.map(function (n) {
+              return n.id
+            }),
+          )
+          var links = ALL.links.filter(function (l) {
+            return ids.has(idOf(l.source)) && ids.has(idOf(l.target))
+          })
+          Graph.graphData({
+            nodes: keep,
+            links: links.map(function (l) {
+              return { source: idOf(l.source), target: idOf(l.target) }
+            }),
+          })
+          el.stats.textContent = keep.length + " 個節點 · " + links.length + " 條連結"
+        }
+
+        // ---- 搜尋 ----
+        el.search.addEventListener("input", function () {
+          var q = el.search.value.trim().toLowerCase()
+          if (!q) {
+            matched = null
+          } else {
+            matched = new Set()
+            ALL.nodes.forEach(function (n) {
+              if (n.title.toLowerCase().indexOf(q) >= 0 || n.id.toLowerCase().indexOf(q) >= 0) {
+                matched.add(n.id)
+              }
+            })
+          }
+          refreshColors()
+        })
+
+        // Enter：飛到第一個命中的節點
+        el.search.addEventListener("keydown", function (e) {
+          if (e.key !== "Enter" || !matched || !matched.size) return
+          var target = Graph.graphData().nodes.filter(function (n) {
+            return matched.has(n.id)
+          })[0]
+          if (!target || target.x === undefined) return
+          var dist = 90
+          var ratio = 1 + dist / Math.hypot(target.x, target.y, target.z || 0.001)
+          Graph.cameraPosition(
+            { x: target.x * ratio, y: target.y * ratio, z: (target.z || 0) * ratio },
+            target,
+            900,
+          )
+        })
+
+        // ---- HTML 疊層標籤（3d-force-graph 的 graph2ScreenCoords 投影） ----
+        function startLabels(hubCut) {
+          var pool = []
+          function labelEl(i) {
+            while (pool.length <= i) {
+              var d = document.createElement("div")
+              d.className = "lbl"
+              el.labels.appendChild(d)
+              pool.push(d)
+            }
+            return pool[i]
+          }
+
+          // 螢幕空間避讓：先算好每個候選標籤的矩形，重疊就讓給優先度高的那個。
+          // 不這樣做的話，700 多個節點擠在中央會糊成一片。
+          function estWidth(s) {
+            var w = 0
+            for (var i = 0; i < s.length; i++) w += s.charCodeAt(i) > 0x2e80 ? 11 : 6
+            return Math.min(w, 300)
+          }
+
+          // 標籤重算不需要跟滿 60fps，壓到 ~25fps 省 CPU
+          var lastTick = 0
+          function tick(now) {
+            requestAnimationFrame(tick)
+            if (now - lastTick < 40) return
+            lastTick = now
+            paint()
+          }
+
+          function paint() {
+            var mode = el.labelMode.value
+            var used = 0
+            if (mode !== "none") {
+              var cam = Graph.camera()
+              var tgt = Graph.controls().target
+              var fx = tgt.x - cam.position.x,
+                fy = tgt.y - cam.position.y,
+                fz = tgt.z - cam.position.z
+              var W = window.innerWidth,
+                H = window.innerHeight
+              var nodes = Graph.graphData().nodes
+              var cands = []
+              for (var i = 0; i < nodes.length; i++) {
+                var n = nodes[i]
+                if (n.x === undefined) continue
+                var focused =
+                  (hoverNode && neighbours.has(n.id)) || (matched && matched.has(n.id))
+                if (!(mode === "all" || n.degree >= hubCut || focused)) continue
+                // 剔除鏡頭後方的節點
+                var dx = n.x - cam.position.x,
+                  dy = n.y - cam.position.y,
+                  dz = n.z - cam.position.z
+                if (dx * fx + dy * fy + dz * fz <= 0) continue
+                var p = Graph.graph2ScreenCoords(n.x, n.y, n.z)
+                if (p.x < 0 || p.y < 0 || p.x > W || p.y > H) continue
+                cands.push({
+                  n: n,
+                  p: p,
+                  // 被聚焦的一定優先，其次比連結度，再來近的贏
+                  prio: (focused ? 1e9 : 0) + n.degree * 1e3 - Math.sqrt(dx * dx + dy * dy + dz * dz),
+                })
+              }
+              cands.sort(function (a, b) {
+                return b.prio - a.prio
+              })
+
+              var placed = []
+              for (var k = 0; k < cands.length; k++) {
+                var c = cands[k]
+                var w = estWidth(c.n.title)
+                var clash = false
+                for (var q = 0; q < placed.length; q++) {
+                  var o = placed[q]
+                  if (
+                    Math.abs(c.p.x - o.x) < (w + o.w) / 2 + 6 &&
+                    Math.abs(c.p.y - o.y) < 15
+                  ) {
+                    clash = true
+                    break
+                  }
+                }
+                if (clash) continue
+                placed.push({ x: c.p.x, y: c.p.y, w: w })
+                var d = labelEl(used++)
+                d.textContent = c.n.title
+                d.style.left = c.p.x + "px"
+                d.style.top = c.p.y - 6 + "px"
+                d.style.display = ""
+              }
+            }
+            for (var j = used; j < pool.length; j++) pool[j].style.display = "none"
+          }
+          requestAnimationFrame(tick)
+        }
+
+        // ---- 跟著父頁切換深淺色 ----
+        // 同源時直接聽父頁 darkmode plugin 發的 themechange；獨立開啟時退回 storage 事件。
+        var pdoc = parentDoc()
+        if (pdoc) {
+          pdoc.addEventListener("themechange", function () {
+            setTimeout(applyTheme, 0) // 等父頁把 CSS 變數換好再讀
+          })
+        }
+        window.addEventListener("storage", function (e) {
+          if (e.key === "theme") applyTheme()
+        })
+      })()
+    </script>
+  </body>
+</html>
