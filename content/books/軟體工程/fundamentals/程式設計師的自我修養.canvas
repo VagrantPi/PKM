@@ -1,259 +1,629 @@
 {
   "nodes": [
     {
-      "id": "center",
+      "id": "root",
       "type": "text",
       "text": "# 📘 程式設計師的自我修養\n連結、裝載與庫",
       "x": -160,
-      "y": 789,
+      "y": 2804,
       "width": 320,
       "height": 147,
       "color": "6"
     },
     {
-      "id": "cat1",
-      "type": "text",
-      "text": "## ⚙️ 編譯：四階段",
-      "x": 300,
-      "y": 113,
-      "width": 320,
-      "height": 68,
-      "color": "5"
-    },
-    {
-      "id": "l1-1",
+      "id": "l1",
+      "type": "file",
+      "file": "tools/工具-編譯連結與裝載.md",
       "x": 660,
       "y": 0,
       "width": 340,
-      "height": 150,
-      "type": "file",
-      "file": "tools/工具-編譯連結與裝載.md"
+      "height": 150
     },
     {
-      "id": "l1-2",
+      "id": "l2",
+      "type": "text",
+      "text": "**預處理 → 編譯 → 彙編 → 連結**\ngcc 只是包裝，實際叫 cc1 / as / ld",
       "x": 660,
       "y": 190,
       "width": 340,
-      "height": 105,
-      "type": "text",
-      "text": "**預處理 → 編譯 → 連結 → 裝載**\n原始碼變成能跑的程式的完整路徑"
+      "height": 176
     },
     {
-      "id": "cat2",
+      "id": "l3",
+      "type": "text",
+      "text": "巨集或標頭出問題？\n**先看 `gcc -E` 的 .i 檔，不要猜**",
+      "x": 660,
+      "y": 406,
+      "width": 340,
+      "height": 142
+    },
+    {
+      "id": "l4",
+      "type": "text",
+      "text": "中間代碼是**前端／後端的分界線**\n一個前端可以配 N 個後端",
+      "x": 660,
+      "y": 588,
+      "width": 340,
+      "height": 108
+    },
+    {
+      "id": "c1",
+      "type": "text",
+      "text": "## ⚙️ 編譯：四階段",
+      "x": 300,
+      "y": 314,
+      "width": 320,
+      "height": 68,
+      "color": "5"
+    },
+    {
+      "id": "l5",
+      "type": "file",
+      "file": "tools/工具-符號決議與重定位.md",
+      "x": 660,
+      "y": 786,
+      "width": 340,
+      "height": 150
+    },
+    {
+      "id": "l6",
+      "type": "text",
+      "text": "模組間的一切互動\n都可歸結為**符號的引用**",
+      "x": 660,
+      "y": 976,
+      "width": 340,
+      "height": 108
+    },
+    {
+      "id": "l7",
+      "type": "text",
+      "text": "**兩趟掃描**\n① 合併段、分配位址、建全域符號表\n② 符號解析 + 重定位",
+      "x": 660,
+      "y": 1124,
+      "width": 340,
+      "height": 142
+    },
+    {
+      "id": "l8",
+      "type": "text",
+      "text": "「重定位所做的就是給每個絕對位址引用的位置**打補丁**。」",
+      "x": 660,
+      "y": 1306,
+      "width": 340,
+      "height": 108
+    },
+    {
+      "id": "l9",
+      "type": "text",
+      "text": "強弱符號三規則\n全弱時選**佔空間最大**的那個",
+      "x": 660,
+      "y": 1454,
+      "width": 340,
+      "height": 108
+    },
+    {
+      "id": "l10",
+      "type": "text",
+      "text": "未初始化全域變數 → **COMMON**\n這就是「忘了加 extern 卻能連過」的真相",
+      "x": 660,
+      "y": 1602,
+      "width": 340,
+      "height": 176
+    },
+    {
+      "id": "c2",
       "type": "text",
       "text": "## 🔗 連結：符號與重定位",
       "x": 300,
-      "y": 476,
+      "y": 1248,
       "width": 320,
       "height": 68,
       "color": "5"
     },
     {
-      "id": "l2-1",
-      "x": 660,
-      "y": 385,
-      "width": 340,
-      "height": 105,
+      "id": "l11",
       "type": "text",
-      "text": "**符號解析**\n連結器把「函式/變數引用」對應到定義"
+      "text": "**ELF / PE**\n目的檔、執行檔、動態庫本質是同一種格式",
+      "x": 660,
+      "y": 1868,
+      "width": 340,
+      "height": 108
     },
     {
-      "id": "l2-2",
-      "x": 660,
-      "y": 530,
-      "width": 340,
-      "height": 105,
+      "id": "l12",
       "type": "text",
-      "text": "**重定位**\n對應不到 → undefined symbol 的根源"
+      "text": "**段 Sections**\n.text（碼）/ .data / .bss（只記大小、不佔檔案空間）",
+      "x": 660,
+      "y": 2016,
+      "width": 340,
+      "height": 142
     },
     {
-      "id": "cat3",
+      "id": "l13",
+      "type": "text",
+      "text": "指令與資料分家的**第三個也是最重要**的理由：**共享**\nIE7 實測：112,844K 總量，96,900K 是共享的",
+      "x": 660,
+      "y": 2198,
+      "width": 340,
+      "height": 176
+    },
+    {
+      "id": "c3",
       "type": "text",
       "text": "## 📦 可執行檔格式",
       "x": 300,
-      "y": 816,
+      "y": 2087,
       "width": 320,
       "height": 68,
       "color": "5"
     },
     {
-      "id": "l3-1",
-      "x": 660,
-      "y": 725,
-      "width": 340,
-      "height": 105,
-      "type": "text",
-      "text": "**ELF / PE**\nELF（Linux）、PE（Windows）"
-    },
-    {
-      "id": "l3-2",
-      "x": 660,
-      "y": 870,
-      "width": 340,
-      "height": 105,
-      "type": "text",
-      "text": "**段 Sections**\n.text（碼）/ .data（初始化資料）/ .bss"
-    },
-    {
-      "id": "cat4",
-      "type": "text",
-      "text": "## 📚 靜態庫 vs 動態庫",
-      "x": 300,
-      "y": 1191,
-      "width": 320,
-      "height": 68,
-      "color": "5"
-    },
-    {
-      "id": "l4-1",
-      "x": 660,
-      "y": 1065,
-      "width": 340,
-      "height": 150,
+      "id": "l14",
       "type": "file",
-      "file": "tools/工具-靜態庫與動態庫.md"
-    },
-    {
-      "id": "l4-2",
+      "file": "tools/工具-虛擬記憶體與行程位址空間.md",
       "x": 660,
-      "y": 1255,
+      "y": 2464,
       "width": 340,
-      "height": 131,
-      "type": "text",
-      "text": "**動態庫**\n執行期載入共享（.so / .dll），省空間但有版本衝突"
+      "height": 150
     },
     {
-      "id": "cat5",
+      "id": "l15",
       "type": "text",
-      "text": "## 🚀 程式啟動與裝載",
+      "text": "分段解決「隔離」與「重定位」\n**分頁**才解決「效率」——粒度縮到 4KB",
+      "x": 660,
+      "y": 2654,
+      "width": 340,
+      "height": 142
+    },
+    {
+      "id": "l16",
+      "type": "text",
+      "text": "裝載的本質是**建立映射，不是搬資料**\n三步做完，一個位元組都還沒進記憶體",
+      "x": 660,
+      "y": 2836,
+      "width": 340,
+      "height": 108
+    },
+    {
+      "id": "l17",
+      "type": "text",
+      "text": "**Section 是連結視圖，Segment 是執行視圖**\n一個 Segment 對應一個 VMA",
+      "x": 660,
+      "y": 2984,
+      "width": 340,
+      "height": 142
+    },
+    {
+      "id": "c4",
+      "type": "text",
+      "text": "## 🧠 虛擬記憶體與裝載",
       "x": 300,
-      "y": 1567,
+      "y": 2761,
       "width": 320,
       "height": 68,
       "color": "5"
     },
     {
-      "id": "l5-1",
+      "id": "l18",
+      "type": "file",
+      "file": "tools/工具-動態連結與位址無關程式碼.md",
       "x": 660,
-      "y": 1476,
+      "y": 3216,
       "width": 340,
-      "height": 105,
-      "type": "text",
-      "text": "**映射進記憶體**\n作業系統把程式段映射到行程位址空間"
+      "height": 150
     },
     {
-      "id": "l5-2",
-      "x": 660,
-      "y": 1621,
-      "width": 340,
-      "height": 105,
+      "id": "l19",
       "type": "text",
-      "text": "**跳到進入點**\n交棒給執行庫，再進 main()"
+      "text": "把「連結」從裝載**前**推遲到裝載**時**\n代價約 5% 效能",
+      "x": 660,
+      "y": 3406,
+      "width": 340,
+      "height": 142
+    },
+    {
+      "id": "l20",
+      "type": "text",
+      "text": "**PIC**：把要被改的部分搬離指令段\n不然程式碼段就無法跨行程共享",
+      "x": 660,
+      "y": 3588,
+      "width": 340,
+      "height": 108
+    },
+    {
+      "id": "l21",
+      "type": "text",
+      "text": "**延遲綁定**＝多加一層間接跳轉\nPLT 第一項故意填「下一條指令」",
+      "x": 660,
+      "y": 3736,
+      "width": 340,
+      "height": 108
+    },
+    {
+      "id": "l22",
+      "type": "text",
+      "text": "⚠️ **全域符號介入**：同名符號先裝載者勝，\n後者被**靜默忽略**",
+      "x": 660,
+      "y": 3884,
+      "width": 340,
+      "height": 142
+    },
+    {
+      "id": "c5",
+      "type": "text",
+      "text": "## 🔌 動態連結",
+      "x": 300,
+      "y": 3587,
+      "width": 320,
+      "height": 68,
+      "color": "5"
+    },
+    {
+      "id": "l23",
+      "type": "file",
+      "file": "tools/工具-靜態庫與動態庫.md",
+      "x": 660,
+      "y": 4116,
+      "width": 340,
+      "height": 150
+    },
+    {
+      "id": "l24",
+      "type": "file",
+      "file": "tools/工具-共享庫版本與相容性.md",
+      "x": 660,
+      "y": 4306,
+      "width": 340,
+      "height": 150
+    },
+    {
+      "id": "l25",
+      "type": "text",
+      "text": "`.a` 就是 ar 打包的一堆 .o\n**連結粒度是目標檔，不是函式**",
+      "x": 660,
+      "y": 4496,
+      "width": 340,
+      "height": 108
+    },
+    {
+      "id": "l26",
+      "type": "text",
+      "text": "**SO-NAME 表示一個庫的介面**\n介面不向後相容，SO-NAME 就得變",
+      "x": 660,
+      "y": 4644,
+      "width": 340,
+      "height": 108
+    },
+    {
+      "id": "l27",
+      "type": "text",
+      "text": "符號版本解決 SO-NAME 解決不了的\n**次版本號交會問題** → `GLIBC_2.xx not found`",
+      "x": 660,
+      "y": 4792,
+      "width": 340,
+      "height": 142
+    },
+    {
+      "id": "c6",
+      "type": "text",
+      "text": "## 📚 庫：取捨與版本",
+      "x": 300,
+      "y": 4491,
+      "width": 320,
+      "height": 68,
+      "color": "5"
+    },
+    {
+      "id": "l28",
+      "type": "file",
+      "file": "tools/工具-程式啟動與執行庫.md",
+      "x": 660,
+      "y": 5024,
+      "width": 340,
+      "height": 150
+    },
+    {
+      "id": "l29",
+      "type": "text",
+      "text": "**程式不是從 main 開始的**\n入口是執行庫的 `_start` / `mainCRTStartup`",
+      "x": 660,
+      "y": 5214,
+      "width": 340,
+      "height": 142
+    },
+    {
+      "id": "l30",
+      "type": "text",
+      "text": "C++ 全域建構＝**段合併成函式指標陣列**\n解構靠 atexit「先註冊後呼叫」自然反序",
+      "x": 660,
+      "y": 5396,
+      "width": 340,
+      "height": 176
+    },
+    {
+      "id": "l31",
+      "type": "text",
+      "text": "「运行库相当于是向操作系统**批发**了一块较大的堆空间，然后**零售**给程序用。」",
+      "x": 660,
+      "y": 5612,
+      "width": 340,
+      "height": 142
+    },
+    {
+      "id": "c7",
+      "type": "text",
+      "text": "## 🚀 程式啟動與執行庫",
+      "x": 300,
+      "y": 5355,
+      "width": 320,
+      "height": 68,
+      "color": "5"
     }
   ],
   "edges": [
     {
-      "id": "e-c-1",
-      "fromNode": "center",
-      "toNode": "cat1",
+      "id": "e1",
+      "fromNode": "root",
+      "toNode": "c1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e-1-1",
-      "fromNode": "cat1",
-      "toNode": "l1-1",
+      "id": "e2",
+      "fromNode": "c1",
+      "toNode": "l1",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e-1-2",
-      "fromNode": "cat1",
-      "toNode": "l1-2",
+      "id": "e3",
+      "fromNode": "c1",
+      "toNode": "l2",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e-c-2",
-      "fromNode": "center",
-      "toNode": "cat2",
+      "id": "e4",
+      "fromNode": "c1",
+      "toNode": "l3",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e-2-1",
-      "fromNode": "cat2",
-      "toNode": "l2-1",
+      "id": "e5",
+      "fromNode": "c1",
+      "toNode": "l4",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e-2-2",
-      "fromNode": "cat2",
-      "toNode": "l2-2",
+      "id": "e6",
+      "fromNode": "root",
+      "toNode": "c2",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e-c-3",
-      "fromNode": "center",
-      "toNode": "cat3",
+      "id": "e7",
+      "fromNode": "c2",
+      "toNode": "l5",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e-3-1",
-      "fromNode": "cat3",
-      "toNode": "l3-1",
+      "id": "e8",
+      "fromNode": "c2",
+      "toNode": "l6",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e-3-2",
-      "fromNode": "cat3",
-      "toNode": "l3-2",
+      "id": "e9",
+      "fromNode": "c2",
+      "toNode": "l7",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e-c-4",
-      "fromNode": "center",
-      "toNode": "cat4",
+      "id": "e10",
+      "fromNode": "c2",
+      "toNode": "l8",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e-4-1",
-      "fromNode": "cat4",
-      "toNode": "l4-1",
+      "id": "e11",
+      "fromNode": "c2",
+      "toNode": "l9",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e-4-2",
-      "fromNode": "cat4",
-      "toNode": "l4-2",
+      "id": "e12",
+      "fromNode": "c2",
+      "toNode": "l10",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e-c-5",
-      "fromNode": "center",
-      "toNode": "cat5",
+      "id": "e13",
+      "fromNode": "root",
+      "toNode": "c3",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e-5-1",
-      "fromNode": "cat5",
-      "toNode": "l5-1",
+      "id": "e14",
+      "fromNode": "c3",
+      "toNode": "l11",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e-5-2",
-      "fromNode": "cat5",
-      "toNode": "l5-2",
+      "id": "e15",
+      "fromNode": "c3",
+      "toNode": "l12",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e16",
+      "fromNode": "c3",
+      "toNode": "l13",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e17",
+      "fromNode": "root",
+      "toNode": "c4",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e18",
+      "fromNode": "c4",
+      "toNode": "l14",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e19",
+      "fromNode": "c4",
+      "toNode": "l15",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e20",
+      "fromNode": "c4",
+      "toNode": "l16",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e21",
+      "fromNode": "c4",
+      "toNode": "l17",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e22",
+      "fromNode": "root",
+      "toNode": "c5",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e23",
+      "fromNode": "c5",
+      "toNode": "l18",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e24",
+      "fromNode": "c5",
+      "toNode": "l19",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e25",
+      "fromNode": "c5",
+      "toNode": "l20",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e26",
+      "fromNode": "c5",
+      "toNode": "l21",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e27",
+      "fromNode": "c5",
+      "toNode": "l22",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e28",
+      "fromNode": "root",
+      "toNode": "c6",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e29",
+      "fromNode": "c6",
+      "toNode": "l23",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e30",
+      "fromNode": "c6",
+      "toNode": "l24",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e31",
+      "fromNode": "c6",
+      "toNode": "l25",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e32",
+      "fromNode": "c6",
+      "toNode": "l26",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e33",
+      "fromNode": "c6",
+      "toNode": "l27",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e34",
+      "fromNode": "root",
+      "toNode": "c7",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e35",
+      "fromNode": "c7",
+      "toNode": "l28",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e36",
+      "fromNode": "c7",
+      "toNode": "l29",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e37",
+      "fromNode": "c7",
+      "toNode": "l30",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e38",
+      "fromNode": "c7",
+      "toNode": "l31",
       "fromSide": "right",
       "toSide": "left"
     }
