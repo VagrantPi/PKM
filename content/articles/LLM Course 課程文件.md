@@ -13,7 +13,7 @@ read_status: read
 > 一份把 LLM 從零到上線拆成**三條學習路徑**的地圖：**LLM Fundamentals**（數學／Python／神經網路／NLP，可跳過）、**The LLM Scientist**（架構、預訓練、後訓練資料、SFT、偏好對齊、評估、量化、新趨勢）、**The LLM Engineer**（跑模型、向量儲存、RAG、進階 RAG、Agent、推論最佳化、部署、安全）。24 個理論主題 ＋ 23 本 Colab notebook ＋ 150 多個外部參考，本身不含可執行程式碼，定位是**導航中樞**。
 
 ## 🗺 心智圖（Canvas）
-![[LLM Course 課程文件.canvas]]
+[[LLM Course 課程文件.canvas|🗺 點開全螢幕心智圖]]
 
 ## 🎯 為什麼存這套文件 / 未來想拿它做什麼
 - 手上已有《AI工程》的應用層工具卡，但**訓練與部署這一段是空白**——這份文件正好補上 SFT／對齊／量化／推論最佳化。

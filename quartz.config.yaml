@@ -154,6 +154,12 @@ plugins:
     enabled: true
   - source: github:quartz-community/explorer
     enabled: true
+    options:
+      # 側邊欄不列 .canvas 心智圖——它跟同名筆記會並排出現兩次。
+      # 心智圖從文章內的連結進去（全螢幕）。
+      # filterFn 會被 toString() 後丟給前端 new Function，所以這裡直接給字串。
+      # 預設值同時排除 tags，覆寫時要一併保留。
+      filterFn: "(node) => node.slugSegment !== 'tags' && !(node.slugSegment ?? '').endsWith('.canvas')"
     layout:
       position: left
       priority: 50
