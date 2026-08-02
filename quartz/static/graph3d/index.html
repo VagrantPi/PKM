@@ -75,6 +75,19 @@
         font-size: 13px;
         font-weight: 600;
       }
+      /* 這頁是獨立開新分頁的，沒有 Quartz 的麵包屑，得自己留一條路回去。
+         相對路徑：本檔在 <base>/static/graph3d/，往上兩層就是站台首頁。 */
+      #back {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 11px;
+        color: var(--muted);
+        text-decoration: none;
+      }
+      #back:hover {
+        color: var(--fg);
+        text-decoration: underline;
+      }
       #search {
         width: 100%;
         padding: 5px 8px;
@@ -186,6 +199,7 @@
     <div id="status">載入中…</div>
 
     <div id="controls" class="panel" hidden>
+      <a id="back" href="../../">← 回知識庫</a>
       <h1>3D 知識圖譜</h1>
       <input id="search" type="search" placeholder="搜尋筆記標題…" autocomplete="off" />
       <div id="cats"></div>
