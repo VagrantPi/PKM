@@ -5,7 +5,7 @@
       "type": "text",
       "text": "# 🦄 獨角獸專案\nThe Unicorn Project",
       "x": -160,
-      "y": 732,
+      "y": 2277,
       "width": 320,
       "height": 147,
       "color": "6"
@@ -26,136 +26,328 @@
       "x": 660,
       "y": 190,
       "width": 340,
-      "height": 104
+      "height": 108
     },
     {
       "id": "l3",
       "type": "text",
-      "text": "能在自己範圍內完成事情，不必層層等待他人",
+      "text": "⚠️ 正式定義在正文；**書末附錄只有名稱、沒有定義**",
       "x": 660,
-      "y": 384,
+      "y": 338,
       "width": 340,
-      "height": 78
-    },
-    {
-      "id": "l4",
-      "type": "text",
-      "text": "依賴糾纏是生產力殺手",
-      "x": 660,
-      "y": 502,
-      "width": 340,
-      "height": 78
-    },
-    {
-      "id": "l5",
-      "type": "text",
-      "text": "「當開發者能專注、進入心流，偉大的事情就會發生。」",
-      "x": 660,
-      "y": 670,
-      "width": 340,
-      "height": 104
-    },
-    {
-      "id": "l6",
-      "type": "text",
-      "text": "技術債與糟糕的開發環境是隱形的巨大成本",
-      "x": 660,
-      "y": 814,
-      "width": 340,
-      "height": 78
-    },
-    {
-      "id": "l7",
-      "type": "text",
-      "text": "改善日常工作，優先於日常工作本身",
-      "x": 660,
-      "y": 982,
-      "width": 340,
-      "height": 78
-    },
-    {
-      "id": "l8",
-      "type": "file",
-      "file": "tools/工具-心理安全感.md",
-      "x": 660,
-      "y": 1150,
-      "width": 340,
-      "height": 150
-    },
-    {
-      "id": "l9",
-      "type": "text",
-      "text": "恐懼文化讓人隱藏問題；心理安全是一切改善的地基",
-      "x": 660,
-      "y": 1340,
-      "width": 340,
-      "height": 104
-    },
-    {
-      "id": "l10",
-      "type": "text",
-      "text": "以「是否真正為顧客創造價值」判斷工作的優先序",
-      "x": 660,
-      "y": 1534,
-      "width": 340,
-      "height": 78
+      "height": 108
     },
     {
       "id": "c1",
       "type": "text",
       "text": "## 🌟 五大理想（診斷框架）",
       "x": 300,
-      "y": 113,
+      "y": 189,
       "width": 320,
       "height": 68,
       "color": "5"
+    },
+    {
+      "id": "l4",
+      "type": "text",
+      "text": "能在自己範圍內完成事情，不必層層等待他人",
+      "x": 660,
+      "y": 536,
+      "width": 340,
+      "height": 78
+    },
+    {
+      "id": "l5",
+      "type": "text",
+      "text": "不只程式碼，**組織與決策**也要有局部性——病灶叫「廣場」",
+      "x": 660,
+      "y": 654,
+      "width": 340,
+      "height": 108
+    },
+    {
+      "id": "l6",
+      "type": "text",
+      "text": "📏 可量測：一個功能平均要動用 **4.2 個團隊**，很多要跟 8 個以上",
+      "x": 660,
+      "y": 802,
+      "width": 340,
+      "height": 108
     },
     {
       "id": "c2",
       "type": "text",
       "text": "## ① 局部性與簡單性",
       "x": 300,
-      "y": 448,
+      "y": 689,
       "width": 320,
       "height": 68,
       "color": "5"
+    },
+    {
+      "id": "l7",
+      "type": "text",
+      "text": "「當開發者能專注、進入心流，偉大的事情就會發生。」",
+      "x": 660,
+      "y": 1000,
+      "width": 340,
+      "height": 108
+    },
+    {
+      "id": "l8",
+      "type": "text",
+      "text": "「複雜度債」不只是技術問題，是商業問題——而且永遠是一個選擇",
+      "x": 660,
+      "y": 1148,
+      "width": 340,
+      "height": 108
     },
     {
       "id": "c3",
       "type": "text",
       "text": "## ② 專注、心流與愉悅",
       "x": 300,
-      "y": 747,
+      "y": 1094,
       "width": 320,
       "height": 68,
       "color": "5"
+    },
+    {
+      "id": "l9",
+      "type": "text",
+      "text": "改善日常工作，優先於日常工作本身",
+      "x": 660,
+      "y": 1346,
+      "width": 340,
+      "height": 78
+    },
+    {
+      "id": "l10",
+      "type": "text",
+      "text": "正面是 **Andon cord**：任何人都能喊停，而且會被感謝",
+      "x": 660,
+      "y": 1464,
+      "width": 340,
+      "height": 108
+    },
+    {
+      "id": "l11",
+      "type": "text",
+      "text": "反面是 **TWWADI**：僵化計畫、強勢架構審查、冗長審批、嚴格職責分離",
+      "x": 660,
+      "y": 1612,
+      "width": 340,
+      "height": 108
     },
     {
       "id": "c4",
       "type": "text",
       "text": "## ③ 改善日常工作",
       "x": 300,
-      "y": 987,
+      "y": 1499,
       "width": 320,
       "height": 68,
       "color": "5"
+    },
+    {
+      "id": "l12",
+      "type": "file",
+      "file": "tools/工具-技術債功能凍結.md",
+      "x": 660,
+      "y": 1810,
+      "width": 340,
+      "height": 150
+    },
+    {
+      "id": "l13",
+      "type": "text",
+      "text": "Project Inversion：**30 天**、高層具名備忘錄、功能與部署同時凍結",
+      "x": 660,
+      "y": 2000,
+      "width": 340,
+      "height": 142
+    },
+    {
+      "id": "l14",
+      "type": "text",
+      "text": "失敗模式：頭一週被拿去吵範圍，多數團隊照常做功能",
+      "x": 660,
+      "y": 2182,
+      "width": 340,
+      "height": 108
     },
     {
       "id": "c5",
       "type": "text",
-      "text": "## ④ 心理安全感",
+      "text": "## 🧊 還債要有期限",
       "x": 300,
-      "y": 1263,
+      "y": 2016,
       "width": 320,
       "height": 68,
       "color": "5"
     },
     {
+      "id": "l15",
+      "type": "file",
+      "file": "tools/工具-心理安全感.md",
+      "x": 660,
+      "y": 2380,
+      "width": 340,
+      "height": 150
+    },
+    {
+      "id": "l16",
+      "type": "text",
+      "text": "恐懼文化讓人隱藏問題；心理安全是一切改善的地基",
+      "x": 660,
+      "y": 2570,
+      "width": 340,
+      "height": 108
+    },
+    {
+      "id": "l17",
+      "type": "text",
+      "text": "**宣告安全沒有用——要有人先示範脆弱才破得了冰**",
+      "x": 660,
+      "y": 2718,
+      "width": 340,
+      "height": 108
+    },
+    {
+      "id": "l18",
+      "type": "text",
+      "text": "「安全是工作的前提。」",
+      "x": 660,
+      "y": 2866,
+      "width": 340,
+      "height": 78
+    },
+    {
       "id": "c6",
+      "type": "text",
+      "text": "## ④ 心理安全感",
+      "x": 300,
+      "y": 2628,
+      "width": 320,
+      "height": 68,
+      "color": "5"
+    },
+    {
+      "id": "l19",
+      "type": "file",
+      "file": "tools/工具-資料民主化.md",
+      "x": 660,
+      "y": 3034,
+      "width": 340,
+      "height": 150
+    },
+    {
+      "id": "l20",
+      "type": "text",
+      "text": "資料所有權推回最懂語意的業務團隊，不必開單就能取用",
+      "x": 660,
+      "y": 3224,
+      "width": 340,
+      "height": 108
+    },
+    {
+      "id": "l21",
+      "type": "text",
+      "text": "但安全、PII、靜態加密**必須集中**，不能各團隊各自為政",
+      "x": 660,
+      "y": 3372,
+      "width": 340,
+      "height": 108
+    },
+    {
+      "id": "c7",
+      "type": "text",
+      "text": "## 🗄 資料民主化",
+      "x": 300,
+      "y": 3223,
+      "width": 320,
+      "height": 68,
+      "color": "5"
+    },
+    {
+      "id": "l22",
+      "type": "text",
+      "text": "以「是否真正為顧客創造價值」判斷工作的優先序",
+      "x": 660,
+      "y": 3570,
+      "width": 340,
+      "height": 108
+    },
+    {
+      "id": "l23",
+      "type": "text",
+      "text": "原話式檢驗：顧客願意為它付錢嗎，還是它只對我們這個部門有價值？",
+      "x": 660,
+      "y": 3718,
+      "width": 340,
+      "height": 108
+    },
+    {
+      "id": "c8",
       "type": "text",
       "text": "## ⑤ 顧客至上",
       "x": 300,
-      "y": 1539,
+      "y": 3664,
+      "width": 320,
+      "height": 68,
+      "color": "5"
+    },
+    {
+      "id": "l24",
+      "type": "file",
+      "file": "tools/工具-核心與語境盤點.md",
+      "x": 660,
+      "y": 3916,
+      "width": 340,
+      "height": 150
+    },
+    {
+      "id": "l25",
+      "type": "text",
+      "text": "沒管好 Context 是「**偉大公司的屠宰場**」",
+      "x": 660,
+      "y": 4106,
+      "width": 340,
+      "height": 108
+    },
+    {
+      "id": "l26",
+      "type": "file",
+      "file": "tools/工具-三地平線與創新賭注治理.md",
+      "x": 660,
+      "y": 4254,
+      "width": 340,
+      "height": 150
+    },
+    {
+      "id": "l27",
+      "type": "text",
+      "text": "季度四選一：續投／砍掉重分配／加碼／畢業到 H2",
+      "x": 660,
+      "y": 4444,
+      "width": 340,
+      "height": 108
+    },
+    {
+      "id": "l28",
+      "type": "text",
+      "text": "⚠️ 放著不管，H1 的人會吃光公司所有資源",
+      "x": 660,
+      "y": 4592,
+      "width": 340,
+      "height": 108
+    },
+    {
+      "id": "c9",
+      "type": "text",
+      "text": "## 💰 資源該投到哪",
+      "x": 300,
+      "y": 4274,
       "width": 320,
       "height": 68,
       "color": "5"
@@ -185,15 +377,15 @@
     },
     {
       "id": "e4",
-      "fromNode": "root",
-      "toNode": "c2",
+      "fromNode": "c1",
+      "toNode": "l3",
       "fromSide": "right",
       "toSide": "left"
     },
     {
       "id": "e5",
-      "fromNode": "c2",
-      "toNode": "l3",
+      "fromNode": "root",
+      "toNode": "c2",
       "fromSide": "right",
       "toSide": "left"
     },
@@ -206,71 +398,218 @@
     },
     {
       "id": "e7",
+      "fromNode": "c2",
+      "toNode": "l5",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e8",
+      "fromNode": "c2",
+      "toNode": "l6",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e9",
       "fromNode": "root",
       "toNode": "c3",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e8",
-      "fromNode": "c3",
-      "toNode": "l5",
-      "fromSide": "right",
-      "toSide": "left"
-    },
-    {
-      "id": "e9",
-      "fromNode": "c3",
-      "toNode": "l6",
-      "fromSide": "right",
-      "toSide": "left"
-    },
-    {
       "id": "e10",
-      "fromNode": "root",
-      "toNode": "c4",
+      "fromNode": "c3",
+      "toNode": "l7",
       "fromSide": "right",
       "toSide": "left"
     },
     {
       "id": "e11",
-      "fromNode": "c4",
-      "toNode": "l7",
+      "fromNode": "c3",
+      "toNode": "l8",
       "fromSide": "right",
       "toSide": "left"
     },
     {
       "id": "e12",
       "fromNode": "root",
-      "toNode": "c5",
+      "toNode": "c4",
       "fromSide": "right",
       "toSide": "left"
     },
     {
       "id": "e13",
-      "fromNode": "c5",
-      "toNode": "l8",
-      "fromSide": "right",
-      "toSide": "left"
-    },
-    {
-      "id": "e14",
-      "fromNode": "c5",
+      "fromNode": "c4",
       "toNode": "l9",
       "fromSide": "right",
       "toSide": "left"
     },
     {
+      "id": "e14",
+      "fromNode": "c4",
+      "toNode": "l10",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
       "id": "e15",
+      "fromNode": "c4",
+      "toNode": "l11",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e16",
+      "fromNode": "root",
+      "toNode": "c5",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e17",
+      "fromNode": "c5",
+      "toNode": "l12",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e18",
+      "fromNode": "c5",
+      "toNode": "l13",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e19",
+      "fromNode": "c5",
+      "toNode": "l14",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e20",
       "fromNode": "root",
       "toNode": "c6",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e16",
+      "id": "e21",
       "fromNode": "c6",
-      "toNode": "l10",
+      "toNode": "l15",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e22",
+      "fromNode": "c6",
+      "toNode": "l16",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e23",
+      "fromNode": "c6",
+      "toNode": "l17",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e24",
+      "fromNode": "c6",
+      "toNode": "l18",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e25",
+      "fromNode": "root",
+      "toNode": "c7",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e26",
+      "fromNode": "c7",
+      "toNode": "l19",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e27",
+      "fromNode": "c7",
+      "toNode": "l20",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e28",
+      "fromNode": "c7",
+      "toNode": "l21",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e29",
+      "fromNode": "root",
+      "toNode": "c8",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e30",
+      "fromNode": "c8",
+      "toNode": "l22",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e31",
+      "fromNode": "c8",
+      "toNode": "l23",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e32",
+      "fromNode": "root",
+      "toNode": "c9",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e33",
+      "fromNode": "c9",
+      "toNode": "l24",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e34",
+      "fromNode": "c9",
+      "toNode": "l25",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e35",
+      "fromNode": "c9",
+      "toNode": "l26",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e36",
+      "fromNode": "c9",
+      "toNode": "l27",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e37",
+      "fromNode": "c9",
+      "toNode": "l28",
       "fromSide": "right",
       "toSide": "left"
     }

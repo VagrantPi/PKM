@@ -5,7 +5,7 @@
       "type": "text",
       "text": "# 🔥 鳳凰專案\nThe Phoenix Project",
       "x": -160,
-      "y": 985,
+      "y": 2126,
       "width": 320,
       "height": 147,
       "color": "6"
@@ -26,153 +26,290 @@
       "x": 660,
       "y": 190,
       "width": 340,
-      "height": 105
+      "height": 108
     },
     {
       "id": "l3",
       "type": "text",
-      "text": "**② 回饋**\n建立由右到左的快速回饋",
+      "text": "**② 回饋**\n建立由右到左的快速回饋，讓等待時間可見",
       "x": 660,
-      "y": 335,
+      "y": 338,
       "width": 340,
-      "height": 105
+      "height": 108
     },
     {
       "id": "l4",
       "type": "text",
-      "text": "**③ 持續學習與實驗**\n打造實驗與學習的文化",
+      "text": "**③ 持續學習與實驗**\n兩週一輪的改善循環，並主動注入故障",
       "x": 660,
-      "y": 480,
+      "y": 486,
       "width": 340,
-      "height": 105
+      "height": 108
     },
     {
       "id": "l5",
-      "type": "file",
-      "file": "tools/工具-四種工作類型.md",
-      "x": 660,
-      "y": 675,
-      "width": 340,
-      "height": 150
-    },
-    {
-      "id": "l6",
       "type": "text",
-      "text": "業務專案 / 內部 IT 專案 / 變更 / **計畫外工作（救火）**",
+      "text": "「改善日常工作，比做日常工作本身更重要。」",
       "x": 660,
-      "y": 865,
+      "y": 634,
       "width": 340,
-      "height": 106
-    },
-    {
-      "id": "l7",
-      "type": "text",
-      "text": "「未計畫的工作，是會殺死你的那種工作。」",
-      "x": 660,
-      "y": 1011,
-      "width": 340,
-      "height": 78
-    },
-    {
-      "id": "l8",
-      "type": "file",
-      "file": "tools/工具-找出並管理約束點.md",
-      "x": 660,
-      "y": 1179,
-      "width": 340,
-      "height": 150
-    },
-    {
-      "id": "l9",
-      "type": "text",
-      "text": "「在瓶頸之外所做的任何改善，都只是假象。」",
-      "x": 660,
-      "y": 1369,
-      "width": 340,
-      "height": 78
-    },
-    {
-      "id": "l10",
-      "type": "text",
-      "text": "找到瓶頸（書中的 Brent），保護它並圍繞它排程",
-      "x": 660,
-      "y": 1487,
-      "width": 340,
-      "height": 78
-    },
-    {
-      "id": "l11",
-      "type": "file",
-      "file": "tools/工具-降低在製品WIP.md",
-      "x": 660,
-      "y": 1655,
-      "width": 340,
-      "height": 150
-    },
-    {
-      "id": "l12",
-      "type": "text",
-      "text": "未計畫的工作會擠掉計畫內工作；降低 WIP 是關鍵解藥",
-      "x": 660,
-      "y": 1845,
-      "width": 340,
-      "height": 104
-    },
-    {
-      "id": "l13",
-      "type": "text",
-      "text": "把製造業原理（豐田生產、約束理論）搬到 IT",
-      "x": 660,
-      "y": 2039,
-      "width": 340,
-      "height": 78
+      "height": 108
     },
     {
       "id": "c1",
       "type": "text",
       "text": "## 🔄 三步工作法",
       "x": 300,
-      "y": 258,
+      "y": 337,
       "width": 320,
       "height": 68,
       "color": "5"
+    },
+    {
+      "id": "l6",
+      "type": "file",
+      "file": "tools/工具-四種工作類型.md",
+      "x": 660,
+      "y": 832,
+      "width": 340,
+      "height": 150
+    },
+    {
+      "id": "l7",
+      "type": "text",
+      "text": "業務專案 / 內部 IT 專案 / 變更 / **計畫外工作（救火）**",
+      "x": 660,
+      "y": 1022,
+      "width": 340,
+      "height": 108
+    },
+    {
+      "id": "l8",
+      "type": "text",
+      "text": "計畫外工作的本質是**復原工作**，永遠把你帶離目標——要追它從哪裡來",
+      "x": 660,
+      "y": 1170,
+      "width": 340,
+      "height": 108
+    },
+    {
+      "id": "l9",
+      "type": "text",
+      "text": "「未計畫的工作，是會殺死你的那種工作。」",
+      "x": 660,
+      "y": 1318,
+      "width": 340,
+      "height": 78
     },
     {
       "id": "c2",
       "type": "text",
       "text": "## 👀 四種工作類型",
       "x": 300,
-      "y": 848,
+      "y": 1080,
       "width": 320,
       "height": 68,
       "color": "5"
+    },
+    {
+      "id": "l10",
+      "type": "file",
+      "file": "tools/工具-找出並管理約束點.md",
+      "x": 660,
+      "y": 1486,
+      "width": 340,
+      "height": 150
+    },
+    {
+      "id": "l11",
+      "type": "text",
+      "text": "「在瓶頸之外所做的任何改善，都只是假象。」",
+      "x": 660,
+      "y": 1676,
+      "width": 340,
+      "height": 108
+    },
+    {
+      "id": "l12",
+      "type": "text",
+      "text": "⚠️ 約束點是**工作中心**，不是人；Brent 是支撐了太多工作中心的那個人",
+      "x": 660,
+      "y": 1824,
+      "width": 340,
+      "height": 108
+    },
+    {
+      "id": "l13",
+      "type": "text",
+      "text": "標準化與文件化之前，再招幾個一樣的人都沒用",
+      "x": 660,
+      "y": 1972,
+      "width": 340,
+      "height": 108
     },
     {
       "id": "c3",
       "type": "text",
       "text": "## 🚧 約束理論・瓶頸",
       "x": 300,
-      "y": 1338,
+      "y": 1749,
       "width": 320,
       "height": 68,
       "color": "5"
+    },
+    {
+      "id": "l14",
+      "type": "file",
+      "file": "tools/工具-降低在製品WIP.md",
+      "x": 660,
+      "y": 2170,
+      "width": 340,
+      "height": 150
+    },
+    {
+      "id": "l15",
+      "type": "text",
+      "text": "未計畫的工作會擠掉計畫內工作；降低 WIP 是關鍵解藥",
+      "x": 660,
+      "y": 2360,
+      "width": 340,
+      "height": 108
+    },
+    {
+      "id": "l16",
+      "type": "text",
+      "text": "更上游的槓桿是**縮小批量**，理想是單件流",
+      "x": 660,
+      "y": 2508,
+      "width": 340,
+      "height": 108
+    },
+    {
+      "id": "l17",
+      "type": "text",
+      "text": "失控時的猛藥：**全面凍結專案 → 分批解凍**",
+      "x": 660,
+      "y": 2656,
+      "width": 340,
+      "height": 108
     },
     {
       "id": "c4",
       "type": "text",
       "text": "## 📉 降低在製品 WIP",
       "x": 300,
-      "y": 1768,
+      "y": 2433,
       "width": 320,
       "height": 68,
       "color": "5"
     },
     {
+      "id": "l18",
+      "type": "file",
+      "file": "tools/工具-等待時間與閒置產能.md",
+      "x": 660,
+      "y": 2854,
+      "width": 340,
+      "height": 150
+    },
+    {
+      "id": "l19",
+      "type": "text",
+      "text": "等待時間 ＝ 忙碌% ÷ 閒置%\n90% 忙 → 等待是 50% 忙的**九倍**",
+      "x": 660,
+      "y": 3044,
+      "width": 340,
+      "height": 142
+    },
+    {
+      "id": "l20",
+      "type": "text",
+      "text": "七次交接 × 各 90% 忙 ＝ **63 小時純排隊**，而實際動手只要 30 秒",
+      "x": 660,
+      "y": 3226,
+      "width": 340,
+      "height": 142
+    },
+    {
+      "id": "l21",
+      "type": "text",
+      "text": "結論：**每個人都必須有 slack**，否則 WIP 全卡在佇列裡",
+      "x": 660,
+      "y": 3408,
+      "width": 340,
+      "height": 108
+    },
+    {
       "id": "c5",
+      "type": "text",
+      "text": "## ⏳ 等待時間與 slack",
+      "x": 300,
+      "y": 3151,
+      "width": 320,
+      "height": 68,
+      "color": "5"
+    },
+    {
+      "id": "l22",
+      "type": "file",
+      "file": "tools/工具-把業務目標接到IT風險.md",
+      "x": 660,
+      "y": 3606,
+      "width": 340,
+      "height": 150
+    },
+    {
+      "id": "l23",
+      "type": "text",
+      "text": "四欄表：業務指標 → 依賴的 IT 系統 → 會出什麼錯 → 靠什麼控制",
+      "x": 660,
+      "y": 3796,
+      "width": 340,
+      "height": 108
+    },
+    {
+      "id": "l24",
+      "type": "text",
+      "text": "把 IT 維運指標變成業務指標的**前導指標**（換機油之於準時到貨）",
+      "x": 660,
+      "y": 3944,
+      "width": 340,
+      "height": 108
+    },
+    {
+      "id": "c6",
+      "type": "text",
+      "text": "## 💼 IT 風險就是業務風險",
+      "x": 300,
+      "y": 3795,
+      "width": 320,
+      "height": 68,
+      "color": "5"
+    },
+    {
+      "id": "l25",
+      "type": "text",
+      "text": "把製造業原理（豐田生產、約束理論）搬到 IT",
+      "x": 660,
+      "y": 4142,
+      "width": 340,
+      "height": 108
+    },
+    {
+      "id": "l26",
+      "type": "text",
+      "text": "「能把不需要的工作**拿出**系統，比能把更多工作**放進**系統更重要。」",
+      "x": 660,
+      "y": 4290,
+      "width": 340,
+      "height": 108
+    },
+    {
+      "id": "c7",
       "type": "text",
       "text": "## 🏭 IT 就是生產線",
       "x": 300,
-      "y": 2044,
+      "y": 4236,
       "width": 320,
       "height": 68,
       "color": "5"
@@ -216,15 +353,15 @@
     },
     {
       "id": "e6",
-      "fromNode": "root",
-      "toNode": "c2",
+      "fromNode": "c1",
+      "toNode": "l5",
       "fromSide": "right",
       "toSide": "left"
     },
     {
       "id": "e7",
-      "fromNode": "c2",
-      "toNode": "l5",
+      "fromNode": "root",
+      "toNode": "c2",
       "fromSide": "right",
       "toSide": "left"
     },
@@ -244,22 +381,22 @@
     },
     {
       "id": "e10",
-      "fromNode": "root",
-      "toNode": "c3",
-      "fromSide": "right",
-      "toSide": "left"
-    },
-    {
-      "id": "e11",
-      "fromNode": "c3",
+      "fromNode": "c2",
       "toNode": "l8",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e12",
-      "fromNode": "c3",
+      "id": "e11",
+      "fromNode": "c2",
       "toNode": "l9",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e12",
+      "fromNode": "root",
+      "toNode": "c3",
       "fromSide": "right",
       "toSide": "left"
     },
@@ -272,36 +409,141 @@
     },
     {
       "id": "e14",
-      "fromNode": "root",
-      "toNode": "c4",
-      "fromSide": "right",
-      "toSide": "left"
-    },
-    {
-      "id": "e15",
-      "fromNode": "c4",
+      "fromNode": "c3",
       "toNode": "l11",
       "fromSide": "right",
       "toSide": "left"
     },
     {
-      "id": "e16",
-      "fromNode": "c4",
+      "id": "e15",
+      "fromNode": "c3",
       "toNode": "l12",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e16",
+      "fromNode": "c3",
+      "toNode": "l13",
       "fromSide": "right",
       "toSide": "left"
     },
     {
       "id": "e17",
       "fromNode": "root",
-      "toNode": "c5",
+      "toNode": "c4",
       "fromSide": "right",
       "toSide": "left"
     },
     {
       "id": "e18",
+      "fromNode": "c4",
+      "toNode": "l14",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e19",
+      "fromNode": "c4",
+      "toNode": "l15",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e20",
+      "fromNode": "c4",
+      "toNode": "l16",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e21",
+      "fromNode": "c4",
+      "toNode": "l17",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e22",
+      "fromNode": "root",
+      "toNode": "c5",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e23",
       "fromNode": "c5",
-      "toNode": "l13",
+      "toNode": "l18",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e24",
+      "fromNode": "c5",
+      "toNode": "l19",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e25",
+      "fromNode": "c5",
+      "toNode": "l20",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e26",
+      "fromNode": "c5",
+      "toNode": "l21",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e27",
+      "fromNode": "root",
+      "toNode": "c6",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e28",
+      "fromNode": "c6",
+      "toNode": "l22",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e29",
+      "fromNode": "c6",
+      "toNode": "l23",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e30",
+      "fromNode": "c6",
+      "toNode": "l24",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e31",
+      "fromNode": "root",
+      "toNode": "c7",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e32",
+      "fromNode": "c7",
+      "toNode": "l25",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e33",
+      "fromNode": "c7",
+      "toNode": "l26",
       "fromSide": "right",
       "toSide": "left"
     }
