@@ -1,310 +1,326 @@
 {
- "nodes": [
-  {
-   "id": "center",
-   "type": "text",
-   "text": "# 大型網站技術架構\n李智慧｜五大架構要素 × 慣用模式",
-   "x": -160,
-   "y": -73,
-   "width": 320,
-   "height": 147,
-   "color": "6"
-  },
-  {
-   "id": "cat1",
-   "type": "text",
-   "text": "🧭 總綱\n九式 × 五要素",
-   "x": 300,
-   "y": -1204,
-   "width": 320,
-   "height": 68,
-   "color": "5"
-  },
-  {
-   "id": "cat1-l1",
-   "type": "file",
-   "file": "tools/工具-網站架構模式九式.md",
-   "x": 660,
-   "y": -1245,
-   "width": 340,
-   "height": 150
-  },
-  {
-   "id": "cat2",
-   "type": "text",
-   "text": "⚡ 性能\n多層快取 × 非同步",
-   "x": 300,
-   "y": -869,
-   "width": 320,
-   "height": 68,
-   "color": "5"
-  },
-  {
-   "id": "cat2-l1",
-   "type": "file",
-   "file": "tools/工具-快取與資源優化.md",
-   "x": 660,
-   "y": -1005,
-   "width": 340,
-   "height": 150
-  },
-  {
-   "id": "cat2-l2",
-   "type": "file",
-   "file": "tools/工具-Transactional-Outbox-Pattern.md",
-   "x": 660,
-   "y": -815,
-   "width": 340,
-   "height": 150
-  },
-  {
-   "id": "cat3",
-   "type": "text",
-   "text": "🛡 可用性\n冗餘備援 × 故障隔離",
-   "x": 300,
-   "y": -439,
-   "width": 320,
-   "height": 68,
-   "color": "5"
-  },
-  {
-   "id": "cat3-l1",
-   "type": "file",
-   "file": "tools/工具-網站高可用與伸縮性設計.md",
-   "x": 660,
-   "y": -575,
-   "width": 340,
-   "height": 150
-  },
-  {
-   "id": "cat3-l2",
-   "type": "file",
-   "file": "tools/工具-生產故障反模式清單.md",
-   "x": 660,
-   "y": -385,
-   "width": 340,
-   "height": 150
-  },
-  {
-   "id": "cat4",
-   "type": "text",
-   "text": "📈 伸縮性\n負載均衡 × 分庫分表 × 削峰",
-   "x": 300,
-   "y": 86,
-   "width": 320,
-   "height": 68,
-   "color": "5"
-  },
-  {
-   "id": "cat4-l1",
-   "type": "file",
-   "file": "tools/工具-透明多級分流.md",
-   "x": 660,
-   "y": -145,
-   "width": 340,
-   "height": 150
-  },
-  {
-   "id": "cat4-l2",
-   "type": "file",
-   "file": "tools/工具-資料分區.md",
-   "x": 660,
-   "y": 45,
-   "width": 340,
-   "height": 150
-  },
-  {
-   "id": "cat4-l3",
-   "type": "file",
-   "file": "tools/工具-秒殺系統設計.md",
-   "x": 660,
-   "y": 235,
-   "width": 340,
-   "height": 150
-  },
-  {
-   "id": "cat5",
-   "type": "text",
-   "text": "🧩 擴展性\n解耦與演進",
-   "x": 300,
-   "y": 516,
-   "width": 320,
-   "height": 68,
-   "color": "5"
-  },
-  {
-   "id": "cat5-l1",
-   "type": "file",
-   "file": "tools/工具-架構隨業務規模演進.md",
-   "x": 660,
-   "y": 475,
-   "width": 340,
-   "height": 150
-  },
-  {
-   "id": "cat6",
-   "type": "text",
-   "text": "🔒 安全性\n攻防 × 加密 × 風控",
-   "x": 300,
-   "y": 946,
-   "width": 320,
-   "height": 68,
-   "color": "5"
-  },
-  {
-   "id": "cat6-l1",
-   "type": "file",
-   "file": "tools/工具-網站應用攻擊與防禦.md",
-   "x": 660,
-   "y": 715,
-   "width": 340,
-   "height": 150
-  },
-  {
-   "id": "cat6-l2",
-   "type": "file",
-   "file": "tools/工具-資料加密與密鑰管理.md",
-   "x": 660,
-   "y": 905,
-   "width": 340,
-   "height": 150
-  },
-  {
-   "id": "cat6-l3",
-   "type": "file",
-   "file": "tools/工具-反垃圾與電商風控.md",
-   "x": 660,
-   "y": 1095,
-   "width": 340,
-   "height": 150
-  }
- ],
- "edges": [
-  {
-   "id": "e1-1",
-   "fromNode": "cat1",
-   "fromSide": "right",
-   "toNode": "cat1-l1",
-   "toSide": "left"
-  },
-  {
-   "id": "ec1",
-   "fromNode": "center",
-   "fromSide": "right",
-   "toNode": "cat1",
-   "toSide": "left"
-  },
-  {
-   "id": "e2-1",
-   "fromNode": "cat2",
-   "fromSide": "right",
-   "toNode": "cat2-l1",
-   "toSide": "left"
-  },
-  {
-   "id": "e2-2",
-   "fromNode": "cat2",
-   "fromSide": "right",
-   "toNode": "cat2-l2",
-   "toSide": "left"
-  },
-  {
-   "id": "ec2",
-   "fromNode": "center",
-   "fromSide": "right",
-   "toNode": "cat2",
-   "toSide": "left"
-  },
-  {
-   "id": "e3-1",
-   "fromNode": "cat3",
-   "fromSide": "right",
-   "toNode": "cat3-l1",
-   "toSide": "left"
-  },
-  {
-   "id": "e3-2",
-   "fromNode": "cat3",
-   "fromSide": "right",
-   "toNode": "cat3-l2",
-   "toSide": "left"
-  },
-  {
-   "id": "ec3",
-   "fromNode": "center",
-   "fromSide": "right",
-   "toNode": "cat3",
-   "toSide": "left"
-  },
-  {
-   "id": "e4-1",
-   "fromNode": "cat4",
-   "fromSide": "right",
-   "toNode": "cat4-l1",
-   "toSide": "left"
-  },
-  {
-   "id": "e4-2",
-   "fromNode": "cat4",
-   "fromSide": "right",
-   "toNode": "cat4-l2",
-   "toSide": "left"
-  },
-  {
-   "id": "e4-3",
-   "fromNode": "cat4",
-   "fromSide": "right",
-   "toNode": "cat4-l3",
-   "toSide": "left"
-  },
-  {
-   "id": "ec4",
-   "fromNode": "center",
-   "fromSide": "right",
-   "toNode": "cat4",
-   "toSide": "left"
-  },
-  {
-   "id": "e5-1",
-   "fromNode": "cat5",
-   "fromSide": "right",
-   "toNode": "cat5-l1",
-   "toSide": "left"
-  },
-  {
-   "id": "ec5",
-   "fromNode": "center",
-   "fromSide": "right",
-   "toNode": "cat5",
-   "toSide": "left"
-  },
-  {
-   "id": "e6-1",
-   "fromNode": "cat6",
-   "fromSide": "right",
-   "toNode": "cat6-l1",
-   "toSide": "left"
-  },
-  {
-   "id": "e6-2",
-   "fromNode": "cat6",
-   "fromSide": "right",
-   "toNode": "cat6-l2",
-   "toSide": "left"
-  },
-  {
-   "id": "e6-3",
-   "fromNode": "cat6",
-   "fromSide": "right",
-   "toNode": "cat6-l3",
-   "toSide": "left"
-  },
-  {
-   "id": "ec6",
-   "fromNode": "center",
-   "fromSide": "right",
-   "toNode": "cat6",
-   "toSide": "left"
-  }
- ]
+  "nodes": [
+    {
+      "id": "center",
+      "type": "text",
+      "text": "# 📗 大型網站技術架構\n核心原理與案例分析\n\n**五大要素 × 九種模式**",
+      "x": -160,
+      "y": -73,
+      "width": 320,
+      "height": 147,
+      "color": "6"
+    },
+    {
+      "id": "cat0",
+      "type": "text",
+      "text": "## 🧭 總綱",
+      "x": 300,
+      "y": -1204,
+      "width": 320,
+      "height": 68,
+      "color": "5"
+    },
+    {
+      "id": "l0-0",
+      "type": "file",
+      "file": "tools/工具-網站架構模式九式.md",
+      "x": 660,
+      "y": -1340,
+      "width": 340,
+      "height": 150
+    },
+    {
+      "id": "l0-1",
+      "type": "file",
+      "file": "tools/工具-可靠可擴展可維護.md",
+      "x": 660,
+      "y": -1150,
+      "width": 340,
+      "height": 150
+    },
+    {
+      "id": "cat1",
+      "type": "text",
+      "text": "## ⚡ 性能",
+      "x": 300,
+      "y": -869,
+      "width": 320,
+      "height": 68,
+      "color": "5"
+    },
+    {
+      "id": "l1-0",
+      "type": "file",
+      "file": "tools/工具-快取與資源優化.md",
+      "x": 660,
+      "y": -910,
+      "width": 340,
+      "height": 150
+    },
+    {
+      "id": "cat2",
+      "type": "text",
+      "text": "## 🛡 可用性",
+      "x": 300,
+      "y": -439,
+      "width": 320,
+      "height": 68,
+      "color": "5"
+    },
+    {
+      "id": "l2-0",
+      "type": "file",
+      "file": "tools/工具-網站高可用與伸縮性設計.md",
+      "x": 660,
+      "y": -670,
+      "width": 340,
+      "height": 150
+    },
+    {
+      "id": "l2-1",
+      "type": "file",
+      "file": "tools/工具-生產故障反模式清單.md",
+      "x": 660,
+      "y": -480,
+      "width": 340,
+      "height": 150
+    },
+    {
+      "id": "l2-2",
+      "type": "file",
+      "file": "tools/工具-資料複製.md",
+      "x": 660,
+      "y": -290,
+      "width": 340,
+      "height": 150
+    },
+    {
+      "id": "cat3",
+      "type": "text",
+      "text": "## 📈 伸縮性",
+      "x": 300,
+      "y": 181,
+      "width": 320,
+      "height": 68,
+      "color": "5"
+    },
+    {
+      "id": "l3-0",
+      "type": "file",
+      "file": "tools/工具-透明多級分流.md",
+      "x": 660,
+      "y": -50,
+      "width": 340,
+      "height": 150
+    },
+    {
+      "id": "l3-1",
+      "type": "file",
+      "file": "tools/工具-資料分區.md",
+      "x": 660,
+      "y": 140,
+      "width": 340,
+      "height": 150
+    },
+    {
+      "id": "l3-2",
+      "type": "file",
+      "file": "tools/工具-秒殺系統設計.md",
+      "x": 660,
+      "y": 330,
+      "width": 340,
+      "height": 150
+    },
+    {
+      "id": "cat4",
+      "type": "text",
+      "text": "## 🧩 擴展性",
+      "x": 300,
+      "y": 611,
+      "width": 320,
+      "height": 68,
+      "color": "5"
+    },
+    {
+      "id": "l4-0",
+      "type": "file",
+      "file": "tools/工具-架構隨業務規模演進.md",
+      "x": 660,
+      "y": 570,
+      "width": 340,
+      "height": 150
+    },
+    {
+      "id": "cat5",
+      "type": "text",
+      "text": "## 🔒 安全性",
+      "x": 300,
+      "y": 1041,
+      "width": 320,
+      "height": 68,
+      "color": "5"
+    },
+    {
+      "id": "l5-0",
+      "type": "file",
+      "file": "tools/工具-網站應用攻擊與防禦.md",
+      "x": 660,
+      "y": 810,
+      "width": 340,
+      "height": 150
+    },
+    {
+      "id": "l5-1",
+      "type": "file",
+      "file": "tools/工具-資料加密與密鑰管理.md",
+      "x": 660,
+      "y": 1000,
+      "width": 340,
+      "height": 150
+    },
+    {
+      "id": "l5-2",
+      "type": "file",
+      "file": "tools/工具-反垃圾與電商風控.md",
+      "x": 660,
+      "y": 1190,
+      "width": 340,
+      "height": 150
+    }
+  ],
+  "edges": [
+    {
+      "id": "e-c-0",
+      "fromNode": "center",
+      "toNode": "cat0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-0-0",
+      "fromNode": "cat0",
+      "toNode": "l0-0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-0-1",
+      "fromNode": "cat0",
+      "toNode": "l0-1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c-1",
+      "fromNode": "center",
+      "toNode": "cat1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-1-0",
+      "fromNode": "cat1",
+      "toNode": "l1-0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c-2",
+      "fromNode": "center",
+      "toNode": "cat2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-2-0",
+      "fromNode": "cat2",
+      "toNode": "l2-0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-2-1",
+      "fromNode": "cat2",
+      "toNode": "l2-1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-2-2",
+      "fromNode": "cat2",
+      "toNode": "l2-2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c-3",
+      "fromNode": "center",
+      "toNode": "cat3",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-3-0",
+      "fromNode": "cat3",
+      "toNode": "l3-0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-3-1",
+      "fromNode": "cat3",
+      "toNode": "l3-1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-3-2",
+      "fromNode": "cat3",
+      "toNode": "l3-2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c-4",
+      "fromNode": "center",
+      "toNode": "cat4",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-4-0",
+      "fromNode": "cat4",
+      "toNode": "l4-0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-c-5",
+      "fromNode": "center",
+      "toNode": "cat5",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-5-0",
+      "fromNode": "cat5",
+      "toNode": "l5-0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-5-1",
+      "fromNode": "cat5",
+      "toNode": "l5-1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-5-2",
+      "fromNode": "cat5",
+      "toNode": "l5-2",
+      "fromSide": "right",
+      "toSide": "left"
+    }
+  ]
 }

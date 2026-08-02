@@ -1,7 +1,7 @@
 ---
 type: tool
 name: "AI 系統評估 Evaluation"
-source: "[[AI工程]]"
+source: "[[books/軟體工程/ai/AI工程|AI工程]]"
 source_type: book
 tags: [software, ai, llm, evaluation]
 triggers: [不知道AI系統好不好, 改了prompt不知變好變壞, 怎麼評估LLM輸出, 上線後品質難監控, AI回答對不對, 憑感覺調模型]

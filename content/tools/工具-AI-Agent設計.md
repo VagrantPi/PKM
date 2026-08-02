@@ -1,7 +1,7 @@
 ---
 type: tool
 name: "AI Agent 設計 Agents"
-source: "[[AI工程]]"
+source: "[[books/軟體工程/ai/AI工程|AI工程]]"
 source_type: book
 tags: [software, ai, llm, agents]
 triggers: [想讓AI自己用工具, 多步驟自動化, agent失控或亂跑, 該不該用agent, LLM呼叫API, 自主完成任務]

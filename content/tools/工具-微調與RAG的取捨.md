@@ -1,7 +1,7 @@
 ---
 type: tool
 name: "微調與 RAG 的取捨 Fine-tuning vs RAG"
-source: "[[AI工程]]"
+source: "[[books/軟體工程/ai/AI工程|AI工程]]"
 source_type: book
 tags: [software, ai, llm, fine-tuning]
 triggers: [該不該微調模型, 微調還是RAG, 模型風格不對, 想教模型新知識, 微調成本值得嗎, 提示調不動了]

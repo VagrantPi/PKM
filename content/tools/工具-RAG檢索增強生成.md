@@ -1,7 +1,7 @@
 ---
 type: tool
 name: "RAG 檢索增強生成 Retrieval-Augmented Generation"
-source: "[[AI工程]]"
+source: "[[books/軟體工程/ai/AI工程|AI工程]]"
 source_type: book
 tags: [software, ai, llm, rag, retrieval]
 triggers: [模型不知道我的私有資料, LLM答案過時, 想讓AI引用公司文件, 減少幻覺, 知識庫問答, 該微調還是RAG]
