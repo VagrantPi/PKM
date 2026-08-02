@@ -4,7 +4,7 @@ title: "AI 工程"
 tags: [moc, ai, llm, engineering]
 ---
 
-> 主題索引（MOC）：用基礎模型（LLM）打造可靠 AI 應用的工具。來源：[[AI工程]]（Chip Huyen）＋[[LLM Course 課程文件]]（訓練與部署那一段）。
+> 主題索引（MOC）：用基礎模型（LLM）打造可靠 AI 應用的工具。來源：[[books/軟體工程/ai/AI工程|AI工程]]（Chip Huyen）＋[[LLM Course 課程文件]]（訓練與部署那一段）。
 
 ## 🎛 調整模型行為（由便宜到昂貴）
 - 讓輸出更準更穩 → [[工具-提示工程]]
@@ -26,7 +26,7 @@ tags: [moc, ai, llm, engineering]
 
 ## 🔗 跨領域
 - 建 AI 應用仍受用：[[工具-可靠可擴展可維護]]、[[工具-管理複雜度]]、[[工具-服務容錯設計]]（給 agent 加護欄）
-- 讓 agent 安全連上外部資料/工具的標準協定 → 見主題 [[MCP]]
+- 讓 agent 安全連上外部資料/工具的標準協定 → 見主題 [[moc/MCP|MCP]]
 
 ## 📚 來源
-[[AI工程]]、[[LLM Course 課程文件]]
+[[books/軟體工程/ai/AI工程|AI工程]]、[[LLM Course 課程文件]]

@@ -21,7 +21,7 @@ tags: [moc, mcp, ai, llm, protocol]
 - 發布/串接前的授權與攻擊面檢查 → [[工具-MCP安全防護要點]]
 
 ## 🔗 相關
-- [[工具-AI-Agent設計]]（MCP 是 agent 用外部工具的標準協定）、見主題 [[AI工程]]
+- [[工具-AI-Agent設計]]（MCP 是 agent 用外部工具的標準協定）、見主題 [[moc/AI工程|AI工程]]
 
 ## 📚 來源
 [[MCP 官方文件]]
