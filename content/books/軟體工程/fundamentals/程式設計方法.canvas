@@ -3,176 +3,153 @@
     {
       "id": "center",
       "type": "text",
-      "text": "# 📙 程式設計方法\nHow to Design Programs (HtDP)",
+      "text": "# 📙 程式設計方法\nHow to Design Programs (HtDP)\n\n**訣竅家族**：一個骨幹，五種變體",
       "x": -160,
-      "y": 969,
+      "y": -73,
       "width": 320,
       "height": 147,
       "color": "6"
     },
     {
-      "id": "cat1",
+      "id": "cat0",
       "type": "text",
-      "text": "## 📐 設計訣竅 Design Recipe",
+      "text": "## 📐 骨幹 The Recipe",
       "x": 300,
-      "y": 476,
+      "y": -704,
       "width": 320,
       "height": 68,
       "color": "5"
     },
     {
-      "id": "l1-1",
-      "x": 660,
-      "y": 0,
-      "width": 340,
-      "height": 150,
+      "id": "l0-0",
       "type": "file",
-      "file": "tools/工具-設計訣竅.md"
+      "file": "tools/工具-設計訣竅.md",
+      "x": 660,
+      "y": -745,
+      "width": 340,
+      "height": 150
     },
     {
-      "id": "l1-2",
-      "x": 660,
-      "y": 190,
-      "width": 340,
-      "height": 105,
+      "id": "cat1",
       "type": "text",
-      "text": "**① 資料定義**\n先講清楚輸入輸出長什麼樣"
+      "text": "## 🧱 先把資料表示法做對",
+      "x": 300,
+      "y": -369,
+      "width": 320,
+      "height": 68,
+      "color": "5"
     },
     {
-      "id": "l1-3",
+      "id": "l1-0",
+      "type": "file",
+      "file": "tools/工具-逐步求精.md",
       "x": 660,
-      "y": 335,
+      "y": -505,
       "width": 340,
-      "height": 105,
-      "type": "text",
-      "text": "**② 契約與目的**\n型別簽章 + 一句話說明這函式做什麼"
+      "height": 150
     },
     {
-      "id": "l1-4",
+      "id": "l1-1",
+      "type": "file",
+      "file": "tools/工具-資料驅動的模板推導.md",
       "x": 660,
-      "y": 480,
+      "y": -315,
       "width": 340,
-      "height": 105,
-      "type": "text",
-      "text": "**③ 範例**\n先寫具體輸入 → 期望輸出"
-    },
-    {
-      "id": "l1-5",
-      "x": 660,
-      "y": 625,
-      "width": 340,
-      "height": 105,
-      "type": "text",
-      "text": "**④ 模板**\n依資料定義的形狀寫出骨架"
-    },
-    {
-      "id": "l1-6",
-      "x": 660,
-      "y": 770,
-      "width": 340,
-      "height": 105,
-      "type": "text",
-      "text": "**⑤ 本體**\n把模板的洞填起來"
-    },
-    {
-      "id": "l1-7",
-      "x": 660,
-      "y": 915,
-      "width": 340,
-      "height": 105,
-      "type": "text",
-      "text": "**⑥ 測試**\n把範例變成自動化測試"
+      "height": 150
     },
     {
       "id": "cat2",
       "type": "text",
-      "text": "## 🧬 由資料驅動",
+      "text": "## 🔁 遞迴的兩種",
       "x": 300,
-      "y": 1201,
+      "y": 61,
       "width": 320,
       "height": 68,
       "color": "5"
     },
     {
-      "id": "l2-1",
+      "id": "l2-0",
+      "type": "file",
+      "file": "tools/工具-生成遞迴與終止論證.md",
       "x": 660,
-      "y": 1110,
+      "y": -75,
       "width": 340,
-      "height": 105,
-      "type": "text",
-      "text": "**程式結構跟著資料結構走**\n資料是遞迴的，函式就是遞迴的"
+      "height": 150
     },
     {
-      "id": "l2-2",
+      "id": "l2-1",
+      "type": "file",
+      "file": "tools/工具-累積器與累積器不變式.md",
       "x": 660,
-      "y": 1255,
+      "y": 115,
       "width": 340,
-      "height": 105,
-      "type": "text",
-      "text": "**資料定義決定模板形狀**\n不必憑靈感想控制流程"
+      "height": 150
     },
     {
       "id": "cat3",
       "type": "text",
-      "text": "## 🪜 逐步求精",
+      "text": "## 🧬 消除相似性",
       "x": 300,
-      "y": 1563,
+      "y": 396,
       "width": 320,
       "height": 68,
       "color": "5"
     },
     {
-      "id": "l3-1",
-      "x": 660,
-      "y": 1450,
-      "width": 340,
-      "height": 150,
+      "id": "l3-0",
       "type": "file",
-      "file": "tools/工具-逐步求精.md"
-    },
-    {
-      "id": "l3-2",
+      "file": "tools/工具-從相似定義提煉抽象.md",
       "x": 660,
-      "y": 1640,
+      "y": 355,
       "width": 340,
-      "height": 105,
-      "type": "text",
-      "text": "**先做核心，再一次加一個功能**\n每一版都是能跑的完整程式"
+      "height": 150
     },
     {
       "id": "cat4",
       "type": "text",
-      "text": "## 🎓 可教的手藝",
+      "text": "## 💾 讓程式記住過去",
       "x": 300,
-      "y": 1926,
+      "y": 636,
       "width": 320,
       "height": 68,
       "color": "5"
     },
     {
-      "id": "l4-1",
+      "id": "l4-0",
+      "type": "file",
+      "file": "tools/工具-狀態變數的設計訣竅.md",
       "x": 660,
-      "y": 1835,
+      "y": 595,
       "width": 340,
-      "height": 105,
-      "type": "text",
-      "text": "**解題過程可重現**\n程式設計是手藝，不是天分的黑魔法"
-    },
-    {
-      "id": "l4-2",
-      "x": 660,
-      "y": 1980,
-      "width": 340,
-      "height": 105,
-      "type": "text",
-      "text": "**不再對著空白畫面發呆**\n永遠有下一步可以做"
+      "height": 150
     }
   ],
   "edges": [
     {
+      "id": "e-c-0",
+      "fromNode": "center",
+      "toNode": "cat0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-0-0",
+      "fromNode": "cat0",
+      "toNode": "l0-0",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
       "id": "e-c-1",
       "fromNode": "center",
       "toNode": "cat1",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-1-0",
+      "fromNode": "cat1",
+      "toNode": "l1-0",
       "fromSide": "right",
       "toSide": "left"
     },
@@ -184,51 +161,16 @@
       "toSide": "left"
     },
     {
-      "id": "e-1-2",
-      "fromNode": "cat1",
-      "toNode": "l1-2",
-      "fromSide": "right",
-      "toSide": "left"
-    },
-    {
-      "id": "e-1-3",
-      "fromNode": "cat1",
-      "toNode": "l1-3",
-      "fromSide": "right",
-      "toSide": "left"
-    },
-    {
-      "id": "e-1-4",
-      "fromNode": "cat1",
-      "toNode": "l1-4",
-      "fromSide": "right",
-      "toSide": "left"
-    },
-    {
-      "id": "e-1-5",
-      "fromNode": "cat1",
-      "toNode": "l1-5",
-      "fromSide": "right",
-      "toSide": "left"
-    },
-    {
-      "id": "e-1-6",
-      "fromNode": "cat1",
-      "toNode": "l1-6",
-      "fromSide": "right",
-      "toSide": "left"
-    },
-    {
-      "id": "e-1-7",
-      "fromNode": "cat1",
-      "toNode": "l1-7",
-      "fromSide": "right",
-      "toSide": "left"
-    },
-    {
       "id": "e-c-2",
       "fromNode": "center",
       "toNode": "cat2",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "e-2-0",
+      "fromNode": "cat2",
+      "toNode": "l2-0",
       "fromSide": "right",
       "toSide": "left"
     },
@@ -240,13 +182,6 @@
       "toSide": "left"
     },
     {
-      "id": "e-2-2",
-      "fromNode": "cat2",
-      "toNode": "l2-2",
-      "fromSide": "right",
-      "toSide": "left"
-    },
-    {
       "id": "e-c-3",
       "fromNode": "center",
       "toNode": "cat3",
@@ -254,16 +189,9 @@
       "toSide": "left"
     },
     {
-      "id": "e-3-1",
+      "id": "e-3-0",
       "fromNode": "cat3",
-      "toNode": "l3-1",
-      "fromSide": "right",
-      "toSide": "left"
-    },
-    {
-      "id": "e-3-2",
-      "fromNode": "cat3",
-      "toNode": "l3-2",
+      "toNode": "l3-0",
       "fromSide": "right",
       "toSide": "left"
     },
@@ -275,16 +203,9 @@
       "toSide": "left"
     },
     {
-      "id": "e-4-1",
+      "id": "e-4-0",
       "fromNode": "cat4",
-      "toNode": "l4-1",
-      "fromSide": "right",
-      "toSide": "left"
-    },
-    {
-      "id": "e-4-2",
-      "fromNode": "cat4",
-      "toNode": "l4-2",
+      "toNode": "l4-0",
       "fromSide": "right",
       "toSide": "left"
     }
