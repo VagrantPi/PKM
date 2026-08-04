@@ -19,6 +19,7 @@ title: 我的知識庫
 - [[moc/DevOps|DevOps（交付流程與維運）]]
 - [[moc/AI工程|AI工程]]
 - [[moc/MCP|MCP（Model Context Protocol）]]
+- [[moc/AI技能收藏|AI 技能收藏]]（外部現成工具，非知識萃取）
 - [[區塊鏈]]
 
 ## 📚 書
