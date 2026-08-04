@@ -15,8 +15,8 @@ tags: [moc, ai, skills, agent, tooling]
 | [gc-minimal-zine-poster](#gc-minimal-zine-poster) | skill | Codex | 把一個主題／句子／照片變成極簡 zine 風海報 | ⬜ 待試 |
 | [i-have-adhd](#i-have-adhd) | plugin | Claude Code・Codex | 逼 agent 把答案放最前面，不要鋪陳與客套 | ⬜ 待試・📊 已實測 |
 | [ponytail](#ponytail) | plugin | Claude Code・Codex・多平台 | 寫碼前先爬「該不該寫」的階梯，砍掉過度設計 | ⬜ 待試・📊 已實測 |
-| [codegraph](#codegraph) | MCP | 多平台 | 本機程式碼知識圖譜，一次呼叫換掉 grep 迴圈 | ✅ 已在用 |
-| [codebase-memory-mcp](#codebase-memory-mcp) | MCP | 多平台 | 同上路線的另一套，主打極速索引與 158 語言 | ✅ 已在用 |
+| [codegraph](#codegraph) | MCP | 多平台 | 本機程式碼知識圖譜，**讀流程強**、caller 會漏 | ✅ 已在用・📊 已實測 |
+| [codebase-memory-mcp](#codebase-memory-mcp) | MCP | 多平台 | 同路線另一套，**caller 完整**、但只給名稱無 body | ✅ 已在用・📊 已實測 |
 
 ---
 
@@ -157,7 +157,11 @@ codex plugin add ponytail@ponytail
 
 ## 🔍 程式碼理解（MCP）
 
-> **這兩個做的是同一件事**：在本機把整個 codebase 建成知識圖譜（symbol、呼叫邊、依賴），讓 agent 一次呼叫就拿到相關原始碼＋呼叫路徑，取代「grep → glob → 一個檔一個檔讀」的迴圈。兩套都主打 100% 本機、程式碼不外流。**同時裝兩套沒有意義，選一套即可。**
+> **這兩個表面上做同一件事**：在本機把整個 codebase 建成知識圖譜（symbol、呼叫邊、依賴），讓 agent 一次呼叫就拿到相關原始碼＋呼叫路徑，取代「grep → glob → 一個檔一個檔讀」的迴圈。兩套都主打 100% 本機、程式碼不外流。
+>
+> 📊 **但實測顯示它們互補，不是二選一** → [[moc/AI技能評比|AI 技能評比]]（2026-08-05）。**找誰呼叫我／影響分析用 codebase-memory**（caller 完整性 5/5、2/2，codegraph 是 3/5、1/2，漏的都是巢狀函式與 singleton 實例方法）；**讀流程／快速讀懂機制用 codegraph**（trace 會 inline 每一跳的原始碼，codebase-memory 只給名稱清單）。
+>
+> ~~同時裝兩套沒有意義，選一套即可。~~ ← 這句是我自己的推論，已被實測推翻，留著當紀錄。
 
 ### codegraph
 
@@ -178,8 +182,11 @@ cd your-project && codegraph init   # 每個專案各自建圖
 ```
 `codegraph install` **只接 agent、不建索引**；建索引是各專案的 `codegraph init`。裝好後 auto-sync 預設開啟，檔案一改就更新，不用手動重建。
 
-**我的狀態：** ✅ 已在用（本機 v1.4.1；官方已出 1.5.0，`codegraph upgrade` 可更新）
-**試用筆記：** 已寫進全域 `CLAUDE.md` 的使用規則——**只在有 `.codegraph/` 目錄的 repo 才用**，沒有就跳過（要不要建索引是我自己決定，不該由 agent 代跑 init）。
+**我的狀態：** ✅ 已在用（本機 v1.4.1；官方已出 1.5.0，`codegraph upgrade` 可更新）・📊 已實測 → [[moc/AI技能評比|AI 技能評比]]
+**試用筆記：**
+- 已寫進全域 `CLAUDE.md` 的使用規則——**只在有 `.codegraph/` 目錄的 repo 才用**，沒有就跳過（要不要建索引是我自己決定，不該由 agent 代跑 init）。
+- 實測強項：**`trace` 會 inline 每一跳的原始碼**，`context` / `explore` 一次取多個符號的源碼，搜尋直接帶型別簽章——讀流程時體驗最好。
+- 實測弱項：**caller 會漏**（`assertWithinQuota` 5 處只抓到 3 處、`handleUserText` 2 處只抓到 1 處），漏的都是**巢狀 async function 與 singleton 實例方法**。做影響分析時別只信它。
 
 ### codebase-memory-mcp
 
@@ -199,8 +206,10 @@ curl -fsSL https://raw.githubusercontent.com/DeusData/codebase-memory-mcp/main/i
 ```
 重啟 agent 後說「Index this project」即可。
 
-**我的狀態：** ✅ 已在用（快取在 `~/.cache/codebase-memory-mcp/`）
+**我的狀態：** ✅ 已在用（快取在 `~/.cache/codebase-memory-mcp/`）・📊 已實測 → [[moc/AI技能評比|AI 技能評比]]（實測用的是 **pro 版**，與這個開源版功能集是否相同我沒查證）
 **試用筆記：**
+- 實測強項：**caller 完整性全勝**（5/5、2/2），type-aware LSP 對巢狀函式與 singleton 實例方法的 CALLS 邊全中；Cypher 查詢、跨程序迴圈深度、語意搜尋、co-change 耦合這四件事 **codegraph 完全沒有對應能力**。
+- 實測弱項：**只給名稱清單、沒有 body**，讀流程時要另外開檔。
 - 它會**跨 client 共用一個 coordination daemon**（Claude Code、Codex、OpenCode…），沒有 opt-in 開關；第一個 session 啟動它、最後一個關掉它。日誌在 `~/.cache/codebase-memory-mcp/logs/`。
 - 所有 CBM process **必須版本完全一致**，否則會被 admission barrier 擋下並寫進 `daemon-conflicts.ndjson`。多 client 混用時升級要一次升完。
 

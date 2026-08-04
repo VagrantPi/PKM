@@ -15,6 +15,7 @@ tags: [moc, ai, skills, benchmark]
 | 日期 | 題目 | 受測對象 | 開啟 |
 |---|---|---|---|
 | 2026-08-05 | 任務系統解說題：四組對照評分 | base・ponytail・i-have-adhd・兩個同開 | [報告 ↗](https://vagrantpi.github.io/PKM/static/skill-eval/2026-08-05-ponytail-vs-i-have-adhd/) |
+| 2026-08-05 | backend 索引能力：真值裁判對決 | codegraph・codebase-memory-pro | [報告 ↗](https://vagrantpi.github.io/PKM/static/skill-eval/2026-08-05-codegraph-vs-codebase-memory/) |
 
 ---
 
@@ -54,6 +55,48 @@ tags: [moc, ai, skills, benchmark]
 - 概念數與重疊率是**代理指標**：抽反引號識別字與檔名、去前綴轉小寫後比對集合，**不是真正的語意比對**。概念數是計數比較不是集合比較——不代表少講的正好是 base 講過的那 18 個。
 - 事實抽查約 25 處（四組全部命中、無捏造），但**非全文查證**。
 - **評分由本次實驗的執行者自評。**
+
+---
+
+## 2026-08-05 ・ backend 索引能力：真值裁判對決
+
+<a href="https://vagrantpi.github.io/PKM/static/skill-eval/2026-08-05-codegraph-vs-codebase-memory/" target="_blank" rel="noopener"><strong>開啟完整報告 ↗</strong></a>
+
+**受測對象**：[codegraph](https://vagrantpi.github.io/PKM/moc/ai%E6%8A%80%E8%83%BD%E6%94%B6%E8%97%8F#codegraph)・**codebase-memory-pro**（報告用的是 pro 版，收藏頁記的是 [codebase-memory-mcp](https://vagrantpi.github.io/PKM/moc/ai%E6%8A%80%E8%83%BD%E6%94%B6%E8%97%8F#codebase-memory-mcp)）
+**標的**：`ai_family_backend`（backend ＋ frontend，排除 `node_modules`）
+**方法**：四個維度各 0–10 分；**每一處差異都用 `grep` 對過真值**
+
+### 一句話結論
+
+**不是誰比較好，是哪件事用哪個。** 總分 codebase-memory-pro 34 ／ codegraph 29，但真正該記的是分工：**分析引擎勝在度量，閱讀引擎勝在追蹤。**
+
+### 決定性證據：caller 完整性
+
+| 符號 | 真值 | codebase-memory | codegraph |
+|---|---|---|---|
+| `handleUserText` 的 callers | 2 | **2/2** | 1/2（漏巢狀 async fn） |
+| `assertWithinQuota` 的 callers | 5 | **5/5** | 3/5（漏巢狀 async fn 與一個普通 class method） |
+
+codegraph 漏掉的都是**巢狀函式與 singleton 實例方法**；codebase-memory 的 type-aware LSP 在這兩種情況全中。**要做影響分析（誰呼叫我）就用 codebase-memory。**
+
+反過來，**讀流程用 codegraph**：它的 trace 回傳整條路徑並 **inline 每一跳的原始碼**，`context` / `explore` 一次取多個符號的源碼，搜尋直接帶型別簽章；codebase-memory 只給名稱清單、沒有 body。
+
+### 只有一邊做得到的能力
+
+**只有 codebase-memory 有**：任意 Cypher 查詢、複雜度／效能指標（跨程序 `transitive_loop_depth`）、語意向量搜尋、co-change 耦合（`FILE_CHANGES_WITH`）、Leiden 社群偵測。這幾件事 codegraph **完全沒有對應能力**。
+
+### ⚠️ 共同盲點（報告明確標出）
+
+**介面多型 dispatch 兩邊都會錯。** `this.transport.isOpen()` 這類介面型別的方法呼叫，兩者都會把 callee 誤指到 mock 或同名的前端實作——只是猜錯的對象不同。**涉及介面多型的調用邊，任一工具的 callee 結果都要用 grep 收尾複核。**
+
+### ⚠️ 讀這份時要留意的（我的註記，非報告原文）
+
+報告本身**沒有像第一份那樣附「條件與限制」段落**，所以以下是我自己標的：
+
+- **單一 repo、N=1**，沒有重複執行，也沒有雜訊底線可比。
+- 節點數差異（12,509 vs 17,187）報告解釋為**建模哲學不同**（codegraph 把 import／constant／enum_member 也物化成節點），**不是覆蓋率高低**，別當成品質指標讀。
+- **冷啟索引只有 codebase-memory 實測 9s，codegraph 標的是「未重測」**——索引速度那一維的 8 vs 7 沒有對等的實測基礎。
+- 受測的是 **codebase-memory-pro**，與收藏頁記錄的開源 `codebase-memory-mcp` 是否同一套功能集，我沒有查證。
 
 ---
 
