@@ -13,8 +13,8 @@ tags: [moc, ai, skills, agent, tooling]
 | Skill | 型態 | 平台 | 一句話 | 我的狀態 |
 |---|---|---|---|---|
 | [gc-minimal-zine-poster](#gc-minimal-zine-poster) | skill | Codex | 把一個主題／句子／照片變成極簡 zine 風海報 | ⬜ 待試 |
-| [i-have-adhd](#i-have-adhd) | plugin | Claude Code・Codex | 逼 agent 把答案放最前面，不要鋪陳與客套 | ⬜ 待試 |
-| [ponytail](#ponytail) | plugin | Claude Code・Codex・多平台 | 寫碼前先爬「該不該寫」的階梯，砍掉過度設計 | ⬜ 待試 |
+| [i-have-adhd](#i-have-adhd) | plugin | Claude Code・Codex | 逼 agent 把答案放最前面，不要鋪陳與客套 | ⬜ 待試・📊 已實測 |
+| [ponytail](#ponytail) | plugin | Claude Code・Codex・多平台 | 寫碼前先爬「該不該寫」的階梯，砍掉過度設計 | ⬜ 待試・📊 已實測 |
 | [codegraph](#codegraph) | MCP | 多平台 | 本機程式碼知識圖譜，一次呼叫換掉 grep 迴圈 | ✅ 已在用 |
 | [codebase-memory-mcp](#codebase-memory-mcp) | MCP | 多平台 | 同上路線的另一套，主打極速索引與 158 語言 | ✅ 已在用 |
 
@@ -66,6 +66,8 @@ git clone https://github.com/LiamGvchi/gc-minimal-zine-poster.git \
 ## 🧠 回應風格與寫碼紀律
 
 > 這兩個都是「**改 agent 的行為**」而不是「給 agent 新能力」。裝上去之後每一輪都會生效，所以要清楚自己想要哪種預設。
+>
+> 📊 **這兩個我已經跑過對照實測** → [[moc/AI技能評比|AI 技能評比]]（2026-08-05）。結論先講：答案確實變短，但**短在少講了三分之一的概念**；而且 **output tokens 完全沒省到**。
 
 ### i-have-adhd
 
@@ -101,8 +103,8 @@ codex plugin add i-have-adhd@i-have-adhd
 **出處**
 鬆散取材自 J. Russell Ramsay 與 Anthony L. Rostain 的 *The Adult ADHD Tool Kit*，但**改寫成「LLM 該怎麼回應」而不是「人該怎麼安排一天」**。
 
-**我的狀態：** ⬜ 待試
-**試用筆記：**（待填）
+**我的狀態：** ⬜ 待試（📊 已有實測 → [[moc/AI技能評比|AI 技能評比]]）
+**試用筆記：** 實測中概念覆蓋 **−17%**，是三個實驗組裡壓縮最輕的；四組裡最會給「起點與終點」（開場指向權威設計文件、結尾指到行號）。
 
 > ⚠️ 想清楚再裝：它會壓掉推理過程與脈絡說明。對「已經知道自己要什麼」的任務很爽，對「需要一起想清楚」的任務可能反而礙事。
 
@@ -146,8 +148,8 @@ codex plugin add ponytail@ponytail
 **用法**
 六個指令：`/ponytail`、`/ponytail-review`、`/ponytail-audit`、`/ponytail-debt`、`/ponytail-gain`、`/ponytail-help`；強度分 `lite` / `full` / `ultra` / `off`。
 
-**我的狀態：** ⬜ 待試
-**試用筆記：**（待填）
+**我的狀態：** ⬜ 待試（📊 已有實測 → [[moc/AI技能評比|AI 技能評比]]）
+**試用筆記：** 實測中概念覆蓋 **−31%**，壓縮幅度最大；與 i-have-adhd 同開時**由它主導**（同開 −33%，不是兩者相加的 −48%）。**但 output tokens 沒省到**，別為了省錢開。
 
 > ⚠️ README 自己承認：對「花 thinking token 去反覆推敲階梯」的推理模型，成本可能**反而變高**（它點名 GPT-5.5）。
 
@@ -207,5 +209,6 @@ curl -fsSL https://raw.githubusercontent.com/DeusData/codebase-memory-mcp/main/i
 ---
 
 ## 🔗 相關
+- 📊 自己跑的對照實測報告 → [[moc/AI技能評比|AI 技能評比]]
 - 自己在用的 gstack skills（/browse、/review、/ship 等）不收在這頁，那些是工作流不是收藏
 - 打造自己的 AI 工具：[[moc/MCP|MCP]]、[[moc/AI工程|AI工程]]

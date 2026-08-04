@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+<title>任務系統解說題：四組對照評分</title>
+<style>
+  :root {
+    --bg:      #E7EAE1;
+    --surface: #F4F6EF;
+    --ink:     #1C1F17;
+    --ink-2:   #565B4C;
+    --ink-3:   #858B77;
+    --line:    #CFD4C4;
+    --line-2:  #DEE2D5;
+    --accent:  #0E6C77;
+    --accent-2:#14909E;
+    --hollow:  #C8CEBB;
+
+    --sans: "PingFang TC", "Noto Sans CJK TC", "Microsoft JhengHei", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #131610; --surface: #1B1F17; --ink: #E7EBDD; --ink-2: #A3AB94; --ink-3: #757D66;
+      --line: #2C3226; --line-2: #21261B; --accent: #3EB6C2; --accent-2: #2A8F9A; --hollow: #333A2A;
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #E7EAE1; --surface: #F4F6EF; --ink: #1C1F17; --ink-2: #565B4C; --ink-3: #858B77;
+    --line: #CFD4C4; --line-2: #DEE2D5; --accent: #0E6C77; --accent-2: #14909E; --hollow: #C8CEBB;
+  }
+  :root[data-theme="dark"] {
+    --bg: #131610; --surface: #1B1F17; --ink: #E7EBDD; --ink-2: #A3AB94; --ink-3: #757D66;
+    --line: #2C3226; --line-2: #21261B; --accent: #3EB6C2; --accent-2: #2A8F9A; --hollow: #333A2A;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 58rem;
+    margin: 0 auto;
+    padding: clamp(2.5rem, 7vw, 4.5rem) clamp(1.15rem, 5vw, 3rem) 7rem;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(3rem, 7vw, 4.5rem);
+  }
+
+  /* ── 標題 ── */
+  .top { display: flex; flex-direction: column; gap: 1rem; }
+  .top-meta { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.12em; color: var(--ink-3); }
+  h1 {
+    font-size: clamp(2.1rem, 6.5vw, 3.4rem);
+    font-weight: 700; line-height: 1.14; letter-spacing: -0.04em; text-wrap: balance;
+  }
+  .top-lede { font-size: 1.0625rem; color: var(--ink-2); max-width: 38rem; }
+
+  /* ── 區塊 ── */
+  .sec { display: flex; flex-direction: column; gap: 1.35rem; }
+  h2 {
+    font-size: 1.4375rem; font-weight: 700; letter-spacing: -0.02em;
+    padding-bottom: 0.7rem; border-bottom: 2px solid var(--ink);
+  }
+  .say { color: var(--ink-2); max-width: 40rem; }
+  .say b { color: var(--ink); font-weight: 600; }
+  .fine { font-size: 0.875rem; color: var(--ink-3); max-width: 42rem; }
+
+  /* ── 評分矩陣 ── */
+  .scroll { overflow-x: auto; }
+  .grid { width: 100%; border-collapse: collapse; }
+  .grid th, .grid td { padding: 0.95rem 0.85rem; vertical-align: top; text-align: left; }
+  .grid thead th { border-bottom: 2px solid var(--ink); }
+  .arm { font-size: 0.9375rem; font-weight: 700; letter-spacing: -0.01em; white-space: nowrap; }
+  .arm i { display: block; font-style: normal; font-size: 0.75rem; font-weight: 500; color: var(--ink-3); }
+  .dimhead { font-size: 0.75rem; font-weight: 600; color: var(--ink-3); letter-spacing: 0.04em; }
+  .grid tbody th { font-size: 0.9375rem; font-weight: 600; white-space: nowrap; border-bottom: 1px solid var(--line-2); }
+  .grid tbody td { border-bottom: 1px solid var(--line-2); min-width: 6.5rem; }
+
+  .cell { display: flex; flex-direction: column; gap: 0.4rem; }
+  .cn { font-family: var(--mono); font-size: 1.5rem; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+  .cn u { text-decoration: none; font-family: var(--sans); font-size: 0.75rem; font-weight: 500; color: var(--ink-3); }
+  .cb { height: 5px; background: var(--line-2); border-radius: 3px; overflow: hidden; }
+  .cb i { display: block; height: 100%; background: var(--hollow); border-radius: 3px; }
+  .cell.best .cn { color: var(--accent); }
+  .cell.best .cb i { background: var(--accent); }
+
+  .grid tr.tot th, .grid tr.tot td { border-bottom: none; border-top: 2px solid var(--ink); padding-top: 1.3rem; }
+  .grid tr.tot .cn { font-size: 2.375rem; }
+
+  /* ── 招牌：概念點陣 ── */
+  .dots-block { display: flex; flex-direction: column; gap: 1.5rem; }
+  .dotrow { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr); gap: 1.1rem; align-items: start; }
+  .dotname { display: flex; flex-direction: column; }
+  .dotname b { font-size: 0.9375rem; font-weight: 700; }
+  .dotname span { font-family: var(--mono); font-size: 0.8125rem; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+  .dotname .cut { color: var(--accent); font-weight: 600; }
+  .dotfield { display: flex; flex-wrap: wrap; gap: 5px; padding-top: 0.45rem; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); animation: pop 400ms ease-out both; }
+  .dot.off { background: none; box-shadow: inset 0 0 0 1.5px var(--hollow); }
+  @keyframes pop { from { opacity: 0; transform: scale(.4); } to { opacity: 1; transform: scale(1); } }
+  @media (prefers-reduced-motion: reduce) { .dot { animation: none; } }
+
+  /* ── 一根長條 = 一個數字 ── */
+  .bars { display: flex; flex-direction: column; gap: 0.85rem; }
+  .brow { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr); gap: 1.1rem; align-items: center; }
+  .bname { font-size: 0.9375rem; font-weight: 600; }
+  .btrack { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0.8rem; align-items: center; }
+  .bfill { height: 26px; background: var(--hollow); border-radius: 3px; transform-origin: left center; animation: grow 640ms cubic-bezier(.2,.85,.3,1) both; }
+  .bfill.on { background: var(--accent); }
+  .bval { font-family: var(--mono); font-size: 1.0625rem; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .bnote { grid-column: 2; font-family: var(--mono); font-size: 0.6875rem; color: var(--ink-3); }
+  @keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  @media (prefers-reduced-motion: reduce) { .bfill { animation: none; } }
+
+  /* ── 兩個大數字 ── */
+  .duo { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: clamp(1.25rem, 4vw, 3rem); max-width: 42rem; }
+  .duo-i { display: flex; flex-direction: column; gap: 0.15rem; padding-top: 0.9rem; border-top: 3px solid var(--line); }
+  .duo-n { font-family: var(--mono); font-size: clamp(2.4rem, 8vw, 3.6rem); font-weight: 700; line-height: 1; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
+  .duo-t { font-size: 0.9375rem; color: var(--ink-2); }
+
+  /* ── 各組個性 ── */
+  .cards { display: flex; flex-direction: column; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  .card { background: var(--surface); padding: 1.3rem clamp(1.1rem, 3vw, 1.5rem); display: grid; grid-template-columns: minmax(0, 10rem) minmax(0, 1fr); gap: 0.4rem 1.4rem; }
+  .card-n { font-weight: 700; font-size: 0.9375rem; }
+  .card-n span { display: block; font-family: var(--mono); font-size: 0.8125rem; color: var(--ink-3); }
+  .card p { color: var(--ink-2); font-size: 0.9375rem; }
+  .card p b { color: var(--ink); font-weight: 600; }
+
+  /* ── 條列 ── */
+  .list { display: flex; flex-direction: column; gap: 0.9rem; max-width: 42rem; }
+  .li { display: grid; grid-template-columns: 1.4rem minmax(0, 1fr); gap: 0.9rem; }
+  .li-k { font-family: var(--mono); font-size: 0.8125rem; color: var(--accent); font-weight: 700; line-height: 1.95; }
+  .li p { color: var(--ink-2); }
+  .li p b { color: var(--ink); font-weight: 600; }
+
+  .caveats { display: flex; flex-direction: column; gap: 0.5rem; max-width: 42rem; }
+  .caveats li { list-style: none; padding-left: 1.3rem; position: relative; font-size: 0.9375rem; color: var(--ink-2); line-height: 1.7; }
+  .caveats li::before { content: ""; position: absolute; left: 0; top: 0.78em; width: 8px; height: 1px; background: var(--ink-3); }
+
+  .flagbox { background: var(--surface); border-left: 3px solid var(--accent); padding: 1.1rem 1.3rem; max-width: 42rem; }
+  .flagbox p { font-size: 0.9375rem; color: var(--ink-2); }
+  .flagbox b { color: var(--ink); font-weight: 600; }
+
+  code { font-family: var(--mono); font-size: 0.8125em; background: var(--line-2); padding: 0.12em 0.4em; border-radius: 2px; }
+  footer { border-top: 1px solid var(--line); padding-top: 1.2rem; font-family: var(--mono); font-size: 0.75rem; color: var(--ink-3); }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  @media (max-width: 42rem) {
+    .dotrow, .brow { grid-template-columns: 6rem minmax(0, 1fr); gap: 0.7rem; }
+    .card { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>
+
+<div class="page">
+
+  <header class="top">
+    <div class="top-meta">任務系統解說題 ／ claude-opus-5 ／ 四組 × 3 次 ／ 12 次全數有效</div>
+    <h1>同樣的地圖，畫得更粗。</h1>
+    <p class="top-lede">問「幫我解說這個專案的任務系統設計」，比較 base、ponytail、i-have-adhd 與兩個同開。這次答案真的變短了——短在少講了三分之一的概念，不是少講廢話。</p>
+  </header>
+
+  <!-- ═════ 評分表 ═════ -->
+  <section class="sec">
+    <h2>評分表</h2>
+    <p class="say">六個維度各 0–10 分，總分 60。每個維度最高分標色，並列則同時標。答案先去識別化成 A–D 才評分，評完才揭曉對應。</p>
+
+    <div class="scroll">
+      <table class="grid">
+        <thead>
+          <tr>
+            <th scope="col" class="dimhead">維度</th>
+            <th scope="col" class="arm">base<i>無客製化</i></th>
+            <th scope="col" class="arm">ponytail<i>少寫程式碼</i></th>
+            <th scope="col" class="arm">i-have-adhd<i>輸出排版</i></th>
+            <th scope="col" class="arm">兩個同開<i>pony + adhd</i></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">正確性</th>
+            <td><div class="cell best"><span class="cn">10</span><span class="cb"><i style="width:100%"></i></span></div></td>
+            <td><div class="cell"><span class="cn">9</span><span class="cb"><i style="width:90%"></i></span></div></td>
+            <td><div class="cell"><span class="cn">9</span><span class="cb"><i style="width:90%"></i></span></div></td>
+            <td><div class="cell best"><span class="cn">10</span><span class="cb"><i style="width:100%"></i></span></div></td>
+          </tr>
+          <tr>
+            <th scope="row">完整度</th>
+            <td><div class="cell best"><span class="cn">10</span><span class="cb"><i style="width:100%"></i></span></div></td>
+            <td><div class="cell"><span class="cn">9</span><span class="cb"><i style="width:90%"></i></span></div></td>
+            <td><div class="cell"><span class="cn">8</span><span class="cb"><i style="width:80%"></i></span></div></td>
+            <td><div class="cell"><span class="cn">9</span><span class="cb"><i style="width:90%"></i></span></div></td>
+          </tr>
+          <tr>
+            <th scope="row">簡潔度</th>
+            <td><div class="cell"><span class="cn">7</span><span class="cb"><i style="width:70%"></i></span></div></td>
+            <td><div class="cell best"><span class="cn">8</span><span class="cb"><i style="width:80%"></i></span></div></td>
+            <td><div class="cell"><span class="cn">7</span><span class="cb"><i style="width:70%"></i></span></div></td>
+            <td><div class="cell best"><span class="cn">8</span><span class="cb"><i style="width:80%"></i></span></div></td>
+          </tr>
+          <tr>
+            <th scope="row">可掃描性</th>
+            <td><div class="cell"><span class="cn">9</span><span class="cb"><i style="width:90%"></i></span></div></td>
+            <td><div class="cell"><span class="cn">8</span><span class="cb"><i style="width:80%"></i></span></div></td>
+            <td><div class="cell"><span class="cn">7</span><span class="cb"><i style="width:70%"></i></span></div></td>
+            <td><div class="cell best"><span class="cn">10</span><span class="cb"><i style="width:100%"></i></span></div></td>
+          </tr>
+          <tr>
+            <th scope="row">資訊密度</th>
+            <td><div class="cell best"><span class="cn">10</span><span class="cb"><i style="width:100%"></i></span></div></td>
+            <td><div class="cell"><span class="cn">9</span><span class="cb"><i style="width:90%"></i></span></div></td>
+            <td><div class="cell"><span class="cn">8</span><span class="cb"><i style="width:80%"></i></span></div></td>
+            <td><div class="cell"><span class="cn">8</span><span class="cb"><i style="width:80%"></i></span></div></td>
+          </tr>
+          <tr>
+            <th scope="row">可執行性</th>
+            <td><div class="cell"><span class="cn">8</span><span class="cb"><i style="width:80%"></i></span></div></td>
+            <td><div class="cell"><span class="cn">7</span><span class="cb"><i style="width:70%"></i></span></div></td>
+            <td><div class="cell"><span class="cn">8</span><span class="cb"><i style="width:80%"></i></span></div></td>
+            <td><div class="cell best"><span class="cn">10</span><span class="cb"><i style="width:100%"></i></span></div></td>
+          </tr>
+          <tr class="tot">
+            <th scope="row">總分</th>
+            <td><div class="cell"><span class="cn">54<u> / 60</u></span><span class="cb"><i style="width:90%"></i></span></div></td>
+            <td><div class="cell"><span class="cn">50<u> / 60</u></span><span class="cb"><i style="width:83.3%"></i></span></div></td>
+            <td><div class="cell"><span class="cn">47<u> / 60</u></span><span class="cb"><i style="width:78.3%"></i></span></div></td>
+            <td><div class="cell best"><span class="cn">55<u> / 60</u></span><span class="cb"><i style="width:91.7%"></i></span></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="flagbox">
+      <p><b>這個排序不可靠，別拿它做決定。</b>我只評了每組的第一次。而同一組跑三次，答案長度能差 30%、概念數能差 17 個——單次判讀的變異很可能大於 47 與 55 的差距。要讓排序站得住，得 12 次全評再算組內雜訊底線。<br><br>這張表能講的只有一件事：<b>四組都寫得很好，base 沒有比較差。</b></p>
+    </div>
+  </section>
+
+  <!-- ═════ 招牌：概念點陣 ═════ -->
+  <section class="sec">
+    <h2>那什麼才可靠？概念數</h2>
+    <p class="say">把每份答案裡提到的函式、檔案、常數抽出來去重，就是它實際覆蓋了多少個知識點。<b>一個點＝一個概念</b>，空心表示比 base 少講的量。</p>
+
+    <div class="dots-block" id="dots">
+      <div class="dotrow">
+        <span class="dotname"><b>base</b><span>58 個概念</span></span>
+        <div class="dotfield" data-on="58" data-off="0"></div>
+      </div>
+      <div class="dotrow">
+        <span class="dotname"><b>ponytail</b><span>40 個</span><span class="cut">少 18</span></span>
+        <div class="dotfield" data-on="40" data-off="18"></div>
+      </div>
+      <div class="dotrow">
+        <span class="dotname"><b>i-have-adhd</b><span>48 個</span><span class="cut">少 10</span></span>
+        <div class="dotfield" data-on="48" data-off="10"></div>
+      </div>
+      <div class="dotrow">
+        <span class="dotname"><b>兩個同開</b><span>39 個</span><span class="cut">少 19</span></span>
+        <div class="dotfield" data-on="39" data-off="19"></div>
+      </div>
+    </div>
+
+    <p class="say">base 自己跑三次，概念數只在 <b>56 到 65</b> 之間擺盪——全距 9 個。ponytail 少 18、兩個同開少 19，<b>都是這條線的兩倍</b>。這不是雜訊，是真的少講了。</p>
+    <p class="fine">數字是三次的中位數。這是計數比較，不是集合比較——不代表少講的正好是 base 講過的那 18 個。</p>
+  </section>
+
+  <!-- ═════ 但 token 沒省 ═════ -->
+  <section class="sec">
+    <h2>答案變短了，帳單沒變</h2>
+
+    <div class="bars">
+      <div class="brow"><span class="bname">base</span><div class="btrack"><span class="bfill" style="width:92.7%"></span><span class="bval">7,997</span></div></div>
+      <div class="brow"><span class="bname">ponytail</span><div class="btrack"><span class="bfill" style="width:97.0%"></span><span class="bval">8,370</span></div></div>
+      <div class="brow"><span class="bname">i-have-adhd</span><div class="btrack"><span class="bfill" style="width:100%"></span><span class="bval">8,631</span></div></div>
+      <div class="brow"><span class="bname">兩個同開</span><div class="btrack"><span class="bfill" style="width:82.6%"></span><span class="bval">7,133</span></div></div>
+      <div class="brow"><span></span><span class="bnote">長條從 0 起算，長度＝output tokens 中位數</span></div>
+    </div>
+
+    <p class="say">四組差距最大 864，而 base 自己三次就能差 <b>2,348</b>。跟上一輪的結論一樣：<b>output tokens 完全在雜訊裡</b>。原因是這些 token 的大宗是 26–29 輪工具呼叫的推理，不是最終那份答案。答案砍掉四分之一，總花費不動。</p>
+
+    <div class="bars">
+      <div class="brow"><span class="bname">base</span><div class="btrack"><span class="bfill" style="width:100%"></span><span class="bval">6,272</span></div></div>
+      <div class="brow"><span class="bname">ponytail</span><div class="btrack"><span class="bfill on" style="width:74.6%"></span><span class="bval">4,680</span></div></div>
+      <div class="brow"><span class="bname">i-have-adhd</span><div class="btrack"><span class="bfill" style="width:85.8%"></span><span class="bval">5,382</span></div></div>
+      <div class="brow"><span class="bname">兩個同開</span><div class="btrack"><span class="bfill on" style="width:76.4%"></span><span class="bval">4,795</span></div></div>
+      <div class="brow"><span></span><span class="bnote">長條長度＝最終答案字數中位數；著色者超過雜訊底線 909 字</span></div>
+    </div>
+  </section>
+
+  <!-- ═════ 語意 ═════ -->
+  <section class="sec">
+    <h2>少講的是量，不是換了內容</h2>
+    <div class="duo">
+      <div class="duo-i"><span class="duo-n">42.7%</span><span class="duo-t">同一組自己兩次之間的概念重疊</span></div>
+      <div class="duo-i"><span class="duo-n">38.9%</span><span class="duo-t">不同組之間的概念重疊</span></div>
+    </div>
+    <p class="say">兩個數字幾乎一樣，而組內本身就在 32% 到 54% 之間擺盪。<b>沒有任何一組讓內容系統性地換方向。</b>把這件事跟上面的概念數合起來讀，結論很精確：<b>從同一個概念池裡挑，只是挑得更少。</b></p>
+  </section>
+
+  <!-- ═════ 兩個同開 ═════ -->
+  <section class="sec">
+    <h2>兩個同開不是相加，是 ponytail 吸收掉 adhd</h2>
+    <div class="duo">
+      <div class="duo-i"><span class="duo-n">−31%</span><span class="duo-t">ponytail 單開，概念數</span></div>
+      <div class="duo-i"><span class="duo-n">−17%</span><span class="duo-t">i-have-adhd 單開</span></div>
+      <div class="duo-i"><span class="duo-n">−33%</span><span class="duo-t">兩個同開</span></div>
+    </div>
+    <p class="say">相加應該接近 −48%，實際上兩個同開 <b>≈ ponytail 單開</b>。壓縮由 ponytail 主導，adhd 的效果被吸收。<br><br>不過兩個同開有個單獨的好處：<b>它是四組裡最穩的</b>，三次概念數全距只有 5 個（base 9、adhd 11、ponytail 17）。要可預期的產出，這組最好。</p>
+  </section>
+
+  <!-- ═════ 各組個性 ═════ -->
+  <section class="sec">
+    <h2>四份答案各自的長處</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="card-n">base<span>54 / 60</span></div>
+        <p><b>最精準。</b>資料模型表多一欄關鍵欄位。獨家講到「重算失敗不覆寫，避免把 0 蓋掉既有進度」，也是唯一分辨 <code>runProcessBundleTx</code> 把連線池錯誤（P2024／P2028）往上拋、業務錯誤才降級的一份。</p>
+      </div>
+      <div class="card">
+        <div class="card-n">ponytail<span>50 / 60</span></div>
+        <p><b>收尾一句話最好</b>：「用 partial unique index 換掉大部分的鎖，用冪等重算換掉精確的事件消費」。獨家點出 <code>avatarHashTag</code> 以現值判定、與規格 §10.7 有已知偏差。</p>
+      </div>
+      <div class="card">
+        <div class="card-n">i-have-adhd<span>47 / 60</span></div>
+        <p><b>最會給起點與終點。</b>開場直接指向兩份權威設計文件，結尾指到文件第 27–33 行。獨家有一節講「為什麼讀路徑不能發獎」，把 <code>justGranted → false → 獎勵被靜默吞掉</code> 的因果鏈走完。</p>
+      </div>
+      <div class="card">
+        <div class="card-n">兩個同開<span>55 / 60</span></div>
+        <p><b>教學裝置最強。</b>把三個白名單常數提煉成「理解全系統的鑰匙」，並觀察到這個 codebase 的註解記的幾乎都是「為什麼不那樣做」。結尾指向 <code>processBundle:224-272</code>：「30 行內有四個決策」。</p>
+      </div>
+    </div>
+    <p class="say">事實查證方面，我抽查了約 <b>25 處</b>引用——<code>schema.prisma</code> 的七個 model 行號、<code>task-assignment.service.ts</code> 的七個函式定義行、三個白名單常數位置、<code>configs/user-task.ts:10</code> 的上限 500、以及三處註解位置。<b>四組全部命中，沒有任何捏造。</b></p>
+  </section>
+
+  <!-- ═════ 建議 ═════ -->
+  <section class="sec">
+    <h2>怎麼用</h2>
+    <div class="list">
+      <div class="li"><span class="li-k">→</span><p><b>想要完整就別開。</b>base 的完整度與資訊密度都是最高分，而且概念覆蓋最廣。研究一個沒碰過的模組時，多出來的那 18 個知識點值得那 1,600 字。</p></div>
+      <div class="li"><span class="li-k">→</span><p><b>想要快速掌握輪廓就開 ponytail</b>，或兩個同開。少三分之一的概念換來短四分之一的篇幅，而且骨架不會少。</p></div>
+      <div class="li"><span class="li-k">→</span><p><b>要穩定就兩個同開。</b>三次概念數全距只有 5，是四組裡最可預期的。</p></div>
+      <div class="li"><span class="li-k">→</span><p><b>別為了省 token 開任何一個。</b>output tokens 三輪實驗都在雜訊裡。真要省該往 rtk、codegraph、subagent 隔離去找。</p></div>
+    </div>
+  </section>
+
+  <!-- ═════ 條件與限制 ═════ -->
+  <section class="sec">
+    <h2>條件與限制</h2>
+    <ul class="caveats">
+      <li>模型 <code>claude-opus-5</code>，基線 <code>--safe-mode</code>（關掉全部客製化），工具只給 Read／Grep／Glob，四組交錯執行各 3 次。</li>
+      <li>「兩個同開」的 system prompt 照真實載入順序串接：ponytail 走 SessionStart 在前、i-have-adhd 的 skill 在後。</li>
+      <li>概念數與重疊率是代理指標：抽反引號識別字與檔名、去前綴轉小寫後比對集合，不是真正的語意比對。</li>
+      <li>評分只評了每組第一次，沒有雜訊底線可比，排序不可靠（已在上方標示）。</li>
+      <li>N=3 不做統計顯著性宣稱。事實抽查 25 處，非全文查證。</li>
+      <li>評分由本次實驗的執行者自評。</li>
+    </ul>
+  </section>
+
+  <footer>12 次執行全數有效 ／ claude -p headless ／ 交錯序 base → ponytail → i-have-adhd → 兩個同開</footer>
+
+</div>
+
+<script>
+  (function () {
+    var fields = document.querySelectorAll('.dotfield');
+    for (var f = 0; f < fields.length; f++) {
+      var el = fields[f], on = +el.dataset.on, off = +el.dataset.off, i, d;
+      for (i = 0; i < on + off; i++) {
+        d = document.createElement('span');
+        d.className = i < on ? 'dot' : 'dot off';
+        d.style.animationDelay = (f * 90 + i * 7) + 'ms';
+        el.appendChild(d);
+      }
+    }
+  })();
+</script>
+  </body>
+</html>
