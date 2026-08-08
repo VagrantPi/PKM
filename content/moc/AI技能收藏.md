@@ -13,6 +13,7 @@ tags: [moc, ai, skills, agent, tooling]
 | Skill | 型態 | 平台 | 一句話 | 我的狀態 |
 |---|---|---|---|---|
 | [gc-minimal-zine-poster](#gc-minimal-zine-poster) | skill | Codex | 把一個主題／句子／照片變成極簡 zine 風海報 | ⬜ 待試 |
+| [editorial-vision-studio](#editorial-vision-studio) | skill | Codex | 視覺導演引擎：決策管線＋可換模型 adapter，一份方向出多模型 prompt | ⬜ 待試 |
 | [i-have-adhd](#i-have-adhd) | plugin | Claude Code・Codex | 逼 agent 把答案放最前面，不要鋪陳與客套 | ⬜ 待試・📊 已實測 |
 | [ponytail](#ponytail) | plugin | Claude Code・Codex・多平台 | 寫碼前先爬「該不該寫」的階梯，砍掉過度設計 | ⬜ 待試・📊 已實測 |
 | [codegraph](#codegraph) | MCP | 多平台 | 本機程式碼知識圖譜，**讀流程強**、caller 會漏 | ✅ 已在用・📊 已實測 |
@@ -60,6 +61,49 @@ git clone https://github.com/LiamGvchi/gc-minimal-zine-poster.git \
 
 **我的狀態：** ⬜ 待試
 **試用筆記：**（待填）
+
+**🔗 相關：** [editorial-vision-studio](#editorial-vision-studio) 是它的演進版——把「鎖死一種極簡 zine 風」開放成可選風格與版面，並加上決策管線與多模型 adapter。
+
+---
+
+### editorial-vision-studio
+
+**平台：Codex**（安裝路徑 `~/.codex/skills/`）
+**可呼叫名稱：** `editorial-vision-studio`
+**來源：** https://github.com/Yu-0312/editorial-vision-studio ・ MIT ・ 96 ★（2026-08-08 查看時）
+
+**做什麼**
+給 AI 圖像／編輯設計用的「視覺導演引擎」。它不直接寫 prompt，而是先跑一條決策管線：**判斷用途 → 分析畫面 → 決定視覺語言 → 規劃版面與風格 → 補救弱點 → 產出一份與模型無關的 VisionSpec／EditorialSpec**，最後才用 adapter 轉成某個模型的 prompt。目標是讓成品接近雜誌、展覽海報、品牌主視覺或極簡插畫的質感。哲學一句話：「不要裝飾，一律詮釋。」
+
+**它的靈魂：決策引擎固定、模型 adapter 可抽換**
+- 「視覺邏輯」與「模型語法」徹底分離——同一份視覺方向要換模型（GPT Image → Flux → Ideogram），**只重跑 adapter，不重新分析**。
+- 內建 adapter：`gpt-image`（照片保真、上傳照片時預設）、`flux`（小誌質感／氛圍）、`ideogram`（封面／活動字體）、`generic`（未知後端）。
+- 每一層只做一件事：分析器不編譯、編譯器不分析。
+
+**它比 gc-minimal-zine-poster 多做的事**（SKILL.md 明說它站在 gc-minimal-zine-poster 與 photo-abstract-editorial 之上演進）
+- **不鎖死單一風格**：內建 Swiss／MUJI／Kinfolk／Monocle／COS／Brutalist／Wallpaper*／Apartamento／Purple／POPEYE 十種風格 DNA，搭配海報／封面／展覽圖／小誌／首圖／活動／品牌主視覺／產品編輯圖／moodboard 等版面。
+- 產圖前有 **Reviewer 衝突檢查**：例如 MUJI 卻配過重標題、Swiss grid 配 Kinfolk 有機感、展覽圖塞太多字，會擋下或自動修正。
+- **Panter Mode 低對比補救**：灰掉／低飽和的照片，用暖冷衝突色、加高彩度色錨、拉開明暗來救（只補色、不加材質）。
+- 產圖前後有 Image Report（0–100 Editorial Score）與 Quality Evaluator（A–D 評級）。
+
+**安裝**
+```bash
+mkdir -p ~/.codex/skills
+git clone https://github.com/Yu-0312/editorial-vision-studio.git \
+  ~/.codex/skills/editorial-vision-studio
+```
+裝完若沒出現就重啟 Codex。
+
+**用法**
+呼叫 skill 並描述用途或給照片，例如「用 editorial-vision-studio，把這張照片重新構圖為極簡展覽插畫提示詞，不要保留寫實攝影細節」。可只給主題，也可指定 `style:`（如 `kinfolk`）或 `model:`（如 `flux`）。指定 style／model 時會跳過自動推導，但 Reviewer 仍會驗證風格 DNA 是否相容。
+
+**輸出**
+預設給一段方向摘要 ＋ 可直接用的 GenerationRequest（model-ready prompt，prompt 用英文、方向摘要跟隨你的語言）；有分析照片才附 Image Report，要重用方向／換模型才附完整 VisionSpec，有實際生圖工具且你要求生圖才生圖。
+
+**我的狀態：** ⬜ 待試
+**試用筆記：**（待填）
+
+**🔗 相關：** [gc-minimal-zine-poster](#gc-minimal-zine-poster)（前身之一，把風格鎖死在極簡 zine；本 skill 把風格與版面開放成可選）
 
 ---
 
