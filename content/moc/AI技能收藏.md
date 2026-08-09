@@ -4,180 +4,142 @@ title: "AI 技能收藏"
 tags: [moc, ai, skills, agent, tooling]
 ---
 
-> 收藏值得一試的 **AI agent 外掛**——skill、plugin、MCP server 都收（Claude Code / Codex / 其他 agent 平台）。
+> 收藏值得一試的 **AI agent 外掛**——skill、plugin、MCP server 都收（Claude Code / Codex / 其他平台）。
 >
-> ⚠️ **這頁與其他 MOC 不同**：其他 MOC 索引的是「我從書裡萃取出來的知識」，這裡收的是**外部現成的工具**。所以每條記的是「它做什麼、裝在哪、我試了沒」，而不是心法。
+> ⚠️ **這頁收的是外部現成工具**（不是我從書裡萃取的心法）。每張卡記「做什麼、裝哪、怎麼用、我試了沒」；**我自己跑的對照實測結論在 [[moc/AI技能評比|AI 技能評比]]**，這裡只放一句話 + 連結，不重抄。
+
+**圖例**　型態：`skill` `plugin` `MCP`　狀態：⬜ 待試・✅ 已在用・📊 已跑實測
+（★ 為查看當時概數，非即時。）
 
 ## 📇 快速索引
 
-| Skill | 型態 | 平台 | 一句話 | 我的狀態 |
-|---|---|---|---|---|
-| [gc-minimal-zine-poster](#gc-minimal-zine-poster) | skill | Codex | 把一個主題／句子／照片變成極簡 zine 風海報 | ⬜ 待試 |
-| [editorial-vision-studio](#editorial-vision-studio) | skill | Codex | 視覺導演引擎：決策管線＋可換模型 adapter，一份方向出多模型 prompt | ⬜ 待試 |
-| [i-have-adhd](#i-have-adhd) | plugin | Claude Code・Codex | 逼 agent 把答案放最前面，不要鋪陳與客套 | ⬜ 待試・📊 已實測 |
-| [ponytail](#ponytail) | plugin | Claude Code・Codex・多平台 | 寫碼前先爬「該不該寫」的階梯，砍掉過度設計 | ⬜ 待試・📊 已實測 |
-| [codegraph](#codegraph) | MCP | 多平台 | 本機程式碼知識圖譜，**讀流程強**、caller 會漏 | ✅ 已在用・📊 已實測 |
-| [codebase-memory-mcp](#codebase-memory-mcp) | MCP | 多平台 | 同路線另一套，**caller 完整**、但只給名稱無 body | ✅ 已在用・📊 已實測 |
+| Skill | 型態 | 平台 | 一句話 | 來源 | 狀態 |
+|---|---|---|---|---|---|
+| [gc-minimal-zine-poster](#gc-minimal-zine-poster) | skill | Codex | 主題／照片 → 極簡 zine 風海報，直接生圖 | [repo↗](https://github.com/LiamGvchi/gc-minimal-zine-poster) | ⬜ |
+| [editorial-vision-studio](#editorial-vision-studio) | skill | Codex | 視覺導演引擎：決策管線＋可換模型 adapter | [repo↗](https://github.com/Yu-0312/editorial-vision-studio) | ⬜ |
+| [MiniMax-H3 skills](#minimax-h3-skills) | skill | npx skills | H3 全模態影音模型附的九個 prompt／影片生成 skill | [repo↗](https://github.com/MiniMax-AI/MiniMax-H3) | ⬜ |
+| [i-have-adhd](#i-have-adhd) | plugin | Claude・Codex | 逼 agent 答案先講、不鋪陳客套 | [repo↗](https://github.com/ayghri/i-have-adhd) | ⬜ 📊 |
+| [ponytail](#ponytail) | plugin | 多平台 | 寫碼前爬「該不該寫」階梯，砍過度設計 | [repo↗](https://github.com/dietrichgebert/ponytail) | ⬜ 📊 |
+| [codegraph](#codegraph) | MCP | 多平台 | 本機碼圖譜，讀流程強、caller 會漏 | [repo↗](https://github.com/colbymchenry/codegraph) | ✅ 📊 |
+| [codebase-memory-mcp](#codebase-memory-mcp) | MCP | 多平台 | 同路線，caller 完整、只給名稱無 body | [repo↗](https://github.com/DeusData/codebase-memory-mcp) | ✅ 📊 |
 
 ---
 
-## 🎨 圖像與設計
+## 🎨 圖像與影片
 
 ### gc-minimal-zine-poster
+`skill` · Codex · MIT · ★113 · ⬜ 待試
 
-**平台：Codex**（不是 Claude Code —— 安裝路徑是 `~/.codex/skills/`）
-**可呼叫名稱：** `gc-minimal-zine-poster-v0-1`
-**來源：** https://github.com/LiamGvchi/gc-minimal-zine-poster ・ MIT ・ 113 ★（2026-08 查看時）
+**做什麼**：把主題／句子／物件／心情／文章點子／照片，編譯成「安靜極簡 zine 風編輯海報」的生成 prompt，並直接產圖。
 
-**做什麼**
-把一個主題、句子、物件、心情、文章點子、照片或內容簡報，編譯成「安靜的極簡 zine 風編輯海報」的生成 prompt，並直接產出圖。
+**核心**（它的靈魂——不是通用生圖，而是把風格鎖死往一個方向壓）
+- 3:5 **老化紙張**畫布、**70–90% 留白**
+- **只有一個**小主體或視覺聚落
+- 襯線／打字機／等寬字 ＋ **一個高彩度色錨**
+- xerox／riso／halftone／凸版／掃描紙張的瑕疵感、日韓獨立誌的安靜氛圍
+- 刻意避開：商業廣告版面、光亮 mockup、電影感打光、3D、霓虹、拼貼 scrapbook、大段乾淨文字
 
-**它固定往哪個方向壓**（這是這個 skill 的靈魂——它不是通用生圖，而是把風格鎖死）
-- 3:5 的**老化紙張**畫布
-- **70–90% 留白**
-- **只有一個**小的可成像主體或視覺聚落
-- 襯線體、打字機體或等寬字
-- **一個清楚可見的高彩度色錨**
-- xerox／risograph／halftone／凸版印刷／掃描紙張的瑕疵感
-- 日韓獨立誌或極簡編輯設計的安靜氛圍
-
-**它刻意避開**
-商業廣告版面、光亮的 mockup、電影感打光、3D 算圖、霓虹、密集拼貼式 scrapbook、長段乾淨的文字塊。
-
-**安裝**
+**裝**
 ```bash
 git clone https://github.com/LiamGvchi/gc-minimal-zine-poster.git \
   ~/.codex/skills/gc-minimal-zine-poster-v0-1
 ```
-裝完若沒出現就重啟 Codex。
+可呼叫名稱 `gc-minimal-zine-poster-v0-1`；沒出現就重啟 Codex。
 
-**用法**
-呼叫 skill 名稱並給一個主題或簡報即可，例如「用 $gc-minimal-zine-poster-v0-1 做一張關於雨天舊書店的海報」。也可以餵句子、文章點子、物件、心情或參考圖。
+**用**：呼叫名稱給一個主題／簡報，例「用 $gc-minimal-zine-poster-v0-1 做一張關於雨天舊書店的海報」（也可餵句子／點子／物件／心情／參考圖）。輸出＝海報圖＋最終 prompt＋變體配方與詮釋註記；預設直接生圖，明確說「只要 prompt」才停。
 
-**輸出三件事**
-產出的海報圖 ＋ 最終的生圖 prompt ＋ 選用的變體配方與一小段詮釋註記。
-
-> 預設走 Standard Mode 並直接生圖；只有在你明確要求「只要 prompt」時才會停在 prompt 輸出。
-
-**我的狀態：** ⬜ 待試
-**試用筆記：**（待填）
-
-**🔗 相關：** [editorial-vision-studio](#editorial-vision-studio) 是它的演進版——把「鎖死一種極簡 zine 風」開放成可選風格與版面，並加上決策管線與多模型 adapter。
-
----
+**🔗 相關**：[editorial-vision-studio](#editorial-vision-studio) 是它的演進版——把「鎖死一種 zine 風」開放成可選風格與版面。
 
 ### editorial-vision-studio
+`skill` · Codex · MIT · ★96 · ⬜ 待試
 
-**平台：Codex**（安裝路徑 `~/.codex/skills/`）
-**可呼叫名稱：** `editorial-vision-studio`
-**來源：** https://github.com/Yu-0312/editorial-vision-studio ・ MIT ・ 96 ★（2026-08-08 查看時）
+**做什麼**：AI 圖像／編輯設計的「視覺導演引擎」。不直接寫 prompt，先跑決策管線（**判斷用途 → 分析畫面 → 定視覺語言 → 規劃版面與風格 → 補救 → 產出模型無關的 VisionSpec**），最後才用 adapter 轉成該模型的 prompt。哲學：「不要裝飾，一律詮釋。」
 
-**做什麼**
-給 AI 圖像／編輯設計用的「視覺導演引擎」。它不直接寫 prompt，而是先跑一條決策管線：**判斷用途 → 分析畫面 → 決定視覺語言 → 規劃版面與風格 → 補救弱點 → 產出一份與模型無關的 VisionSpec／EditorialSpec**，最後才用 adapter 轉成某個模型的 prompt。目標是讓成品接近雜誌、展覽海報、品牌主視覺或極簡插畫的質感。哲學一句話：「不要裝飾，一律詮釋。」
+**核心**
+- **決策引擎固定、模型 adapter 可抽換**：換模型（GPT Image → Flux → Ideogram）只重跑 adapter，不重新分析。
+- adapter：`gpt-image`（照片保真，預設）／`flux`（小誌質感）／`ideogram`（封面字體）／`generic`。
+- 十種風格 DNA（Swiss／MUJI／Kinfolk／Monocle／COS／Brutalist／Wallpaper*／Apartamento／Purple／POPEYE）× 多版面（海報／封面／展覽圖／小誌／首圖／活動／品牌主視覺／產品編輯圖／moodboard）。
+- 產圖前 **Reviewer 擋風格衝突**（MUJI 配重標題、Swiss 配 Kinfolk 有機感、展覽圖塞太多字）。
+- **Panter Mode**：低對比／灰掉的照片，用暖冷衝突色＋高彩度色錨＋拉開明暗來救（只補色、不加材質）。
 
-**它的靈魂：決策引擎固定、模型 adapter 可抽換**
-- 「視覺邏輯」與「模型語法」徹底分離——同一份視覺方向要換模型（GPT Image → Flux → Ideogram），**只重跑 adapter，不重新分析**。
-- 內建 adapter：`gpt-image`（照片保真、上傳照片時預設）、`flux`（小誌質感／氛圍）、`ideogram`（封面／活動字體）、`generic`（未知後端）。
-- 每一層只做一件事：分析器不編譯、編譯器不分析。
-
-**它比 gc-minimal-zine-poster 多做的事**（SKILL.md 明說它站在 gc-minimal-zine-poster 與 photo-abstract-editorial 之上演進）
-- **不鎖死單一風格**：內建 Swiss／MUJI／Kinfolk／Monocle／COS／Brutalist／Wallpaper*／Apartamento／Purple／POPEYE 十種風格 DNA，搭配海報／封面／展覽圖／小誌／首圖／活動／品牌主視覺／產品編輯圖／moodboard 等版面。
-- 產圖前有 **Reviewer 衝突檢查**：例如 MUJI 卻配過重標題、Swiss grid 配 Kinfolk 有機感、展覽圖塞太多字，會擋下或自動修正。
-- **Panter Mode 低對比補救**：灰掉／低飽和的照片，用暖冷衝突色、加高彩度色錨、拉開明暗來救（只補色、不加材質）。
-- 產圖前後有 Image Report（0–100 Editorial Score）與 Quality Evaluator（A–D 評級）。
-
-**安裝**
+**裝**
 ```bash
 mkdir -p ~/.codex/skills
 git clone https://github.com/Yu-0312/editorial-vision-studio.git \
   ~/.codex/skills/editorial-vision-studio
 ```
-裝完若沒出現就重啟 Codex。
+沒出現就重啟 Codex。
 
-**用法**
-呼叫 skill 並描述用途或給照片，例如「用 editorial-vision-studio，把這張照片重新構圖為極簡展覽插畫提示詞，不要保留寫實攝影細節」。可只給主題，也可指定 `style:`（如 `kinfolk`）或 `model:`（如 `flux`）。指定 style／model 時會跳過自動推導，但 Reviewer 仍會驗證風格 DNA 是否相容。
+**用**：描述用途或給照片，例「用 editorial-vision-studio，把這張照片重新構圖為極簡展覽插畫提示詞，別保留寫實細節」。可指定 `style:`（如 `kinfolk`）或 `model:`（如 `flux`），指定時跳過自動推導但 Reviewer 仍驗證風格相容。輸出預設＝方向摘要＋GenerationRequest（prompt 英文、摘要跟隨你語言）；分析照片才附 Image Report，換模型才附完整 VisionSpec。
 
-**輸出**
-預設給一段方向摘要 ＋ 可直接用的 GenerationRequest（model-ready prompt，prompt 用英文、方向摘要跟隨你的語言）；有分析照片才附 Image Report，要重用方向／換模型才附完整 VisionSpec，有實際生圖工具且你要求生圖才生圖。
+**🔗 相關**：[gc-minimal-zine-poster](#gc-minimal-zine-poster)（前身之一）。
 
-**我的狀態：** ⬜ 待試
-**試用筆記：**（待填）
+### MiniMax-H3 skills
+`skill` · npx skills · MiniMax H3 Community License · ★1.6k · ⬜ 待試
 
-**🔗 相關：** [gc-minimal-zine-poster](#gc-minimal-zine-poster)（前身之一，把風格鎖死在極簡 zine；本 skill 把風格與版面開放成可選）
+**做什麼**：MiniMax 開源全模態影音生成模型 **H3** 附的**九個 skill**，把「怎麼對 H3 下 prompt／做特定風格影片」包成可直接裝的技能。（模型本身的能力與架構 → [[articles/MiniMax H3 全模態生成模型|模型筆記]]）
+
+**九個 skill**
+- `h3-prompt-writing`：H3 的 prompt 寫法指南（附 `base-en.txt` 給 text／keyframe 模式、`ref-en.txt` 給 full-reference Ref2VA 模式）。
+- 八個風格化影片生成：`minimalist-product-ad-generator`、`3d-animation-short-generator`、`papercraft-stop-motion-explainer`、`brand-promo-video-generator`、`music-video-subtitle-generator`、`co-op-game-intro-generator`、`paper-collage-explainer-generator`、`handdrawn-live-video-generator`。
+
+**裝**（以 prompt-writing 為例，其餘換 `--skill` 名稱）
+```bash
+npx skills add https://github.com/MiniMax-AI/MiniMax-H3 --skill h3-prompt-writing
+```
+
+**用**：skill 本身是 prompt 與流程指南，實際生成靠 H3 模型——搭配 H3 的 API／App，或本機部署的 H3-Base（768p，2K 需官方 Regenerate-2K API）。
+
+**🔗 相關**：[[articles/MiniMax H3 全模態生成模型|MiniMax H3（模型筆記）]]
 
 ---
 
 ## 🧠 回應風格與寫碼紀律
 
-> 這兩個都是「**改 agent 的行為**」而不是「給 agent 新能力」。裝上去之後每一輪都會生效，所以要清楚自己想要哪種預設。
+> 這兩個是「**改 agent 行為**」不是「給新能力」，裝上每輪生效——想清楚要哪種預設。
 >
-> 📊 **這兩個我已經跑過對照實測** → [[moc/AI技能評比|AI 技能評比]]（2026-08-05）。結論先講：答案確實變短，但**短在少講了三分之一的概念**；而且 **output tokens 完全沒省到**。
+> 📊 已跑對照實測 → [[moc/AI技能評比|AI 技能評比]]（2026-08-05）。結論：答案確實變短，但**短在少講三分之一概念**，且 **output token 沒省到**。
 
 ### i-have-adhd
+`plugin` · Claude Code・Codex · MIT · ★16.7k · ⬜ 待試 · 📊
 
-**平台：** Claude Code、Codex（其他 agent 見 repo 的 `INSTALL.md`）
-**來源：** https://github.com/ayghri/i-have-adhd ・ MIT ・ 16,688 ★（2026-08-05 查看時）
+**做什麼**：讓 coding agent **不要把答案埋起來**——動作先講、多步驟編號、不「Hope this helps!」。不需 ADHD 診斷也適用。
 
-**做什麼**
-一條讓 coding agent **不要把答案埋起來**的規則集。動作先講、多步驟編號、不要「Hope this helps!」。名字雖然叫 ADHD，README 明說**不需要有 ADHD 診斷**也適用。
+**核心**（十條規則，全文在 repo 的 `SKILL.md`）
+先講下一動作／多步驟編號／結尾給下一步／壓離題／每輪重述狀態／時間估算講分鐘／進展看得見／錯誤就事論事／清單 ≤5 項／無開場白回顧結語。出處：鬆散取材《The Adult ADHD Tool Kit》，改寫成「LLM 該怎麼回應」。
 
-**十條規則**（全文在 repo 的 `SKILL.md`）
-1. 先講下一個動作
-2. 多步驟任務要編號
-3. 結尾給一個具體的下一步
-4. 壓掉離題
-5. 每一輪重述目前狀態
-6. 時間估算要具體（講分鐘，不要講「一下下」）
-7. 讓進展看得見
-8. 錯誤就事論事
-9. 清單最多 5 項
-10. 沒有開場白、沒有回顧、沒有結語
-
-**安裝**
+**裝**
 ```bash
 # Claude Code
 claude plugin marketplace add ayghri/i-have-adhd
 claude plugin install i-have-adhd@i-have-adhd
-
 # Codex
 codex plugin marketplace add ayghri/i-have-adhd --ref main
 codex plugin add i-have-adhd@i-have-adhd
 ```
 
-**出處**
-鬆散取材自 J. Russell Ramsay 與 Anthony L. Rostain 的 *The Adult ADHD Tool Kit*，但**改寫成「LLM 該怎麼回應」而不是「人該怎麼安排一天」**。
+**⚠️ 注意**：會壓掉推理過程與脈絡。「已知道要什麼」的任務很爽，「需要一起想清楚」的可能反而礙事。
 
-**我的狀態：** ⬜ 待試（📊 已有實測 → [[moc/AI技能評比|AI 技能評比]]）
-**試用筆記：** 實測中概念覆蓋 **−17%**，是三個實驗組裡壓縮最輕的；四組裡最會給「起點與終點」（開場指向權威設計文件、結尾指到行號）。
-
-> ⚠️ 想清楚再裝：它會壓掉推理過程與脈絡說明。對「已經知道自己要什麼」的任務很爽，對「需要一起想清楚」的任務可能反而礙事。
+**📊 實測**：概念覆蓋 **−17%**（三組裡壓最輕），四組裡最會給「起點與終點」 → [[moc/AI技能評比|評比]]
 
 ### ponytail
+`plugin` · 多平台 · MIT · ★95.7k · ⬜ 待試 · 📊
 
-**平台：** Claude Code、Codex、GitHub Copilot CLI、OpenCode、Gemini CLI、Qoder、Pi
-**來源：** https://github.com/dietrichgebert/ponytail ・ MIT ・ 95,739 ★（2026-08-05 查看時）
+**做什麼**：把「看你五十行程式碼一句話不說就換成一行」的資深工程師塞進 agent。寫碼前先爬一道階梯，停在第一個成立的階。
 
-**做什麼**
-把「公司裡待最久、看你五十行程式碼一句話不說就換成一行」的那位資深工程師塞進 agent 裡。核心是寫碼前先爬一道**階梯**，停在第一個成立的階：
-
+**核心**（決策階梯）
 ```
-1. 這東西需要存在嗎？        → 不需要：跳過（YAGNI）
-2. 這個 codebase 裡已經有了？ → 沿用，不要重寫
-3. 標準函式庫做得到？        → 用它
-4. 平台原生功能做得到？      → 用它
-5. 已安裝的依賴做得到？      → 用它
-6. 一行寫得完？              → 一行
-7. 到這裡才動手：能動的最小量
+1 需要存在嗎？   → 不需要:跳過 (YAGNI)
+2 codebase 已有？ → 沿用，不重寫
+3 標準函式庫可以？ → 用它
+4 平台原生可以？   → 用它
+5 已裝依賴可以？   → 用它
+6 一行寫得完？     → 一行
+7 才動手：能動的最小量
 ```
+兩個限定（別誤讀成「叫 AI 偷懶」）：階梯是**讀懂問題之後**才跑（對解法懶、**對閱讀絕不懶**）；信任邊界驗證／資料遺失／資安／無障礙**永遠不在被砍名單**。
 
-**關鍵的兩個限定**（很容易被誤讀成「叫 AI 偷懶」）
-- 階梯是在**讀懂問題之後**才跑，不是拿來取代理解：README 說它會先讀改動觸及的程式碼、追出真正的流程，再挑要停在哪一階。**對解法懶，對閱讀絕不懶。**
-- **懶但不失職**：信任邊界的驗證、資料遺失的處理、資安、無障礙，永遠不在被砍的名單上。
-
-**它自己給的數字**（README 原文，未經我驗證）
-在 tiangolo 的 full-stack-fastapi-template 上跑 12 個 feature ticket、Haiku 4.5、n=4：LOC −54%、token −22%、成本 −20%、時間 −27%、安全性維持 100%。README 自己也標明：**−54% 是平均值**，過度設計的情境（date picker）可到 −94%，本來就寫得很精簡的情境則接近 0；而且「YAGNI + 寫一行」的土法 prompt 對照組會掉一個安全防護。
-
-**安裝**（Claude Code 要分**兩則**訊息送）
+**裝**（Claude Code 要分兩則訊息送）
 ```
 /plugin marketplace add DietrichGebert/ponytail
 /plugin install ponytail@ponytail
@@ -187,77 +149,62 @@ codex plugin add i-have-adhd@i-have-adhd
 codex plugin marketplace add DietrichGebert/ponytail
 codex plugin add ponytail@ponytail
 ```
-需要 `node` 在 PATH 上（Claude Code／Codex 版會跑兩個 Node.js lifecycle hook）；沒有的話 skill 還是能用，只是常駐啟動會安靜地失效。
+需 `node` 在 PATH（跑兩個 lifecycle hook；沒有的話常駐會安靜失效）。
 
-**用法**
-六個指令：`/ponytail`、`/ponytail-review`、`/ponytail-audit`、`/ponytail-debt`、`/ponytail-gain`、`/ponytail-help`；強度分 `lite` / `full` / `ultra` / `off`。
+**用**：六指令 `/ponytail`・`-review`・`-audit`・`-debt`・`-gain`・`-help`；強度 `lite`/`full`/`ultra`/`off`。
 
-**我的狀態：** ⬜ 待試（📊 已有實測 → [[moc/AI技能評比|AI 技能評比]]）
-**試用筆記：** 實測中概念覆蓋 **−31%**，壓縮幅度最大；與 i-have-adhd 同開時**由它主導**（同開 −33%，不是兩者相加的 −48%）。**但 output tokens 沒省到**，別為了省錢開。
+**⚠️ 注意**：對「花 thinking token 反覆推敲階梯」的推理模型，成本可能**反而變高**（README 點名 GPT-5.5）。
 
-> ⚠️ README 自己承認：對「花 thinking token 去反覆推敲階梯」的推理模型，成本可能**反而變高**（它點名 GPT-5.5）。
+**📊 實測**：概念覆蓋 **−31%**（壓最多），與 i-have-adhd 同開由它主導（−33% 非相加）；**output token 沒省到，別為省錢開** → [[moc/AI技能評比|評比]]
+
+**宣稱數字**（README，未驗證）：fastapi-template 12 ticket、Haiku 4.5、n=4：LOC −54%、token −22%、成本 −20%、時間 −27%、安全 100%（−54% 是均值，過度設計可到 −94%，本來精簡的接近 0）。
 
 ---
 
 ## 🔍 程式碼理解（MCP）
 
-> **這兩個表面上做同一件事**：在本機把整個 codebase 建成知識圖譜（symbol、呼叫邊、依賴），讓 agent 一次呼叫就拿到相關原始碼＋呼叫路徑，取代「grep → glob → 一個檔一個檔讀」的迴圈。兩套都主打 100% 本機、程式碼不外流。
+> **兩者表面做同一件事**：本機把 codebase 建成知識圖譜（symbol、呼叫邊、依賴），一次呼叫拿到相關源碼＋呼叫路徑，取代「grep → 逐檔讀」的迴圈。都主打 100% 本機、碼不外流。
 >
-> 📊 **但實測顯示它們互補，不是二選一** → [[moc/AI技能評比|AI 技能評比]]（2026-08-05）。**找誰呼叫我／影響分析用 codebase-memory**（caller 完整性 5/5、2/2，codegraph 是 3/5、1/2，漏的都是巢狀函式與 singleton 實例方法）；**讀流程／快速讀懂機制用 codegraph**（trace 會 inline 每一跳的原始碼，codebase-memory 只給名稱清單）。
+> 📊 **實測顯示互補、不是二選一**：影響分析（誰呼叫我）用 codebase-memory；讀流程／快速讀懂機制用 codegraph → [[moc/AI技能評比|AI 技能評比]]（2026-08-05）。
 >
-> ~~同時裝兩套沒有意義，選一套即可。~~ ← 這句是我自己的推論，已被實測推翻，留著當紀錄。
+> ~~同時裝兩套沒有意義，選一套即可。~~ ← 我自己的推論，已被實測推翻，留著當紀錄。
 
 ### codegraph
+`MCP` · 多平台 · MIT · ★64k · ✅ 已在用 · 📊
 
-**平台：** Claude Code、Cursor、Codex CLI、opencode、Hermes Agent、Gemini CLI、Antigravity IDE、Kiro
-**來源：** https://github.com/colbymchenry/codegraph ・ MIT ・ 64,496 ★（2026-08-05 查看時）
+**做什麼**：本機程式碼知識圖譜（Rust kernel）。核心工具 `codegraph_explore` 一次給相關 symbol 的**逐字源碼**＋**呼叫路徑**（含 grep 追不到的 dynamic dispatch）＋改動 blast radius。
 
-**做什麼**
-Rust kernel 的程式碼知識圖譜。核心工具 `codegraph_explore` 一次回傳：相關 symbol 的**逐字原始碼**＋它們之間的**呼叫路徑**（含 grep 追不到的 dynamic dispatch）＋改動的 blast radius。
-
-**它自己給的數字**（README 原文，未經我驗證）
-7 個開源專案、7 種語言、Claude Opus 4.8 headless、每組 4 次取中位數：工具呼叫 −89%、成本 −60%、token −69%、**七個 repo 的檔案讀取全部歸零**。README 自己標註兩個誠實的但書：小型 repo 有「地板效應」，強模型直接 grep 反而 wall-clock 更快（只是燒 5–10 倍 token）；OkHttp 那組成本幾乎打平。
-
-**安裝**
+**裝**
 ```bash
 curl -fsSL https://raw.githubusercontent.com/colbymchenry/codegraph/main/install.sh | sh
-codegraph install     # 偵測並接上各家 agent（這步才會接上 MCP）
-cd your-project && codegraph init   # 每個專案各自建圖
+codegraph install               # 接上各家 agent，不建索引
+cd your-project && codegraph init  # 每個專案各自建圖
 ```
-`codegraph install` **只接 agent、不建索引**；建索引是各專案的 `codegraph init`。裝好後 auto-sync 預設開啟，檔案一改就更新，不用手動重建。
+auto-sync 預設開，改檔即更新。本機 v1.4.1，官方已出 1.5.0（`codegraph upgrade`）。
 
-**我的狀態：** ✅ 已在用（本機 v1.4.1；官方已出 1.5.0，`codegraph upgrade` 可更新）・📊 已實測 → [[moc/AI技能評比|AI 技能評比]]
-**試用筆記：**
-- 已寫進全域 `CLAUDE.md` 的使用規則——**只在有 `.codegraph/` 目錄的 repo 才用**，沒有就跳過（要不要建索引是我自己決定，不該由 agent 代跑 init）。
-- 實測強項：**`trace` 會 inline 每一跳的原始碼**，`context` / `explore` 一次取多個符號的源碼，搜尋直接帶型別簽章——讀流程時體驗最好。
-- 實測弱項：**caller 會漏**（`assertWithinQuota` 5 處只抓到 3 處、`handleUserText` 2 處只抓到 1 處），漏的都是**巢狀 async function 與 singleton 實例方法**。做影響分析時別只信它。
+**用**：只在有 `.codegraph/` 目錄的 repo 用（建索引我自己決定，不讓 agent 代跑 `init`）。已寫進全域 `CLAUDE.md`。
+
+**📊 實測**：讀流程／快速讀懂贏；**caller 會漏**（巢狀函式、singleton 方法），影響分析別只信它 → [[moc/AI技能評比|評比]]
+
+**宣稱數字**（README，未驗證）：工具呼叫 −89%、token −69%、7 repo 檔案讀取全部歸零；但小 repo 有地板效應、強模型直接 grep wall-clock 更快（只是燒 5–10 倍 token）。
 
 ### codebase-memory-mcp
+`MCP` · 43 client surface · MIT · ★37.4k · ✅ 已在用 · 📊
 
-**平台：** 43 個 client surface（自動／條件式偵測）
-**來源：** https://github.com/DeusData/codebase-memory-mcp ・ MIT ・ 37,430 ★（2026-08-05 查看時）
+**做什麼**：同是本機程式碼知識圖譜，路線差在**廣度與速度**：tree-sitter AST 覆蓋 **158 種語言**（其中 12 種另加 LSP 語意型別解析），單一靜態 binary、零依賴。15 個 MCP 工具（死碼偵測／跨服務 HTTP 串接／Cypher／ADR），另把 Dockerfile／K8s／Kustomize 也建進圖。
 
-**做什麼**
-同樣是本機程式碼知識圖譜，路線差異在**廣度與速度**：tree-sitter AST 覆蓋 **158 種語言**（其中 Python／TS／JS／PHP／C#／Go／C／C++／Java／Kotlin／Rust／Perl 另外加 LSP 語意型別解析），單一靜態 binary、零依賴。15 個 MCP 工具，含死碼偵測、跨服務 HTTP 串接、Cypher 查詢、ADR 管理。另外會把 Dockerfile／K8s manifest／Kustomize 也建進圖裡。
-
-**它自己給的數字**（README 原文，未經我驗證）
-Linux kernel（28M LOC、75K 檔）3 分鐘建完索引，結構查詢 <1ms；5 個結構查詢約 3,400 token vs 逐檔搜尋約 412,000 token。另附 preprint（arXiv:2603.27277），31 個真實 repo：答案品質 83%、token 少 10×、工具呼叫少 2.1×。
-
-**安裝**
+**裝**
 ```bash
 curl -fsSL https://raw.githubusercontent.com/DeusData/codebase-memory-mcp/main/install.sh | bash
-# 要 3D 圖譜視覺化（localhost:9749）：加 -s -- --ui
+# 要 3D 圖譜視覺化(localhost:9749)：加 -s -- --ui
 ```
-重啟 agent 後說「Index this project」即可。
+重啟 agent 後說「Index this project」。快取在 `~/.cache/codebase-memory-mcp/`。
 
-**我的狀態：** ✅ 已在用（快取在 `~/.cache/codebase-memory-mcp/`）・📊 已實測 → [[moc/AI技能評比|AI 技能評比]]（實測用的是 **pro 版**，與這個開源版功能集是否相同我沒查證）
-**試用筆記：**
-- 實測強項：**caller 完整性全勝**（5/5、2/2），type-aware LSP 對巢狀函式與 singleton 實例方法的 CALLS 邊全中；Cypher 查詢、跨程序迴圈深度、語意搜尋、co-change 耦合這四件事 **codegraph 完全沒有對應能力**。
-- 實測弱項：**只給名稱清單、沒有 body**，讀流程時要另外開檔。
-- 它會**跨 client 共用一個 coordination daemon**（Claude Code、Codex、OpenCode…），沒有 opt-in 開關；第一個 session 啟動它、最後一個關掉它。日誌在 `~/.cache/codebase-memory-mcp/logs/`。
-- 所有 CBM process **必須版本完全一致**，否則會被 admission barrier 擋下並寫進 `daemon-conflicts.ndjson`。多 client 混用時升級要一次升完。
+**⚠️ 注意**：它**會讀你的 codebase、也會寫你的 agent 設定檔**；跨 client 共用一個 coordination daemon（無 opt-in，第一個 session 啟動、最後一個關掉）；所有 CBM process 版本**必須完全一致**，否則被 admission barrier 擋下。
 
-> ⚠️ README 自己寫明：它**會讀你的 codebase、也會寫你的 agent 設定檔**。這是設計如此，但值得知道。
+**📊 實測**：**caller 完整性全勝**（type-aware LSP）；Cypher／跨程序迴圈深度／語意搜尋／co-change 耦合是它獨有；但只給名稱清單、無 body → [[moc/AI技能評比|評比]]（實測用 **pro 版**，與開源版功能集是否相同未查證）
+
+**宣稱數字**（README，未驗證）：Linux kernel 28M LOC 3 分鐘建完、結構查詢 <1ms；preprint arXiv:2603.27277，31 repo：品質 83%、token 少 10×、工具呼叫少 2.1×。
 
 ---
 
