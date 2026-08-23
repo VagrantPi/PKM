@@ -20,6 +20,7 @@ title: 我的知識庫
 - [[moc/AI工程|AI工程]]
 - [[moc/MCP|MCP（Model Context Protocol）]]
 - [[moc/AI技能收藏|AI 技能收藏]]（外部現成工具，非知識萃取）／ [[moc/AI技能評比|AI 技能評比]]（自己跑的對照實測）
+- [[moc/Claude Code 深度使用|Claude Code 深度使用]]（做自己的工具／驗證／調校內建行為）
 - [[區塊鏈]]
 
 ## 📚 書
