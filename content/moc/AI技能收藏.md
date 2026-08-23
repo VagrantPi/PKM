@@ -20,6 +20,7 @@ tags: [moc, ai, skills, agent, tooling]
 | [MiniMax-H3 skills](#minimax-h3-skills) | skill | npx skills | H3 全模態影音模型附的九個 prompt／影片生成 skill | [repo↗](https://github.com/MiniMax-AI/MiniMax-H3) | ⬜ |
 | [i-have-adhd](#i-have-adhd) | plugin | Claude・Codex | 逼 agent 答案先講、不鋪陳客套 | [repo↗](https://github.com/ayghri/i-have-adhd) | ⬜ 📊 |
 | [ponytail](#ponytail) | plugin | 多平台 | 寫碼前爬「該不該寫」階梯，砍過度設計 | [repo↗](https://github.com/dietrichgebert/ponytail) | ⬜ 📊 |
+| [eli5](#eli5) | skill | Claude Code | 依聽眾（5 歲／主管／工程師／家人）換一套講法解釋同一件事 | [repo↗](https://github.com/DreambigOu/ELI5) | ⬜ |
 | [codegraph](#codegraph) | MCP | 多平台 | 本機碼圖譜，讀流程強、caller 會漏 | [repo↗](https://github.com/colbymchenry/codegraph) | ✅ 📊 |
 | [codebase-memory-mcp](#codebase-memory-mcp) | MCP | 多平台 | 同路線，caller 完整、只給名稱無 body | [repo↗](https://github.com/DeusData/codebase-memory-mcp) | ✅ 📊 |
 
@@ -158,6 +159,54 @@ codex plugin add ponytail@ponytail
 **📊 實測**：概念覆蓋 **−31%**（壓最多），與 i-have-adhd 同開由它主導（−33% 非相加）；**output token 沒省到，別為省錢開** → [[moc/AI技能評比|評比]]
 
 **宣稱數字**（README，未驗證）：fastapi-template 12 ticket、Haiku 4.5、n=4：LOC −54%、token −22%、成本 −20%、時間 −27%、安全 100%（−54% 是均值，過度設計可到 −94%，本來精簡的接近 0）。
+
+---
+
+## 🗣 解釋與表達
+
+> 跟上面的「回應風格」差在**生效時機**：那些是 plugin，裝上每輪都在改你的 agent；這類是 skill，**被觸發才上場**，平常不動預設行為。所以風險低、但也要留意觸發詞會不會誤觸。
+
+### eli5
+`skill` · Claude Code · MIT · ★143 · ⬜ 待試
+
+**做什麼**：把同一個東西（概念／一段 code／一則錯誤訊息）**換一套講法講給不同的人聽**——5 歲小孩、5 年級生、主管、設計師、研究生、你媽。不是「講簡單一點」，是換分析框架。
+
+**核心**（它的靈魂＝一張「聽眾 → 校準參數」對照表，不是一句「說人話」）
+- **四類聽眾**：年齡（5／10／15／20–30／40+）、學程（5 年級／國中／高中／大學／研究所）、職務（主管／工程師／設計師／總監／PM／同事）、關係（伴侶／父母／小孩／朋友）。
+- **五個校準維度**：用詞、類比、語氣、深度、**框架**。框架是重點——主管框「影響／風險／要做什麼決定」、設計師框「使用者體驗與互動」、工程師框「架構與取捨」。
+- **會反向加難度**：對工程師／研究生**刻意用術語**（「不用專有名詞他們會覺得被當白痴」），對主管**砍掉實作細節**。所以它不是單向的簡化器。
+- 固定結構：一句話講「是什麼」→ 給類比 → 補細節 → 收在「所以這對**你**有什麼影響」。
+- **沒指定聽眾就預設 Age 5。**
+- 明講的取捨：對非技術聽眾，**「80% 正確但聽得懂」勝過「100% 正確但聽不下去」**。
+
+**裝**
+```bash
+git clone https://github.com/DreambigOu/ELI5.git
+cp -r ELI5/skills/eli5 ~/.claude/skills/eli5
+```
+眉角：repo 名是大寫 `ELI5`，但 skill 本體在子目錄 `skills/eli5`——**只 clone 不 `cp` 不會生效**。
+
+**用**：講白話就會觸發，例「ELI5 什麼是 database index」「把這段 code 解釋給我主管聽」「用 5 年級生聽得懂的方式講 git merge conflict」「解釋這個錯誤給我媽」。
+
+**⚠️ 注意**
+- **不讀 codebase、不改設定檔**——就是一個 prompt 檔，裝了不會有副作用。
+- **沒講聽眾就當你是 5 歲**。想要「簡潔的專業說明」時會過頭，要明講對象。
+- **觸發詞很寬**（`explain this to my`／`break this down for`／`dumb it down`／`simplify this for`），只想要一般說明時可能被誤觸。
+- SKILL.md **全英文**，類比取材也是英語語境（玩具、遊樂場、社群媒體）。**用中文問時類比貼不貼，未驗證。**
+
+**宣稱數字**（README，未驗證）
+- repo 裡**兩份數字對不起來**，原因在作者的 blog（[[做一個 ELI5 Skill 的過程]]）：
+  - `eval-results.md` 的 **91.7% vs 33.3%（+58.3%）**、token +23%、平均快 14.4s ← skill-creator 那次的**人工評分**。
+  - README 的 **83.3% vs 41.6%（+41.7%）** ← 後來本地腳本的 **LLM auto-grader**。
+  - 兩者鬆緊剛好相反：auto-grader 抓到「主管那題超過 500 字」，卻放過了人工判 fail 的「phone book 類比」。**別把兩份混著比。**
+- 條件：**3 題 × 4 條 assertion＝12 條**，每組**各只跑 1 次**，無重複、無雜訊底線；`claude -p` **未指定 model**；**評分由 Claude 自評**。
+- 最該知道的一點：with-skill 那組是在題目前面加「Read the skill at `<path>` first, then follow its instructions」——所以它測的是「**SKILL.md 的內容有沒有用**」，**不是「這個 skill 會不會被正確自動觸發」**。後者沒測。
+- 作者自陳最大增益在**主管**這一類（baseline 0/4 → 3/4）。
+
+**🔗 相關**
+- [[做一個 ELI5 Skill 的過程]] — 作者怎麼做出它的（skill-creator 流程），以及上面那兩份數字的來歷
+- [[如何評測一個 Claude Code Skill]] — 它的 eval 腳本怎麼運作、為什麼單次結果不能信
+- [i-have-adhd](#i-have-adhd) 是另一頭——同樣在動輸出風格，但它是 plugin **每輪生效改紀律**（怎麼排版答案），eli5 是 skill **被叫才上場換框架**（講給誰聽）。想同時裝要想清楚要哪種預設。
 
 ---
 

@@ -83,4 +83,5 @@ codegraph 漏的都是**巢狀函式與 singleton 實例方法**；codebase-memo
 
 ## 🔗 相關
 - 工具本身怎麼裝、做什麼 → [[moc/AI技能收藏|AI 技能收藏]]
+- 這套對照評測的方法論 → [[如何評測一個 Claude Code Skill]]（為什麼「只評第一次」是限制，理由在這篇）
 - 報告原始檔存在 Quartz 專案的 `quartz/static/skill-eval/` 下（有進版控）；vault 的 `sync.sh` 只搬 `.md` 與 `.canvas`，HTML 無法從 vault 同步
