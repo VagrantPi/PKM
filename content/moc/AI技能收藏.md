@@ -18,6 +18,7 @@ tags: [moc, ai, skills, agent, tooling]
 | [gc-minimal-zine-poster](#gc-minimal-zine-poster) | skill | Codex | 主題／照片 → 極簡 zine 風海報，直接生圖 | [repo↗](https://github.com/LiamGvchi/gc-minimal-zine-poster) | ⬜ |
 | [editorial-vision-studio](#editorial-vision-studio) | skill | Codex | 視覺導演引擎：決策管線＋可換模型 adapter | [repo↗](https://github.com/Yu-0312/editorial-vision-studio) | ⬜ |
 | [MiniMax-H3 skills](#minimax-h3-skills) | skill | npx skills | H3 全模態影音模型附的九個 prompt／影片生成 skill | [repo↗](https://github.com/MiniMax-AI/MiniMax-H3) | ⬜ |
+| [archify](#archify) | skill | 多平台 | codebase／描述 → 會自我驗證的互動架構圖 HTML | [repo↗](https://github.com/tt-a1i/archify) | ⬜ |
 | [i-have-adhd](#i-have-adhd) | plugin | Claude・Codex | 逼 agent 答案先講、不鋪陳客套 | [repo↗](https://github.com/ayghri/i-have-adhd) | ⬜ 📊 |
 | [ponytail](#ponytail) | plugin | 多平台 | 寫碼前爬「該不該寫」階梯，砍過度設計 | [repo↗](https://github.com/dietrichgebert/ponytail) | ⬜ 📊 |
 | [eli5](#eli5) | skill | Claude Code | 依聽眾（5 歲／主管／工程師／家人）換一套講法解釋同一件事 | [repo↗](https://github.com/DreambigOu/ELI5) | ⬜ |
@@ -92,6 +93,44 @@ npx skills add https://github.com/MiniMax-AI/MiniMax-H3 --skill h3-prompt-writin
 **用**：skill 本身是 prompt 與流程指南，實際生成靠 H3 模型——搭配 H3 的 API／App，或本機部署的 H3-Base（768p，2K 需官方 Regenerate-2K API）。
 
 **🔗 相關**：[[articles/MiniMax H3 全模態生成模型|MiniMax H3（模型筆記）]]
+
+---
+
+## 📐 架構圖與技術溝通
+
+> 跟上面的生圖 skill 差在**輸出的正確性有沒有人管**：那些產的是美術品，好看就是成功；這類產的是**技術陳述**，畫得漂亮但接錯線就是有害。所以要看的重點是「它會不會驗自己」。
+
+### archify
+`skill` · Claude Code・Codex・Cursor・opencode・Raven · MIT · ★20.6k · ⬜ 待試
+
+**做什麼**：把 codebase 或一段系統描述，變成**一頁自足的互動式架構圖 HTML**（可搜尋節點、追上下游、探測路徑、比較角色、播導覽章節），並能匯出 PNG／SVG／WebM 與 1200×630 分享卡。五種圖：`architecture`／`workflow`／`sequence`／`dataflow`／`lifecycle`。
+
+**核心**（它的靈魂不是畫得漂亮，是**不讓模型直接產最終產物**）
+- **agent 產 typed JSON IR → 確定性編譯器渲染 HTML/SVG**。版面判斷交給模型，像素計算交給程式。
+- **分級驗證閘**：4 項檢查＝基本；**9 項全過 ＋ 0 錯誤 ＋ 0 警告**才是可交付級。
+- **失敗回「修復收據」**：穩定的規則碼 ＋ 確切 subject ＋ 量到的 evidence ＋ 可用修法清單——不是 Node stack trace。
+- **原子交付**：凍結規格 bytes → 私有快照渲染檢查 → 通過才原子替換 → 回報 SHA-256。通過即凍結，不准再改。
+- **Architecture Delta**：拿兩份驗證過的快照比 Before／Delta／After，列出確切的新增／移除／變更／移動／改道。
+
+**裝**
+```bash
+npx skills add tt-a1i/archify -g
+```
+```bash
+# 不想安裝先試用
+npx skills use tt-a1i/archify@archify --agent codex
+```
+切換器支援 `cursor`／`codex`／`claude-code`／`opencode`。Raven 要手動把 `archify.zip` 解到 `~/.raven/workspace/skills`。Claude.ai 則在 Settings → Capabilities → Skills 上傳 zip（**能不能用取決於沙箱有沒有 Node.js**）。
+
+**用**：`Use archify to map this repository's runtime architecture.`
+規格建議一次只要一個有界視圖——8–12 個核心元件、一條主路徑、外部相依與信任邊界，**細節放卡片而不是加更多線**。
+
+**⚠️ 注意**
+- **需要 Node.js**。純 prompt 環境（Project Knowledge、無 shell 的沙箱）只能退化成提示驅動的替代路徑，拿不到驗證與渲染。
+- **刻意不做**：Mermaid 自動解析、通用 auto-layout、hosted sharing、WYSIWYG 編輯。它明說自己「不是繪圖編輯器，也不是 Mermaid 佈景主題」。
+- 餵 Mermaid 進去時它是**重寫**成自己的 JSON，不是照搬樣式。
+
+**🔗 相關**：[[Archify 架構圖 skill]] —— **詳細筆記在那裡**：`SKILL.md` 的設計拆解（context 預算怎麼寫進指令、修復怎麼收斂、以及那組「不准造假通過」的條款）。
 
 ---
 
