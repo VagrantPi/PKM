@@ -19,6 +19,7 @@ tags: [moc, ai, skills, agent, tooling]
 | [editorial-vision-studio](#editorial-vision-studio) | skill | Codex | 視覺導演引擎：決策管線＋可換模型 adapter | [repo↗](https://github.com/Yu-0312/editorial-vision-studio) | ⬜ |
 | [MiniMax-H3 skills](#minimax-h3-skills) | skill | npx skills | H3 全模態影音模型附的九個 prompt／影片生成 skill | [repo↗](https://github.com/MiniMax-AI/MiniMax-H3) | ⬜ |
 | [ai-short-drama-screenwriter](#ai-short-drama-screenwriter) | skill | Codex | 繁中短劇編劇：八階段流程＋可拍性檢查，只做劇本不越界 | [repo↗](https://github.com/POUND0423/AI-drama-pound) | ⬜ |
+| [Skills For Real Engineers](#skills-for-real-engineers) | plugin | Claude Code・多平台 | Matt Pocock 的 ~24 個工程流程 skill：拷問→規格→票→實作→審查 | [repo↗](https://github.com/mattpocock/skills) | ⬜ |
 | [archify](#archify) | skill | 多平台 | codebase／描述 → 會自我驗證的互動架構圖 HTML | [repo↗](https://github.com/tt-a1i/archify) | ⬜ |
 | [i-have-adhd](#i-have-adhd) | plugin | Claude・Codex | 逼 agent 答案先講、不鋪陳客套 | [repo↗](https://github.com/ayghri/i-have-adhd) | ⬜ 📊 |
 | [ponytail](#ponytail) | plugin | 多平台 | 寫碼前爬「該不該寫」階梯，砍過度設計 | [repo↗](https://github.com/dietrichgebert/ponytail) | ⬜ 📊 |
@@ -166,6 +167,45 @@ npx skills use tt-a1i/archify@archify --agent codex
 - 餵 Mermaid 進去時它是**重寫**成自己的 JSON，不是照搬樣式。
 
 **🔗 相關**：[[Archify 架構圖 skill]] —— **詳細筆記在那裡**：`SKILL.md` 的設計拆解（context 預算怎麼寫進指令、修復怎麼收斂、以及那組「不准造假通過」的條款）。
+
+---
+
+## 🛠 工程工作流
+
+> 這類不是改語氣、也不是給單一新能力，而是**把整條開發流程包起來**：對齊 → 規格 → 拆票 → 實作 → 審查。
+> 挑選時看兩件事：**它願不願意讓你改**（框架型的會接管流程，出錯很難修），以及**它有沒有處理集合層級的維護**（skill 一多就會互相打架）。
+
+### Skills For Real Engineers
+`plugin` · Claude Code（官方 marketplace）・Codex／其他經 skills.sh · MIT · ★239.6k · ⬜ 待試
+
+**做什麼**：Matt Pocock 每天在用的 **~24 個工程 skill**，涵蓋整條流程——`grill-me`（拷問對齊）→ `to-spec`（轉規格）→ `to-tickets`（拆成曳光彈式的票）→ `implement`（驅動 TDD）→ `code-review`（雙軸審查）。另有 `diagnosing-bugs`、`tdd`、`domain-modeling`、`codebase-design`、`resolving-merge-conflicts`、`improve-codebase-architecture`、`handoff`、`teach` 等。
+
+**核心**（靈魂是**組織方式**，不是任何單一 skill）
+- **反框架的立場**：明講 GSD／BMAD／Spec-Kit 那類「接管流程」的做法**奪走你的控制權、流程出錯難修**；他要的是**小、好改、可組合**。
+- ⭐ **用「誰能叫它」分兩層**：**user-invoked** 只有人能叫，職責是**編排**；**model-invoked** 人和模型都能叫，持有**可複用的紀律**。**user-invoked 可呼叫 model-invoked，但絕不呼叫另一個 user-invoked。**
+  實例：`grilling` 這個面談原語被 5 個編排型 skill 共用。
+- **診斷了四個 agent 失敗模式**：沒做我要的（對齊落差）／太囉唆（缺共享語言）／code 不能跑（回饋迴路不足）／一團爛泥（agent 加速軟體熵）。
+- **`CONTEXT.md` 共享語言**，他自稱是整個 repo 最酷的技術——把專案行話固定下來，命名一致、agent 好導航、**思考花的 token 更少**。
+
+**裝**（**兩種哲學，別同時裝**——會拿到每個 skill 兩份）
+```bash
+# 訂閱：整包唯讀、自動更新（已在 Claude Code 官方 marketplace）
+claude plugins install mattpocock-skills
+```
+```bash
+# 分叉：把可編輯的檔案寫進你的 repo，你擁有它
+npx skills@latest add mattpocock/skills
+```
+裝完要**在每個 repo 各跑一次** `/setup-matt-pocock-skills`（選 issue tracker、triage 標籤、文件位置）。Codex 原生 plugin 還在 roadmap 上。
+
+**用**：不確定用哪個就 `/ask-matt`（它是所有 user-invoked skill 的路由）。最常用的是 `/grill-me` 與 `/grill-with-docs`。
+
+**⚠️ 注意**
+- **它預設你有 issue tracker**（GitHub／Linear／本機檔案），整套流程繞著票在跑。只想要單點工具的話會覺得包袱重。
+- `improve-codebase-architecture` 作者自己標明是 **"a survey, not a rescue"**——老專案上它找得出候選，但**不會幫你把爛泥解開**。
+- **四個失敗模式的解法都是既有的軟體工程基本功**（見下方筆記的對照表），不是新發明。作者自己就說 "Software engineering fundamentals matter more than ever"。
+
+**🔗 相關**：[[Skills For Real Engineers]] —— **詳細筆記在那裡**：四個失敗模式對應到我既有工具卡的表、集合分層規則、以及 `CLAUDE.md` 裡那組維護紀律（含「會說謊的路由」）。
 
 ---
 
