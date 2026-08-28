@@ -18,6 +18,7 @@ tags: [moc, ai, skills, agent, tooling]
 | [gc-minimal-zine-poster](#gc-minimal-zine-poster) | skill | Codex | 主題／照片 → 極簡 zine 風海報，直接生圖 | [repo↗](https://github.com/LiamGvchi/gc-minimal-zine-poster) | ⬜ |
 | [editorial-vision-studio](#editorial-vision-studio) | skill | Codex | 視覺導演引擎：決策管線＋可換模型 adapter | [repo↗](https://github.com/Yu-0312/editorial-vision-studio) | ⬜ |
 | [MiniMax-H3 skills](#minimax-h3-skills) | skill | npx skills | H3 全模態影音模型附的九個 prompt／影片生成 skill | [repo↗](https://github.com/MiniMax-AI/MiniMax-H3) | ⬜ |
+| [ai-short-drama-screenwriter](#ai-short-drama-screenwriter) | skill | Codex | 繁中短劇編劇：八階段流程＋可拍性檢查，只做劇本不越界 | [repo↗](https://github.com/POUND0423/AI-drama-pound) | ⬜ |
 | [archify](#archify) | skill | 多平台 | codebase／描述 → 會自我驗證的互動架構圖 HTML | [repo↗](https://github.com/tt-a1i/archify) | ⬜ |
 | [i-have-adhd](#i-have-adhd) | plugin | Claude・Codex | 逼 agent 答案先講、不鋪陳客套 | [repo↗](https://github.com/ayghri/i-have-adhd) | ⬜ 📊 |
 | [ponytail](#ponytail) | plugin | 多平台 | 寫碼前爬「該不該寫」階梯，砍過度設計 | [repo↗](https://github.com/dietrichgebert/ponytail) | ⬜ 📊 |
@@ -28,7 +29,7 @@ tags: [moc, ai, skills, agent, tooling]
 
 ---
 
-## 🎨 圖像與影片
+## 🎨 影像與內容創作
 
 ### gc-minimal-zine-poster
 `skill` · Codex · MIT · ★113 · ⬜ 待試
@@ -94,6 +95,39 @@ npx skills add https://github.com/MiniMax-AI/MiniMax-H3 --skill h3-prompt-writin
 **用**：skill 本身是 prompt 與流程指南，實際生成靠 H3 模型——搭配 H3 的 API／App，或本機部署的 H3-Base（768p，2K 需官方 Regenerate-2K API）。
 
 **🔗 相關**：[[articles/MiniMax H3 全模態生成模型|MiniMax H3（模型筆記）]]
+
+### ai-short-drama-screenwriter
+`skill` · Codex（桌面版／CLI／IDE extension） · MIT · ★375 · ⬜ 待試
+
+**做什麼**：**繁體中文**的短劇／豎屏短劇編劇——選題、全劇與單集結構、角色關係、分場、臺詞、衝突、反轉、鉤子、格式與修改。輸出是**標準短劇格式**（場次、內／外景、地點、時間、動作、角色名、臺詞、畫面文字），可直接進製作。
+
+**核心**（靈魂是**範圍紀律**，不是文采）
+- **任務路由**：完整專案／單點創作／混合交付／格式化／審閱修改，各走不同路徑，只讀對應的 `references/`（`workflow.md`／`format.md`／`checklists.md`）——主 SKILL.md 保持精簡。
+- **可拍性的硬規則**：每場至少改變資訊、關係、目標、風險或情緒**其中一項**；反轉**必須能由前文線索回看成立**；集尾鉤子必須產生下一步問題或代價；優先寫「正在發生的可見行動」而非解說性對白。
+- ⭐ **明確拒絕越界**：只要劇本時**不輸出**逐鏡分鏡、景別、運鏡或影片模型提示詞。混合請求時**先完成劇本，再銜接環境中已安裝的分鏡／影片 skill**。
+- 保留使用者指定的集數、時長、觀眾、類型、平台、預算、場景與交付形式；只問「會實質改變結果」的缺漏，其餘採合理假設並標示。
+
+**裝**（Codex standalone skill，個人技能位置是 `$HOME/.agents/skills`）
+```bash
+git clone --depth 1 https://github.com/POUND0423/AI-drama-pound.git
+mkdir -p "$HOME/.agents/skills/ai-short-drama-screenwriter"
+cp -R "AI-drama-pound/skill-src/ai-short-drama-screenwriter/." \
+  "$HOME/.agents/skills/ai-short-drama-screenwriter/"
+test -f "$HOME/.agents/skills/ai-short-drama-screenwriter/SKILL.md" && echo "Skill installed"
+```
+眉角：**skill 資料夾內要直接有 `SKILL.md`**（不能多包一層）；裝完沒出現就重啟 Codex。README 另附 Windows PowerShell 版本。
+
+**用**：顯式 `使用 $ai-short-drama-screenwriter，把以下故事前提規劃成 8 集、每集 90 秒的都市懸疑短劇…`；也支援隱式觸發（符合範圍就自動啟動）。
+
+**⚠️ 注意**
+- **只有 Codex**。README 沒有 Claude Code／Cursor 的安裝路徑。
+- **本身不含分鏡或影片提示詞 skill**，混合交付要環境裡另有適用技能才接得上（可搭 [MiniMax-H3 skills](#minimax-h3-skills) 那條產線）。
+- **v0.1.0、4 個 commit、單一貢獻者**，很新。
+- 涉及平台偏好／演算法／市場趨勢時，SKILL.md 要求**先查證再當事實**——別把它的產業判斷當現況。
+
+**📐 它的驗證方法值得抄**：repo 的 `validation/` 完整留下 RED 基線、GREEN 行為測試，以及**觸發邊界微測試 A–F 各 5 次**的結果表（含一次 `3/5` 的失敗、最小修補、重跑全組）。→ [[工具-測試skill的觸發邊界]]
+
+**🔗 相關**：[MiniMax-H3 skills](#minimax-h3-skills) —— 劇本 → 分鏡／影片生成是同一條產線的下游，這張 skill 明說要在那個階段交棒。
 
 ---
 
