@@ -19,6 +19,7 @@ tags: [moc, ai, skills, agent, tooling]
 | [editorial-vision-studio](#editorial-vision-studio) | skill | Codex | 視覺導演引擎：決策管線＋可換模型 adapter | [repo↗](https://github.com/Yu-0312/editorial-vision-studio) | ⬜ |
 | [MiniMax-H3 skills](#minimax-h3-skills) | skill | npx skills | H3 全模態影音模型附的九個 prompt／影片生成 skill | [repo↗](https://github.com/MiniMax-AI/MiniMax-H3) | ⬜ |
 | [ai-short-drama-screenwriter](#ai-short-drama-screenwriter) | skill | Codex | 繁中短劇編劇：八階段流程＋可拍性檢查，只做劇本不越界 | [repo↗](https://github.com/POUND0423/AI-drama-pound) | ⬜ |
+| [scroll-world](#scroll-world) | skill | Claude Code・Codex・多平台 | 生成 AI 場景＋鏡頭影片，做捲動穿梭的沉浸式落地頁（**會扣真錢**） | [repo↗](https://github.com/oso95/scroll-world) | ⬜ |
 | [Skills For Real Engineers](#skills-for-real-engineers) | plugin | Claude Code・多平台 | Matt Pocock 的 ~24 個工程流程 skill：拷問→規格→票→實作→審查 | [repo↗](https://github.com/mattpocock/skills) | ⬜ |
 | [archify](#archify) | skill | 多平台 | codebase／描述 → 會自我驗證的互動架構圖 HTML | [repo↗](https://github.com/tt-a1i/archify) | ⬜ |
 | [i-have-adhd](#i-have-adhd) | plugin | Claude・Codex | 逼 agent 答案先講、不鋪陳客套 | [repo↗](https://github.com/ayghri/i-have-adhd) | ⬜ 📊 |
@@ -129,6 +130,37 @@ test -f "$HOME/.agents/skills/ai-short-drama-screenwriter/SKILL.md" && echo "Ski
 **📐 它的驗證方法值得抄**：repo 的 `validation/` 完整留下 RED 基線、GREEN 行為測試，以及**觸發邊界微測試 A–F 各 5 次**的結果表（含一次 `3/5` 的失敗、最小修補、重跑全組）。→ [[工具-測試skill的觸發邊界]]
 
 **🔗 相關**：[MiniMax-H3 skills](#minimax-h3-skills) —— 劇本 → 分鏡／影片生成是同一條產線的下游，這張 skill 明說要在那個階段交棒。
+
+### scroll-world
+`skill` · Claude Code・Codex・多平台（skills CLI） · MIT · ★8.7k · ⬜ 待試
+
+**做什麼**：把一個品牌或產業變成**捲動穿梭的落地頁**——捲動時鏡頭從場景外一路飛進室內，再無縫接到下一個場景，**全程沒有剪接點**。就是 Apple 產品頁那套技術：**預先算好影片，捲動只驅動時間軸**，鏡頭是真的在動。
+
+**核心**（靈魂是**接縫**，不是生圖）
+- 產出是 **N 張場景靜圖 → N 支「飛入」鏡頭 → N−1 支「連接」鏡頭 → 一支可攜的 scrub 引擎**。
+- ⭐ **成敗只有一條規則：接縫必須逐格相同**。連接鏡頭是**用相鄰場景實際算出來的畫格**去生成的，所以接得起來。SKILL.md 明說這是「最常見的單一失敗點」，做錯就會看到「跳一下」。因此**只選能 frame-lock 的模型**。
+- **行動版是另外原生算一條 9:16 直式鏈**，不是把橫式裁切——但這會讓影片生成數量翻倍，所以**一定要單獨問過**。
+- **框架無關**：scrub 引擎是自足的 vanilla JS，丟進純 HTML／Next.js／Vue／Python 服務的頁面都行。作者自己說「這個 skill 的價值是管線、提示詞與接縫方法，不是框架」。
+
+**裝**
+```bash
+# Claude Code
+/plugin marketplace add oso95/scroll-world
+/plugin install scroll-world@scroll-world
+```
+```bash
+# Codex 與其他 agent
+npx skills add oso95/scroll-world -a codex
+```
+
+**⚠️ 注意（這張的注意事項比功能重要）**
+- 🔴 **會花真錢，而且不便宜**：預設走 Monid（Seedance 2.0，按支計費 USD）。實測 **1080p 六場景一條鏈約 $27**、720p 約 $11。選了行動版影片生成量**翻倍**。
+- **前置一大串**：Monid CLI＋API key＋餘額、Higgsfield CLI（已登入、有 credit，靜圖與備援都靠它）、`ffmpeg`／`ffprobe`、Python 3＋Pillow；Codex CLI 可選（用 ChatGPT 訂閱出圖，省 credit）。
+- **生成很慢**：單次 3–8 分鐘，skill 會背景執行並輪詢。
+- **它的成本紀律做得很好**：先報估算（`N 靜圖 + (2N−1) 影片 + ~15% 重跑餘裕`）、先跑一張一支**校準實際單價**、超過餘額 ~70% 會警告、核准後才生成，並提供便宜的 draft 預覽路徑。
+- macOS 的 bash 3.2 沒有 `declare -A`，SKILL.md 自己有標這個坑。
+
+**📐 值得抄的兩件事**：→ [[工具-會花錢的skill該怎麼設計]]、[[工具-該問開放題還是選擇題]]（它的訪談段明講：**主題要開放地問，絕不給捏造的多選題**）。
 
 ---
 
