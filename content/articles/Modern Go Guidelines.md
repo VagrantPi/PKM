@@ -78,4 +78,5 @@ README 明說：`scripts/dev-install.sh` **刻意與 agent 面對的 wrapper 分
   > "`scripts/dev-install.sh`, which is intentionally separate from the agent-facing wrapper so an agent can never trigger a build."
 
 ## 🔗 相關
+- [[Effective Go]] — **搭配看**：那篇講「Go 為什麼長這樣」（心智模型，變得慢），這篇講「現在該怎麼寫」（語法與 API，變得快）。那篇的 Errors 章教的 type switch 辨識錯誤，正是這裡標為 Critical 的 `erris` 要換掉的寫法
 - [[moc/AI技能收藏#go-modern-guidelines|收藏頁的卡]] — 四個平台的安裝指令速查
