@@ -21,6 +21,7 @@ tags: [moc, ai, skills, agent, tooling]
 | [archify](#archify) | skill | 多平台 | codebase／描述 → 會自我驗證的互動架構圖 HTML | [repo↗](https://github.com/tt-a1i/archify) | ⬜ |
 | [i-have-adhd](#i-have-adhd) | plugin | Claude・Codex | 逼 agent 答案先講、不鋪陳客套 | [repo↗](https://github.com/ayghri/i-have-adhd) | ⬜ 📊 |
 | [ponytail](#ponytail) | plugin | 多平台 | 寫碼前爬「該不該寫」階梯，砍過度設計 | [repo↗](https://github.com/dietrichgebert/ponytail) | ⬜ 📊 |
+| [go-modern-guidelines](#go-modern-guidelines) | plugin | 多平台 | 給 agent 一份現代 Go 對照表，別再產出過時寫法 | [repo↗](https://github.com/JetBrains/go-modern-guidelines) | ⬜ |
 | [eli5](#eli5) | skill | Claude Code | 依聽眾（5 歲／主管／工程師／家人）換一套講法解釋同一件事 | [repo↗](https://github.com/DreambigOu/ELI5) | ⬜ |
 | [codegraph](#codegraph) | MCP | 多平台 | 本機碼圖譜，讀流程強、caller 會漏 | [repo↗](https://github.com/colbymchenry/codegraph) | ✅ 📊 |
 | [codebase-memory-mcp](#codebase-memory-mcp) | MCP | 多平台 | 同路線，caller 完整、只給名稱無 body | [repo↗](https://github.com/DeusData/codebase-memory-mcp) | ✅ 📊 |
@@ -136,7 +137,7 @@ npx skills use tt-a1i/archify@archify --agent codex
 
 ## 🧠 回應風格與寫碼紀律
 
-> 這兩個是「**改 agent 行為**」不是「給新能力」，裝上每輪生效——想清楚要哪種預設。
+> 都是「**改 agent 怎麼寫／怎麼答**」而不是「給新能力」。差別在觸發時機：前兩個裝上**每輪生效**，會改變你所有對話的預設；`go-modern-guidelines` 只在**碰到 Go 任務時**才被叫起來，平常不影響。
 >
 > 📊 已跑對照實測 → [[moc/AI技能評比|AI 技能評比]]（2026-08-05）。結論：答案確實變短，但**短在少講三分之一概念**，且 **output token 沒省到**。
 
@@ -198,6 +199,46 @@ codex plugin add ponytail@ponytail
 **📊 實測**：概念覆蓋 **−31%**（壓最多），與 i-have-adhd 同開由它主導（−33% 非相加）；**output token 沒省到，別為省錢開** → [[moc/AI技能評比|評比]]
 
 **宣稱數字**（README，未驗證）：fastapi-template 12 ticket、Haiku 4.5、n=4：LOC −54%、token −22%、成本 −20%、時間 −27%、安全 100%（−54% 是均值，過度設計可到 −94%，本來精簡的接近 0）。
+
+### go-modern-guidelines
+`plugin` · Junie・Claude Code・Codex・Cursor・opencode · Apache-2.0 · ★2.2k · ⬜ 待試
+
+**做什麼**：JetBrains 官方出的 Go 專用 plugin，塞給 agent 一份**現代 Go 寫法對照表**，讓它別再產出過時的 Go——`max(a,b)` 而不是 if-else、`slices.Contains` 而不是手寫迴圈、`cmp.Or(a,b,c)` 而不是一串 nil 檢查。涵蓋 Go 1.0–1.27，對齊官方 `modernize` analyzer。
+
+**核心**（它的靈魂是**動機分析**，不是那份清單）
+它指名 coding agent 產出過時程式碼有**兩個不同原因**：
+- **訓練資料落後**——模型沒看過 cutoff 之後的特性，例如 Go 1.26 的 `errors.AsType[T]`。
+- **頻率偏誤**——**就算模型知道**新寫法，訓練語料裡 `for i := 0; i < n; i++` 就是比 `for i := range n` 多，所以出來的是舊的。
+
+第二個是關鍵：**光叫它「用最新寫法」沒用，要給明確的對照表。**
+另外它**會先從 `go.mod` 偵測專案 Go 版本**，只用到該版本為止可用的特性——否則就是把編不過的程式碼塞給你。
+
+**裝**
+```bash
+# Claude Code（在 session 內）
+/plugin marketplace add JetBrains/go-modern-guidelines
+/plugin install modern-go-guidelines@goland-claude-marketplace
+```
+```bash
+# Codex（terminal）
+codex plugin marketplace add JetBrains/go-modern-guidelines
+codex plugin add modern-go-guidelines@goland-codex-marketplace
+```
+```bash
+# 其他 agent（opencode 等）
+npx skills add JetBrains/go-modern-guidelines
+```
+Junie 用 `/extensions marketplace add` ＋ `/extensions install modern-go-guidelines`；Cursor 用 `cursor-agent plugin marketplace add <repo-url>` 再以 `/plugins` 安裝。
+
+**用**：碰到 Go 任務會自動觸發。Claude Code 要明確叫用：`/modern-go-guidelines:use-modern-go`。
+
+**⚠️ 注意**
+- **需要 Go toolchain 在 PATH 上**——marketplace 整合會在首次使用時 `go install` 一支小 CLI（快取在 `~/.cache/go-modern-guidelines`，不會動你的專案）。目標 Go 1.25+，較舊版本靠 `GOTOOLCHAIN=auto` 自動抓相容工具鏈。
+- **第三方 marketplace 的自動更新預設是關的**：Claude Code 要進 `/plugin` → Marketplaces → 選 `goland-claude-marketplace` → Enable auto-update，更新後還要 `/reload-plugins` 才會套用到當前 session。
+- **Cursor 沒有非互動的更新指令**，只能重開再用 `/plugins` 重裝。
+- `FEATURES.md` 自標 **“Work in progress — inconsistencies may be present.”**
+
+**🔗 相關**：[[Modern Go Guidelines]] —— **詳細筆記在那裡**：Critical／High 條目的舊→新速查表，以及那組「兩個失敗原因」的分析。
 
 ---
 
