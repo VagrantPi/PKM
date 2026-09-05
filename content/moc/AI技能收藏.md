@@ -17,6 +17,7 @@ tags: [moc, ai, skills, agent, tooling]
 |---|---|---|---|---|---|
 | [gc-minimal-zine-poster](#gc-minimal-zine-poster) | skill | Codex | 主題／照片 → 極簡 zine 風海報，直接生圖 | [repo↗](https://github.com/LiamGvchi/gc-minimal-zine-poster) | ⬜ |
 | [editorial-vision-studio](#editorial-vision-studio) | skill | Codex | 視覺導演引擎：決策管線＋可換模型 adapter | [repo↗](https://github.com/Yu-0312/editorial-vision-studio) | ⬜ |
+| [mono-color](#mono-color) | skill | Claude Code・多平台 | 單色／雙色編輯印刷風格圖像，最多兩塊印版的硬約束 | [repo↗](https://github.com/yanliudesign/mono-color-skill) | ⬜ |
 | [MiniMax-H3 skills](#minimax-h3-skills) | skill | npx skills | H3 全模態影音模型附的九個 prompt／影片生成 skill | [repo↗](https://github.com/MiniMax-AI/MiniMax-H3) | ⬜ |
 | [ai-short-drama-screenwriter](#ai-short-drama-screenwriter) | skill | Codex | 繁中短劇編劇：八階段流程＋可拍性檢查，只做劇本不越界 | [repo↗](https://github.com/POUND0423/AI-drama-pound) | ⬜ |
 | [scroll-world](#scroll-world) | skill | Claude Code・Codex・多平台 | 生成 AI 場景＋鏡頭影片，做捲動穿梭的沉浸式落地頁（**會扣真錢**） | [repo↗](https://github.com/oso95/scroll-world) | ⬜ |
@@ -79,6 +80,41 @@ git clone https://github.com/Yu-0312/editorial-vision-studio.git \
 **用**：描述用途或給照片，例「用 editorial-vision-studio，把這張照片重新構圖為極簡展覽插畫提示詞，別保留寫實細節」。可指定 `style:`（如 `kinfolk`）或 `model:`（如 `flux`），指定時跳過自動推導但 Reviewer 仍驗證風格相容。輸出預設＝方向摘要＋GenerationRequest（prompt 英文、摘要跟隨你語言）；分析照片才附 Image Report，換模型才附完整 VisionSpec。
 
 **🔗 相關**：[gc-minimal-zine-poster](#gc-minimal-zine-poster)（前身之一）。
+
+### mono-color
+`skill` · Claude Code（其他 agent 可載入 `SKILL.md`） · MIT（**例外見注意**） · ★2.5k · ⬜ 待試
+
+**做什麼**：把主題／句子／物件／照片，做成**單色或受控雙色的編輯印刷風格圖像**——海報、zine、肖像、包裝、視覺筆記。輸出是「一張印出來的紙」，不是數位單色濾鏡。
+
+**核心**（靈魂是**把印刷的物理限制當成設計約束**）
+- ⭐ **最多兩塊印版**，這是硬規則。預設受控雙色：**主版佔 70–85%、輔版 15–30%，而且輔版必須有明確任務**（日期、註記、選定物件、疊印交界）。明確要求單色才走單版。
+  - **紙張不是第三色，兩版疊印產生的深色也不是第三種墨。**
+- **紙張要看得見**、**留白佔 25–55% 且有結構**、照片一律走機械複製（網點、顆粒、爆亮部、油墨堆積、輕微套印偏移）。
+- **色票是寫死的**：八種單色墨（Cobalt `#2148B8`、Signal Red `#C83232`、Charcoal `#30343A`…）與九組雙色配方，都附 hex。
+- ⭐ **`design-system/` 是機器可讀的目錄**（色彩 token、字體角色、構圖幾何、節奏、受控印刷瑕疵各自成檔）。文件明說 **catalog ID 是「參考板、配方、驗證」三者之間的共同契約**——把視覺語彙從散文流程裡抽出來，變成可檢查的資料。
+- ⭐ **`rhythm.json` 對「放鬆」的定義很特別**：放鬆是**不均勻的能量**，不是整體降低強度。每頁挑**一個大膽的焦點事件**（超大字、極端裁切、單一巨大細節、集中疊印、異常尺度關係），其餘用紙張、淡網與稀疏功能字釋放。
+- **有評測合約與 CI**：`validate_evals.py`、`validate_design_system.py`，GitHub Actions 在每次 PR 與推送都跑。
+- **明確的「不要什麼」清單**（8 條）：不要全彩照片套單色濾鏡、不要玻璃質感 mockup／3D／漸層、不要置中模板或貼紙拼貼、**不要因為用了網點與限色就自動做成復古泛黃**、不要編造品牌與 QR code、不要重建參考海報。
+- **參考是文法不是模板**：從任何提供的參考至少改動**四個結構變數**。
+
+**裝**
+```bash
+git clone https://github.com/yanliudesign/mono-color-skill.git   ~/.claude/skills/mono-color
+```
+裝完重啟 Claude Code。其他 agent 環境可直接把 `SKILL.md` 當入口載入。
+
+**用**：`用 mono-color 做一張關於午夜便利商店的直式海報，標題就用「still open」。`
+可指定墨色與模式，例「Charcoal + Signal Red 的混凝土建築展覽海報，紅版只用在日期、地點與一個幾何干擾」。
+
+**⚠️ 注意**
+- 🔴 **授權有例外，不是整包 MIT**：程式碼、skill 指令與腳本是 MIT，但 **`examples/` 的原創作品 © 2026 Yan Liu，不在 MIT 範圍內**；作為研究依據的十二張第三方參考圖仍屬各自權利人。**拿它產圖沒問題，直接轉用 repo 裡的範例圖要看清楚。**
+- **圖像生成工具不可用時不會假裝成功**：會回傳 production-ready prompt 並明說限制。
+- **驗證腳本要 `python3`**（repo 語言 100% Python）。
+- **沒有發布任何 release、單一貢獻者**。
+
+**🔗 相關**
+- [gc-minimal-zine-poster](#gc-minimal-zine-poster)、[editorial-vision-studio](#editorial-vision-studio) —— 三張海報 skill 的分工：`gc-` **鎖死一種** zine 風；`editorial-vision-studio` 開放**可選風格與可換模型**；`mono-color` 走**印刷限制**這條路（最多兩塊版），約束來自製程而非品味。
+- [[工具-讓LLM產出可驗證的產物]] —— 它的 `design-system/*.json` ＋ 驗證腳本 ＋ CI，正是那張卡講的「把判斷交給模型、把可驗證的部分交給程式」，只是套用在美學上。
 
 ### MiniMax-H3 skills
 `skill` · npx skills · MiniMax H3 Community License · ★1.6k · ⬜ 待試
