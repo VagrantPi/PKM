@@ -21,6 +21,7 @@ tags: [moc, ai, skills, agent, tooling]
 | [MiniMax-H3 skills](#minimax-h3-skills) | skill | npx skills | H3 全模態影音模型附的九個 prompt／影片生成 skill | [repo↗](https://github.com/MiniMax-AI/MiniMax-H3) | ⬜ |
 | [ai-short-drama-screenwriter](#ai-short-drama-screenwriter) | skill | Codex | 繁中短劇編劇：八階段流程＋可拍性檢查，只做劇本不越界 | [repo↗](https://github.com/POUND0423/AI-drama-pound) | ⬜ |
 | [scroll-world](#scroll-world) | skill | Claude Code・Codex・多平台 | 生成 AI 場景＋鏡頭影片，做捲動穿梭的沉浸式落地頁（**會扣真錢**） | [repo↗](https://github.com/oso95/scroll-world) | ⬜ |
+| [superpowers](#superpowers) | plugin | 15+ harness | 一整套強制執行的開發方法論：腦力激盪→計劃→TDD→subagent 執行→審查 | [repo↗](https://github.com/obra/superpowers) | ⬜ |
 | [Skills For Real Engineers](#skills-for-real-engineers) | plugin | Claude Code・多平台 | Matt Pocock 的 ~24 個工程流程 skill：拷問→規格→票→實作→審查 | [repo↗](https://github.com/mattpocock/skills) | ⬜ |
 | [archify](#archify) | skill | 多平台 | codebase／描述 → 會自我驗證的互動架構圖 HTML | [repo↗](https://github.com/tt-a1i/archify) | ⬜ |
 | [i-have-adhd](#i-have-adhd) | plugin | Claude・Codex | 逼 agent 答案先講、不鋪陳客套 | [repo↗](https://github.com/ayghri/i-have-adhd) | ⬜ 📊 |
@@ -242,6 +243,37 @@ npx skills use tt-a1i/archify@archify --agent codex
 
 > 這類不是改語氣、也不是給單一新能力，而是**把整條開發流程包起來**：對齊 → 規格 → 拆票 → 實作 → 審查。
 > 挑選時看兩件事：**它願不願意讓你改**（框架型的會接管流程，出錯很難修），以及**它有沒有處理集合層級的維護**（skill 一多就會互相打架）。
+
+### superpowers
+`plugin` · Claude Code・Codex・Cursor・Gemini・Copilot・Grok・Kimi・OpenCode・Devin 等 15+ harness · MIT · ★282.1k · ⬜ 待試
+
+**做什麼**：不是一組工具，是**一整套會自動接管的軟體開發方法論**。你一開口要做東西，它不會直接寫碼——先反問你要解決什麼、逼出規格、分段給你確認；你點頭後產出「一個熱心但沒品味、沒判斷力、沒專案脈絡、討厭寫測試的菜鳥也照得動」的實作計劃；說 go 之後派 subagent 逐項執行並兩階段審查。**作者說 agent 常能照著計劃自主跑上好幾小時。**
+
+**核心**（靈魂是「**強制**，不是建議」）
+- **七步流程自動觸發**：`brainstorming` → `using-git-worktrees` → `writing-plans`（任務切到 **2–5 分鐘**一顆，每顆都有確切檔案路徑、完整程式碼、驗證步驟）→ `subagent-driven-development`／`executing-plans` → `test-driven-development` → `requesting-code-review` → `finishing-a-development-branch`。
+- 文件原話：**"Mandatory workflows, not suggestions."** 且 **`test-driven-development` 會刪掉在測試之前寫的程式碼。**
+- **四條哲學**：測試先行、系統化勝過臨場發揮、複雜度降低、**證據勝過宣稱**（verify before declaring success）。
+- ⭐ **`writing-skills` 內含一套 skill 測試方法論**（`testing-skills-with-subagents.md`）——**把 TDD 套用在流程文件上**：不帶 skill 跑壓力情境看它失敗、逐字記下藉口、寫 skill、再用多重壓力測服從度。→ [[工具-用壓力情境測試skill]]
+
+**裝**（每個 harness 要各裝一次）
+```
+# Claude Code（Anthropic 官方 marketplace，不用先加來源）
+/plugin install superpowers@claude-plugins-official
+```
+```bash
+# 其他：Gemini CLI / Devin / Droid 等各有自己的指令
+gemini extensions install https://github.com/obra/superpowers
+devin plugins install obra/superpowers
+```
+
+**⚠️ 注意**
+- 🔴 **它會接管流程，這是特性也是代價**。想保有逐步控制權的人會覺得綁手綁腳——**這正是 [Skills For Real Engineers](#skills-for-real-engineers) 明講要反對的那種設計**（那份的立場是「框架接管流程會奪走你的控制權，流程出錯還很難修」）。**兩者是同一個問題的兩種答案，不是誰比較好。**
+- ⚠️ **預設有 telemetry**：`brainstorming` 的視覺伴隨功能會從作者網站載入 logo，**帶上 Superpowers 版本號**（不含專案、prompt 或 agent 資訊）。關法：`SUPERPOWERS_DISABLE_TELEMETRY`，它也尊重 `DISABLE_TELEMETRY` 與 `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC`（那兩個變數 → [[Claude Code 隱藏設定分析 v2.1.239]]）。
+- **有商業支援方案**（primeradiant.com），這是一個有公司在後面的專案。
+
+**🔗 相關**
+- [Skills For Real Engineers](#skills-for-real-engineers) —— **直接對照組**：同樣是「整條開發流程的 skill 集合」，但 superpowers 走**強制方法論**、Matt Pocock 走**小而可組合、你自己編排**。選哪邊取決於你要控制權還是要自動駕駛。
+- [[工具-用壓力情境測試skill]] —— 它 `writing-skills` 裡那套方法論，我單獨抽出來的卡
 
 ### Skills For Real Engineers
 `plugin` · Claude Code（官方 marketplace）・Codex／其他經 skills.sh · MIT · ★239.6k · ⬜ 待試
