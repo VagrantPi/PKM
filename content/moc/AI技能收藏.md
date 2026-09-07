@@ -27,6 +27,7 @@ tags: [moc, ai, skills, agent, tooling]
 | [i-have-adhd](#i-have-adhd) | plugin | Claude・Codex | 逼 agent 答案先講、不鋪陳客套 | [repo↗](https://github.com/ayghri/i-have-adhd) | ⬜ 📊 |
 | [ponytail](#ponytail) | plugin | 多平台 | 寫碼前爬「該不該寫」階梯，砍過度設計 | [repo↗](https://github.com/dietrichgebert/ponytail) | ⬜ 📊 |
 | [go-modern-guidelines](#go-modern-guidelines) | plugin | 多平台 | 給 agent 一份現代 Go 對照表，別再產出過時寫法 | [repo↗](https://github.com/JetBrains/go-modern-guidelines) | ⬜ |
+| [karpathy-guidelines](#karpathy-guidelines) | plugin | Claude Code・Cursor | 四條原則治 LLM 寫碼的老毛病：亂假設、過度設計、順手亂改 | [repo↗](https://github.com/multica-ai/andrej-karpathy-skills) | ⬜ |
 | [eli5](#eli5) | skill | Claude Code | 依聽眾（5 歲／主管／工程師／家人）換一套講法解釋同一件事 | [repo↗](https://github.com/DreambigOu/ELI5) | ⬜ |
 | [codegraph](#codegraph) | MCP | 多平台 | 本機碼圖譜，讀流程強、caller 會漏 | [repo↗](https://github.com/colbymchenry/codegraph) | ✅ 📊 |
 | [codebase-memory-mcp](#codebase-memory-mcp) | MCP | 多平台 | 同路線，caller 完整、只給名稱無 body | [repo↗](https://github.com/DeusData/codebase-memory-mcp) | ✅ 📊 |
@@ -413,6 +414,45 @@ Junie 用 `/extensions marketplace add` ＋ `/extensions install modern-go-guide
 - `FEATURES.md` 自標 **“Work in progress — inconsistencies may be present.”**
 
 **🔗 相關**：[[Modern Go Guidelines]] —— **詳細筆記在那裡**：Critical／High 條目的舊→新速查表，以及那組「兩個失敗原因」的分析。
+
+### karpathy-guidelines
+`plugin` · Claude Code・Cursor · README 標 MIT（**但 repo 沒有 LICENSE 檔**） · ★210.9k · ⬜ 待試
+
+> ⚠️ **先講清楚歸屬**：**這不是 Andrej Karpathy 做的，也不是他背書的。** 是第三方（`multica-ai`，作者 X 帳號 `@jiayuan_jy`）把 Karpathy 公開談 LLM 寫碼缺陷的說法，整理成一份 `CLAUDE.md`。README 本身講得誠實（用的是 "derived from"、"Karpathy-Inspired"），**但 repo 名字 `andrej-karpathy-skills` 讀起來像是他本人的**——引用時要注意別誤植。
+
+**做什麼**：一份 `CLAUDE.md`（也包成 plugin 與 Cursor rule），用**四條原則**對付 Karpathy 點名的 LLM 寫碼老毛病。
+
+**核心**（它的價值在「問題 → 原則」的對應很乾淨）
+| 原則 | 治什麼毛病 |
+|---|---|
+| **Think Before Coding** | 替你亂做假設、藏著困惑不講、不攤開取捨 |
+| **Simplicity First** | 過度複雜化、臃腫的抽象（「100 行夠的寫成 1000 行」） |
+| **Surgical Changes** | 動到不該動的、改掉它沒真的看懂的程式碼與註解 |
+| **Goal-Driven Execution** | 用可驗證的成功標準換取「它能自己跑」 |
+
+其中最值得記的是那句引用的洞察：
+> **"Don't tell it what to do, give it success criteria and watch it go."**
+
+**裝**
+```
+# Claude Code
+/plugin marketplace add forrestchang/andrej-karpathy-skills
+/plugin install andrej-karpathy-skills@karpathy-skills
+```
+```bash
+# 或直接當 CLAUDE.md 用（單一專案）
+curl -o CLAUDE.md https://raw.githubusercontent.com/forrestchang/andrej-karpathy-skills/main/CLAUDE.md
+```
+⚠️ **安裝指令裡的 `forrestchang` 與 repo 現址 `multica-ai` 不一致**——實測 `forrestchang/...` 會被 GitHub 轉址到現址，所以目前可用，但**這靠的是轉址，舊名一旦被別人註冊就會裝到別的東西**。保險起見改用現址。
+
+**⚠️ 注意**
+- **README 寫 MIT，但 repo 裡沒有 LICENSE 檔**（GitHub 側欄的 Resources 也沒偵測到授權）。要在公司專案裡用，這個授權狀態偏弱。
+- **它自己標了取捨**：這份指引**偏向謹慎而非速度**。改錯字、明顯的一行修正這類瑣事不需要全套嚴謹——目標是減少非瑣碎工作上的昂貴錯誤。
+- **與 [ponytail](#ponytail) 高度重疊**：兩者都在治「過度設計」。ponytail 給的是一道**決策階梯**（需不需要存在 → codebase 有沒有 → 標準庫行不行…），這份給的是**四條原則加驗收判準**。**同開意義不大，挑一個。**
+- 沒有發布任何 release。
+
+**📐 抽出來的兩張卡**：→ [[工具-外科手術式修改]]（「每一行改動都要能追溯到使用者的要求」）、[[工具-把命令變成可驗證的目標]]。
+另外兩條原則 vault 已有對應：Think Before Coding → [[工具-讓agent反過來拷問你]]；Simplicity First → [ponytail](#ponytail) 那張卡的決策階梯。
 
 ---
 
