@@ -19,6 +19,12 @@
         --panel: rgba(30, 30, 33, 0.86);
         --border: #393639;
       }
+      /* 深空主題：面板要更透、邊框更淡，才不會在星空上糊成一塊白板 */
+      html[data-space="1"] {
+        --panel: rgba(10, 13, 22, 0.72);
+        --border: rgba(150, 170, 210, 0.22);
+        --muted: #8d9ab8;
+      }
       * {
         box-sizing: border-box;
       }
@@ -143,6 +149,9 @@
         color: var(--muted);
         margin-bottom: 3px;
       }
+      label.field + select {
+        margin-bottom: 8px;
+      }
       #stats {
         margin-top: 8px;
         color: var(--muted);
@@ -192,6 +201,17 @@
         }
       }
     </style>
+    <!-- 讓 3d-force-graph 與我們自己 import 的 three / postprocessing 共用同一份 three。
+         esm.sh 的 ?external=three 會把 three-forcegraph、three-render-objects 的 three
+         也外部化，否則會載到兩份 three，bloom 的 pass 會認不得 renderer 的場景。 -->
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://esm.sh/three@0.184.0",
+          "three/": "https://esm.sh/three@0.184.0/"
+        }
+      }
+    </script>
   </head>
   <body>
     <div id="graph"></div>
@@ -204,24 +224,34 @@
       <input id="search" type="search" placeholder="搜尋筆記標題…" autocomplete="off" />
       <div id="cats"></div>
       <hr />
+      <label class="field" for="preset">視覺主題</label>
+      <select id="preset"></select>
       <label class="field" for="labelMode">標籤</label>
       <select id="labelMode">
         <option value="hub">只顯示樞紐節點</option>
         <option value="all">全部顯示</option>
         <option value="none">關閉</option>
       </select>
+      <label class="row" for="orbit" style="margin-top: 6px">
+        <input id="orbit" type="checkbox" />
+        <span>自動旋轉</span>
+      </label>
       <div id="stats"></div>
     </div>
 
     <div id="hover" class="panel"></div>
     <div id="hint" class="panel">拖曳旋轉 · 滾輪縮放 · 右鍵平移 · 點節點開筆記</div>
 
-    <script>
-      ;(function () {
-        var CDN = "https://cdn.jsdelivr.net/npm/3d-force-graph@1.80.0/dist/3d-force-graph.min.js"
-
-        // 依 slug 第一段分類。順序即圖例順序。
-        var CATS = [
+    <script type="module">
+      /*
+       * 深空視覺（銀河／星雲）是從 Obsidian 外掛 Galaxy View 移植過來的配方：
+       *   https://github.com/Longwind1984/galaxy-view (MIT, Rick / longwind1984)
+       * 那邊是自寫的 three.js renderer；這裡改成架在 3d-force-graph 之上，
+       * 但預設值（風格預設、配色主題、銀河力學、星空/星雲參數）沿用它的數字。
+       */
+      ;(async function () {
+        // 依 slug 第一段分類。順序即圖例順序，也是配色主題套色的順序。
+        const CATS = [
           { key: "books", name: "書卡", color: "#e8834a" },
           { key: "tools", name: "工具卡", color: "#4aa3e8" },
           { key: "moc", name: "主題地圖", color: "#c678dd" },
@@ -229,28 +259,139 @@
           { key: "articles", name: "文章", color: "#e0b23c" },
           { key: "other", name: "其他", color: "#e05561" },
         ]
-        var COLOR = {}
-        CATS.forEach(function (c) {
-          COLOR[c.key] = c.color
-        })
 
-        // 站台套了 quartz-themes（absolutegruv 只支援深色），所以不能只看 localStorage。
-        // 嵌在 iframe 裡時直接讀父頁算好的 CSS 變數，配色才會跟站台一致；
-        // 獨立開啟時才退回下面這組預設值。
-        var FALLBACK = {
+        // 配色主題（galaxy-view src/render/colorThemes.ts）：挑選標準是「近黑太空底上的表現」
+        const COLOR_THEMES = {
+          hubble: ["#46d4dc", "#ffc35c", "#d05a32", "#7fd0a0", "#e8d9a0", "#5a9bd8"],
+          tiktok: ["#25f4ee", "#fe2c55", "#ffffff", "#7ae8e2", "#ff7a9c", "#19b8b2"],
+          matrix: ["#00ff41", "#33ff66", "#00cc34", "#66ff8c", "#00b32d", "#80ffa0"],
+        }
+
+        /*
+         * 視覺主題。space:true 的走深空渲染（星空／星雲／發光節點／bloom／銀河力學），
+         * space:false 的沿用原本那套（實心球 + 跟隨站台深淺色）。
+         * bloom / physics / look 的數值直接取自 galaxy-view 的 STYLE_PRESETS。
+         */
+        const PRESETS = [
+          {
+            id: "galaxy",
+            name: "銀河 Galaxy",
+            space: true,
+            bg: "#05070d",
+            theme: "hubble",
+            starfield: true,
+            layers: { nebula: 0.35, fieldStars: 0.25, clusterClouds: 0.3 },
+            frameElevDeg: 50,
+            autoOrbit: true,
+            bloom: { strength: 0.35, radius: 0.35, threshold: 0.22 },
+            physics: {
+              repel: 170,
+              linkDistance: 55,
+              linkStrength: 1.1,
+              centerPull: 0.05,
+              flatten: 0.55,
+              coreGravity: 0.1,
+              spiral: 0.02,
+            },
+            look: { nodeSize: 1, linkOpacity: 0.14, linkCurve: 0.35, twinkle: 0.5 },
+          },
+          {
+            id: "nebula",
+            name: "星雲 Nebula",
+            space: true,
+            bg: "#06040d",
+            theme: "tiktok",
+            starfield: false,
+            layers: { nebula: 0.8, fieldStars: 0.45, clusterClouds: 0.7 },
+            frameElevDeg: 18,
+            autoOrbit: true,
+            bloom: { strength: 0.6, radius: 0.32, threshold: 0.2 },
+            physics: {
+              repel: 150,
+              linkDistance: 70,
+              linkStrength: 0.9,
+              centerPull: 0.03,
+              flatten: 0.15,
+              coreGravity: 0.03,
+              spiral: 0,
+            },
+            look: { nodeSize: 1.05, linkOpacity: 0.2, linkCurve: 0.45, twinkle: 0.5 },
+          },
+          {
+            id: "minimal",
+            name: "極簡 Minimal",
+            space: true,
+            bg: "#04050a",
+            theme: "matrix",
+            starfield: false,
+            layers: { nebula: 0, fieldStars: 0, clusterClouds: 0 },
+            frameElevDeg: 18,
+            autoOrbit: false,
+            bloom: { strength: 0, radius: 0.3, threshold: 0.3 },
+            physics: {
+              repel: 230,
+              linkDistance: 80,
+              linkStrength: 1,
+              centerPull: 0.04,
+              flatten: 0,
+              coreGravity: 0,
+              spiral: 0,
+            },
+            look: { nodeSize: 0.8, linkOpacity: 0.07, linkCurve: 0, twinkle: 0 },
+          },
+          {
+            // 這頁原本的樣子：實心球、直線、跟著站台的深淺色走
+            id: "classic",
+            name: "經典（跟隨站台）",
+            space: false,
+            theme: "cats",
+            starfield: false,
+            layers: { nebula: 0, fieldStars: 0, clusterClouds: 0 },
+            frameElevDeg: null,
+            autoOrbit: false,
+            bloom: { strength: 0, radius: 0.3, threshold: 0.3 },
+            physics: {
+              repel: 60,
+              linkDistance: 28,
+              linkStrength: 1,
+              centerPull: 0,
+              flatten: 0,
+              coreGravity: 0,
+              spiral: 0,
+            },
+            look: { nodeSize: 1, linkOpacity: 0.42, linkCurve: 0, twinkle: 0 },
+          },
+        ]
+
+        const PRESET_KEY = "graph3d:preset"
+        const DEFAULT_PRESET = "galaxy"
+
+        // 深空模式下非聚焦節點的殘留透明度（galaxy-view 的 aDim 下限）
+        const DIM_ALPHA = 0.12
+        // 連線寬度只此一處，hover 與重繪都吃同一份，避免兩邊漂掉
+        const LINK_W = { active: 1.6, idle: 0.5 }
+
+        const FALLBACK = {
           light: { bg: "#faf8f8", fg: "#2b2b2b", link: "#cfcfcf", dim: "#e4e4e4" },
           dark: { bg: "#161618", fg: "#ebebec", link: "#4a474a", dim: "#2c2a2c" },
         }
-        var PAL = FALLBACK.light
+        // 深空模式的固定調色：底近黑、連線冷灰、標籤偏白
+        const SPACE_PAL_LINK = "#8ea3c8"
 
-        var el = {
+        let PAL = FALLBACK.light
+        let CUR = PRESETS[0] // 當前主題
+        let COLOR = {} // catKey -> 色碼，隨主題換
+
+        const el = {
           graph: document.getElementById("graph"),
           labels: document.getElementById("labels"),
           status: document.getElementById("status"),
           controls: document.getElementById("controls"),
           search: document.getElementById("search"),
           cats: document.getElementById("cats"),
+          preset: document.getElementById("preset"),
           labelMode: document.getElementById("labelMode"),
+          orbit: document.getElementById("orbit"),
           stats: document.getElementById("stats"),
           hover: document.getElementById("hover"),
         }
@@ -262,19 +403,24 @@
 
         // 站台的 base path：本檔位於 <base>/static/graph3d/（目錄索引，
         // 因為 crawl-links 會把 .html 副檔名吃掉，用目錄形式才不會被改壞）
-        var BASE = location.pathname.replace(/\/static\/graph3d\/?(index\.html)?$/, "")
+        const BASE = location.pathname.replace(/\/static\/graph3d\/?(index\.html)?$/, "")
 
         function urlFor(slug) {
           return slug === "index" ? BASE + "/" : BASE + "/" + slug
         }
 
         function catOf(slug) {
-          var head = slug.split("/")[0]
-          return COLOR[head] ? head : "other"
+          const head = slug.split("/")[0]
+          return CATS.some((c) => c.key === head) ? head : "other"
         }
 
-        // ---- 主題 ----
-        var theme = "light"
+        function catName(key) {
+          const c = CATS.find((x) => x.key === key)
+          return c ? c.name : key
+        }
+
+        // ---- 站台深淺色（只有 classic 主題會跟著走） ----
+        let siteTheme = "light"
 
         function parentDoc() {
           try {
@@ -286,82 +432,73 @@
 
         // --light 之類的值可能含 calc()/var()，丟給瀏覽器的 CSS 引擎去算
         function resolveColor(doc, value) {
-          var d = doc.createElement("div")
+          const d = doc.createElement("div")
           d.style.cssText = "position:absolute;visibility:hidden;color:" + value
           doc.body.appendChild(d)
-          var out = getComputedStyle(d).color
+          const out = getComputedStyle(d).color
           d.remove()
           return out
         }
 
         function readPalette() {
-          var doc = parentDoc()
+          const doc = parentDoc()
           if (doc && doc.body) {
             try {
-              var cs = getComputedStyle(doc.documentElement)
-              var pick = function (name) {
-                var v = cs.getPropertyValue(name).trim()
+              const cs = getComputedStyle(doc.documentElement)
+              const pick = (name) => {
+                const v = cs.getPropertyValue(name).trim()
                 return v ? resolveColor(doc, v) : null
               }
-              var bg = pick("--light"),
+              const bg = pick("--light"),
                 fg = pick("--dark"),
                 lg = pick("--lightgray"),
                 gy = pick("--gray")
               if (bg && fg && lg) {
-                theme = doc.documentElement.getAttribute("saved-theme") === "dark" ? "dark" : "light"
+                siteTheme =
+                  doc.documentElement.getAttribute("saved-theme") === "dark" ? "dark" : "light"
                 return { bg: bg, fg: fg, link: gy || lg, dim: lg }
               }
             } catch (e) {
               /* 讀不到就用 fallback */
             }
           }
-          var t = "light"
+          let t = "light"
           try {
             t =
               localStorage.getItem("theme") ||
               (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
           } catch (e) {}
-          theme = t === "dark" ? "dark" : "light"
-          return FALLBACK[theme]
+          siteTheme = t === "dark" ? "dark" : "light"
+          return FALLBACK[siteTheme]
         }
 
-        function applyTheme() {
-          PAL = readPalette()
-          var root = document.documentElement
-          root.setAttribute("data-theme", theme)
+        // 把當前主題的配色算出來，同時決定頁面 UI 的 CSS 變數
+        function applyPalette() {
+          const root = document.documentElement
+          if (CUR.space) {
+            PAL = { bg: CUR.bg, fg: "#e8edf8", link: SPACE_PAL_LINK, dim: "#1d2333" }
+            root.setAttribute("data-theme", "dark")
+            root.setAttribute("data-space", "1")
+          } else {
+            PAL = readPalette()
+            root.setAttribute("data-theme", siteTheme)
+            root.removeAttribute("data-space")
+          }
           root.style.setProperty("--bg", PAL.bg)
           root.style.setProperty("--fg", PAL.fg)
-          if (Graph) {
-            Graph.backgroundColor(PAL.bg)
-            refreshColors()
-          }
-        }
 
-        // ---- 載入 3d-force-graph（同 upstream graph plugin 的 CDN 載入模式） ----
-        function loadScript(src) {
-          return new Promise(function (resolve, reject) {
-            var s = document.createElement("script")
-            s.src = src
-            s.crossOrigin = "anonymous"
-            s.onload = resolve
-            s.onerror = reject
-            document.head.appendChild(s)
+          COLOR = {}
+          const pal = COLOR_THEMES[CUR.theme]
+          CATS.forEach((c, i) => {
+            COLOR[c.key] = pal ? pal[i % pal.length] : c.color
           })
         }
-
-        var Graph = null
-        var ALL = { nodes: [], links: [] }
-        var enabled = {}
-        var hoverNode = null
-        var fitted = false
-        var neighbours = new Set()
-        var matched = null // Set of slugs，搜尋結果；null = 沒在搜尋
 
         // 3D 圖靠 WebGL，先確認瀏覽器給得出 context，才不會把「沒有 WebGL」
         // 誤報成「網路載入失敗」。
         function hasWebGL() {
           try {
-            var c = document.createElement("canvas")
+            const c = document.createElement("canvas")
             return !!(c.getContext("webgl2") || c.getContext("webgl"))
           } catch (e) {
             return false
@@ -370,47 +507,584 @@
 
         if (!hasWebGL()) {
           fail("這個瀏覽器（或環境）沒有可用的 WebGL，無法顯示 3D 圖譜。可改看右側欄的 2D 圖譜。")
-        } else {
-          Promise.all([
-            loadScript(CDN),
-            fetch(BASE + "/static/contentIndex.json").then(function (r) {
+          return
+        }
+
+        let THREE, ForceGraph3D, UnrealBloomPass, index
+        try {
+          const [three, bloom, fg, data] = await Promise.all([
+            import("three"),
+            import("three/examples/jsm/postprocessing/UnrealBloomPass.js"),
+            import("https://esm.sh/3d-force-graph@1.80.0?external=three"),
+            fetch(BASE + "/static/contentIndex.json").then((r) => {
               if (!r.ok) throw new Error("contentIndex.json " + r.status)
               return r.json()
             }),
           ])
-            .then(function (res) {
-              build(res[1])
-            })
-            .catch(function (err) {
-              console.error("[Graph3D]", err)
-              fail("3D 圖譜載入失敗（" + (err && err.message ? err.message : err) + "），請重新整理。")
-            })
+          THREE = three
+          UnrealBloomPass = bloom.UnrealBloomPass
+          ForceGraph3D = fg.default
+          index = data
+        } catch (err) {
+          console.error("[Graph3D]", err)
+          fail("3D 圖譜載入失敗（" + (err && err.message ? err.message : err) + "），請重新整理。")
+          return
         }
 
-        function build(index) {
-          if (!window.ForceGraph3D) return fail("3D 圖譜函式庫載入失敗。")
+        // ================= 以下是從 galaxy-view 移植的渲染輔助 =================
 
-          var valid = new Set(Object.keys(index))
-          var nodeMap = new Map()
-          valid.forEach(function (slug) {
-            var d = index[slug] || {}
-            nodeMap.set(slug, {
-              id: slug,
-              title: d.title || slug,
-              cat: catOf(slug),
-              degree: 0,
-            })
+        /** mulberry32：固定 seed → 每次分布一致（換主題只重染色不搬星） */
+        function mulberry(seed) {
+          let a = seed >>> 0
+          return () => {
+            a = (a + 0x6d2b79f5) >>> 0
+            let t = a
+            t = Math.imul(t ^ (t >>> 15), t | 1)
+            t ^= t + Math.imul(t ^ (t >>> 7), t | 61)
+            return ((t ^ (t >>> 14)) >>> 0) / 4294967296
+          }
+        }
+
+        function hash2(ix, iy, seed) {
+          let h = (ix * 374761393 + iy * 668265263 + seed * 1442695) | 0
+          h = Math.imul(h ^ (h >>> 13), 1274126177)
+          return ((h ^ (h >>> 16)) >>> 0) / 4294967296
+        }
+
+        const COOL_A = new THREE.Color("#9da8c4")
+        const COOL_B = new THREE.Color("#ffffff")
+        const WARM = new THREE.Color("#ffe9c9")
+        const BLUE = new THREE.Color("#bfd3ff")
+
+        function starColor(rand) {
+          const pick = rand()
+          return pick < 0.85
+            ? COOL_A.clone().lerp(COOL_B, rand())
+            : pick < 0.95
+              ? WARM.clone()
+              : BLUE.clone()
+        }
+
+        // 星空：3 個尺寸級 = 3 個 draw call，球殼分布近似無窮遠
+        const STAR_CLASSES = [
+          { count: 2600, size: 1.2 },
+          { count: 900, size: 2.0 },
+          { count: 250, size: 3.0 },
+        ]
+
+        function buildStarfield(shellRadius) {
+          const group = new THREE.Group()
+          const rand = mulberry(0x517cc1)
+          let twinkle = null
+          for (const cls of STAR_CLASSES) {
+            const pos = new Float32Array(cls.count * 3)
+            const col = new Float32Array(cls.count * 3)
+            for (let i = 0; i < cls.count; i++) {
+              const theta = 2 * Math.PI * rand()
+              const phi = Math.acos(2 * rand() - 1)
+              const r = shellRadius * (0.95 + 0.1 * rand())
+              pos[i * 3] = r * Math.sin(phi) * Math.cos(theta)
+              pos[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta)
+              pos[i * 3 + 2] = r * Math.cos(phi)
+              const c = starColor(rand)
+              // 大星級裡 ~3% 提到 HDR 亮度，獨享 bloom —— 僅有的幾顆「真星」
+              if (cls.size >= 3.0 && rand() < 0.03) c.multiplyScalar(1.8)
+              col[i * 3] = c.r
+              col[i * 3 + 1] = c.g
+              col[i * 3 + 2] = c.b
+            }
+            const geo = new THREE.BufferGeometry()
+            geo.setAttribute("position", new THREE.BufferAttribute(pos, 3))
+            geo.setAttribute("color", new THREE.BufferAttribute(col, 3))
+            const points = new THREE.Points(
+              geo,
+              new THREE.PointsMaterial({
+                size: cls.size,
+                sizeAttenuation: false,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.55,
+                depthWrite: false,
+              }),
+            )
+            points.renderOrder = -2 // 星空墊底
+            points.frustumCulled = false
+            group.add(points)
+            if (cls.size >= 3.0) twinkle = makeTwinkler(geo, cls.count)
+          }
+          return { group, twinkle }
+        }
+
+        /*
+         * 亮星眨眼：只有最大尺寸級的「真星」會眨，同一時刻最多一顆，
+         * 泊松隨機間隔 + 1.6s 正弦包絡——像真夜空偶爾的大氣閃爍，不是聖誕彩燈。
+         */
+        function makeTwinkler(geometry, starCount) {
+          const attr = geometry.getAttribute("color")
+          const base = new Float32Array(attr.array)
+          let active = null
+          let nextIn = 3
+          return function update(deltaS, freq) {
+            const arr = attr.array
+            if (active) {
+              active.t += deltaS
+              const DUR = 1.6
+              const i = active.index * 3
+              const k = active.t >= DUR ? 1 : 1 + 2.2 * Math.sin((Math.PI * active.t) / DUR)
+              arr[i] = base[i] * k
+              arr[i + 1] = base[i + 1] * k
+              arr[i + 2] = base[i + 2] * k
+              attr.needsUpdate = true
+              if (active.t >= DUR) active = null
+              return
+            }
+            if (freq <= 0.01) return
+            nextIn -= deltaS
+            if (nextIn <= 0) {
+              active = { index: Math.floor(Math.random() * starCount), t: 0 }
+              // 泊松間隔：均值 6/freq 秒
+              nextIn = Math.min(Math.max(-Math.log(Math.random() + 1e-9) * (6 / freq), 1.5), 90)
+            }
+          }
+        }
+
+        /*
+         * 空間浮星：散在圖體積內外的零星小星，sizeAttenuation 近大遠小，
+         * 巡航時產生視差——與球殼天幕的「無窮遠」星點是兩種不同的深度感。
+         */
+        function buildFieldStars(volumeRadius, density) {
+          const count = Math.max(Math.round(1200 * density), 1)
+          const rand = mulberry(0x2f6e1b)
+          const pos = new Float32Array(count * 3)
+          const col = new Float32Array(count * 3)
+          for (let i = 0; i < count; i++) {
+            // 立方根採樣趨近體積均勻，再抬走 30% 內圈——核心區留給節點
+            const r = volumeRadius * (0.3 + 0.7 * Math.cbrt(rand()))
+            const theta = 2 * Math.PI * rand()
+            const phi = Math.acos(2 * rand() - 1)
+            pos[i * 3] = r * Math.sin(phi) * Math.cos(theta)
+            pos[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta)
+            pos[i * 3 + 2] = r * Math.cos(phi)
+            const c = starColor(rand).multiplyScalar(0.75)
+            col[i * 3] = c.r
+            col[i * 3 + 1] = c.g
+            col[i * 3 + 2] = c.b
+          }
+          const geo = new THREE.BufferGeometry()
+          geo.setAttribute("position", new THREE.BufferAttribute(pos, 3))
+          geo.setAttribute("color", new THREE.BufferAttribute(col, 3))
+          const points = new THREE.Points(
+            geo,
+            new THREE.PointsMaterial({
+              size: 2.4,
+              sizeAttenuation: true,
+              vertexColors: true,
+              transparent: true,
+              opacity: 0.6,
+              depthWrite: false,
+            }),
+          )
+          points.renderOrder = -2
+          points.frustumCulled = false
+          return points
+        }
+
+        // 體積雲／集群雲霧共用的軟高斯 billboard shader
+        const SOFT_SPRITE_VERT = /* glsl */ `
+          attribute float aSize;
+          attribute vec3 aColor;
+          varying vec3 vColor;
+          uniform float uPixelScale;
+          uniform float uMaxPoint;
+          void main() {
+            vColor = aColor;
+            vec4 mv = modelViewMatrix * vec4(position, 1.0);
+            gl_PointSize = min(aSize * uPixelScale / max(-mv.z, 1.0), uMaxPoint);
+            gl_Position = projectionMatrix * mv;
+          }
+        `
+        const NEBULA_FRAG = /* glsl */ `
+          varying vec3 vColor;
+          uniform float uIntensity;
+          void main() {
+            // 很軟的高斯，讓相鄰雲片無縫融合成霧（不是一顆顆圓斑）
+            float r = length(gl_PointCoord - 0.5) * 2.0;
+            float a = exp(-r * r * 2.6) - 0.0743; // r=1 處精確歸零
+            if (a < 0.003) discard;
+            gl_FragColor = vec4(vColor * uIntensity * 0.30, a * uIntensity * 0.22);
+          }
+        `
+        const CLOUD_FRAG = /* glsl */ `
+          varying vec3 vColor;
+          uniform float uIntensity;
+          void main() {
+            vec2 uv = gl_PointCoord - 0.5;
+            float d2 = dot(uv, uv);
+            float a = exp(-d2 * 10.0) - 0.0821; // r=0.5 處精確歸零（無方形硬邊）
+            if (a < 0.004) discard;
+            gl_FragColor = vec4(vColor * uIntensity * 0.55, a * uIntensity * 0.4);
+          }
+        `
+
+        function softSpritePoints(maxCount, fragmentShader, maxPoint) {
+          const geo = new THREE.BufferGeometry()
+          geo.setAttribute("position", new THREE.BufferAttribute(new Float32Array(maxCount * 3), 3))
+          geo.setAttribute("aColor", new THREE.BufferAttribute(new Float32Array(maxCount * 3), 3))
+          geo.setAttribute("aSize", new THREE.BufferAttribute(new Float32Array(maxCount), 1))
+          geo.setDrawRange(0, 0)
+          const mat = new THREE.ShaderMaterial({
+            vertexShader: SOFT_SPRITE_VERT,
+            fragmentShader,
+            transparent: true,
+            depthWrite: false,
+            blending: THREE.AdditiveBlending,
+            uniforms: {
+              uPixelScale: { value: 1 },
+              uMaxPoint: { value: maxPoint },
+              uIntensity: { value: 0 },
+            },
+          })
+          const points = new THREE.Points(geo, mat)
+          points.renderOrder = -1 // 星點之上、節點／連線之下
+          points.frustumCulled = false
+          return points
+        }
+
+        const NEBULA_CENTERS = 6
+        const NEBULA_PER_CENTER = 24
+        const NEBULA_MAX = NEBULA_CENTERS * NEBULA_PER_CENTER
+
+        /*
+         * 星雲（體積版）：散布在圖周圍體積裡的軟 billboard 雲片，雲核成團、各在不同深度，
+         * 加色疊加自然成濃淡，永遠面向相機 = 不露球面輪廓。分布用固定 seed。
+         */
+        function bakeNebula(points, R, tintA, tintB) {
+          const rand = mulberry(0x9e37)
+          const posAttr = points.geometry.getAttribute("position")
+          const colAttr = points.geometry.getAttribute("aColor")
+          const sizeAttr = points.geometry.getAttribute("aSize")
+          const pos = posAttr.array,
+            col = colAttr.array,
+            size = sizeAttr.array
+          const a = new THREE.Color(tintA),
+            b = new THREE.Color(tintB)
+          const hsl = { h: 0, s: 0, l: 0 }
+          const c = new THREE.Color()
+          let p = 0
+          for (let ci = 0; ci < NEBULA_CENTERS && p < NEBULA_MAX; ci++) {
+            // 雲核方向隨機，深度 0.7R..2.4R → 有的近有的遠、包裹住圖
+            const theta = 2 * Math.PI * rand()
+            const phi = Math.acos(2 * rand() - 1)
+            const cr = R * (0.7 + 1.7 * rand())
+            const cx = cr * Math.sin(phi) * Math.cos(theta)
+            const cy = cr * Math.sin(phi) * Math.sin(theta) * 0.75 // 略壓扁，雲帶偏盤狀
+            const cz = cr * Math.cos(phi)
+            const spread = R * (0.5 + 0.5 * rand())
+            c.copy(a).lerp(b, rand())
+            c.getHSL(hsl)
+            c.setHSL(hsl.h + (rand() - 0.5) * 0.05, Math.min(hsl.s * 0.85, 0.9), 0.16 + 0.08 * rand())
+            for (let k = 0; k < NEBULA_PER_CENTER && p < NEBULA_MAX; k++) {
+              // 近似常態偏移（3 均勻和）→ 中心稠密、邊緣稀薄
+              pos[p * 3] = cx + (rand() + rand() + rand() - 1.5) * spread
+              pos[p * 3 + 1] = cy + (rand() + rand() + rand() - 1.5) * spread * 0.8
+              pos[p * 3 + 2] = cz + (rand() + rand() + rand() - 1.5) * spread
+              const big = rand() < 0.25
+              size[p] = R * (big ? 1.0 + 0.8 * rand() : 0.4 + 0.5 * rand())
+              const j = 0.85 + 0.3 * rand() // 逐片亮度微擾
+              col[p * 3] = c.r * j
+              col[p * 3 + 1] = c.g * j
+              col[p * 3 + 2] = c.b * j
+              p++
+            }
+          }
+          posAttr.needsUpdate = colAttr.needsUpdate = sizeAttr.needsUpdate = true
+          points.geometry.setDrawRange(0, p)
+          return p
+        }
+
+        const MAX_CLUSTERS = 10
+        const POINTS_PER_CLUSTER = 3
+
+        /*
+         * 集群雲霧：稠密星團上的彩色雲團。度數 top 節點做種子、貪心保持間距 →
+         * 每簇質心／散布半徑 → 3 個抖動軟 sprite，顏色 = 簇內節點均色提飽和。
+         */
+        function bakeClusterClouds(points, nodes, graphRadius) {
+          const n = nodes.length
+          const posAttr = points.geometry.getAttribute("position")
+          const colAttr = points.geometry.getAttribute("aColor")
+          const sizeAttr = points.geometry.getAttribute("aSize")
+          if (n < 20) {
+            points.geometry.setDrawRange(0, 0)
+            return 0
+          }
+          const order = nodes.map((_, i) => i).sort((x, y) => nodes[y].degree - nodes[x].degree)
+          const seeds = []
+          const minGap = graphRadius * 0.5
+          for (const cand of order.slice(0, 250)) {
+            const a = nodes[cand]
+            if (a.x === undefined) continue
+            let ok = true
+            for (const sd of seeds) {
+              const b = nodes[sd]
+              if (Math.hypot(a.x - b.x, a.y - b.y, (a.z || 0) - (b.z || 0)) < minGap) {
+                ok = false
+                break
+              }
+            }
+            if (ok) seeds.push(cand)
+            if (seeds.length >= MAX_CLUSTERS) break
+          }
+          const pArr = posAttr.array,
+            cArr = colAttr.array,
+            sArr = sizeAttr.array
+          const memberR = graphRadius * 0.33
+          const acc = new THREE.Color()
+          const tmp = new THREE.Color()
+          const hsl = { h: 0, s: 0, l: 0 }
+          let p = 0
+          let hashSeed = 11
+          for (const sd of seeds) {
+            const s = nodes[sd]
+            const members = []
+            let mx = 0,
+              my = 0,
+              mz = 0
+            for (let i = 0; i < n; i++) {
+              const q = nodes[i]
+              if (q.x === undefined) continue
+              const dx = q.x - s.x,
+                dy = q.y - s.y,
+                dz = (q.z || 0) - (s.z || 0)
+              if (dx * dx + dy * dy + dz * dz < memberR * memberR) {
+                members.push(i)
+                mx += q.x
+                my += q.y
+                mz += q.z || 0
+              }
+            }
+            if (members.length < 8) continue
+            mx /= members.length
+            my /= members.length
+            mz /= members.length
+            let sq = 0
+            for (const i of members) {
+              const q = nodes[i]
+              sq += (q.x - mx) ** 2 + (q.y - my) ** 2 + ((q.z || 0) - mz) ** 2
+            }
+            const spread = Math.sqrt(sq / members.length)
+            // 簇內均色 → 提飽和定亮度，加色混合下讀作彩色星雲
+            acc.setRGB(0, 0, 0)
+            for (const i of members) acc.add(tmp.set(COLOR[nodes[i].cat]))
+            acc.multiplyScalar(1 / members.length)
+            acc.getHSL(hsl)
+            acc.setHSL(hsl.h, Math.min(hsl.s * 1.25, 1), 0.4)
+            for (let k = 0; k < POINTS_PER_CLUSTER; k++) {
+              pArr[p * 3] = mx + (hash2(hashSeed, k, 3) - 0.5) * spread
+              pArr[p * 3 + 1] = my + (hash2(hashSeed, k, 5) - 0.5) * spread * 0.7
+              pArr[p * 3 + 2] = mz + (hash2(hashSeed, k, 7) - 0.5) * spread
+              sArr[p] = spread * (1.6 + 0.8 * hash2(hashSeed, k, 13))
+              cArr[p * 3] = acc.r
+              cArr[p * 3 + 1] = acc.g
+              cArr[p * 3 + 2] = acc.b
+              p++
+            }
+            hashSeed++
+          }
+          posAttr.needsUpdate = colAttr.needsUpdate = sizeAttr.needsUpdate = true
+          points.geometry.setDrawRange(0, p)
+          return p
+        }
+
+        /*
+         * 節點發光貼圖：白熱核心 + 軟邊（NASA「luminous orb」配方的 canvas 版）。
+         * 只做 alpha 斜坡，顏色交給 sprite material 的 color 染，核心的白由 bloom 打出來。
+         */
+        function glowTexture() {
+          const s = 128
+          const c = document.createElement("canvas")
+          c.width = c.height = s
+          const g = c.getContext("2d")
+          const grad = g.createRadialGradient(s / 2, s / 2, 0, s / 2, s / 2, s / 2)
+          grad.addColorStop(0.0, "rgba(255,255,255,1)")
+          grad.addColorStop(0.18, "rgba(255,255,255,0.92)")
+          grad.addColorStop(0.42, "rgba(255,255,255,0.32)")
+          grad.addColorStop(1.0, "rgba(255,255,255,0)")
+          g.fillStyle = grad
+          g.fillRect(0, 0, s, s)
+          const tex = new THREE.CanvasTexture(c)
+          tex.colorSpace = THREE.SRGBColorSpace
+          return tex
+        }
+
+        // ---- 銀河力學（galaxy-view src/layout/galaxyForces.ts） ----
+        const CORE_R = 200
+        const SPIRAL_R = 160
+
+        /** 軸向回正力（等同 d3 的 forceX/Y/Z(0)），3d-force-graph 預設沒有這幾條 */
+        function forceAxis(axis, strength) {
+          let nodes = []
+          const v = "v" + axis
+          const force = (alpha) => {
+            if (!strength) return
+            for (const n of nodes) n[v] = (n[v] || 0) - (n[axis] || 0) * strength * alpha
+          }
+          force.initialize = (ns) => (nodes = ns)
+          return force
+        }
+
+        /*
+         * 徑向核心引力：在柱面半徑 r=hypot(x,z) 上把節點拉向中軸，外圈更強（線性於 r），
+         * 並按度數加權（hub 沉核）→ 致密亮核 + 徑向密度梯度。
+         */
+        function forceRadialCore(strength) {
+          let nodes = []
+          let meanDeg = 1
+          const force = (alpha) => {
+            if (!strength) return
+            for (const n of nodes) {
+              const x = n.x || 0,
+                z = n.z || 0
+              const r = Math.hypot(x, z)
+              if (r < 1e-4) continue
+              const degW = Math.min(Math.max((n.degree || 1) / meanDeg, 0.3), 3)
+              const pull = (strength * degW * alpha * r) / CORE_R
+              n.vx = (n.vx || 0) - (x / r) * pull
+              n.vz = (n.vz || 0) - (z / r) * pull
+            }
+          }
+          force.initialize = (ns) => {
+            nodes = ns
+            let sum = 0
+            for (const n of ns) sum += n.degree || 1
+            meanDeg = ns.length ? sum / ns.length : 1
+          }
+          return force
+        }
+
+        /** 旋臂切向力：內快外慢的微弱切向推力，冷卻期把盤梳成對數旋臂 */
+        function forceSpiral(strength) {
+          let nodes = []
+          const force = (alpha) => {
+            if (!strength) return
+            for (const n of nodes) {
+              const x = n.x || 0,
+                z = n.z || 0
+              const r = Math.hypot(x, z)
+              if (r < 1e-3) continue
+              const k = strength * alpha * (1 / (1 + r / SPIRAL_R))
+              n.vx = (n.vx || 0) + -z * k
+              n.vz = (n.vz || 0) + x * k
+            }
+          }
+          force.initialize = (ns) => (nodes = ns)
+          return force
+        }
+
+        // ================= 建圖 =================
+
+        let Graph = null
+        const ALL = { nodes: [], links: [] }
+        const enabled = {}
+        let hoverNode = null
+        let fitted = false
+        let settled = false // 佈局至少收斂過一次（d3 一建好就會給初始座標，不能拿它當依據）
+        let neighbours = new Set()
+        let matched = null // Set of slugs，搜尋結果；null = 沒在搜尋
+        let hubCut = 1
+
+        const GLOW = glowTexture()
+        const sprites = [] // 保留參照，換主題時 dispose
+        let centerForce = null // classic 用的內建 center force
+        let bloomPass = null
+        const layers = { starGroup: null, twinkle: null, fieldStars: null, nebula: null, clouds: null }
+        let worldRadius = 300
+        // 框視野的鏡頭補間期間要讓自動旋轉閉嘴，否則每幀覆寫鏡頭位置會把仰角拉回 0
+        let holdOrbitUntil = 0
+
+        function idOf(x) {
+          return typeof x === "object" ? x.id : x
+        }
+
+        function isActiveLink(l) {
+          if (!hoverNode) return false
+          return idOf(l.source) === hoverNode.id || idOf(l.target) === hoverNode.id
+        }
+
+        /** 這個節點現在是不是被聚焦的（搜尋命中 / hover 鄰域）。沒在搜尋也沒 hover 就全都算亮 */
+        function isFocused(n) {
+          if (matched) return matched.has(n.id)
+          if (hoverNode) return neighbours.has(n.id)
+          return true
+        }
+
+        function nodeColor(n) {
+          return isFocused(n) ? COLOR[n.cat] : PAL.dim
+        }
+
+        function linkColor(l) {
+          if (hoverNode) return isActiveLink(l) ? COLOR[hoverNode.cat] : PAL.dim
+          return PAL.link
+        }
+
+        function linkWidth(l) {
+          return isActiveLink(l) ? LINK_W.active : LINK_W.idle
+        }
+
+        /** 節點半徑，跟 2D 圖同一條公式：radius = 2 + sqrt(degree) */
+        function nodeRadius(n) {
+          return 2 + Math.sqrt(n.degree)
+        }
+
+        function makeNodeObject(n) {
+          if (!CUR.space) return null // falsy → 交回 3d-force-graph 畫預設實心球
+          const mat = new THREE.SpriteMaterial({
+            map: GLOW,
+            color: COLOR[n.cat],
+            transparent: true,
+            depthWrite: false,
+            blending: THREE.AdditiveBlending,
+            opacity: isFocused(n) ? 1 : DIM_ALPHA,
+          })
+          const sp = new THREE.Sprite(mat)
+          sp.scale.setScalar(nodeRadius(n) * 2.6 * CUR.look.nodeSize)
+          sp.renderOrder = 1
+          sprites.push(mat)
+          return sp
+        }
+
+        /** 重新套色。深空模式直接改 sprite material，classic 走原本的 accessor 路徑 */
+        function refreshColors() {
+          if (!Graph) return
+          if (CUR.space) {
+            for (const n of Graph.graphData().nodes) {
+              const o = n.__threeObj
+              if (!o || !o.material) continue
+              o.material.opacity = isFocused(n) ? 1 : DIM_ALPHA
+              o.material.color.set(COLOR[n.cat])
+            }
+            Graph.linkColor(linkColor).linkWidth(linkWidth)
+          } else {
+            Graph.nodeColor(nodeColor).linkColor(linkColor).linkWidth(linkWidth)
+          }
+        }
+
+        function build() {
+          const valid = new Set(Object.keys(index))
+          const nodeMap = new Map()
+          valid.forEach((slug) => {
+            const d = index[slug] || {}
+            nodeMap.set(slug, { id: slug, title: d.title || slug, cat: catOf(slug), degree: 0 })
           })
 
           // 只保留目標也在 index 裡的連結，並把雙向重複邊去掉
-          var seen = new Set()
-          var links = []
-          valid.forEach(function (slug) {
-            var outgoing = (index[slug] && index[slug].links) || []
-            for (var i = 0; i < outgoing.length; i++) {
-              var dest = outgoing[i]
+          const seen = new Set()
+          const links = []
+          valid.forEach((slug) => {
+            const outgoing = (index[slug] && index[slug].links) || []
+            for (const dest of outgoing) {
               if (!valid.has(dest) || dest === slug) continue
-              var key = slug < dest ? slug + " " + dest : dest + " " + slug
+              const key = slug < dest ? slug + " " + dest : dest + " " + slug
               if (seen.has(key)) continue
               seen.add(key)
               links.push({ source: slug, target: dest })
@@ -423,17 +1097,11 @@
           ALL.links = links
 
           // 樞紐節點門檻：連結度前 30 名
-          var degrees = ALL.nodes
-            .map(function (n) {
-              return n.degree
-            })
-            .sort(function (a, b) {
-              return b - a
-            })
-          var hubCut = degrees[Math.min(29, degrees.length - 1)] || 1
+          const degrees = ALL.nodes.map((n) => n.degree).sort((a, b) => b - a)
+          hubCut = degrees[Math.min(29, degrees.length - 1)] || 1
 
+          applyPalette()
           buildLegend()
-          applyTheme()
 
           Graph = ForceGraph3D()(el.graph)
             .backgroundColor(PAL.bg)
@@ -441,34 +1109,32 @@
             // 球半徑 = nodeRelSize * cbrt(val)，所以 val 開三次方回推成
             // 跟 2D 圖同一條公式：radius = 2 + sqrt(degree)
             .nodeRelSize(2.2)
-            .nodeVal(function (n) {
-              return Math.pow(2 + Math.sqrt(n.degree), 3)
-            })
+            .nodeVal((n) => Math.pow(nodeRadius(n), 3))
             .nodeColor(nodeColor)
             .nodeOpacity(0.92)
-            .nodeLabel(function (n) {
-              return n.title
-            })
+            .nodeLabel((n) => n.title)
             .linkColor(linkColor)
-            .linkWidth(function (l) {
-              return isActiveLink(l) ? 1.6 : 0.5
+            .linkWidth(linkWidth)
+            // 連線彎曲的旋轉角用端點雜湊定死，各條朝不同方向拱，看起來才像纖維而非同心弧
+            .linkCurveRotation((l) => {
+              const s = idOf(l.source) + "|" + idOf(l.target)
+              let h = 0
+              for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0
+              return ((h >>> 0) / 4294967296) * Math.PI * 2
             })
-            .linkOpacity(0.42)
-            .onNodeHover(function (n) {
+            .onNodeHover((n) => {
               hoverNode = n
               neighbours = new Set()
               if (n) {
                 neighbours.add(n.id)
-                for (var i = 0; i < ALL.links.length; i++) {
-                  var l = ALL.links[i]
-                  var s = idOf(l.source),
+                for (const l of ALL.links) {
+                  const s = idOf(l.source),
                     t = idOf(l.target)
                   if (s === n.id) neighbours.add(t)
                   else if (t === n.id) neighbours.add(s)
                 }
                 el.hover.style.display = "block"
-                el.hover.innerHTML =
-                  "<b></b><div class='sub'></div>"
+                el.hover.innerHTML = "<b></b><div class='sub'></div>"
                 el.hover.querySelector("b").textContent = n.title
                 el.hover.querySelector(".sub").textContent =
                   catName(n.cat) + " · " + n.degree + " 條連結 · " + n.id
@@ -478,108 +1144,282 @@
               el.graph.style.cursor = n ? "pointer" : ""
               refreshColors()
             })
-            .onNodeClick(function (n) {
+            .onNodeClick((n) => {
               window.top.location.href = urlFor(n.id)
             })
-            .onEngineStop(function () {
+            .onEngineStop(() => {
+              settled = true
               if (fitted) return
               fitted = true
               fitView()
+              rebuildLayers() // 佈局定了才知道圖有多大，星空／星雲照這個尺度重烤
             })
             .cooldownTicks(220)
             .graphData({ nodes: [], links: [] })
 
-          Graph.d3Force("charge").strength(-60)
-          Graph.d3Force("link").distance(28)
+          centerForce = Graph.d3Force("center")
+
+          // bloom 只建一次，之後只調參數；strength 0 的主題直接停用整個 pass
+          bloomPass = new UnrealBloomPass(
+            new THREE.Vector2(window.innerWidth, window.innerHeight),
+            0.35,
+            0.35,
+            0.22,
+          )
+          Graph.postProcessingComposer().addPass(bloomPass)
+
+          // 星空球殼會擺到 worldRadius 的好幾倍遠，遠平面得跟著拉開
+          Graph.camera().far = 60000
+          Graph.camera().updateProjectionMatrix()
+
+          layers.nebula = softSpritePoints(NEBULA_MAX, NEBULA_FRAG, 1600)
+          layers.clouds = softSpritePoints(MAX_CLUSTERS * POINTS_PER_CLUSTER, CLOUD_FRAG, 300)
+          Graph.scene().add(layers.nebula)
+          Graph.scene().add(layers.clouds)
 
           // 除錯用把手（在 console 裡可直接操作圖）
-          window.__graph3d = { graph: Graph, urlFor: urlFor, base: BASE, data: ALL }
+          window.__graph3d = {
+            graph: Graph,
+            urlFor,
+            base: BASE,
+            data: ALL,
+            presets: PRESETS,
+            setPreset: applyPreset,
+          }
 
           el.status.hidden = true
           el.controls.hidden = false
+          // 順序有意義：先把主題（含力學）設好，最後才餵 graphData。
+          // three-forcegraph 是在 kapsule 的延遲 update 裡才建好 state.layout，
+          // 若這之前就 d3ReheatSimulation() 把引擎打開，下一幀 tick 會踩到
+          // undefined 的 layout，整個 render loop 會就此死掉（而且不會進 console）。
+          applyPreset(savedPreset(), true)
           render()
-          startLabels(hubCut)
+          startLoop()
 
-          window.addEventListener("resize", function () {
+          const resize = () => {
             Graph.width(window.innerWidth).height(window.innerHeight)
+            bloomPass.setSize(window.innerWidth, window.innerHeight)
+            updatePixelScale()
+          }
+          window.addEventListener("resize", resize)
+          resize()
+        }
+
+        // ---- 主題套用 ----
+
+        function savedPreset() {
+          let id = null
+          try {
+            id = localStorage.getItem(PRESET_KEY)
+          } catch (e) {}
+          return PRESETS.some((p) => p.id === id) ? id : DEFAULT_PRESET
+        }
+
+        function applyPreset(id, initial) {
+          const p = PRESETS.find((x) => x.id === id) || PRESETS[0]
+          CUR = p
+          try {
+            localStorage.setItem(PRESET_KEY, p.id)
+          } catch (e) {}
+          el.preset.value = p.id
+          el.orbit.checked = p.autoOrbit
+          autoOrbit = p.autoOrbit
+
+          applyPalette()
+          refreshLegend()
+
+          // 舊的 sprite material 要收，但 three-forcegraph 是下一輪 digest 才換掉節點物件，
+          // 當場 dispose 會讓那一幀畫到已釋放的材質，所以延後丟。
+          const stale = sprites.splice(0)
+          setTimeout(() => stale.forEach((m) => m.dispose()), 1000)
+
+          Graph.backgroundColor(PAL.bg)
+            .nodeThreeObject((n) => makeNodeObject(n))
+            .linkOpacity(p.look.linkOpacity)
+            // galaxy-view 的 bow 係數 0.32 是貝茲控制點的偏移比例，
+            // 3d-force-graph 的 curvature 則約等於 2 倍偏移，故換算成 ×0.64
+            .linkCurvature(p.look.linkCurve * 0.64)
+
+          // ACES filmic 是深空模式的關鍵：加色疊加的星雲不經色調映射會把整個畫面
+          // 洗成灰藍，套上去之後高光壓得住，底才會黑。（galaxy-view AggregateRenderer 同設定）
+          const renderer = Graph.renderer()
+          renderer.toneMapping = p.space ? THREE.ACESFilmicToneMapping : THREE.NoToneMapping
+          renderer.toneMappingExposure = 1.05
+
+          applyForces(p, initial)
+          applyBloom(p)
+          rebuildLayers()
+          refreshColors()
+
+          // 力學參數換了就會重跑一輪佈局，讓 onEngineStop 去框視野；
+          // 只有在圖已經停穩（換的是純外觀）時才當場重framing。
+          fitted = false
+          if (settled) {
+            fitted = true
+            fitView()
+          }
+        }
+
+        function applyForces(p, initial) {
+          const ph = p.physics
+          Graph.d3Force("charge").strength(-ph.repel).distanceMax(800)
+          const link = Graph.d3Force("link")
+          link.distance(ph.linkDistance)
+          // d3 預設的 link strength 就是 1/min(deg)，乘上主題倍率再夾到 1
+          link.strength((l) => {
+            const ds = (l.source && l.source.degree) || 1
+            const dt = (l.target && l.target.degree) || 1
+            return Math.min((1 / Math.min(ds, dt)) * ph.linkStrength, 1)
           })
-          Graph.width(window.innerWidth).height(window.innerHeight)
+
+          if (p.space) {
+            // 深空模式用 forceX/Y/Z(0) 定位（y 多吃一份 flatten 把球壓成盤），
+            // 跟內建的 center force 會互相打架，所以把 center 拿掉。
+            Graph.d3Force("center", null)
+            Graph.d3Force("x", forceAxis("x", ph.centerPull))
+            Graph.d3Force("y", forceAxis("y", ph.centerPull + ph.flatten))
+            Graph.d3Force("z", forceAxis("z", ph.centerPull))
+            Graph.d3Force("core", forceRadialCore(ph.coreGravity))
+            Graph.d3Force("spiral", forceSpiral(ph.spiral))
+            Graph.d3VelocityDecay(0.6)
+          } else {
+            Graph.d3Force("center", centerForce)
+            Graph.d3Force("x", null)
+            Graph.d3Force("y", null)
+            Graph.d3Force("z", null)
+            Graph.d3Force("core", null)
+            Graph.d3Force("spiral", null)
+            Graph.d3VelocityDecay(0.4)
+          }
+          // 初次套用時 layout 還沒建好，reheat 會提早打開引擎 → 見 build() 的註解
+          if (!initial) Graph.d3ReheatSimulation()
+        }
+
+        function applyBloom(p) {
+          bloomPass.enabled = p.bloom.strength > 0
+          bloomPass.strength = p.bloom.strength
+          bloomPass.radius = p.bloom.radius
+          bloomPass.threshold = p.bloom.threshold
+        }
+
+        /** 由目前節點分布估一個「圖有多大」，星空／星雲的尺度全掛在這個數上 */
+        function measureWorld() {
+          const ns = Graph.graphData().nodes.filter((n) => n.x !== undefined)
+          if (!ns.length) return worldRadius
+          const ds = ns.map((n) => Math.hypot(n.x, n.y, n.z || 0)).sort((a, b) => a - b)
+          return Math.max(ds[Math.floor(ds.length * 0.9)] || ds[ds.length - 1], 60)
+        }
+
+        function rebuildLayers() {
+          worldRadius = measureWorld()
+          const scene = Graph.scene()
+
+          // 星空：只有需要時才生，換主題就整組丟掉重來
+          if (layers.starGroup) {
+            scene.remove(layers.starGroup)
+            for (const c of layers.starGroup.children) {
+              c.geometry.dispose()
+              c.material.dispose()
+            }
+            layers.starGroup = null
+            layers.twinkle = null
+          }
+          if (CUR.starfield) {
+            const sf = buildStarfield(worldRadius * 8)
+            layers.starGroup = sf.group
+            layers.twinkle = sf.twinkle
+            scene.add(sf.group)
+          }
+
+          if (layers.fieldStars) {
+            scene.remove(layers.fieldStars)
+            layers.fieldStars.geometry.dispose()
+            layers.fieldStars.material.dispose()
+            layers.fieldStars = null
+          }
+          if (CUR.layers.fieldStars > 0) {
+            layers.fieldStars = buildFieldStars(worldRadius * 2.2, CUR.layers.fieldStars)
+            scene.add(layers.fieldStars)
+          }
+
+          const nebulaOn = CUR.layers.nebula > 0
+          if (nebulaOn) {
+            const pal = COLOR_THEMES[CUR.theme] || CATS.map((c) => c.color)
+            bakeNebula(layers.nebula, worldRadius, pal[0], pal[1 % pal.length])
+          }
+          layers.nebula.material.uniforms.uIntensity.value = CUR.layers.nebula
+          layers.nebula.visible = nebulaOn
+
+          const cloudsOn = CUR.layers.clusterClouds > 0
+          const cloudCount = cloudsOn
+            ? bakeClusterClouds(layers.clouds, Graph.graphData().nodes, worldRadius)
+            : 0
+          layers.clouds.material.uniforms.uIntensity.value = CUR.layers.clusterClouds
+          layers.clouds.visible = cloudsOn && cloudCount > 0
+
+          updatePixelScale()
+        }
+
+        /** 體積雲 shader 的 gl_PointSize 要換算成世界尺度：drawingBufferHeight / (2·tan(fov/2)) */
+        function updatePixelScale() {
+          const cam = Graph.camera()
+          const h = Graph.renderer().getContext().drawingBufferHeight
+          const scale = h / (2 * Math.tan(((cam.fov / 2) * Math.PI) / 180))
+          layers.nebula.material.uniforms.uPixelScale.value = scale
+          layers.clouds.material.uniforms.uPixelScale.value = scale
         }
 
         // 佈局收斂後把視野框到主體上。刻意只框最靠中心的 92%——
         // 少數飄很遠的孤立節點若也算進去，整團會被縮成一小點。
         function fitView() {
-          var ns = Graph.graphData().nodes.filter(function (n) {
-            return n.x !== undefined
-          })
+          const ns = Graph.graphData().nodes.filter((n) => n.x !== undefined)
           if (!ns.length) return
-          var ds = ns
-            .map(function (n) {
-              return Math.sqrt(n.x * n.x + n.y * n.y + (n.z || 0) * (n.z || 0))
-            })
-            .sort(function (a, b) {
-              return a - b
-            })
-          var cut = ds[Math.floor(ds.length * 0.92)] || ds[ds.length - 1]
-          Graph.zoomToFit(700, 30, function (n) {
-            return Math.sqrt(n.x * n.x + n.y * n.y + (n.z || 0) * (n.z || 0)) <= cut
-          })
-        }
-
-        function idOf(x) {
-          return typeof x === "object" ? x.id : x
-        }
-        function catName(key) {
-          for (var i = 0; i < CATS.length; i++) if (CATS[i].key === key) return CATS[i].name
-          return key
-        }
-
-        function isActiveLink(l) {
-          if (!hoverNode) return false
-          return idOf(l.source) === hoverNode.id || idOf(l.target) === hoverNode.id
-        }
-
-        function nodeColor(n) {
-          if (matched) return matched.has(n.id) ? COLOR[n.cat] : PAL.dim
-          if (hoverNode) return neighbours.has(n.id) ? COLOR[n.cat] : PAL.dim
-          return COLOR[n.cat]
-        }
-
-        function linkColor(l) {
-          if (hoverNode) return isActiveLink(l) ? COLOR[hoverNode.cat] : PAL.dim
-          return PAL.link
-        }
-
-        function refreshColors() {
-          if (!Graph) return
-          Graph.nodeColor(nodeColor).linkColor(linkColor).linkWidth(function (l) {
-            return isActiveLink(l) ? 1.2 : 0.4
-          })
+          const ds = ns.map((n) => Math.hypot(n.x, n.y, n.z || 0)).sort((a, b) => a - b)
+          const cut = ds[Math.floor(ds.length * 0.92)] || ds[ds.length - 1]
+          holdOrbitUntil = performance.now() + 2600
+          Graph.zoomToFit(700, 30, (n) => Math.hypot(n.x, n.y, n.z || 0) <= cut)
+          // 盤狀的主題要從上方一點看下去才看得到旋臂，球狀的維持接近水平
+          if (CUR.frameElevDeg != null) {
+            setTimeout(() => {
+              const c = Graph.camera().position
+              const d = Math.hypot(c.x, c.y, c.z) || cut * 2
+              const az = Math.atan2(c.z, c.x)
+              const ev = (CUR.frameElevDeg * Math.PI) / 180
+              Graph.cameraPosition(
+                {
+                  x: d * Math.cos(ev) * Math.cos(az),
+                  y: d * Math.sin(ev),
+                  z: d * Math.cos(ev) * Math.sin(az),
+                },
+                { x: 0, y: 0, z: 0 },
+                900,
+              )
+            }, 750)
+          }
         }
 
         // ---- 圖例 / 篩選 ----
         function buildLegend() {
-          var counts = {}
-          CATS.forEach(function (c) {
+          const counts = {}
+          CATS.forEach((c) => {
             counts[c.key] = 0
             enabled[c.key] = true
           })
-          ALL.nodes.forEach(function (n) {
-            counts[n.cat]++
-          })
+          ALL.nodes.forEach((n) => counts[n.cat]++)
 
-          CATS.forEach(function (c) {
+          CATS.forEach((c) => {
             if (!counts[c.key]) return
-            var row = document.createElement("label")
+            const row = document.createElement("label")
             row.className = "row"
+            row.dataset.cat = c.key
             row.innerHTML =
-              "<input type='checkbox' checked><span class='dot' style='background:" +
-              c.color +
-              "'></span><span></span><span class='cnt'>" +
+              "<input type='checkbox' checked><span class='dot'></span><span></span><span class='cnt'>" +
               counts[c.key] +
               "</span>"
+            row.querySelector(".dot").style.background = COLOR[c.key]
             row.querySelectorAll("span")[1].textContent = c.name
-            row.querySelector("input").addEventListener("change", function (e) {
+            row.querySelector("input").addEventListener("change", (e) => {
               enabled[c.key] = e.target.checked
               render()
             })
@@ -587,37 +1427,49 @@
           })
         }
 
+        /** 換主題會換分類色，圖例色點要跟著換，不然圖例會對不上圖 */
+        function refreshLegend() {
+          el.cats.querySelectorAll(".row").forEach((row) => {
+            const dot = row.querySelector(".dot")
+            if (dot) dot.style.background = COLOR[row.dataset.cat]
+          })
+        }
+
         function render() {
           fitted = false // 換過篩選條件就重新框一次視野
-          var keep = ALL.nodes.filter(function (n) {
-            return enabled[n.cat]
-          })
-          var ids = new Set(
-            keep.map(function (n) {
-              return n.id
-            }),
-          )
-          var links = ALL.links.filter(function (l) {
-            return ids.has(idOf(l.source)) && ids.has(idOf(l.target))
-          })
+          const keep = ALL.nodes.filter((n) => enabled[n.cat])
+          const ids = new Set(keep.map((n) => n.id))
+          const links = ALL.links.filter((l) => ids.has(idOf(l.source)) && ids.has(idOf(l.target)))
           Graph.graphData({
             nodes: keep,
-            links: links.map(function (l) {
-              return { source: idOf(l.source), target: idOf(l.target) }
-            }),
+            links: links.map((l) => ({ source: idOf(l.source), target: idOf(l.target) })),
           })
           el.stats.textContent = keep.length + " 個節點 · " + links.length + " 條連結"
         }
 
+        // ---- 控制項 ----
+        PRESETS.forEach((p) => {
+          const o = document.createElement("option")
+          o.value = p.id
+          o.textContent = p.name
+          el.preset.appendChild(o)
+        })
+        el.preset.addEventListener("change", () => applyPreset(el.preset.value))
+
+        let autoOrbit = false
+        el.orbit.addEventListener("change", () => {
+          autoOrbit = el.orbit.checked
+        })
+
         // ---- 搜尋 ----
-        el.search.addEventListener("input", function () {
-          var q = el.search.value.trim().toLowerCase()
+        el.search.addEventListener("input", () => {
+          const q = el.search.value.trim().toLowerCase()
           if (!q) {
             matched = null
           } else {
             matched = new Set()
-            ALL.nodes.forEach(function (n) {
-              if (n.title.toLowerCase().indexOf(q) >= 0 || n.id.toLowerCase().indexOf(q) >= 0) {
+            ALL.nodes.forEach((n) => {
+              if (n.title.toLowerCase().includes(q) || n.id.toLowerCase().includes(q)) {
                 matched.add(n.id)
               }
             })
@@ -626,14 +1478,11 @@
         })
 
         // Enter：飛到第一個命中的節點
-        el.search.addEventListener("keydown", function (e) {
+        el.search.addEventListener("keydown", (e) => {
           if (e.key !== "Enter" || !matched || !matched.size) return
-          var target = Graph.graphData().nodes.filter(function (n) {
-            return matched.has(n.id)
-          })[0]
+          const target = Graph.graphData().nodes.filter((n) => matched.has(n.id))[0]
           if (!target || target.x === undefined) return
-          var dist = 90
-          var ratio = 1 + dist / Math.hypot(target.x, target.y, target.z || 0.001)
+          const ratio = 1 + 90 / Math.hypot(target.x, target.y, target.z || 0.001)
           Graph.cameraPosition(
             { x: target.x * ratio, y: target.y * ratio, z: (target.z || 0) * ratio },
             target,
@@ -641,12 +1490,16 @@
           )
         })
 
-        // ---- HTML 疊層標籤（3d-force-graph 的 graph2ScreenCoords 投影） ----
-        function startLabels(hubCut) {
-          var pool = []
+        // ================= 主迴圈 =================
+        /*
+         * 一條 rAF 管三件事：世界層動畫（眨眼／星雲自轉／自動旋轉）每幀跑，
+         * HTML 標籤重算壓到 ~25fps 省 CPU。
+         */
+        function startLoop() {
+          const pool = []
           function labelEl(i) {
             while (pool.length <= i) {
-              var d = document.createElement("div")
+              const d = document.createElement("div")
               d.className = "lbl"
               el.labels.appendChild(d)
               pool.push(d)
@@ -655,99 +1508,130 @@
           }
 
           // 螢幕空間避讓：先算好每個候選標籤的矩形，重疊就讓給優先度高的那個。
-          // 不這樣做的話，700 多個節點擠在中央會糊成一片。
+          // 不這樣做的話，800 多個節點擠在中央會糊成一片。
           function estWidth(s) {
-            var w = 0
-            for (var i = 0; i < s.length; i++) w += s.charCodeAt(i) > 0x2e80 ? 11 : 6
+            let w = 0
+            for (let i = 0; i < s.length; i++) w += s.charCodeAt(i) > 0x2e80 ? 11 : 6
             return Math.min(w, 300)
           }
 
-          // 標籤重算不需要跟滿 60fps，壓到 ~25fps 省 CPU
-          var lastTick = 0
+          // 使用者一動鏡頭就停自動旋轉，放手 4 秒後才接手回來
+          let idleSince = performance.now()
+          const poke = () => (idleSince = performance.now())
+          el.graph.addEventListener("pointerdown", poke)
+          el.graph.addEventListener("pointermove", (e) => {
+            if (e.buttons) poke()
+          })
+          el.graph.addEventListener("wheel", poke, { passive: true })
+
+          let last = performance.now()
+          let lastPaint = 0
           function tick(now) {
             requestAnimationFrame(tick)
-            if (now - lastTick < 40) return
-            lastTick = now
-            paint()
+            const dt = Math.min((now - last) / 1000, 0.1)
+            last = now
+
+            if (layers.twinkle) layers.twinkle(dt, CUR.look.twinkle)
+            if (layers.nebula.visible) layers.nebula.rotation.y += 0.0004 * dt
+            if (autoOrbit && now - idleSince > 4000 && now > holdOrbitUntil) orbitStep(dt)
+
+            if (now - lastPaint >= 40) {
+              lastPaint = now
+              paint()
+            }
+          }
+
+          function orbitStep(dt) {
+            const cam = Graph.camera()
+            const t = Graph.controls().target
+            const dx = cam.position.x - t.x,
+              dz = cam.position.z - t.z
+            const a = Math.atan2(dz, dx) + 0.02 * dt // ~5 分鐘一圈
+            const r = Math.hypot(dx, dz)
+            Graph.cameraPosition({
+              x: t.x + r * Math.cos(a),
+              y: cam.position.y,
+              z: t.z + r * Math.sin(a),
+            })
           }
 
           function paint() {
-            var mode = el.labelMode.value
-            var used = 0
+            const mode = el.labelMode.value
+            let used = 0
             if (mode !== "none") {
-              var cam = Graph.camera()
-              var tgt = Graph.controls().target
-              var fx = tgt.x - cam.position.x,
+              const cam = Graph.camera()
+              const tgt = Graph.controls().target
+              const fx = tgt.x - cam.position.x,
                 fy = tgt.y - cam.position.y,
                 fz = tgt.z - cam.position.z
-              var W = window.innerWidth,
+              const W = window.innerWidth,
                 H = window.innerHeight
-              var nodes = Graph.graphData().nodes
-              var cands = []
-              for (var i = 0; i < nodes.length; i++) {
-                var n = nodes[i]
+              const nodes = Graph.graphData().nodes
+              const cands = []
+              for (const n of nodes) {
                 if (n.x === undefined) continue
-                var focused =
+                const focused =
                   (hoverNode && neighbours.has(n.id)) || (matched && matched.has(n.id))
                 if (!(mode === "all" || n.degree >= hubCut || focused)) continue
                 // 剔除鏡頭後方的節點
-                var dx = n.x - cam.position.x,
+                const dx = n.x - cam.position.x,
                   dy = n.y - cam.position.y,
                   dz = n.z - cam.position.z
                 if (dx * fx + dy * fy + dz * fz <= 0) continue
-                var p = Graph.graph2ScreenCoords(n.x, n.y, n.z)
+                const p = Graph.graph2ScreenCoords(n.x, n.y, n.z)
                 if (p.x < 0 || p.y < 0 || p.x > W || p.y > H) continue
                 cands.push({
-                  n: n,
-                  p: p,
+                  n,
+                  p,
                   // 被聚焦的一定優先，其次比連結度，再來近的贏
                   prio: (focused ? 1e9 : 0) + n.degree * 1e3 - Math.sqrt(dx * dx + dy * dy + dz * dz),
                 })
               }
-              cands.sort(function (a, b) {
-                return b.prio - a.prio
-              })
+              cands.sort((a, b) => b.prio - a.prio)
 
-              var placed = []
-              for (var k = 0; k < cands.length; k++) {
-                var c = cands[k]
-                var w = estWidth(c.n.title)
-                var clash = false
-                for (var q = 0; q < placed.length; q++) {
-                  var o = placed[q]
-                  if (
-                    Math.abs(c.p.x - o.x) < (w + o.w) / 2 + 6 &&
-                    Math.abs(c.p.y - o.y) < 15
-                  ) {
+              const placed = []
+              for (const c of cands) {
+                const w = estWidth(c.n.title)
+                let clash = false
+                for (const o of placed) {
+                  if (Math.abs(c.p.x - o.x) < (w + o.w) / 2 + 6 && Math.abs(c.p.y - o.y) < 15) {
                     clash = true
                     break
                   }
                 }
                 if (clash) continue
-                placed.push({ x: c.p.x, y: c.p.y, w: w })
-                var d = labelEl(used++)
+                placed.push({ x: c.p.x, y: c.p.y, w })
+                const d = labelEl(used++)
                 d.textContent = c.n.title
                 d.style.left = c.p.x + "px"
                 d.style.top = c.p.y - 6 + "px"
                 d.style.display = ""
               }
             }
-            for (var j = used; j < pool.length; j++) pool[j].style.display = "none"
+            for (let j = used; j < pool.length; j++) pool[j].style.display = "none"
           }
           requestAnimationFrame(tick)
         }
 
-        // ---- 跟著父頁切換深淺色 ----
-        // 同源時直接聽父頁 darkmode plugin 發的 themechange；獨立開啟時退回 storage 事件。
-        var pdoc = parentDoc()
-        if (pdoc) {
-          pdoc.addEventListener("themechange", function () {
-            setTimeout(applyTheme, 0) // 等父頁把 CSS 變數換好再讀
-          })
+        // ---- 跟著父頁切換深淺色（只有 classic 主題吃這個） ----
+        function onSiteThemeChange() {
+          if (CUR.space) return
+          applyPalette()
+          refreshLegend()
+          if (Graph) {
+            Graph.backgroundColor(PAL.bg)
+            refreshColors()
+          }
         }
-        window.addEventListener("storage", function (e) {
-          if (e.key === "theme") applyTheme()
+        const pdoc = parentDoc()
+        if (pdoc) {
+          pdoc.addEventListener("themechange", () => setTimeout(onSiteThemeChange, 0))
+        }
+        window.addEventListener("storage", (e) => {
+          if (e.key === "theme") onSiteThemeChange()
         })
+
+        build()
       })()
     </script>
   </body>
