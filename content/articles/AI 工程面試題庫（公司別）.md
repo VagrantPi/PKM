@@ -32,7 +32,7 @@ read_status: read
 ## ✨ 關鍵重點
 
 ### 題目分布（2026-09-20 撷取）
-**總計 602 題**，分兩區：
+**總計 602 題**，分兩區。**Common 區 119 題已全數展開成 56 頁機制層筆記**（見 [[moc/AI工程面試準備|AI 工程面試準備]]）：
 
 | 區 | 題數 | 用途 |
 |---|---|---|
@@ -48,11 +48,11 @@ Common 區的十個主題：
 | RAG and Retrieval | 12 | ✅ [[切塊與文件解析]]、[[稀疏與密集檢索]]、[[Reranker 重排序]]、[[向量索引 ANN]]、[[查詢改寫與 HyDE]]、[[權限感知檢索與引用歸因]]、[[RAG 評估與營運]] |
 | Agents and Tool Use | 12 | ✅ [[ReAct 與 Agent Loop]]、[[Function Calling 與結構化輸出]]、[[工具集設計]]、[[Agent 記憶設計]]、[[多 Agent 編排與 Agent Drift]]、[[可逆性、審計與人類把關]] |
 | Fine-Tuning, Post-Training and Alignment | 12 | ✅ [[RLHF 全流程]]、[[DPO]]、[[GRPO 與 RLVR]]、[[LoRA 與 QLoRA]]、[[PEFT 方法比較]]、[[災難性遺忘]]、[[知識蒸餾]] |
-| Evaluation and Observability | 10 | 批次 3 |
-| Safety, Security and Responsible AI | 10 | 批次 3 |
-| Multimodal, Speech and Voice AI | 10 | 批次 3 |
-| AI System Design | 11 | 批次 3 |
-| Coding and Data Structures | 12 | 批次 3 |
+| Evaluation and Observability | 10 | ✅ [[LLM-as-Judge]]、[[沒有標註時怎麼建評估集]]、[[幻覺偵測]]、[[上線閘門與線上評估]]、[[Benchmark 污染與分數失真]]、[[LLM 可觀測性]]、[[Agent 評估]] |
+| Safety, Security and Responsible AI | 10 | ✅ [[提示注入與分層防禦]]、[[OWASP LLM Top 10]]、[[Guardrails 護欄設計]]、[[Constitutional AI 與 RLAIF]]、[[PII、紅隊與公平性稽核]] |
+| Multimodal, Speech and Voice AI | 10 | ✅ [[視覺語言模型]]、[[即時語音 Agent]]、[[級聯與原生語音]] |
+| AI System Design | 11 | ✅ [[AI 系統設計框架]]（11 題各自的骨架） |
+| Coding and Data Structures | 12 | ✅ [[AI 工程 Coding 題型]]（12 題分類 + B 類完整實作） |
 
 ### 📊 35 家公司考點地圖
 
