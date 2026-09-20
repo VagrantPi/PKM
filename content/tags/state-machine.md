@@ -1,4 +1,4 @@
 ---
-title: "decoupling"
+title: "state-machine"
 unlisted: true
 ---
