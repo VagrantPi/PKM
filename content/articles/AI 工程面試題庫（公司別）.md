@@ -45,9 +45,9 @@ Common 區的十個主題：
 |---|---|---|
 | LLM Internals and Architecture | 16 | ✅ [[注意力機制]]、[[KV Cache]]、[[FlashAttention]]、[[分詞與 BPE]]、[[位置編碼與 RoPE]]、[[混合專家 MoE]]、[[正規化與激活函式]]、[[取樣與解碼策略]]、[[Scaling Laws 與 Chinchilla]]、[[前向傳播全流程]] |
 | Inference, Serving and GPU Performance | 14 | ✅ [[Prefill 與 Decode]]、[[連續批次 Continuous Batching]]、[[PagedAttention 與 vLLM]]、[[推測解碼 Speculative Decoding]]、[[前綴快取 Prompt Caching]]、[[量化 Quantization]]、[[平行化策略]]、[[GPU 記憶體估算]]、[[服務棧選型與降本]] |
-| RAG and Retrieval | 12 | 批次 2 |
-| Agents and Tool Use | 12 | 批次 2 |
-| Fine-Tuning, Post-Training and Alignment | 12 | 批次 2 |
+| RAG and Retrieval | 12 | ✅ [[切塊與文件解析]]、[[稀疏與密集檢索]]、[[Reranker 重排序]]、[[向量索引 ANN]]、[[查詢改寫與 HyDE]]、[[權限感知檢索與引用歸因]]、[[RAG 評估與營運]] |
+| Agents and Tool Use | 12 | ✅ [[ReAct 與 Agent Loop]]、[[Function Calling 與結構化輸出]]、[[工具集設計]]、[[Agent 記憶設計]]、[[多 Agent 編排與 Agent Drift]]、[[可逆性、審計與人類把關]] |
+| Fine-Tuning, Post-Training and Alignment | 12 | ✅ [[RLHF 全流程]]、[[DPO]]、[[GRPO 與 RLVR]]、[[LoRA 與 QLoRA]]、[[PEFT 方法比較]]、[[災難性遺忘]]、[[知識蒸餾]] |
 | Evaluation and Observability | 10 | 批次 3 |
 | Safety, Security and Responsible AI | 10 | 批次 3 |
 | Multimodal, Speech and Voice AI | 10 | 批次 3 |

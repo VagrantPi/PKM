@@ -81,7 +81,7 @@ $$32 \times 2048 \times 8 \times 4096 \times 2 = \mathbf{4\ GiB}$$
 
 ### LoRA 的帳
 
-LoRA 凍結底座，只訓練低秩旁路 $\Delta W = BA$（見 **LoRA 與 QLoRA**（本庫尚未建立，批次 2／3 補））：
+LoRA 凍結底座，只訓練低秩旁路 $\Delta W = BA$（見 [[LoRA 與 QLoRA]]）：
 
 | 項目 | 大小 |
 |---|---|
@@ -145,7 +145,7 @@ LoRA + 優化器:     0.13 GB
 ## 🔗 相關
 - [[KV Cache]] —— 推論記憶體的變動部分
 - [[量化 Quantization]] —— 直接改變 bytes/param
-- **LoRA 與 QLoRA**（本庫尚未建立，批次 2／3 補） —— 微調記憶體的主要解法
+- [[LoRA 與 QLoRA]] —— 微調記憶體的主要解法
 - [[平行化策略]] —— 裝不下時怎麼切
 - [[PagedAttention 與 vLLM]] —— 消除碎片化浪費
 - [[Prefill 與 Decode]] —— 顯存 → 併發 → 成本的因果鏈

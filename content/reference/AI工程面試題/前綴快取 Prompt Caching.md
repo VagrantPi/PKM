@@ -162,4 +162,4 @@ triggers: [同樣的system prompt每次都重算太浪費, 怎麼讓TTFT變快�
 - [[KV Cache]] —— 被快取的東西
 - [[Prefill 與 Decode]] —— 省掉的是 prefill，直接改善 TTFT
 - [[服務棧選型與降本]] —— 降本槓桿排序中最優先的一項
-- **ReAct 與 Agent Loop**（本庫尚未建立，批次 2／3 補） —— 受益最大的場景
+- [[ReAct 與 Agent Loop]] —— 受益最大的場景
