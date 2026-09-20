@@ -1,4 +1,4 @@
 ---
-title: "paradigms"
+title: "dp"
 unlisted: true
 ---
