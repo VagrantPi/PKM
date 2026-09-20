@@ -228,6 +228,13 @@
        *   https://github.com/Longwind1984/galaxy-view (MIT, Rick / longwind1984)
        * 那邊是自寫的 three.js renderer；這裡改成架在 3d-force-graph 之上，
        * 但預設值（風格預設、配色主題、銀河力學、星空/星雲參數）沿用它的數字。
+       *
+       * 「星系軌道」主題則是移植另一個外掛 Vault Galaxy：
+       *   https://github.com/sjhealthadvising-prog/vault-galaxy (MIT, Samer Jaber)
+       * 它不是力導向圖，而是編排式軌道：最多連結的筆記當恆星，hub 繞著恆星，
+       * 其餘筆記繞著自己連最多的那個，半徑／相位／速度都由路徑雜湊決定（所以每次開
+       * 都長一樣），再以 Kepler 差速自轉。原版是 2D canvas，這裡搬到 3D 場景裡，
+       * 它的 z 分層（Z_BAND）就對應我們的 y 軸。
        */
       ;(async function () {
         // 依 slug 第一段分類。順序即圖例順序，也是配色主題套色的順序。
@@ -245,6 +252,46 @@
           hubble: ["#46d4dc", "#ffc35c", "#d05a32", "#7fd0a0", "#e8d9a0", "#5a9bd8"],
           tiktok: ["#25f4ee", "#fe2c55", "#ffffff", "#7ae8e2", "#ff7a9c", "#19b8b2"],
           matrix: ["#00ff41", "#33ff66", "#00cc34", "#66ff8c", "#00b32d", "#80ffa0"],
+          // Vault Galaxy 的 GROUP_PALETTE 前六色（資料夾群組色）
+          vault: ["#9fc7a5", "#b18cff", "#5fdd8f", "#59c2f0", "#e88bc4", "#43d9c0"],
+        }
+
+        /*
+         * Vault Galaxy 的軌道參數，全部照抄原始碼（main.js 的常數區與 buildModel）。
+         * 原版是 2D：它的 (x, y) 對應我們的 (x, z)，它的 z 分層對應我們的 y。
+         */
+        const VG = {
+          GOLDEN: 2.399963229728653, // 黃金角，用來把相位錯開不撞在一起
+          SPEED_K: { core: 46, hub: 210, leaf: 64, disc: 335 }, // omega = K / r^1.5
+          DISC_TWIST: 0.0045, // 每單位半徑的旋臂扭轉（rad）
+          DISC_INNER: 240,
+          DISC_SPAN: 560,
+          ARMS: 6,
+          GRAVITY: 1.48, // 軌道緊實度：半徑 /= g、角速度 *= g^1.5
+          SPEED: 0.5, // 自轉速度倍率
+          SUNS: 5, // 前幾名連結數當恆星
+          HUBS: 8, // 次一級當 hub（需 degree >= 4）
+          Z_BAND: { sun: 6, hub: 14, note: 38 }, // 各層的 |y| 半帶寬 → 鼓起的核球 + 薄盤
+          BANDS: { sun: [12, 26], hub: [5.5, 11], note: [1.6, 5.0] }, // 各層的繪製半徑
+          TIER_COLOR: { core: "#ffd54a", hub: "#ff9d2e" }, // 恆星金、hub 橘
+        }
+
+        // FNV-1a，原版拿來把檔案路徑變成穩定 seed
+        function hash32(str) {
+          let h = 2166136261
+          for (let i = 0; i < str.length; i++) {
+            h ^= str.charCodeAt(i)
+            h = Math.imul(h, 16777619)
+          }
+          return h >>> 0
+        }
+
+        // 單步 mulberry32
+        function rand01(seed) {
+          let t = (seed + 0x6d2b79f5) >>> 0
+          t = Math.imul(t ^ (t >>> 15), t | 1)
+          t ^= t + Math.imul(t ^ (t >>> 7), t | 61)
+          return ((t ^ (t >>> 14)) >>> 0) / 4294967296
         }
 
         /*
@@ -296,6 +343,27 @@
               spiral: 0,
             },
             look: { nodeSize: 1.05, linkOpacity: 0.2, linkCurve: 0.45, twinkle: 0.5 },
+          },
+          {
+            // 不走力學，改用 Vault Galaxy 的編排式軌道（見 buildOrbit / stepOrbit）
+            id: "vaultgalaxy",
+            name: "星系軌道 Vault Galaxy",
+            space: true,
+            layout: "orbit",
+            bg: "#04060c",
+            theme: "vault",
+            starfield: true,
+            layers: { nebula: 0.18, fieldStars: 0.3, clusterClouds: 0 },
+            frameElevDeg: 62, // 原版 TILT.ANGLES.steep
+            autoOrbit: true,
+            // 軌道佈局比力導向緊密太多（葉節點就繞在 hub 旁 24–100 單位），
+            // 加色疊加會整團燒成白塊，所以這個主題用一般混合＋收斂的 bloom。
+            // 原版本來也是 canvas 的一般 alpha 合成，glow 預設只有 0.3。
+            blend: "normal",
+            bloom: { strength: 0.32, radius: 0.4, threshold: 0.3 },
+            physics: null, // 軌道模式不跑 d3
+            // 原版連結就是直線細絲，剛好也最省：直線不必切段，buffer 只有 1/6
+            look: { nodeSize: 0.65, linkOpacity: 0.16, linkCurve: 0, twinkle: 0.5 },
           },
           {
             id: "minimal",
@@ -863,7 +931,7 @@
             const spread = Math.sqrt(sq / members.length)
             // 簇內均色 → 提飽和定亮度，加色混合下讀作彩色星雲
             acc.setRGB(0, 0, 0)
-            for (const i of members) acc.add(tmp.set(COLOR[nodes[i].cat]))
+            for (const i of members) acc.add(tmp.set(nodeColorOf(nodes[i])))
             acc.multiplyScalar(1 / members.length)
             acc.getHSL(hsl)
             acc.setHSL(hsl.h, Math.min(hsl.s * 1.25, 1), 0.4)
@@ -1062,8 +1130,14 @@
           return true
         }
 
+        /** 軌道模式下層級壓過分類：恆星金、hub 橘，其餘走資料夾群組色 */
+        function nodeColorOf(n) {
+          if (CUR.layout === "orbit" && VG.TIER_COLOR[n.vgTier]) return VG.TIER_COLOR[n.vgTier]
+          return COLOR[n.cat]
+        }
+
         function nodeColor(n) {
-          return isFocused(n) ? COLOR[n.cat] : PAL.dim
+          return isFocused(n) ? nodeColorOf(n) : PAL.dim
         }
 
         /** 節點半徑，跟 2D 圖同一條公式：radius = 2 + sqrt(degree) */
@@ -1071,24 +1145,31 @@
           return 2 + Math.sqrt(n.degree)
         }
 
+        /** sprite 的全尺寸。軌道模式用 Vault Galaxy 算好的 drawR（半徑），其餘用度數公式 */
+        function spriteScale(n) {
+          // drawR 是半徑；1.8 是留給發光暈的餘裕（貼圖中心實心、外緣漸淡）
+          if (CUR.layout === "orbit") return n.vgDrawR * 2 * 1.8 * CUR.look.nodeSize
+          return nodeRadius(n) * 2.6 * CUR.look.nodeSize
+        }
+
         /** 節點在世界座標裡的頂端高度，標籤要擺在這之上 */
         function nodeTopOffset(n) {
           // 深空是 sprite（scale 即全高），classic 是球（半徑 = nodeRelSize × cbrt(nodeVal)）
-          return CUR.space ? nodeRadius(n) * 1.3 * CUR.look.nodeSize : nodeRadius(n) * 2.2
+          return CUR.space ? spriteScale(n) * 0.5 : nodeRadius(n) * 2.2
         }
 
         function makeNodeObject(n) {
           if (!CUR.space) return null // falsy → 交回 3d-force-graph 畫預設實心球
           const mat = new THREE.SpriteMaterial({
             map: GLOW,
-            color: COLOR[n.cat],
+            color: nodeColorOf(n),
             transparent: true,
             depthWrite: false,
-            blending: THREE.AdditiveBlending,
+            blending: CUR.blend === "normal" ? THREE.NormalBlending : THREE.AdditiveBlending,
             opacity: isFocused(n) ? 1 : DIM_ALPHA,
           })
           const sp = new THREE.Sprite(mat)
-          sp.scale.setScalar(nodeRadius(n) * 2.6 * CUR.look.nodeSize)
+          sp.scale.setScalar(spriteScale(n))
           sp.renderOrder = 1
           sprites.push(mat)
           return sp
@@ -1102,7 +1183,7 @@
               const o = n.__threeObj
               if (!o || !o.material) continue
               o.material.opacity = isFocused(n) ? 1 : DIM_ALPHA
-              o.material.color.set(COLOR[n.cat])
+              o.material.color.set(nodeColorOf(n))
             }
           } else {
             Graph.nodeColor(nodeColor)
@@ -1199,6 +1280,192 @@
           linkMesh.geometry.getAttribute("position").needsUpdate = true
         }
 
+        // ================= Vault Galaxy 軌道佈局 =================
+
+        let orbitCentral = null
+
+        /**
+         * 指派每個節點的層級、父節點、軌道半徑／相位／角速度。
+         * 全部由 degree 與路徑雜湊決定，沒有亂數，所以同一個 vault 每次都長一樣。
+         */
+        function buildOrbit() {
+          const nodes = Graph.graphData().nodes
+          if (!nodes.length) return
+          const byId = new Map(nodes.map((n) => [n.id, n]))
+          // 鄰接表：我們的連結沒有權重，所以權重一律 1
+          const adj = new Map(nodes.map((n) => [n.id, new Set()]))
+          for (const l of ALL.links) {
+            const s = idOf(l.source),
+              t = idOf(l.target)
+            if (!adj.has(s) || !adj.has(t)) continue
+            adj.get(s).add(t)
+            adj.get(t).add(s)
+          }
+
+          for (const n of nodes) {
+            n.vgSeed = hash32(n.id)
+            n.vgKids = []
+            n.vgParent = null
+            n.vgTier = "note"
+          }
+
+          const setOrbit = (n, r, K, phase) => {
+            n.vgR = r
+            // 每顆稍微差一點速度，軌道才不會整排同步得像齒輪
+            const vary = 0.9 + 0.2 * rand01(n.vgSeed ^ 0xa5a5)
+            n.vgOmega = (K / Math.pow(Math.max(r, 8), 1.5)) * vary
+            n.vgTheta = phase
+          }
+          const adopt = (c, p) => {
+            c.vgParent = p
+            p.vgKids.push(c)
+          }
+          // 連結沒權重，所以「最佳父節點」= 候選清單裡第一個有連到的（清單本身已排序）
+          const bestParent = (n, cands) => {
+            const a = adj.get(n.id)
+            for (const c of cands) if (a.has(c.id)) return c
+            return null
+          }
+
+          // 排序的 tiebreak 一律用 id，避免同分時順序飄
+          const cmp = (a, b) => b.degree - a.degree || (a.id < b.id ? -1 : 1)
+          const ranked = nodes.slice().sort(cmp)
+
+          // --- 恆星：連結最多的前幾名
+          const suns = ranked.slice(0, VG.SUNS).filter((n) => n.degree > 0)
+          if (!suns.length) suns.push(ranked[0])
+          suns.forEach((n) => (n.vgTier = "core"))
+          orbitCentral = suns[0]
+          orbitCentral.vgR = 0
+          orbitCentral.vgOmega = 0
+          orbitCentral.vgTheta = 0
+          for (let i = 1; i < suns.length; i++) {
+            const ring = Math.floor((i - 1) / 4)
+            adopt(suns[i], orbitCentral)
+            setOrbit(
+              suns[i],
+              115 + ring * 85 + (i % 2) * 14,
+              VG.SPEED_K.core,
+              ((i - 1) % 4) * (Math.PI / 2) + ring * 0.45 + rand01(suns[i].vgSeed) * 0.3,
+            )
+          }
+          const sunSet = new Set(suns.map((s) => s.id))
+
+          // --- hub：次一級，繞著自己連最多的那顆恆星
+          const hubs = ranked.filter((n) => !sunSet.has(n.id) && n.degree >= 4).slice(0, VG.HUBS)
+          hubs.forEach((n) => (n.vgTier = "hub"))
+          const hubKids = new Map()
+          for (const h of hubs) {
+            const sun = bestParent(h, suns) || orbitCentral
+            if (!hubKids.has(sun.id)) hubKids.set(sun.id, [])
+            hubKids.get(sun.id).push(h)
+          }
+          for (const [sunId, list] of hubKids) {
+            const sun = byId.get(sunId)
+            list.forEach((h, idx) => {
+              adopt(h, sun)
+              setOrbit(h, 95 + 40 * idx, VG.SPEED_K.hub, idx * VG.GOLDEN + rand01(h.vgSeed) * 0.5)
+            })
+          }
+          const hubSet = new Set(hubs.map((h) => h.id))
+
+          // --- 其餘：連結度用對數壓到 0..1，愈多連結軌道抱得愈緊（距離即連結強度）
+          let ordMax = 1
+          for (const n of nodes) {
+            if (sunSet.has(n.id) || hubSet.has(n.id)) continue
+            if (n.degree > ordMax) ordMax = n.degree
+          }
+          const degLogMax = Math.log(1 + ordMax)
+          const degT = (n) => Math.log(1 + n.degree) / degLogMax
+
+          const leafCount = new Map()
+          const placeLeaf = (n, parent, tight) => {
+            const idx = leafCount.get(parent.id) || 0
+            leafCount.set(parent.id, idx + 1)
+            const grow = tight ? 8 : 11
+            const base = tight ? 42 : 24
+            const hug = 1 - 0.85 * degT(n)
+            adopt(n, parent)
+            setOrbit(
+              n,
+              // 向日葵階梯把人群排開，再被 degree 壓縮：連結多的搶內圈
+              base + (grow * Math.sqrt(idx) + rand01(n.vgSeed ^ 7) * 4) * hug,
+              VG.SPEED_K.leaf,
+              idx * VG.GOLDEN + rand01(n.vgSeed) * 0.4,
+            )
+          }
+
+          const pending = []
+          for (const n of nodes) {
+            if (n.vgParent || n === orbitCentral || sunSet.has(n.id) || hubSet.has(n.id)) continue
+            const h = bestParent(n, hubs)
+            if (h) {
+              pending.push([n, h, false])
+              continue
+            }
+            const s = bestParent(n, suns)
+            if (s) {
+              pending.push([n, s, true])
+              continue
+            }
+            // 沒連到任何 hub/恆星的，撒進旋臂盤：密度往外遞減，連結多的往內拉
+            const u = rand01(n.vgSeed ^ 5)
+            const r = (VG.DISC_INNER + VG.DISC_SPAN * Math.pow(u, 1.6)) * (1 - 0.8 * degT(n))
+            const arm = n.vgSeed % VG.ARMS
+            const phase =
+              arm * ((2 * Math.PI) / VG.ARMS) +
+              r * VG.DISC_TWIST +
+              (rand01(n.vgSeed ^ 11) - 0.5) * 0.6
+            adopt(n, orbitCentral)
+            setOrbit(n, r, VG.SPEED_K.disc, phase)
+          }
+          // 連結多的先排，才搶得到內圈的階梯
+          pending.sort((p, q) => q[0].degree - p[0].degree || (p[0].id < q[0].id ? -1 : 1))
+          for (const [n, parent, tight] of pending) placeLeaf(n, parent, tight)
+
+          // --- 繪製半徑：同層內依內容長度排名normalize，但層級永遠壓過內容
+          //     （最肥的筆記也不會大過最小的 hub）
+          const bandOf = (n) => (sunSet.has(n.id) ? "sun" : hubSet.has(n.id) ? "hub" : "note")
+          const groups = { sun: [], hub: [], note: [] }
+          for (const n of nodes) groups[bandOf(n)].push(n)
+          for (const key of Object.keys(groups)) {
+            const g = groups[key].sort((a, b) => a.bytes - b.bytes || (a.id < b.id ? -1 : 1))
+            const [lo, hi] = VG.BANDS[key]
+            const zb = VG.Z_BAND[key]
+            g.forEach((n, i) => {
+              n.vgDrawR = lo + (hi - lo) * (g.length > 1 ? i / (g.length - 1) : 0.7)
+              // 兩次雜湊相加 → 三角分布、偏向中面，每層讀起來是軟邊的帶而不是一片板
+              n.vgY = zb * (rand01(n.vgSeed ^ 0x51ab) + rand01(n.vgSeed ^ 0x2e7f) - 1)
+            })
+          }
+        }
+
+        /** 推進一幀軌道。父節點一定先於子節點算完（自中心 BFS），子軌道才掛得上去。 */
+        function stepOrbit(dt) {
+          if (!orbitCentral) return
+          const g15 = Math.pow(VG.GRAVITY, 1.5)
+          const dtSim = dt * VG.SPEED
+          const step = (n, px, pz) => {
+            n.vgTheta += n.vgOmega * g15 * dtSim
+            const r = n.vgR / VG.GRAVITY
+            n.x = px + r * Math.cos(n.vgTheta)
+            n.z = pz + r * Math.sin(n.vgTheta)
+            n.y = n.vgY
+            // 引擎是停著的，three-forcegraph 不會幫我們同步位置，得自己搬
+            const o = n.__threeObj
+            if (o) o.position.set(n.x, n.y, n.z)
+          }
+          step(orbitCentral, 0, 0)
+          const queue = [orbitCentral]
+          while (queue.length) {
+            const p = queue.pop()
+            for (const c of p.vgKids) {
+              step(c, p.x, p.z)
+              if (c.vgKids.length) queue.push(c)
+            }
+          }
+        }
+
         const _lc = new THREE.Color()
         const _la = new THREE.Color()
 
@@ -1207,7 +1474,7 @@
           const arr = linkMesh.geometry.getAttribute("color").array
           const seg = CUR.look.linkCurve > 0 ? CURVE_SEG : 1
           _lc.set(PAL.link)
-          if (hoverNode) _la.set(COLOR[hoverNode.cat])
+          if (hoverNode) _la.set(nodeColorOf(hoverNode))
           // 單一材質只有一個 opacity，所以「變暗」靠把頂點色壓下去
           const idle = hoverNode ? 0.25 : 1
           let p = 0
@@ -1228,7 +1495,14 @@
           const nodeMap = new Map()
           valid.forEach((slug) => {
             const d = index[slug] || {}
-            nodeMap.set(slug, { id: slug, title: d.title || slug, cat: catOf(slug), degree: 0 })
+            nodeMap.set(slug, {
+              id: slug,
+              title: d.title || slug,
+              cat: catOf(slug),
+              degree: 0,
+              // Vault Galaxy 依「檔案大小」排同層內的節點大小，用內文長度當代理
+              bytes: (d.content || "").length,
+            })
           })
 
           // 只保留目標也在 index 裡的連結，並把雙向重複邊去掉
@@ -1400,16 +1674,28 @@
           rebuildLayers()
           refreshColors()
 
-          // 力學參數換了就會重跑一輪佈局，讓 onEngineStop 去框視野；
-          // 只有在圖已經停穩（換的是純外觀）時才當場重framing。
+          // 換主題通常會換力學，佈局得重跑一輪。先立刻框一次讓畫面有反應，
+          // 但 fitted 維持 false——等新佈局停穩時 onEngineStop 會再框一次才準。
           fitted = false
-          if (settled) {
-            fitted = true
-            fitView()
-          }
+          if (settled) fitView()
         }
 
+        const ORBIT_FORCES = ["x", "y", "z", "core", "spiral"]
+
         function applyForces(p, initial) {
+          if (p.layout === "orbit") {
+            // 軌道模式完全不跑 d3：charge 清成 0、其餘力拿掉、cooldownTicks(0) 讓引擎
+            // 第一幀就停。位置改由 stepOrbit() 每幀自己算，連拖曳也關掉（會跟軌道打架）。
+            Graph.d3Force("charge").strength(0)
+            Graph.d3Force("link").distance(30).strength(0)
+            Graph.d3Force("center", null)
+            for (const f of ORBIT_FORCES) Graph.d3Force(f, null)
+            Graph.cooldownTicks(0).enableNodeDrag(false)
+            buildOrbit()
+            stepOrbit(0) // 先擺好位置，onEngineStop 框視野時才有東西可框
+            return
+          }
+          Graph.cooldownTicks(220).enableNodeDrag(true)
           const ph = p.physics
           Graph.d3Force("charge").strength(-ph.repel).distanceMax(800)
           const link = Graph.d3Force("link")
@@ -1521,33 +1807,42 @@
           layers.clouds.material.uniforms.uPixelScale.value = scale
         }
 
-        // 佈局收斂後把視野框到主體上。刻意只框最靠中心的 92%——
-        // 少數飄很遠的孤立節點若也算進去，整團會被縮成一小點。
+        /*
+         * 佈局收斂後把視野框到主體上。刻意只框最靠中心的 92%——
+         * 少數飄很遠的孤立節點若也算進去，整團會被縮成一小點。
+         *
+         * 自己算距離而不用 Graph.zoomToFit()：它是拿「目前鏡頭到中心的方向」normalize
+         * 後乘上算出來的距離，鏡頭一旦離原點很近就 normalize 出接近零的向量，結果把鏡頭
+         * 直接塞進原點再也出不來（軌道主題第一幀就停、立刻框視野，每次都踩到）。
+         * 自己算也省掉「先 zoomToFit 再補仰角」的兩段跳動。
+         */
         function fitView() {
           const ns = Graph.graphData().nodes.filter((n) => n.x !== undefined)
           if (!ns.length) return
           const ds = ns.map((n) => Math.hypot(n.x, n.y, n.z || 0)).sort((a, b) => a - b)
-          const cut = ds[Math.floor(ds.length * 0.92)] || ds[ds.length - 1]
-          holdOrbitUntil = performance.now() + 2600
-          Graph.zoomToFit(700, 30, (n) => Math.hypot(n.x, n.y, n.z || 0) <= cut)
+          // 軌道佈局的半徑分布是雙峰的（核心一團 + 稀疏的旋臂盤，p50 114 / p95 284 /
+          // max 540），框太緊鏡頭會掉進盤裡、框到最外圈又讓核心變成一小點，取 95%。
+          const q = CUR.layout === "orbit" ? 0.95 : 0.92
+          const cut = ds[Math.floor(ds.length * q)] || ds[ds.length - 1]
+          if (!(cut > 0)) return
+          const cam = Graph.camera()
+          // 要把半徑 cut 的球塞進垂直視角：d = R / sin(fov/2)，再留 10% 邊
+          const d = (cut / Math.sin(((cam.fov / 2) * Math.PI) / 180)) * 1.1
+          const c = cam.position
+          // 保留目前的方位角；鏡頭若還在原點附近就沒有方位可言，退回預設的 +z
+          const az = Math.hypot(c.x, c.z) > 1 ? Math.atan2(c.z, c.x) : Math.PI / 2
           // 盤狀的主題要從上方一點看下去才看得到旋臂，球狀的維持接近水平
-          if (CUR.frameElevDeg != null) {
-            setTimeout(() => {
-              const c = Graph.camera().position
-              const d = Math.hypot(c.x, c.y, c.z) || cut * 2
-              const az = Math.atan2(c.z, c.x)
-              const ev = (CUR.frameElevDeg * Math.PI) / 180
-              Graph.cameraPosition(
-                {
-                  x: d * Math.cos(ev) * Math.cos(az),
-                  y: d * Math.sin(ev),
-                  z: d * Math.cos(ev) * Math.sin(az),
-                },
-                { x: 0, y: 0, z: 0 },
-                900,
-              )
-            }, 750)
-          }
+          const ev = ((CUR.frameElevDeg != null ? CUR.frameElevDeg : 0) * Math.PI) / 180
+          holdOrbitUntil = performance.now() + 1500
+          Graph.cameraPosition(
+            {
+              x: d * Math.cos(ev) * Math.cos(az),
+              y: d * Math.sin(ev),
+              z: d * Math.cos(ev) * Math.sin(az),
+            },
+            { x: 0, y: 0, z: 0 },
+            900,
+          )
         }
 
         // ---- 圖例 / 篩選 ----
@@ -1595,6 +1890,11 @@
             nodes: keep,
             links: links.map((l) => ({ source: idOf(l.source), target: idOf(l.target) })),
           })
+          // 節點集變了，軌道要整個重指派（誰是恆星、誰繞誰都會變）
+          if (CUR.layout === "orbit") {
+            buildOrbit()
+            stepOrbit(0)
+          }
           buildLinkMesh()
           el.stats.textContent = keep.length + " 個節點 · " + links.length + " 條連結"
         }
@@ -1674,6 +1974,11 @@
             const dt = Math.min((now - last) / 1000, 0.1)
             last = now
 
+            // 軌道模式的位置是我們自己算的（d3 引擎是停的），每幀都要推進與搬連結
+            if (CUR.layout === "orbit") {
+              stepOrbit(dt)
+              updateLinkPositions()
+            }
             if (layers.twinkle) layers.twinkle(dt, CUR.look.twinkle)
             if (layers.nebula.visible) layers.nebula.rotation.y += 0.0004 * dt
             if (autoOrbit && now - idleSince > 4000 && now > holdOrbitUntil) orbitStep(dt)
