@@ -1,0 +1,245 @@
+{
+ "nodes": [
+  {
+   "id": "c",
+   "type": "text",
+   "text": "# Google Go 風格指南",
+   "x": -140,
+   "y": -40,
+   "width": 280,
+   "height": 80,
+   "color": "6"
+  },
+  {
+   "id": "t1",
+   "type": "text",
+   "text": "取捨與原則",
+   "x": 320,
+   "y": -710,
+   "width": 220,
+   "height": 60,
+   "color": "5"
+  },
+  {
+   "id": "l1_1",
+   "type": "file",
+   "file": "tools/工具-Go可讀性五原則.md",
+   "x": 640,
+   "y": -735,
+   "width": 340,
+   "height": 110
+  },
+  {
+   "id": "t2",
+   "type": "text",
+   "text": "錯誤處理",
+   "x": 320,
+   "y": -430,
+   "width": 220,
+   "height": 60,
+   "color": "5"
+  },
+  {
+   "id": "l2_1",
+   "type": "file",
+   "file": "tools/工具-Go錯誤該包還是該轉.md",
+   "x": 640,
+   "y": -535,
+   "width": 340,
+   "height": 110
+  },
+  {
+   "id": "l2_2",
+   "type": "text",
+   "text": "錯誤字串小寫無句號\n不要 in-band error\n錯誤流程往外推",
+   "x": 640,
+   "y": -375,
+   "width": 340,
+   "height": 110
+  },
+  {
+   "id": "t3",
+   "type": "text",
+   "text": "測試",
+   "x": 320,
+   "y": -110,
+   "width": 220,
+   "height": 60,
+   "color": "5"
+  },
+  {
+   "id": "l3_1",
+   "type": "file",
+   "file": "tools/工具-讓測試失敗訊息有用.md",
+   "x": 640,
+   "y": -215,
+   "width": 340,
+   "height": 110
+  },
+  {
+   "id": "l3_2",
+   "type": "file",
+   "file": "tools/工具-Go表格測試與子測試.md",
+   "x": 640,
+   "y": -55,
+   "width": 340,
+   "height": 110
+  },
+  {
+   "id": "t4",
+   "type": "text",
+   "text": "API 與狀態設計",
+   "x": 320,
+   "y": 290,
+   "width": 220,
+   "height": 60,
+   "color": "5"
+  },
+  {
+   "id": "l4_1",
+   "type": "file",
+   "file": "tools/工具-Go全域狀態的判準.md",
+   "x": 640,
+   "y": 105,
+   "width": 340,
+   "height": 110
+  },
+  {
+   "id": "l4_2",
+   "type": "file",
+   "file": "tools/工具-Go函式參數太多怎麼辦.md",
+   "x": 640,
+   "y": 265,
+   "width": 340,
+   "height": 110
+  },
+  {
+   "id": "l4_3",
+   "type": "text",
+   "text": "介面由消費端定義\naccept interfaces,\nreturn concrete types\n→ [[工具-Go介面小而隱式]]",
+   "x": 640,
+   "y": 425,
+   "width": 340,
+   "height": 110
+  },
+  {
+   "id": "t5",
+   "type": "text",
+   "text": "Google 內部專屬\n（照抄會踩空）",
+   "x": 320,
+   "y": 650,
+   "width": 220,
+   "height": 60,
+   "color": "2"
+  },
+  {
+   "id": "l5_1",
+   "type": "text",
+   "text": "log 是 glog 變體\nflag 是內部變體\nstatus / canonical codes\nBazel test filter",
+   "x": 640,
+   "y": 625,
+   "width": 340,
+   "height": 110
+  }
+ ],
+ "edges": [
+  {
+   "id": "ec1",
+   "fromNode": "c",
+   "toNode": "t1",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e1_1",
+   "fromNode": "t1",
+   "toNode": "l1_1",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "ec2",
+   "fromNode": "c",
+   "toNode": "t2",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e2_1",
+   "fromNode": "t2",
+   "toNode": "l2_1",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e2_2",
+   "fromNode": "t2",
+   "toNode": "l2_2",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "ec3",
+   "fromNode": "c",
+   "toNode": "t3",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e3_1",
+   "fromNode": "t3",
+   "toNode": "l3_1",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e3_2",
+   "fromNode": "t3",
+   "toNode": "l3_2",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "ec4",
+   "fromNode": "c",
+   "toNode": "t4",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e4_1",
+   "fromNode": "t4",
+   "toNode": "l4_1",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e4_2",
+   "fromNode": "t4",
+   "toNode": "l4_2",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e4_3",
+   "fromNode": "t4",
+   "toNode": "l4_3",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "ec5",
+   "fromNode": "c",
+   "toNode": "t5",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e5_1",
+   "fromNode": "t5",
+   "toNode": "l5_1",
+   "fromSide": "right",
+   "toSide": "left"
+  }
+ ]
+}

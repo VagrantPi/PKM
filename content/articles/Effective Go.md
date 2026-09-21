@@ -67,4 +67,5 @@ read_status: read
 ## 🔗 相關
 - [[Go Blog 經典六篇]] — 同期官方素材的逐篇查證；它的 Errors 章與這篇一樣停在 2009 年的做法
 - [[Modern Go Guidelines]] — **一定要搭配看**：那份補的正是這篇沒有的現代語法與 API
+- [[Google Go 風格指南]] — Google 內部審 Go code 的依據，明說以這篇為前提；補的是「兩種寫法都合法時選哪個」
 - [[moc/軟體工程|軟體工程]] — 語言層章節
