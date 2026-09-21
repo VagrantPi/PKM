@@ -71,4 +71,4 @@ Concurrency: timeouts 建議用 `time.After`。多年來社群的標準修正是
 - [[Effective Go]] — 同樣是 2009–2011 的官方素材，同樣要分層讀
 - [[Modern Go Guidelines]] — 現代語法對照表；這六篇的過時處多半在那裡有對應的現代寫法
 - [[Google Go 風格指南]] — 錯誤處理那章可當作 2011 那篇〈Error handling and Go〉的現代替代
-- [[moc/軟體工程|軟體工程]] — 語言層章節
+- [[moc/Go|Go]] — 主題索引：16 張 Go 工具卡與四份來源的分工

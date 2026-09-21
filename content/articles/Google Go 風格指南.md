@@ -154,4 +154,4 @@ read_status: read
 - [[Effective Go]] — 這套文件明說以它為前提。兩者分工：Effective Go 講「Go 為什麼長這樣」，這套講「合法的寫法之間怎麼選」
 - [[Modern Go Guidelines]] — 補的是「哪個 API 是現在的寫法」；這套不談 API 新舊，只談取捨
 - [[Go Blog 經典六篇]] — 那六篇的 Errors 章已過時，這套的錯誤章可以當作它的現代替代
-- [[moc/軟體工程|軟體工程]] — 語言層章節
+- [[moc/Go|Go]] — 主題索引：16 張 Go 工具卡與四份來源的分工

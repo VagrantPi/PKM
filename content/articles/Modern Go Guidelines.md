@@ -81,3 +81,4 @@ README 明說：`scripts/dev-install.sh` **刻意與 agent 面對的 wrapper 分
 - [[Effective Go]] — **搭配看**：那篇講「Go 為什麼長這樣」（心智模型，變得慢），這篇講「現在該怎麼寫」（語法與 API，變得快）。那篇的 Errors 章教的 type switch 辨識錯誤，正是這裡標為 Critical 的 `erris` 要換掉的寫法
 - [[Google Go 風格指南]] — 互補：那套不談 API 新舊，只談合法寫法之間的取捨排序
 - [[moc/AI技能收藏#go-modern-guidelines|收藏頁的卡]] — 四個平台的安裝指令速查
+- [[moc/Go|Go]] — 主題索引：16 張 Go 工具卡與四份來源的分工
