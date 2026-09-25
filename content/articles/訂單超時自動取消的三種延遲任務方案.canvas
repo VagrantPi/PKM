@@ -1,0 +1,334 @@
+{
+ "nodes": [
+  {
+   "id": "c",
+   "type": "text",
+   "text": "# 訂單超時自動取消\n**N 分鐘後做一件事**",
+   "x": -160,
+   "y": -60,
+   "width": 320,
+   "height": 120,
+   "color": "6"
+  },
+  {
+   "id": "t1",
+   "type": "text",
+   "text": "① 定時掃描錯在哪",
+   "x": 340,
+   "y": -620,
+   "width": 240,
+   "height": 80,
+   "color": "5"
+  },
+  {
+   "id": "t2",
+   "type": "text",
+   "text": "② 方案 A｜Redis ZSet\n（預設選這個）",
+   "x": 340,
+   "y": -300,
+   "width": 240,
+   "height": 80,
+   "color": "5"
+  },
+  {
+   "id": "t3",
+   "type": "text",
+   "text": "③ 方案 B｜Broker TTL + 死信",
+   "x": 340,
+   "y": 20,
+   "width": 240,
+   "height": 80,
+   "color": "5"
+  },
+  {
+   "id": "t4",
+   "type": "text",
+   "text": "④ 方案 C｜時間輪",
+   "x": 340,
+   "y": 340,
+   "width": 240,
+   "height": 80,
+   "color": "5"
+  },
+  {
+   "id": "t5",
+   "type": "text",
+   "text": "⑤ 追問鏈",
+   "x": 340,
+   "y": 660,
+   "width": 240,
+   "height": 80,
+   "color": "5"
+  },
+  {
+   "id": "l1a",
+   "type": "text",
+   "text": "**精度被綁死**\n誤差上界＝掃描週期。\n要準就得縮短週期＝壓 DB，\n兩者同一個旋鈕 → 這才是換方案的理由。",
+   "x": 660,
+   "y": -700,
+   "width": 360,
+   "height": 130,
+   "color": "1"
+  },
+  {
+   "id": "l1b",
+   "type": "text",
+   "text": "**「掃全表」要打折**\n有 `(status, create_time)` 複合索引就是\n索引範圍掃；取消後離開 UNPAID 前綴，\n待掃區間有界。",
+   "x": 660,
+   "y": -550,
+   "width": 360,
+   "height": 130,
+   "color": "3"
+  },
+  {
+   "id": "l2a",
+   "type": "text",
+   "text": "`member`=訂單號　`score`=到期時間戳\nLua 原子取出：`ZRANGE ... BYSCORE` + `ZREM`\n（Redis 6.2 起 `ZRANGEBYSCORE` 已 deprecated）",
+   "x": 660,
+   "y": -390,
+   "width": 380,
+   "height": 120,
+   "color": "4"
+  },
+  {
+   "id": "l2b",
+   "type": "text",
+   "text": "⚠️ **ZREM 後 crash＝任務蒸發**\n要做 visibility timeout 兩階段：\n搬到 processing set，做完才 ack。",
+   "x": 660,
+   "y": -250,
+   "width": 380,
+   "height": 110,
+   "color": "1"
+  },
+  {
+   "id": "l2c",
+   "type": "file",
+   "file": "tools/工具-延遲任務方案選型.md",
+   "x": 660,
+   "y": -120,
+   "width": 340,
+   "height": 110
+  },
+  {
+   "id": "l3a",
+   "type": "text",
+   "text": "緩衝佇列（無消費者＋TTL）→ 死信 → DLX → 業務佇列\n⚠️ 同佇列 TTL 必須一致，否則**隊頭阻塞**\nRocketMQ 4.x 只有 18 個延遲等級；Kafka 無原生延遲",
+   "x": 660,
+   "y": 10,
+   "width": 420,
+   "height": 120,
+   "color": "4"
+  },
+  {
+   "id": "l3b",
+   "type": "file",
+   "file": "reference/企業整合模式/訊息過期.md",
+   "x": 660,
+   "y": 150,
+   "width": 340,
+   "height": 110
+  },
+  {
+   "id": "l3c",
+   "type": "file",
+   "file": "reference/企業整合模式/死信通道.md",
+   "x": 660,
+   "y": 280,
+   "width": 340,
+   "height": 110
+  },
+  {
+   "id": "l4a",
+   "type": "text",
+   "text": "`slot=(cur+d/T)%S`　`circle=(d/T)/S`\n插入 O(1)，但**每任務被空摸 d/(S×T) 次**\n實測 20 萬 × 30 分鐘 = 每任務 30 次",
+   "x": 660,
+   "y": 420,
+   "width": 400,
+   "height": 120,
+   "color": "4"
+  },
+  {
+   "id": "l4b",
+   "type": "text",
+   "text": "Go 實測：`time.AfterFunc` 20 萬個 = 69 ns/op、32 MB\n→ **十萬量級別自己造輪子**",
+   "x": 660,
+   "y": 560,
+   "width": 400,
+   "height": 100,
+   "color": "3"
+  },
+  {
+   "id": "l4c",
+   "type": "file",
+   "file": "tools/工具-時間輪.md",
+   "x": 660,
+   "y": 690,
+   "width": 340,
+   "height": 110
+  },
+  {
+   "id": "l5a",
+   "type": "text",
+   "text": "**取消撞付款**：別三步走（TOCTOU）\n`UPDATE ... WHERE id=? AND status='UNPAID'`\n影響行數 0＝別人先改掉，放棄",
+   "x": 660,
+   "y": 830,
+   "width": 400,
+   "height": 120,
+   "color": "4"
+  },
+  {
+   "id": "l5b",
+   "type": "file",
+   "file": "tools/工具-用條件更新做狀態機冪等.md",
+   "x": 660,
+   "y": 970,
+   "width": 340,
+   "height": 110
+  },
+  {
+   "id": "l5c",
+   "type": "text",
+   "text": "**Redis 掛了？** 定時任務沒死，降級成\n低頻小窗口對帳：每 10 分鐘掃\n「建立於 30～40 分鐘前」的窄區間。",
+   "x": 660,
+   "y": 1100,
+   "width": 400,
+   "height": 110,
+   "color": "3"
+  }
+ ],
+ "edges": [
+  {
+   "id": "ec1",
+   "fromNode": "c",
+   "toNode": "t1",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "ec2",
+   "fromNode": "c",
+   "toNode": "t2",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "ec3",
+   "fromNode": "c",
+   "toNode": "t3",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "ec4",
+   "fromNode": "c",
+   "toNode": "t4",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "ec5",
+   "fromNode": "c",
+   "toNode": "t5",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e1a",
+   "fromNode": "t1",
+   "toNode": "l1a",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e1b",
+   "fromNode": "t1",
+   "toNode": "l1b",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e2a",
+   "fromNode": "t2",
+   "toNode": "l2a",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e2b",
+   "fromNode": "t2",
+   "toNode": "l2b",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e2c",
+   "fromNode": "t2",
+   "toNode": "l2c",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e3a",
+   "fromNode": "t3",
+   "toNode": "l3a",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e3b",
+   "fromNode": "t3",
+   "toNode": "l3b",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e3c",
+   "fromNode": "t3",
+   "toNode": "l3c",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e4a",
+   "fromNode": "t4",
+   "toNode": "l4a",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e4b",
+   "fromNode": "t4",
+   "toNode": "l4b",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e4c",
+   "fromNode": "t4",
+   "toNode": "l4c",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e5a",
+   "fromNode": "t5",
+   "toNode": "l5a",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e5b",
+   "fromNode": "t5",
+   "toNode": "l5b",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e5c",
+   "fromNode": "t5",
+   "toNode": "l5c",
+   "fromSide": "right",
+   "toSide": "left"
+  }
+ ]
+}
