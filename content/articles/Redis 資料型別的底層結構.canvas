@@ -1,0 +1,336 @@
+{
+ "nodes": [
+  {
+   "id": "c",
+   "type": "text",
+   "text": "# Redis 資料型別的底層結構\n**對外穩定，對內換結構**\n小資料省記憶體 ↔ 大資料保效能",
+   "x": -180,
+   "y": -80,
+   "width": 360,
+   "height": 160,
+   "color": "6"
+  },
+  {
+   "id": "t1",
+   "type": "text",
+   "text": "① String｜SDS",
+   "x": 380,
+   "y": -680,
+   "width": 260,
+   "height": 80,
+   "color": "5"
+  },
+  {
+   "id": "t2",
+   "type": "text",
+   "text": "② List／Hash｜listpack 家族",
+   "x": 380,
+   "y": -360,
+   "width": 260,
+   "height": 80,
+   "color": "5"
+  },
+  {
+   "id": "t3",
+   "type": "text",
+   "text": "③ ZSet｜skiplist + dict",
+   "x": 380,
+   "y": -40,
+   "width": 260,
+   "height": 80,
+   "color": "5"
+  },
+  {
+   "id": "t4",
+   "type": "text",
+   "text": "④ 編碼切換門檻",
+   "x": 380,
+   "y": 280,
+   "width": 260,
+   "height": 80,
+   "color": "5"
+  },
+  {
+   "id": "t5",
+   "type": "text",
+   "text": "⑤ 單執行緒的代價",
+   "x": 380,
+   "y": 600,
+   "width": 260,
+   "height": 80,
+   "color": "5"
+  },
+  {
+   "id": "l1a",
+   "type": "text",
+   "text": "`len` → O(1) 取長度\n只認長度不認 `\\0` → **二進位安全**\n`alloc - len` → 追加不會溢位\n`flags` 低 3 位 → 5 種頭部大小",
+   "x": 720,
+   "y": -760,
+   "width": 380,
+   "height": 140,
+   "color": "4"
+  },
+  {
+   "id": "l1b",
+   "type": "text",
+   "text": "三種編碼：`int` ／ `embstr`(≤44B，一次 malloc) ／ `raw`\n對 embstr 做修改 → 轉 raw，**不會轉回去**",
+   "x": 720,
+   "y": -610,
+   "width": 380,
+   "height": 110,
+   "color": "3"
+  },
+  {
+   "id": "l2a",
+   "type": "text",
+   "text": "quicklist = 雙向鏈結串列 + listpack\n⚠️ 7.2 起**小 List 直接就是 listpack**，沒有 quicklist 外層\n（原文漏了這點，已補）",
+   "x": 720,
+   "y": -440,
+   "width": 400,
+   "height": 120,
+   "color": "1"
+  },
+  {
+   "id": "l2b",
+   "type": "text",
+   "text": "ziplist 的 `prevlen` → **連鎖更新**\n（<254 用 1B，否則 5B；0xFF 是 zlend）\n→ 7.0 用 listpack 拔掉這個設計",
+   "x": 720,
+   "y": -290,
+   "width": 400,
+   "height": 120,
+   "color": "4"
+  },
+  {
+   "id": "l2c",
+   "type": "text",
+   "text": "Hash 擴容用**漸進式 rehash**：留兩張表，\n每次增刪改查順手搬一部分桶\n→ 把一次大阻塞攤成很多次小的",
+   "x": 720,
+   "y": -140,
+   "width": 400,
+   "height": 120,
+   "color": "3"
+  },
+  {
+   "id": "l3a",
+   "type": "text",
+   "text": "dict：member → score，平均 **O(1)**\nskiplist：排序／排名／範圍，**O(log N)**\n**member 的 SDS 兩邊共用，不存兩份**",
+   "x": 720,
+   "y": 10,
+   "width": 400,
+   "height": 120,
+   "color": "4"
+  },
+  {
+   "id": "l3b",
+   "type": "text",
+   "text": "層高擲硬幣 P=0.25、MAXLEVEL=**32**（不是 64）\n期望層數 1/(1-P)=**1.333**（100 萬次模擬 1.33299）\n`span` 累加 → 排名也是 O(log N)",
+   "x": 720,
+   "y": 160,
+   "width": 400,
+   "height": 130,
+   "color": "3"
+  },
+  {
+   "id": "l3c",
+   "type": "file",
+   "file": "tools/工具-跳表.md",
+   "x": 720,
+   "y": 320,
+   "width": 360,
+   "height": 110
+  },
+  {
+   "id": "l4a",
+   "type": "text",
+   "text": "String 44B｜Hash 512 entries / 64B\nZSet 128 / 64｜Set intset 512、listpack 128\nList `-2` = 每節點 8KB",
+   "x": 720,
+   "y": 470,
+   "width": 400,
+   "height": 120,
+   "color": "4"
+  },
+  {
+   "id": "l4b",
+   "type": "text",
+   "text": "⚠️ **轉換是單向的**：刪回小資料也不會轉回去\n用 `OBJECT ENCODING` 問，別用猜的",
+   "x": 720,
+   "y": 610,
+   "width": 400,
+   "height": 100,
+   "color": "1"
+  },
+  {
+   "id": "l4c",
+   "type": "file",
+   "file": "tools/工具-Redis資料型別的底層編碼.md",
+   "x": 720,
+   "y": 740,
+   "width": 360,
+   "height": 110
+  },
+  {
+   "id": "l5a",
+   "type": "text",
+   "text": "6.0 多執行緒只做網路 I/O，**命令執行仍單執行緒**\n→ 一條 O(N) 大指令 = 全部 client 一起等",
+   "x": 720,
+   "y": 890,
+   "width": 400,
+   "height": 100,
+   "color": "4"
+  },
+  {
+   "id": "l5b",
+   "type": "text",
+   "text": "`KEYS`→`SCAN`｜`HGETALL`→`HSCAN`\n`DEL bigkey`→**`UNLINK`**（4.0+，背景回收）",
+   "x": 720,
+   "y": 1020,
+   "width": 400,
+   "height": 100,
+   "color": "3"
+  },
+  {
+   "id": "l5c",
+   "type": "file",
+   "file": "tools/工具-Redis單執行緒下的阻塞風險.md",
+   "x": 720,
+   "y": 1150,
+   "width": 360,
+   "height": 110
+  }
+ ],
+ "edges": [
+  {
+   "id": "ec1",
+   "fromNode": "c",
+   "toNode": "t1",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "ec2",
+   "fromNode": "c",
+   "toNode": "t2",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "ec3",
+   "fromNode": "c",
+   "toNode": "t3",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "ec4",
+   "fromNode": "c",
+   "toNode": "t4",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "ec5",
+   "fromNode": "c",
+   "toNode": "t5",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e1a",
+   "fromNode": "t1",
+   "toNode": "l1a",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e1b",
+   "fromNode": "t1",
+   "toNode": "l1b",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e2a",
+   "fromNode": "t2",
+   "toNode": "l2a",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e2b",
+   "fromNode": "t2",
+   "toNode": "l2b",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e2c",
+   "fromNode": "t2",
+   "toNode": "l2c",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e3a",
+   "fromNode": "t3",
+   "toNode": "l3a",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e3b",
+   "fromNode": "t3",
+   "toNode": "l3b",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e3c",
+   "fromNode": "t3",
+   "toNode": "l3c",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e4a",
+   "fromNode": "t4",
+   "toNode": "l4a",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e4b",
+   "fromNode": "t4",
+   "toNode": "l4b",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e4c",
+   "fromNode": "t4",
+   "toNode": "l4c",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e5a",
+   "fromNode": "t5",
+   "toNode": "l5a",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e5b",
+   "fromNode": "t5",
+   "toNode": "l5b",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e5c",
+   "fromNode": "t5",
+   "toNode": "l5c",
+   "fromSide": "right",
+   "toSide": "left"
+  }
+ ]
+}
