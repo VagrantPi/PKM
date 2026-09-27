@@ -24,6 +24,7 @@ tags: [moc, ai, skills, agent, tooling]
 | [superpowers](#superpowers) | plugin | 15+ harness | 一整套強制執行的開發方法論：腦力激盪→計劃→TDD→subagent 執行→審查 | [repo↗](https://github.com/obra/superpowers) | ⬜ |
 | [Skills For Real Engineers](#skills-for-real-engineers) | plugin | Claude Code・多平台 | Matt Pocock 的 ~24 個工程流程 skill：拷問→規格→票→實作→審查 | [repo↗](https://github.com/mattpocock/skills) | ⬜ |
 | [archify](#archify) | skill | 多平台 | codebase／描述 → 會自我驗證的互動架構圖 HTML | [repo↗](https://github.com/tt-a1i/archify) | ⬜ |
+| [architecture-diagram-generator](#architecture-diagram-generator) | skill | Claude.ai・Claude Code | 描述 → 深色主題架構圖 HTML；純 prompt＋設計規範，**不驗證** | [repo↗](https://github.com/Cocoon-AI/architecture-diagram-generator) | ⬜ |
 | [i-have-adhd](#i-have-adhd) | plugin | Claude・Codex | 逼 agent 答案先講、不鋪陳客套 | [repo↗](https://github.com/ayghri/i-have-adhd) | ⬜ 📊 |
 | [ponytail](#ponytail) | plugin | 多平台 | 寫碼前爬「該不該寫」階梯，砍過度設計 | [repo↗](https://github.com/dietrichgebert/ponytail) | ⬜ 📊 |
 | [go-modern-guidelines](#go-modern-guidelines) | plugin | 多平台 | 給 agent 一份現代 Go 對照表，別再產出過時寫法 | [repo↗](https://github.com/JetBrains/go-modern-guidelines) | ⬜ |
@@ -237,6 +238,37 @@ npx skills use tt-a1i/archify@archify --agent codex
 - 餵 Mermaid 進去時它是**重寫**成自己的 JSON，不是照搬樣式。
 
 **🔗 相關**：[[Archify 架構圖 skill]] —— **詳細筆記在那裡**：`SKILL.md` 的設計拆解（context 預算怎麼寫進指令、修復怎麼收斂、以及那組「不准造假通過」的條款）。
+
+
+### architecture-diagram-generator
+`skill` · Claude.ai・Claude Code · MIT · ★7.3k · v1.1 · ⬜ 待試
+
+**做什麼**：把一段系統描述變成**一頁自足的深色主題架構圖 HTML**（內嵌 SVG＋CSS），頁首自帶 Copy／PNG／PDF 匯出按鈕，瀏覽器打開就能用。同作者另有畫流程圖的姊妹 skill [process-flow-diagram-generator](https://github.com/Cocoon-AI/process-flow-diagram-generator)（★約 100），設計語言相同。
+
+**核心**：整個 skill 就是**一份設計規範寫進 `SKILL.md`**，外加一個 `resources/template.html`，沒有任何程式或驗證步驟。
+- **語意配色**：前端 cyan、後端 emerald、資料庫 violet、雲 amber、資安 rose、訊息匯流排 orange、外部 slate。
+- **版面規則交給模型自己算座標**：元件高 60px、垂直間距至少 40px、匯流排放在間隙正中、圖例放在所有邊界框外至少 20px，並附「錯誤／正確」的座標範例。
+- **箭頭 z-order 的小技巧**：箭頭先畫；元件先墊一個不透明底框，再疊半透明色框，箭頭才不會透出來。
+
+**跟 [archify](#archify) 的差別**：archify 讓模型產 JSON 再用編譯器渲染，還有 9 項驗證閘；這個是**模型直接手寫 SVG 座標**，好看與否靠規範，**接錯線、元件重疊沒有任何檢查**。換來的是零依賴，不需要 Node.js。
+
+**裝**
+```bash
+# Claude Code：解到 skills 目錄（zip 在 repo 根目錄）
+unzip architecture-diagram.zip -d ~/.claude/skills/     # 全域
+unzip architecture-diagram.zip -d ./.claude/skills/     # 專案內
+```
+Claude.ai：**Customize → Skills → + → Create skill → Upload a skill** 上傳 zip。前提是先在 **Settings → Capabilities** 開啟 Code Execution（Team／Enterprise 要管理員在組織設定開）。
+
+**用**：`Use your architecture diagram skill to create an architecture diagram from this description: …`。README 建議先讓 agent 分析 codebase 產出「元件＋連線＋技術」清單，再貼給它畫；之後用對話迭代（「把 XYZ 改成…」）。
+
+**⚠️ 注意**
+- **不驗證**：技術圖畫錯線是有害的，產出要自己對一遍。
+- **輸出會連 Google Fonts** 載 JetBrains Mono，離線或內網環境字型會退回預設。
+- 只有深色一種風格；要淺色、要符合公司 CI 得自己改規範。
+- 介紹文（掘金 MacroZheng，2026-08-27）寫 ★6.3k，查證時（2026-09-27）已 ★7.3k。
+
+**🔗 相關**：[archify](#archify) —— 同類但會自我驗證，產出要拿去對外溝通時優先選它。
 
 ---
 
