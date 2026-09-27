@@ -137,6 +137,11 @@ MCP  ──提供──▶  工具定義  ──餵給──▶  Function Callin
 - **約束解碼不是萬靈丹**。schema 太複雜時，模型會被逼著填出語法合法但語意荒謬的值。**寧可簡單 schema + 事後驗證。**
 - **schema 驗證只是第一關**。通過之後還要驗**業務規則**（日期合理嗎？ID 存在嗎？金額在範圍內嗎？）。
 - **各家 API 的行為不一致**：平行工具呼叫、strict mode、`tool_choice` 的語義、拒絕時的回應格式都不同。**換供應商要重測。**
+- **「模型只提出請求、執行都在你這邊」不一定成立，要看工具在哪裡跑**。Anthropic 把工具分成兩種：
+  - **client tools**：你自訂的工具，加上 `bash`、`text_editor` 這類 Anthropic 定義好 schema 的工具。模型回 `tool_use`，**你的程式執行**，再用 `tool_result` 回傳。
+  - **server tools**：`web_search`、`web_fetch`、`code_execution`、MCP connector 等。**在 Anthropic 的基礎設施上執行**，回應裡是 `server_tool_use` 加上結果，你不用處理、也攔不到執行過程。
+
+  OpenAI 同樣有內建工具（web search、file search 等）。所以做權限盤點時，要把「供應商代為執行的工具」另列一欄：它們能讀到什麼、會把資料送去哪裡，都不經過你的 dispatch 白名單。OpenAI 官方另外明寫：模型產出的參數**不一定是合法 JSON，也可能編造 schema 沒定義的參數**，執行前一律要驗證。（Anthropic Tool use overview、OpenAI Function calling guide，查證 2026-09-27；補充自 <https://signals.tw/articles/what-is-tool-calling/>）
 - **模型會編造工具名與參數**。dispatch 端必須**白名單驗證**，不能相信模型給的名字（見 [[ReAct 與 Agent Loop]]）。
 - **MCP server 是新的信任邊界**。第三方 server 能看到你餵進去的內容，工具描述本身也可能是注入載體（見 [[工具-MCP安全防護要點]]）。
 - **結構化輸出會降低 CoT 空間**。強制 JSON 會壓縮模型的思考餘地——需要推理時，先讓它自由思考，再用第二次呼叫格式化。
