@@ -50,6 +50,50 @@ RAG 有兩段：**檢索**和**生成**。答錯時要先判斷是哪一段：
 
 常見做法：依文件結構切（標題、段落），而不是固定字數硬切；相鄰片段保留少量重疊；在每個片段前面加上它所屬文件與章節的標題。細節 → [[切塊與文件解析]]。
 
+### ★ 動手之前先問：這個知識庫還需不需要 RAG？
+
+（補充自 <https://juejin.cn/post/7690218295266066441>，原始出處 Anthropic *Introducing Contextual Retrieval*，逐字查證 2026-09-28）
+
+> 「If your knowledge base is smaller than **200,000 tokens (about 500 pages of material)**, you can just include the entire knowledge base in the prompt that you give the model, **with no need for RAG**.」
+
+**20 萬 token ≈ 500 頁**是一條很實用的分界：低於它，全塞 Prompt ＋ [[前綴快取 Prompt Caching]] 通常比維護一整條檢索管線划算。
+
+但**企業場景有三樣東西長上下文給不了**，這三樣才是 RAG 真正不可取代的理由：
+
+| | 為什麼長上下文做不到 |
+|---|---|
+| **權限隔離** | 「誰能看哪一部分」無法靠塞進同一個 prompt 解決 → [[權限感知檢索與引用歸因]] |
+| **資料新鮮度** | 文件一直在變，全塞等於每次都要重灌 |
+| **成本** | 每個請求都塞全庫，帳單隨流量線性成長 |
+
+所以判準不是「庫有多大」，而是：**小庫 + 無權限需求 + 不常變 → 別做 RAG。**
+
+### ★ 別追架構，先給問題分類（GraphRAG 值不值得交那筆稅）
+
+同樣來源。GraphRAG 熱起來之後「上圖譜」一度變成政治正確，但**不存在普適最優的 RAG 架構，存在的是「問題類型 → 架構」的路由表**：
+
+| 問題類型 | 誰比較行 | 為什麼 |
+|---|---|---|
+| **單跳事實**（「XX 的營業時間」） | **樸素 RAG + 重排就夠** | 答案就在某一塊裡，多繞路只是增加成本與延遲 |
+| **多跳關聯**（「A 的負責人審批的部署歸誰管」） | 圖譜 / Agentic | **這條關係鏈在向量空間裡根本沒有表示** |
+| **全局歸納**（「這批文件的主題是什麼」） | ⚠️ **證據分歧，見下** | 切片檢索天然答不了全局歸納，但圖譜是否真的較好有爭議 |
+
+**先統計自己評測集裡的題型分布，再決定要不要交圖譜的稅**——八成日常請求是單跳事實題。
+
+> ⚠️ **「全局歸納該上 GraphRAG」這件事，2026 年的證據是分歧的，別當定論。**
+> **WildGraphBench**（arXiv 2602.02053，2026-02，1,100 題涵蓋 single-fact / multi-fact / section-level summarization）的結論是：GraphRAG 在 **multi-fact aggregation 有幫助**，但
+> 「may overemphasize high-level statements at the expense of fine-grained details, **leading to weaker performance on summarization tasks**」
+> ——**section-level summarization 正是「全局歸納」，而它在那一格是較弱的。**
+>
+> **Do We Still Need GraphRAG?**（arXiv 2604.09666，2026-04）則發現：agentic search 大幅拉抬 dense RAG、縮小與 GraphRAG 的差距，**GraphRAG 的優勢集中在複雜多跳推理**，且要「offline cost 被攤提之後」才划算。
+>
+> 兩篇合起來的實務結論：**GraphRAG 的明確主場是「多跳關係查詢」，不是「全局歸納」。**
+> 網路上流傳的「全局歸納 GraphRAG 顯著占優」附帶的精確百分比，我查了上述兩篇的摘要都找不到對應數字，**無法定位出處，不要拿它做決策依據**。
+
+**代價那一欄也要看**：GraphRAG 的圖構建成本比一般 RAG 高出一到兩個數量級（每份語料要跑大量 LLM 呼叫抽實體與關係）。輕量化路線有 **LightRAG**（arXiv 2410.05779，雙粒度檢索）與 **HippoRAG**（arXiv 2405.14831，Personalized PageRank 一步多跳），但**「圖構建稅」這筆錢總是要交**。
+
+> ★ **一句話**：**知道哪筆稅不用交，也是能力的一部分。** 語料小、互動歷史短，就別為了架構時髦去付它。
+
 ## 🧪 我實際套用的紀錄
 - 2026-07-15：（待填）
 
@@ -63,3 +107,4 @@ RAG 有兩段：**檢索**和**生成**。答錯時要先判斷是哪一段：
 - [[工具-AI系統評估]] —— 沒有它就不知道 RAG 到底有沒有讓答案變準，檢索品質要能量化
 - [[工具-對話型AI的長期記憶分層]] —— RAG 用在「對話記憶」的特例：摘要保大綱、向量找回被截掉的原文
 - [[工具-LLM安全防護]] —— RAG 的暗面：檢索進來的文件正是間接提示注入的主要載體，接外部來源前先看它
+- [[Agent 記憶設計]] —— 「查靜態文件」與「記住互動歷史」是兩個物種，別用同一套解
