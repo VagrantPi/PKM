@@ -29,6 +29,14 @@ tags: [moc, ai, llm, engineering]
 ## 🤖 進階
 - 讓模型自主用工具完成多步任務 → [[工具-AI-Agent設計]]
 
+## 🏗 把 agent 上線：平台、身分與治理
+- 要自己架還是用雲端代管、會被綁多深 → [[工具-agent平台自建還是用代管]]
+- prompt 裡的規則模型不一定照做，要硬擋 → [[工具-把業務規則從prompt搬到授權層]]
+- agent 要代表使用者呼叫下游或第三方 → [[工具-agent代使用者存取的身分設計]]
+- 前面加了閘道，要確保沒人繞過 → [[工具-讓Gateway當agent唯一入口]]
+- CI 怎麼擋 agent 退化 → [[工具-agent的測試金字塔]]
+- 平台實例（AWS）：[[AgentCore 與 Nova Act 研究]]（14 頁型錄：Runtime、Gateway、Identity、Policy、Evaluations、Nova Act…）
+
 ## 🎭 長對話／角色型產品（context 怎麼放、放多少）
 - 設定或知識太多，每輪只想載入相關的那幾條 → [[工具-關鍵字觸發的設定注入]]
 - 系統提示、設定、聊天記錄要一起塞進固定 context → [[工具-長對話的Token預算分配]]
@@ -45,4 +53,4 @@ tags: [moc, ai, llm, engineering]
 - 讓 agent 安全連上外部資料/工具的標準協定 → 見主題 [[moc/MCP|MCP]]
 
 ## 📚 來源
-[[books/軟體工程/ai/AI工程|AI工程]]、[[LLM Course 課程文件]]、[[SillyTavern 角色扮演系統技術文件]]
+[[books/軟體工程/ai/AI工程|AI工程]]、[[LLM Course 課程文件]]、[[SillyTavern 角色扮演系統技術文件]]、[[AgentCore 與 Nova Act 研究]]
