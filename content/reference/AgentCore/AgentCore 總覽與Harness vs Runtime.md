@@ -85,6 +85,52 @@ AgentCore 是 AWS 為 AI agent 提供的**一組託管基礎設施服務**，可
 
 **畢業路徑**：`agentcore export harness --name X [--build CodeZip|Container]` 產出 Strands Python 專案（Claude Agent SDK 版官方標「即將推出」），帶走模型設定、工具、memory、上限、截斷策略、skills、檔案系統掛載、authorizer；另產生 `EXPORT_NOTES.md` 列出需人工處理項目，部署前必看。可部署到 Runtime，**也可部署到任何跑得動 Python 3.12+ 的地方**。官方沒提反向匯入，視為**單向**。代價是 prompt 實驗回到「改碼、重新部署」循環。
 
+### ★ 同一組詞，各家用法不同（讀文件前先對齊）
+
+（補充自 <https://juejin.cn/post/7679753075939524623>，各家原文查證 2026-10-01）
+
+「Harness」「Runtime」在 2026 年被各家混著用，**同一個詞在不同廠商指的東西不一樣**。讀任何文件或部落格前，先問「這是誰的用法」：
+
+| 誰 | Harness 指什麼 | Runtime 指什麼 | Agent loop 歸誰 |
+|---|---|---|---|
+| **AWS AgentCore**（本卡） | 給設定（model、prompt、tools），**AWS 幫你跑 loop** | 跑**你自己寫的 agent**（含你的 loop 與 prompt）的 microVM | Harness 模式歸 AWS；Runtime 模式歸你的程式碼 |
+| **Microsoft Agent Framework** | 「the **runtime scaffolding** that turns a language model into an agent」：驅動模型與工具呼叫、管對話狀態、套用核准策略；Python `create_harness_agent`、.NET `AsHarnessAgent` / `HarnessAgent` | 不另定義——官方說 Harness「composes existing building blocks **rather than defining a separate agent runtime**」 | **Harness**（含 function invocation，可選 bounded looping） |
+| **Google Cloud** 架構指南 | — | 「the **compute environment** where your agent's application logic runs」（Agent Platform、Cloud Run、GKE） | — |
+| **QwenPaw**（`harnesses/` 子包） | 包住第三方 agent CLI 的那層：生命週期、輸出格式歸一、Skills/MCP 投影、安全審批 | 被包住的第三方 agent（Codex、Qoder 等）；子包 docstring 原文是「Third-party agent runtime integrations」 | 第三方 agent 自己 |
+
+> ⚠️ **AgentCore 的 Runtime 不是「不碰語意的基礎設施」**。在 AgentCore 的 Runtime 模式下，你的 prompt、工具定義、整個 loop 都在 Runtime 裡跑——「Runtime」在這裡是**代管方式**的名字，不是**分層**的名字。
+> 別把部落格裡「Runtime 層不寫 prompt」的分層說法，直接套到 AgentCore 的 Runtime 上。
+
+> 💡 **Go 使用者注意**：微軟 Agent Framework 目前**沒有** packaged Go Harness（官方文件原話：「A packaged Go Harness isn't currently available」），要自己組 agent、context provider、compaction、middleware 套件。
+
+#### 廠商中立的判別三問
+
+拿到任何一個模組，不管它被叫什麼名字，問三題就知道它屬於哪一層：
+
+| 問題 | → 語意／策略層（Harness 性質） | → 執行／基礎設施層（Runtime 性質） |
+|---|---|---|
+| 改了它，agent 的**行為、權限、知識**會變嗎？ | 會變 | 不會，只影響效能、穩定、部署形態 |
+| 它的產出是**內容**還是**進程**？ | prompt、工具呼叫請求、記憶、審批紀錄 | 排程結果、checkpoint 檔、容器實例 |
+| 刪掉它，agent 會**變笨／變危險**還是**跑不起來**？ | 變笨或越權 | 直接跑不起來 |
+
+延伸兩條同樣好用的判準：
+- **鉤子歸誰，看它回答什麼問題，不看它用了多少系統資源**。掛在語意事件上（`before_tool_call` 做審查）是策略；掛在系統事件上（`on_oom`、`on_crash_restart`）是執行。上面 AgentCore 的四個 lifecycle hook 全部是前者——所以它們只能 allow/deny，不能改寫內容。
+- **工具橫跨兩層**：Schema、選擇策略、權限白名單、審計紀錄是策略；實際執行、超時、沙箱、憑證注入是執行。
+
+#### ★ 兩種 checkpoint 必須分開存
+
+| | 認知狀態（策略層） | 執行狀態（執行層） |
+|---|---|---|
+| 回答什麼 | 「已經批准過哪些操作、走到哪一步」 | 「進程、沙箱、連線池現場長怎樣」 |
+| 生命週期 | 跨 session，天／月 | session 內，秒／分 |
+| 存哪 | 資料庫、檔案、Git | 記憶體、本機碟、Redis |
+
+原文提出的失效情境（設計推演，非具名事故）：**執行層崩潰後從 checkpoint 恢復，但審批紀錄跟著執行狀態一起丟了**——agent 不知道自己剛批准過什麼，要嘛重複跟使用者要核准，要嘛直接執行。根因是兩種狀態放在同一個儲存、套同一條清理策略。在 AgentCore 上的對應：inline function 的核准結果是**呼叫端**提供的，要自己持久化，不能指望 microVM 的 session 狀態替你記住。
+
+> ❌ **這篇原文有兩處別採用**：
+> 1. 「Loop 是第三類，不要塞進 Harness」——和它自己列的 Harness 職責（第 1 項就是 agent loop）矛盾，也和微軟、AWS 的定義相反。
+> 2. 它宣稱「能跑」的分層示範程式碼實際跑不起來（docstring 少一個引號 → SyntaxError；修掉後多個類別未定義）。
+
 ### 自建 vs 買：難點在三塊
 自建的難處**不在 agent loop**（開源框架都寫好），而在：
 1. **每個 session 強隔離**：一般 container 共用 kernel，跑不受信任程式碼不夠；要做「每 session 一台 microVM、用完清、縮到 0、最長 8 小時」得自寫排程器（高）。
