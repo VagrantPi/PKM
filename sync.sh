@@ -2,7 +2,7 @@
 #
 # sync.sh — 把 Obsidian vault 的筆記同步進 Quartz 並發布到 GitHub Pages
 #
-# 流程：vault(books/articles/tools) --複製--> Quartz content/ --commit+push-->
+# 流程：vault(books/articles/tools/moc/reference/quotes) --複製--> Quartz content/ --commit+push-->
 #       GitHub Actions 自動 build 並部署 https://vagrantpi.github.io/PKM/
 #
 # 用法：
@@ -20,7 +20,7 @@ cd "$SITE"
 
 echo "▶ 從 vault 同步筆記到 Quartz content/ ..."
 # 只更新這幾個來源資料夾，保留 content/index.md 等站台自訂檔
-for d in books articles tools moc reference; do
+for d in books articles tools moc reference quotes; do
   rm -rf "content/$d"
   mkdir -p "content/$d"
   # 遞迴同步（保留子資料夾結構，例如 books/軟體工程/clean-code/），只複製 .md
