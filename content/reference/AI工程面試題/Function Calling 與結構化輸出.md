@@ -70,6 +70,33 @@ MCP  ──提供──▶  工具定義  ──餵給──▶  Function Callin
 
 **實務建議**：schema 要**盡量簡單扁平**。深層巢狀 + 大量 enum + 遞迴定義會讓模型（和解碼器）都變差。
 
+### 二點五、三家 API 怎麼開，以及失敗路徑
+
+（補充自 <https://masonailab.com/tech/structured-output/>；參數與限制逐條對過三家官方文件，查證 2026-10-11。**參數名會改版，實作前再看一次文件**）
+
+| | 怎麼開 | 拒答 | 輸出被截斷 | Schema 限制（重點） |
+|---|---|---|---|---|
+| **OpenAI**（Responses API） | `text.format: {type: "json_schema", name, strict: true, schema}` | message content 裡出現 `type: "refusal"` | `status === "incomplete"` 且 `incomplete_details.reason === "max_output_tokens"` | 只支援 JSON Schema 子集 |
+| **Claude** | `output_config.format: {type: "json_schema", schema}`；工具參數用 `strict: true` | `stop_reason: "refusal"`（仍回 200、照樣計費），**輸出可能不符 schema** | `stop_reason: "max_tokens"`，輸出可能不完整 | `additionalProperties` **必須是 `false`**；**不支援**遞迴、`minimum`／`maximum`、`minLength`／`maxLength`；違反直接回 400 |
+| **Gemini**（Interactions API） | `response_format: {mime_type: "application/json", schema}` | — | — | 支援 `minimum`／`maximum`、`minItems`／`maxItems`；太大或太深的 schema 可能被拒 |
+
+> - Claude 舊的 `output_format` 參數**已移到 `output_config.format`**，舊參數 deprecated，要用得加 beta header，否則回 400。
+> - **JSON Schema 的 `additionalProperties` 預設是允許**——不明寫 `false`，模型（或 validator）可以合法地多吐欄位。正式資料契約要明確關掉。
+> - Claude 不支援數值範圍約束，所以「金額 ≥ 0」**只能放到業務驗證層**，這正好說明下面那條：schema 只管形狀。
+
+**★ 成功條件不是「`JSON.parse` 沒丟例外」**。拒答與截斷都會讓你拿到一段「不符 schema 的東西」，直接 parse 要嘛炸掉、要嘛拿到半截資料。處理順序固定是：
+
+```
+1. 先看結束原因（OpenAI: status / incomplete_details；Claude: stop_reason）
+   ├─ 截斷 → 不 parse；加大輸出上限重試，或拆小 schema
+   └─ 拒答 → 不 parse；顯示拒答或轉人工，不要硬塞進原 schema
+2. parse（try/catch）
+3. schema 驗證（Zod / Pydantic，型別與 schema 同一份定義產生）
+4. 業務驗證（ID 存在嗎？金額合理嗎？信心不足就轉人工）
+```
+
+監控時把這三件事**分開記**：schema 驗證通過率、業務驗證通過率、任務實際正確率。只看第一個會以為一切正常。
+
 ### ★ 三、MCP vs Function Calling（Microsoft 那題）
 
 **最常見的錯誤答案是「MCP 是更新版的 function calling」。不是。它們在不同層，不互相取代。**
