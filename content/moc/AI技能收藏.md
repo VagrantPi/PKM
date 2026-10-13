@@ -22,7 +22,7 @@ tags: [moc, ai, skills, agent, tooling]
 | [ai-short-drama-screenwriter](#ai-short-drama-screenwriter) | skill | Codex | 繁中短劇編劇：八階段流程＋可拍性檢查，只做劇本不越界 | [repo↗](https://github.com/POUND0423/AI-drama-pound) | ⬜ |
 | [scroll-world](#scroll-world) | skill | Claude Code・Codex・多平台 | 生成 AI 場景＋鏡頭影片，做捲動穿梭的沉浸式落地頁（**會扣真錢**） | [repo↗](https://github.com/oso95/scroll-world) | ⬜ |
 | [superpowers](#superpowers) | plugin | 15+ harness | 一整套強制執行的開發方法論：腦力激盪→計劃→TDD→subagent 執行→審查 | [repo↗](https://github.com/obra/superpowers) | ⬜ |
-| [Skills For Real Engineers](#skills-for-real-engineers) | plugin | Claude Code・多平台 | Matt Pocock 的 ~24 個工程流程 skill：拷問→規格→票→實作→審查 | [repo↗](https://github.com/mattpocock/skills) | ⬜ |
+| [Skills For Real Engineers](#skills-for-real-engineers) | plugin | Claude Code・多平台 | Matt Pocock 的 38 個 skill（v1.3.1）：拷問→規格→票→實作→審查→PR→回顧 | [repo↗](https://github.com/mattpocock/skills) | ⬜ |
 | [archify](#archify) | skill | 多平台 | codebase／描述 → 會自我驗證的互動架構圖 HTML | [repo↗](https://github.com/tt-a1i/archify) | ⬜ |
 | [architecture-diagram-generator](#architecture-diagram-generator) | skill | Claude.ai・Claude Code | 描述 → 深色主題架構圖 HTML；純 prompt＋設計規範，**不驗證** | [repo↗](https://github.com/Cocoon-AI/architecture-diagram-generator) | ⬜ |
 | [i-have-adhd](#i-have-adhd) | plugin | Claude・Codex | 逼 agent 答案先講、不鋪陳客套 | [repo↗](https://github.com/ayghri/i-have-adhd) | ⬜ 📊 |
@@ -309,27 +309,27 @@ devin plugins install obra/superpowers
 - [[工具-用壓力情境測試skill]] —— 它 `writing-skills` 裡那套方法論，我單獨抽出來的卡
 
 ### Skills For Real Engineers
-`plugin` · Claude Code（官方 marketplace）・Codex／其他經 skills.sh · MIT · ★239.6k · ⬜ 待試
+`plugin` · Claude Code（官方 marketplace）・Codex・Copilot・Gemini CLI／skills.sh · MIT · ★288k（2026-10-13）· v1.3.1 · ⬜ 待試
 
-**做什麼**：Matt Pocock 每天在用的 **~24 個工程 skill**，涵蓋整條流程——`grill-me`（拷問對齊）→ `to-spec`（轉規格）→ `to-tickets`（拆成曳光彈式的票）→ `implement`（驅動 TDD）→ `code-review`（雙軸審查）。另有 `diagnosing-bugs`、`tdd`、`domain-modeling`、`codebase-design`、`resolving-merge-conflicts`、`improve-codebase-architecture`、`handoff`、`teach` 等。
+**做什麼**：Matt Pocock 每天在用的 **38 個 skill**（engineering 20、productivity 7、misc 4 已凍結、in-progress 7 beta），涵蓋整條流程：`/grill-with-docs`（拷問對齊）→ `/to-spec`（轉規格）→ `/to-tickets`（拆成垂直切片）→ `/implement` 或 `/implement-spec`（平行實作）→ `code-review`（雙軸審查）→ `pr`（PR 內文）→ `/retro`（改善 agent 環境）。旁路入口有 `/triage`、`diagnosing-bugs`、`/wayfinder`。每個 skill 的拆解見 [[Skills For Real Engineers#🗂 全部 38 個 skill 拆解（2026-10-13，依 v1.3.1）|筆記]]。
 
 **核心**（靈魂是**組織方式**，不是任何單一 skill）
 - **反框架的立場**：明講 GSD／BMAD／Spec-Kit 那類「接管流程」的做法**奪走你的控制權、流程出錯難修**；他要的是**小、好改、可組合**。
 - ⭐ **用「誰能叫它」分兩層**：**user-invoked** 只有人能叫，職責是**編排**；**model-invoked** 人和模型都能叫，持有**可複用的紀律**。**user-invoked 可呼叫 model-invoked，但絕不呼叫另一個 user-invoked。**
   實例：`grilling` 這個面談原語被 5 個編排型 skill 共用。
 - **診斷了四個 agent 失敗模式**：沒做我要的（對齊落差）／太囉唆（缺共享語言）／code 不能跑（回饋迴路不足）／一團爛泥（agent 加速軟體熵）。
-- **`CONTEXT.md` 共享語言**，他自稱是整個 repo 最酷的技術——把專案行話固定下來，命名一致、agent 好導航、**思考花的 token 更少**。
+- **`GLOSSARY.md` 共享語言**（1.3.0 前叫 `CONTEXT.md`，舊專案要自己 `git mv`），他自稱是整個 repo 最酷的技術——把專案行話固定下來，命名一致、agent 好導航、**思考花的 token 更少**。
 
 **裝**（**兩種哲學，別同時裝**——會拿到每個 skill 兩份）
 ```bash
 # 訂閱：整包唯讀、自動更新（已在 Claude Code 官方 marketplace）
-claude plugins install mattpocock-skills
+claude plugin install mattpocock-skills@claude-plugins-official
 ```
 ```bash
 # 分叉：把可編輯的檔案寫進你的 repo，你擁有它
 npx skills@latest add mattpocock/skills
 ```
-裝完要**在每個 repo 各跑一次** `/setup-matt-pocock-skills`（選 issue tracker、triage 標籤、文件位置）。Codex 原生 plugin 還在 roadmap 上。
+裝完要**在每個 repo 各跑一次** `/setup-matt-pocock-skills`（選 issue tracker、triage 標籤、文件位置）。Codex、Copilot 也有原生 plugin（依 README，2026-10-13 查證）。
 
 **用**：不確定用哪個就 `/ask-matt`（它是所有 user-invoked skill 的路由）。最常用的是 `/grill-me` 與 `/grill-with-docs`。
 
