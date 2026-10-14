@@ -620,14 +620,7 @@ graphify install               # 偵測你的 agent 並註冊 /graphify skill
 - **README 一直在推付費的 Graphify Cloud**（宣稱「agent token 省 80%」，未驗證）；開源版是本機 CLI 加 skill。
 - 跟 codegraph／codebase-memory 功能重疊，差別在**文件也進圖**、而且有可信度標記；純看程式碼結構時，那兩個已經夠用。
 
-**🧪 工作坊補充**（Neo Hsu〈讓 AI 讀懂你的系統〉，<https://share.neohsu.dev/graphify-workshop>，2026-10-14 查證；工具相關的說法都對過原始碼，評比見 `_meta/來源評比紀錄.md`）
-- **為什麼要圖**：agent 最容易壞在「找 context」這一步，找錯了後面的推理全建立在錯的前提上。grep 只給你「字在哪」，分不出哪個是核心；圖給你「誰跟誰有關」。例如 grep `login` 會撈到 UI 按鈕文字、測試 fixture、README、舊 migration，圖則能從 command 一路追到 handler、service、config、test。
-- **看到的連結要依可信度處理**：`EXTRACTED` 可以高度參考，但仍回原始碼驗證；`INFERRED` 當探索線索；`AMBIGUOUS` 一定要人確認。程式碼的關係較「硬」，文件的關係較「軟」，適合縮小範圍，不適合當最終判決。
-- **降噪**：測試 fixture、產生的程式碼、migration、locales、vendor、大型 csv／parquet 先排除。圖不是越密越好，太密通常代表雜訊太多。
-- **多 repo 補一層 bridge doc**：`architecture.md`（誰呼叫誰）、`data-flow.md`（一筆資料怎麼穿過各服務）、`ubiquitous-language.md`（同一個概念在各 repo 的命名對照）。多 repo 的問題通常不是不會合併，而是 repo 之間本來就缺描述關係的文件。
-- **從小開始**：第一版只選一個產品功能、一個主要 repo、對應的 spec 和少量架構文件。目標是「一張會被用的圖」，不是最大的圖。
-- **找不到關聯 ≠ 沒實作**：需求在圖上連不到程式碼，是要 PM 和 RD 一起確認的落差候選；圖不準常常是在提醒「有些關係本來就沒寫成文件」。
-- 講者引用 Karpathy 時把〈LLM Wiki〉說成「預先建立的知識圖譜」；原文是互相連結的 markdown wiki，不是圖。同一個精神，但別引用成原話 → [[LLM Wiki（Karpathy）]]
+**🧪 工作坊**：Neo Hsu 的 Graphify 工作坊整理成筆記 → [[讓AI讀懂你的系統（Graphify工作坊）]]，裡面有可信度分級怎麼用、降噪、多 repo 的 bridge doc、從小開始，以及查證表。方法本身抽成 [[工具-用知識圖譜幫agent找對context]]。
 
 **🔗 相關**：[codegraph](#codegraph)、[codebase-memory-mcp](#codebase-memory-mcp) —— 只看程式碼的同類工具。[[工具-讓LLM維護的個人Wiki]] —— 同樣是「先建好結構、查詢時不必重撈原始檔」的想法。
 
