@@ -32,6 +32,7 @@ tags: [moc, ai, skills, agent, tooling]
 | [eli5](#eli5) | skill | Claude Code | 依聽眾（5 歲／主管／工程師／家人）換一套講法解釋同一件事 | [repo↗](https://github.com/DreambigOu/ELI5) | ⬜ |
 | [codegraph](#codegraph) | MCP | 多平台 | 本機碼圖譜，讀流程強、caller 會漏 | [repo↗](https://github.com/colbymchenry/codegraph) | ✅ 📊 |
 | [codebase-memory-mcp](#codebase-memory-mcp) | MCP | 多平台 | 同路線，caller 完整、只給名稱無 body | [repo↗](https://github.com/DeusData/codebase-memory-mcp) | ✅ 📊 |
+| [graphify](#graphify) | skill | 多平台 | 程式碼＋文件＋PDF 建成一張圖，每條邊標可信度（EXTRACTED／INFERRED／AMBIGUOUS） | [repo↗](https://github.com/Graphify-Labs/graphify) | ⬜ |
 
 ---
 
@@ -580,6 +581,55 @@ curl -fsSL https://raw.githubusercontent.com/DeusData/codebase-memory-mcp/main/i
 **📊 實測**：**caller 完整性全勝**（type-aware LSP）；Cypher／跨程序迴圈深度／語意搜尋／co-change 耦合是它獨有；但只給名稱清單、無 body → [[moc/AI技能評比|評比]]（實測用 **pro 版**，與開源版功能集是否相同未查證）
 
 **宣稱數字**（README，未驗證）：Linux kernel 28M LOC 3 分鐘建完、結構查詢 <1ms；preprint arXiv:2603.27277，31 repo：品質 83%、token 少 10×、工具呼叫少 2.1×。
+
+---
+
+### graphify
+`skill` · Claude Code・Cursor・Codex・Gemini CLI・Copilot 等 20+ · Apache-2.0 · ★126k（2026-10-14）· ⬜ 待試
+
+**做什麼**：把整個資料夾（程式碼、文件、SQL schema、設定、PDF、圖片、影片）建成一張**可查詢的知識圖譜**，用「沿著關係走」取代 grep。跟上面兩個的差別：它不只看程式碼，**文件和需求也進同一張圖**，所以能問「這個需求對應到哪些 module」。
+
+**核心**
+- **兩種抽取**：程式碼用 tree-sitter 解析 AST，**確定性、不呼叫 LLM、不出本機**；文件、PDF、圖片走模型做語意抽取（用你助手的模型，或另外設定的 API key）。
+- ★ **每條邊都標可信度**（ARCHITECTURE.md）：`EXTRACTED`（原文明確寫的，例如 import、直接呼叫）、`INFERRED`（合理推論，例如呼叫圖的第二輪解析、在同一段上下文共同出現）、`AMBIGUOUS`（不確定，會列在報告裡請人確認）。
+- **不是向量索引**：沒有 embedding，是真的圖，可以走路徑。社群切分用 Leiden。
+- **三個產出**：`graph.html`（給人點著看）、`GRAPH_REPORT.md`（god nodes、社群、意外連結、建議提問）、`graph.json`（給 agent 查）。另有 `manifest.json` 記錄每個檔的狀態，`--update` 靠它只重抽改過的檔。
+
+**裝**
+```bash
+uv tool install graphifyy      # 套件名有兩個 y（或 pipx install graphifyy），需要 Python 3.10+
+graphify install               # 偵測你的 agent 並註冊 /graphify skill
+```
+選配：`graphifyy[mcp]`（MCP stdio server）、`graphifyy[video]`、`graphifyy[neo4j]`。
+
+**用**
+```
+/graphify .                          # 建圖
+/graphify . --update                 # 只重抽改過的檔
+/graphify . --cluster-only           # 只重新分群
+/graphify . --no-viz                 # 不產 HTML，只要報告和 JSON
+/graphify query "auth flow 是怎麼運作的？"
+/graphify path "Login Page" "Auth Service"   # 兩個概念之間的最短路徑
+/graphify explain "Auth Service"             # 一個節點跟誰有關、哪些邊是推論的
+```
+`.graphifyignore`（加上 `.gitignore`、`--exclude`）用來排除雜訊；純程式碼的話加 `--code-only`，完全離線、不需要 API key。
+
+**⚠️ 注意**
+- **文件、PDF、圖片的部分會送到模型**：碼不外流，但文件會。公司文件要先確認可以送。
+- **推論的邊只能當線索**：`INFERRED`／`AMBIGUOUS` 要回原始碼確認；動態派發、runtime 設定、feature flag、外部服務呼叫，AST 也看不到。
+- **README 一直在推付費的 Graphify Cloud**（宣稱「agent token 省 80%」，未驗證）；開源版是本機 CLI 加 skill。
+- 跟 codegraph／codebase-memory 功能重疊，差別在**文件也進圖**、而且有可信度標記；純看程式碼結構時，那兩個已經夠用。
+
+**🧪 工作坊補充**（Neo Hsu〈讓 AI 讀懂你的系統〉，<https://share.neohsu.dev/graphify-workshop>，2026-10-14 查證；工具相關的說法都對過原始碼，評比見 `_meta/來源評比紀錄.md`）
+- **為什麼要圖**：agent 最容易壞在「找 context」這一步，找錯了後面的推理全建立在錯的前提上。grep 只給你「字在哪」，分不出哪個是核心；圖給你「誰跟誰有關」。例如 grep `login` 會撈到 UI 按鈕文字、測試 fixture、README、舊 migration，圖則能從 command 一路追到 handler、service、config、test。
+- **看到的連結要依可信度處理**：`EXTRACTED` 可以高度參考，但仍回原始碼驗證；`INFERRED` 當探索線索；`AMBIGUOUS` 一定要人確認。程式碼的關係較「硬」，文件的關係較「軟」，適合縮小範圍，不適合當最終判決。
+- **降噪**：測試 fixture、產生的程式碼、migration、locales、vendor、大型 csv／parquet 先排除。圖不是越密越好，太密通常代表雜訊太多。
+- **多 repo 補一層 bridge doc**：`architecture.md`（誰呼叫誰）、`data-flow.md`（一筆資料怎麼穿過各服務）、`ubiquitous-language.md`（同一個概念在各 repo 的命名對照）。多 repo 的問題通常不是不會合併，而是 repo 之間本來就缺描述關係的文件。
+- **從小開始**：第一版只選一個產品功能、一個主要 repo、對應的 spec 和少量架構文件。目標是「一張會被用的圖」，不是最大的圖。
+- **找不到關聯 ≠ 沒實作**：需求在圖上連不到程式碼，是要 PM 和 RD 一起確認的落差候選；圖不準常常是在提醒「有些關係本來就沒寫成文件」。
+- 講者引用 Karpathy 時把〈LLM Wiki〉說成「預先建立的知識圖譜」；原文是互相連結的 markdown wiki，不是圖。同一個精神，但別引用成原話 → [[LLM Wiki（Karpathy）]]
+
+**🔗 相關**：[codegraph](#codegraph)、[codebase-memory-mcp](#codebase-memory-mcp) —— 只看程式碼的同類工具。[[工具-讓LLM維護的個人Wiki]] —— 同樣是「先建好結構、查詢時不必重撈原始檔」的想法。
 
 ---
 
