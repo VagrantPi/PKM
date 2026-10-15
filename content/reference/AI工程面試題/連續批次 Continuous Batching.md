@@ -85,7 +85,7 @@ Orca 的解法是 **selective batching**：
 > 只有前者沒有後者，你能插隊的空間非常有限。
 
 #### 3. 排程策略要選
-vLLM 維護三個佇列：
+vLLM **V0 排程器**維護三個佇列（下表）；**V1 引擎**（v0.31.0，查證 2026-10-15）簡化為 `waiting` 與 `running` 兩個，被搶佔的請求釋放 KV block、狀態標 `PREEMPTED` 後**插回 `waiting` 隊首**重算，不再有 swap 到 CPU 的 `swapped` 佇列：
 
 | 佇列 | 狀態 |
 |---|---|
@@ -98,7 +98,7 @@ vLLM 維護三個佇列：
 - **prefill 優先** → 新使用者很快看到第一個字，但現有使用者卡頓
 - **decode 優先** → 現有使用者順暢，新使用者等更久
 
-沒有標準答案，取決於你的 SLO。多數框架給的是可調旋鈕（vLLM 的 `--scheduling-policy`、TensorRT-LLM 的 scheduler policy）。
+沒有標準答案，取決於你的 SLO。多數框架給的是可調旋鈕（vLLM 的 `--scheduling-policy`，v0.31.0 可選 `fcfs`（預設）或 `priority`，查證 2026-10-15；TensorRT-LLM 的 scheduler policy）。
 
 #### 4. 顯存不夠時要搶佔（preemption）
 所有 slot 都滿、KV cache 又在成長時，要踢掉某個序列：

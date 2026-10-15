@@ -53,9 +53,9 @@ triggers: [agent一直犯同樣的錯, CLAUDE.md越寫越長越來越沒用, 每
 
 ## ⚠️ 注意 / 什麼時候不適用
 - 需要讀得到 session log；harness 不保留紀錄時只能回顧當下這一輪。
-- 短的一次性任務不值得做；值得做的是會反覆在同一個 repo 工作的 agent。
+- 順利的 session 不必做：原文件建議在「值得學點什麼」的 build 之後跑，順利的 build 可以跳過；每次 session 都跑多半只會產出沒人需要的規則（retro 文件）。會反覆在同一個 repo 工作的 agent 回報最大（我的判斷）。
 - 建議會越來越多，要依嚴重度挑，不是每次全做；每類的「何時看」條件就是用來避免每次七類都跑一遍。
-- 「把規範交給 reviewer」的前提是你真的有 review 階段，例如雙軸 code review 或 CI；沒有的話，規則只能留給實作者。
+- 「把規範交給 reviewer」的前提是你真的有 review 階段，例如雙軸 code review 或 CI；沒有的話，規則只能留給實作者（推論）。
 
 ## 🔗 相關工具
 - [[Skills For Real Engineers]] —— 這個做法所在的 skill 集合，以及整條流程裡 retro 的位置

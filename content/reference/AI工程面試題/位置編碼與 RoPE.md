@@ -75,7 +75,7 @@ $$\langle R_m q,\ R_n k\rangle = \mathrm{Re}\left[\sum_i q_i \bar{k_i}\, e^{\mat
 | **直接外推** | 什麼都不做 | — | **壞掉**。perplexity 爆炸 |
 | **Position Interpolation (PI)**<br>Chen et al., 2023 | 位置索引**除以** $s = L_{new}/L_{train}$，把 32K 壓回 4K 的角度範圍 | **要**（少量，千步級） | 高頻被壓扁，**近距離解析度下降**，短文本能力會退 |
 | **NTK-aware scaling** | 不均勻：改 base $b' = b \cdot s^{\frac{d}{d-2}}$。**高頻幾乎不動、低頻大幅拉伸** | 可免 | 比 PI 溫和，但仍有損失 |
-| **YaRN**<br>Peng et al., 2023 | NTK-by-parts + attention 溫度 | 少量（論文稱約 PI 的 1/10 步數） | 目前實務常見的預設 |
+| **YaRN**<br>Peng et al., 2023 | NTK-by-parts + attention 溫度 | 少量（論文稱約 PI 的 1/10 步數） | 截至 2026-10 實務常見的選擇（判斷，非統計） |
 
 **PI 的直覺**：與其讓模型看沒見過的大角度，不如**把新位置線性壓縮進訓練過的角度範圍**。位置 8000 在 $s=2$ 時當作 4000 處理。代價是 token 之間的角度差變小了——原本相鄰兩字差 $\theta$，現在差 $\theta/2$，**近距離的區分度被犧牲**。
 

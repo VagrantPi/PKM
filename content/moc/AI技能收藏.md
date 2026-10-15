@@ -39,7 +39,7 @@ tags: [moc, ai, skills, agent, tooling]
 ## 🎨 影像與內容創作
 
 ### gc-minimal-zine-poster
-`skill` · Codex · MIT · ★113 · ⬜ 待試
+`skill` · Codex · MIT · ★7.3k（2026-10-15） · ⬜ 待試
 
 **做什麼**：把主題／句子／物件／心情／文章點子／照片，編譯成「安靜極簡 zine 風編輯海報」的生成 prompt，並直接產圖。
 
@@ -62,7 +62,7 @@ git clone https://github.com/LiamGvchi/gc-minimal-zine-poster.git \
 **🔗 相關**：[editorial-vision-studio](#editorial-vision-studio) 是它的演進版——把「鎖死一種 zine 風」開放成可選風格與版面。
 
 ### editorial-vision-studio
-`skill` · Codex · MIT · ★96 · ⬜ 待試
+`skill` · Codex · MIT · ★227（2026-10-15） · ⬜ 待試
 
 **做什麼**：AI 圖像／編輯設計的「視覺導演引擎」。不直接寫 prompt，先跑決策管線（**判斷用途 → 分析畫面 → 定視覺語言 → 規劃版面與風格 → 補救 → 產出模型無關的 VisionSpec**），最後才用 adapter 轉成該模型的 prompt。哲學：「不要裝飾，一律詮釋。」
 
@@ -86,7 +86,7 @@ git clone https://github.com/Yu-0312/editorial-vision-studio.git \
 **🔗 相關**：[gc-minimal-zine-poster](#gc-minimal-zine-poster)（前身之一）。
 
 ### mono-color
-`skill` · Claude Code（其他 agent 可載入 `SKILL.md`） · MIT（**例外見注意**） · ★2.5k · ⬜ 待試
+`skill` · Claude Code（其他 agent 可載入 `SKILL.md`） · MIT（**例外見注意**） · ★3.4k（2026-10-15） · ⬜ 待試
 
 **做什麼**：把主題／句子／物件／照片，做成**單色或受控雙色的編輯印刷風格圖像**——海報、zine、肖像、包裝、視覺筆記。輸出是「一張印出來的紙」，不是數位單色濾鏡。
 
@@ -121,7 +121,7 @@ git clone https://github.com/yanliudesign/mono-color-skill.git   ~/.claude/skill
 - [[工具-讓LLM產出可驗證的產物]] —— 它的 `design-system/*.json` ＋ 驗證腳本 ＋ CI，正是那張卡講的「把判斷交給模型、把可驗證的部分交給程式」，只是套用在美學上。
 
 ### MiniMax-H3 skills
-`skill` · npx skills · MiniMax H3 Community License · ★1.6k · ⬜ 待試
+`skill` · npx skills · MiniMax H3 Community License · ★10k（2026-10-15） · ⬜ 待試
 
 **做什麼**：MiniMax 開源全模態影音生成模型 **H3** 附的**九個 skill**，把「怎麼對 H3 下 prompt／做特定風格影片」包成可直接裝的技能。（模型本身的能力與架構 → [[articles/MiniMax H3 全模態生成模型|模型筆記]]）
 
@@ -139,7 +139,7 @@ npx skills add https://github.com/MiniMax-AI/MiniMax-H3 --skill h3-prompt-writin
 **🔗 相關**：[[articles/MiniMax H3 全模態生成模型|MiniMax H3（模型筆記）]]
 
 ### ai-short-drama-screenwriter
-`skill` · Codex（桌面版／CLI／IDE extension） · MIT · ★375 · ⬜ 待試
+`skill` · Codex（桌面版／CLI／IDE extension） · MIT · ★562（2026-10-15） · ⬜ 待試
 
 **做什麼**：**繁體中文**的短劇／豎屏短劇編劇——選題、全劇與單集結構、角色關係、分場、臺詞、衝突、反轉、鉤子、格式與修改。輸出是**標準短劇格式**（場次、內／外景、地點、時間、動作、角色名、臺詞、畫面文字），可直接進製作。
 
@@ -172,7 +172,7 @@ test -f "$HOME/.agents/skills/ai-short-drama-screenwriter/SKILL.md" && echo "Ski
 **🔗 相關**：[MiniMax-H3 skills](#minimax-h3-skills) —— 劇本 → 分鏡／影片生成是同一條產線的下游，這張 skill 明說要在那個階段交棒。
 
 ### scroll-world
-`skill` · Claude Code・Codex・多平台（skills CLI） · MIT · ★8.7k · ⬜ 待試
+`skill` · Claude Code・Codex・多平台（skills CLI） · MIT · ★10.2k（2026-10-15） · ⬜ 待試
 
 **做什麼**：把一個品牌或產業變成**捲動穿梭的落地頁**——捲動時鏡頭從場景外一路飛進室內，再無縫接到下一個場景，**全程沒有剪接點**。就是 Apple 產品頁那套技術：**預先算好影片，捲動只驅動時間軸**，鏡頭是真的在動。
 
@@ -209,7 +209,7 @@ npx skills add oso95/scroll-world -a codex
 > 跟上面的生圖 skill 差在**輸出的正確性有沒有人管**：那些產的是美術品，好看就是成功；這類產的是**技術陳述**，畫得漂亮但接錯線就是有害。所以要看的重點是「它會不會驗自己」。
 
 ### archify
-`skill` · Claude Code・Codex・Cursor・opencode・Raven · MIT · ★20.6k · ⬜ 待試
+`skill` · Claude Code・Codex・Cursor・opencode・Raven · MIT · ★83.9k（2026-10-15） · ⬜ 待試
 
 **做什麼**：把 codebase 或一段系統描述，變成**一頁自足的互動式架構圖 HTML**（可搜尋節點、追上下游、探測路徑、比較角色、播導覽章節），並能匯出 PNG／SVG／WebM 與 1200×630 分享卡。五種圖：`architecture`／`workflow`／`sequence`／`dataflow`／`lifecycle`。
 
@@ -242,9 +242,9 @@ npx skills use tt-a1i/archify@archify --agent codex
 
 
 ### architecture-diagram-generator
-`skill` · Claude.ai・Claude Code · MIT · ★7.3k · v1.1 · ⬜ 待試
+`skill` · Claude.ai・Claude Code · MIT · ★7.4k（2026-10-15） · v1.1 · ⬜ 待試
 
-**做什麼**：把一段系統描述變成**一頁自足的深色主題架構圖 HTML**（內嵌 SVG＋CSS），頁首自帶 Copy／PNG／PDF 匯出按鈕，瀏覽器打開就能用。同作者另有畫流程圖的姊妹 skill [process-flow-diagram-generator](https://github.com/Cocoon-AI/process-flow-diagram-generator)（★約 100），設計語言相同。
+**做什麼**：把一段系統描述變成**一頁自足的深色主題架構圖 HTML**（內嵌 SVG＋CSS），頁首自帶 Copy／PNG／PDF 匯出按鈕，瀏覽器打開就能用。同作者另有畫流程圖的姊妹 skill [process-flow-diagram-generator](https://github.com/Cocoon-AI/process-flow-diagram-generator)（★103（2026-10-15）），設計語言相同。
 
 **核心**：整個 skill 就是**一份設計規範寫進 `SKILL.md`**，外加一個 `resources/template.html`，沒有任何程式或驗證步驟。
 - **語意配色**：前端 cyan、後端 emerald、資料庫 violet、雲 amber、資安 rose、訊息匯流排 orange、外部 slate。
@@ -279,7 +279,7 @@ Claude.ai：**Customize → Skills → + → Create skill → Upload a skill** �
 > 挑選時看兩件事：**它願不願意讓你改**（框架型的會接管流程，出錯很難修），以及**它有沒有處理集合層級的維護**（skill 一多就會互相打架）。
 
 ### superpowers
-`plugin` · Claude Code・Codex・Cursor・Gemini・Copilot・Grok・Kimi・OpenCode・Devin 等 15+ harness · MIT · ★282.1k · ⬜ 待試
+`plugin` · Claude Code・Codex・Cursor・Gemini・Copilot・Grok・Kimi・OpenCode・Devin 等 15+ harness · MIT · ★299.5k（2026-10-15） · ⬜ 待試
 
 **做什麼**：不是一組工具，是**一整套會自動接管的軟體開發方法論**。你一開口要做東西，它不會直接寫碼——先反問你要解決什麼、逼出規格、分段給你確認；你點頭後產出「一個熱心但沒品味、沒判斷力、沒專案脈絡、討厭寫測試的菜鳥也照得動」的實作計劃；說 go 之後派 subagent 逐項執行並兩階段審查。**作者說 agent 常能照著計劃自主跑上好幾小時。**
 
@@ -310,7 +310,7 @@ devin plugins install obra/superpowers
 - [[工具-用壓力情境測試skill]] —— 它 `writing-skills` 裡那套方法論，我單獨抽出來的卡
 
 ### Skills For Real Engineers
-`plugin` · Claude Code（官方 marketplace）・Codex・Copilot・Gemini CLI／skills.sh · MIT · ★288k（2026-10-13）· v1.3.1 · ⬜ 待試
+`plugin` · Claude Code（官方 marketplace）・Codex・Copilot・Gemini CLI／skills.sh · MIT · ★292.1k（2026-10-15）· v1.3.1 · ⬜ 待試
 
 **做什麼**：Matt Pocock 每天在用的 **38 個 skill**（engineering 20、productivity 7、misc 4 已凍結、in-progress 7 beta），涵蓋整條流程：`/grill-with-docs`（拷問對齊）→ `/to-spec`（轉規格）→ `/to-tickets`（拆成垂直切片）→ `/implement` 或 `/implement-spec`（平行實作）→ `code-review`（雙軸審查）→ `pr`（PR 內文）→ `/retro`（改善 agent 環境）。旁路入口有 `/triage`、`diagnosing-bugs`、`/wayfinder`。每個 skill 的拆解見 [[Skills For Real Engineers#🗂 全部 38 個 skill 拆解（2026-10-13，依 v1.3.1）|筆記]]。
 
@@ -350,7 +350,7 @@ npx skills@latest add mattpocock/skills
 > 📊 已跑對照實測 → [[moc/AI技能評比|AI 技能評比]]（2026-08-05）。結論：答案確實變短，但**短在少講三分之一概念**，且 **output token 沒省到**。
 
 ### i-have-adhd
-`plugin` · Claude Code・Codex · MIT · ★16.7k · ⬜ 待試 · 📊
+`plugin` · Claude Code・Codex · MIT · ★57.2k（2026-10-15） · ⬜ 待試 · 📊
 
 **做什麼**：讓 coding agent **不要把答案埋起來**——動作先講、多步驟編號、不「Hope this helps!」。不需 ADHD 診斷也適用。
 
@@ -372,7 +372,7 @@ codex plugin add i-have-adhd@i-have-adhd
 **📊 實測**：概念覆蓋 **−17%**（三組裡壓最輕），四組裡最會給「起點與終點」 → [[moc/AI技能評比|評比]]
 
 ### ponytail
-`plugin` · 多平台 · MIT · ★95.7k · ⬜ 待試 · 📊
+`plugin` · 多平台 · MIT · ★164k（2026-10-15） · ⬜ 待試 · 📊
 
 **做什麼**：把「看你五十行程式碼一句話不說就換成一行」的資深工程師塞進 agent。寫碼前先爬一道階梯，停在第一個成立的階。
 
@@ -409,7 +409,7 @@ codex plugin add ponytail@ponytail
 **宣稱數字**（README，未驗證）：fastapi-template 12 ticket、Haiku 4.5、n=4：LOC −54%、token −22%、成本 −20%、時間 −27%、安全 100%（−54% 是均值，過度設計可到 −94%，本來精簡的接近 0）。
 
 ### go-modern-guidelines
-`plugin` · Junie・Claude Code・Codex・Cursor・opencode · Apache-2.0 · ★2.2k · ⬜ 待試
+`plugin` · Junie・Claude Code・Codex・Cursor・opencode · Apache-2.0 · ★3.9k（2026-10-15） · ⬜ 待試
 
 **做什麼**：JetBrains 官方出的 Go 專用 plugin，塞給 agent 一份**現代 Go 寫法對照表**，讓它別再產出過時的 Go——`max(a,b)` 而不是 if-else、`slices.Contains` 而不是手寫迴圈、`cmp.Or(a,b,c)` 而不是一串 nil 檢查。涵蓋 Go 1.0–1.27，對齊官方 `modernize` analyzer。
 
@@ -449,7 +449,7 @@ Junie 用 `/extensions marketplace add` ＋ `/extensions install modern-go-guide
 **🔗 相關**：[[Modern Go Guidelines]] —— **詳細筆記在那裡**：Critical／High 條目的舊→新速查表，以及那組「兩個失敗原因」的分析。
 
 ### karpathy-guidelines
-`plugin` · Claude Code・Cursor · README 標 MIT（**但 repo 沒有 LICENSE 檔**） · ★210.9k · ⬜ 待試
+`plugin` · Claude Code・Cursor · README 標 MIT（**但 repo 沒有 LICENSE 檔**） · ★220k（2026-10-15） · ⬜ 待試
 
 > ⚠️ **先講清楚歸屬**：**這不是 Andrej Karpathy 做的，也不是他背書的。** 是第三方（`multica-ai`，作者 X 帳號 `@jiayuan_jy`）把 Karpathy 公開談 LLM 寫碼缺陷的說法，整理成一份 `CLAUDE.md`。README 本身講得誠實（用的是 "derived from"、"Karpathy-Inspired"），**但 repo 名字 `andrej-karpathy-skills` 讀起來像是他本人的**——引用時要注意別誤植。
 
@@ -494,7 +494,7 @@ curl -o CLAUDE.md https://raw.githubusercontent.com/forrestchang/andrej-karpathy
 > 跟上面的「回應風格」差在**生效時機**：那些是 plugin，裝上每輪都在改你的 agent；這類是 skill，**被觸發才上場**，平常不動預設行為。所以風險低、但也要留意觸發詞會不會誤觸。
 
 ### eli5
-`skill` · Claude Code · MIT · ★143 · ⬜ 待試
+`skill` · Claude Code · MIT · ★1.7k（2026-10-15） · ⬜ 待試
 
 **做什麼**：把同一個東西（概念／一段 code／一則錯誤訊息）**換一套講法講給不同的人聽**——5 歲小孩、5 年級生、主管、設計師、研究生、你媽。不是「講簡單一點」，是換分析框架。
 
@@ -546,7 +546,7 @@ cp -r ELI5/skills/eli5 ~/.claude/skills/eli5
 > ~~同時裝兩套沒有意義，選一套即可。~~ ← 我自己的推論，已被實測推翻，留著當紀錄。
 
 ### codegraph
-`MCP` · 多平台 · MIT · ★64k · ✅ 已在用 · 📊
+`MCP` · 多平台 · MIT · ★74.2k（2026-10-15） · ✅ 已在用 · 📊
 
 **做什麼**：本機程式碼知識圖譜（Rust kernel）。核心工具 `codegraph_explore` 一次給相關 symbol 的**逐字源碼**＋**呼叫路徑**（含 grep 追不到的 dynamic dispatch）＋改動 blast radius。
 
@@ -556,7 +556,7 @@ curl -fsSL https://raw.githubusercontent.com/colbymchenry/codegraph/main/install
 codegraph install               # 接上各家 agent，不建索引
 cd your-project && codegraph init  # 每個專案各自建圖
 ```
-auto-sync 預設開，改檔即更新。本機 v1.4.1，官方已出 1.5.0（`codegraph upgrade`）。
+auto-sync 預設開，改檔即更新。本機 v1.4.1，官方最新 v1.6.2（2026-10-03 發布；查證 2026-10-15），用 `codegraph upgrade` 升級。
 
 **用**：只在有 `.codegraph/` 目錄的 repo 用（建索引我自己決定，不讓 agent 代跑 `init`）。已寫進全域 `CLAUDE.md`。
 
@@ -565,7 +565,7 @@ auto-sync 預設開，改檔即更新。本機 v1.4.1，官方已出 1.5.0（`co
 **宣稱數字**（README，未驗證）：工具呼叫 −89%、token −69%、7 repo 檔案讀取全部歸零；但小 repo 有地板效應、強模型直接 grep wall-clock 更快（只是燒 5–10 倍 token）。
 
 ### codebase-memory-mcp
-`MCP` · 43 client surface · MIT · ★37.4k · ✅ 已在用 · 📊
+`MCP` · 43 client surface · MIT · ★46.6k（2026-10-15） · ✅ 已在用 · 📊
 
 **做什麼**：同是本機程式碼知識圖譜，路線差在**廣度與速度**：tree-sitter AST 覆蓋 **158 種語言**（其中 12 種另加 LSP 語意型別解析），單一靜態 binary、零依賴。15 個 MCP 工具（死碼偵測／跨服務 HTTP 串接／Cypher／ADR），另把 Dockerfile／K8s／Kustomize 也建進圖。
 
@@ -585,7 +585,7 @@ curl -fsSL https://raw.githubusercontent.com/DeusData/codebase-memory-mcp/main/i
 ---
 
 ### graphify
-`skill` · Claude Code・Cursor・Codex・Gemini CLI・Copilot 等 20+ · Apache-2.0 · ★126k（2026-10-14）· ⬜ 待試
+`skill` · Claude Code・Cursor・Codex・Gemini CLI・Copilot 等 20+ · Apache-2.0 · ★126.7k（2026-10-15）· ⬜ 待試
 
 **做什麼**：把整個資料夾（程式碼、文件、SQL schema、設定、PDF、圖片、影片）建成一張**可查詢的知識圖譜**，用「沿著關係走」取代 grep。跟上面兩個的差別：它不只看程式碼，**文件和需求也進同一張圖**，所以能問「這個需求對應到哪些 module」。
 

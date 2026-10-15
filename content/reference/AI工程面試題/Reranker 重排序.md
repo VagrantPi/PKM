@@ -123,7 +123,7 @@ $$\text{score}(q, d) = \sum_{i \in q} \max_{j \in d} \left(E_{q_i} \cdot E_{d_j}
 
 ## ⚠️ 注意 / 什麼時候不適用
 
-- **★ 注意 reranker 的最大長度**。多數 cross-encoder 上限 512 token。**超過就被截斷，而且是靜默的**——你的 1000 token chunk 只有前半被評分。要嘛縮小 chunk，要嘛選長上下文的 reranker。
+- **★ 注意 reranker 的最大長度**。經典 BERT 系 cross-encoder 上限 512 token（如 `cross-encoder/ms-marco-MiniLM-L6-v2`、`BAAI/bge-reranker-large`）；較新的長上下文 reranker 則較長（`jina-reranker-v2` 1024、`bge-reranker-v2-m3` 8192、`Qwen3-Reranker` 數萬 token）——以模型 config 為準（查證 2026-10-15）。**超過就被截斷，而且是靜默的**——你的 1000 token chunk 只有前半被評分。要嘛縮小 chunk，要嘛選長上下文的 reranker。
 - **分數不可跨查詢比較**。cross-encoder 的分數是相對於「這個 query」的，**拿它當全域閾值（「> 0.8 才算相關」）會失準**。要設閾值就得自己校準。
 - **領域不匹配時可能比不 rerank 更差**。通用 reranker 在高度專業的語料（法律、醫療、內部術語）上可能排錯。**上線前一定要 A/B。**
 - **多語言要挑對模型**。英文 reranker 處理中文常會退化。

@@ -8,7 +8,7 @@ triggers: [AI工程面試會考什麼coding題, 手刻attention要注意什麼, 
 ---
 
 > **對應原題**（Common ‧ Coding and Data Structures，12 題）
-> Anthropic 12 題、Palantir 7 題、OpenAI 7 題——**Coding 在多數公司仍是題數最多的一輪**。
+> Anthropic 12 題、Palantir 7 題、OpenAI 7 題（題庫擷取 2026-09-20）——**Coding 在多數公司仍是題數最多的一輪**。
 > 但形狀變了：**漸進式加需求、在真實 codebase 上寫、可以用 AI 工具**（見 [[AI 工程面試題庫（公司別）]] 的考點地圖）。
 
 ## 🎯 什麼情境該想到我

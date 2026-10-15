@@ -31,9 +31,9 @@ $$\boxed{C \approx 6ND}$$
 | | **Kaplan et al. 2020** | **Chinchilla 2022** |
 |---|---|---|
 | 給定計算預算，該加什麼 | **主要加參數** | **參數與資料等比例加** |
-| 指數 | $N \propto C^{0.73}$，$D \propto C^{0.27}$ | $N \propto C^{0.50}$，$D \propto C^{0.50}$ |
+| 指數 | $N \propto C^{0.73}$，$D \propto C^{0.27}$ | $N \propto C^{a}$，$D \propto C^{b}$；論文三種方法分別得 $a/b \approx$ 0.50/0.50、0.49/0.51、0.46/0.54（Table 2），都接近 0.5/0.5 |
 | 實務結論 | 「模型越大越好，資料夠用就行」 | **「當時的大模型全都嚴重欠訓練」** |
-| 經驗法則 | — | **每個參數約 20 個 token** |
+| 經驗法則 | — | **每個參數約 20 個 token**（取 $a \approx b \approx 0.5$ 的近似：比例不隨預算變，才有固定的 tok/param） |
 
 **Chinchilla 的實驗證明**（同樣的計算預算下）：
 
@@ -56,7 +56,9 @@ Chinchilla 論文的擬合值：$E = 1.69$、$A = 406.4$、$B = 410.7$、$\alpha
 - $A/N^\alpha$ —— 模型容量不足造成的損失
 - $B/D^\beta$ —— 資料不足造成的損失
 
-在 $C = 6ND$ 的約束下對這個式子求極值，就得到 $\alpha \approx \beta$ 時「兩者等比例成長」的結論。
+在 $C = 6ND$ 的約束下對這個式子求極值，得到 $N_{opt} \propto C^{a}$、$D_{opt} \propto C^{b}$，其中
+$$a = \frac{\beta}{\alpha+\beta},\quad b = \frac{\alpha}{\alpha+\beta}$$
+上面這組 $\alpha, \beta$ 是 **Approach 3（參數化擬合）** 的值，代入：$a = 0.28/(0.34+0.28) = 0.28/0.62 \approx 0.45$、$b \approx 0.55$（論文用未四捨五入的擬合值報 0.46/0.54）。所以「$\alpha \approx \beta$ → 兩者等比例成長」只是近似；Approach 3 其實略偏向多給資料，另外兩種方法則幾乎正好 0.5/0.5。
 
 ### ★ 後 Chinchilla 時代：為什麼大家又不照做了
 

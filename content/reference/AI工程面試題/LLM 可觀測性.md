@@ -62,7 +62,7 @@ root span: user_interaction                         總延遲、總成本、版�
 | **`finish_reason`** | ★ `max_tokens` 代表被截斷——這是一種**靜默的品質事故** |
 | `tool_calls` 數量 | agent 行為 |
 
-> **OpenTelemetry 的 GenAI semantic conventions** 是目前的標準化方向，值得對齊——但它**仍在演進**，各家 SDK 的欄位名不完全一致，不要假設可攜。
+> **OpenTelemetry 的 GenAI semantic conventions** 是截至 2026-10 的標準化方向，值得對齊——但它**仍在演進**：屬性狀態仍標 Development（未 stable），且自 semconv v1.42.0 起已搬到獨立 repo `open-telemetry/semantic-conventions-genai`（查證 2026-10-15）；各家 SDK 的欄位名不完全一致，不要假設可攜。
 
 ### 指標分類
 

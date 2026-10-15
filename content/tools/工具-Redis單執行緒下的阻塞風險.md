@@ -27,7 +27,7 @@ Redis **6.0 起網路 I/O 已支援多執行緒**，但**命令執行仍然是�
 |---|---|---|
 | `KEYS pattern` | O(N)，N = 整個 keyspace | `SCAN cursor MATCH ... COUNT ...`（游標分批） |
 | `HGETALL` / `SMEMBERS` | O(N)，N = 集合大小 | `HSCAN` / `SSCAN`（自 2.8 起） |
-| `ZRANGE key 0 -1` | O(log N + M)，M = 全部 | 只取需要的區段；排行榜用 `ZREVRANGE key 0 9` |
+| `ZRANGE key 0 -1` | O(log N + M)，M = 全部 | 只取需要的區段；排行榜用 `ZRANGE key 0 9 REV`（`ZREVRANGE` 自 6.2 起已標為 deprecated，查證 2026-10-15） |
 | `LRANGE key 0 -1` | O(N) | 取固定區段，並用 `LTRIM key 0 99` 控制長度上限 |
 | `DEL bigkey` | O(N)，要同步釋放所有記憶體 | **`UNLINK`**（4.0 起）：O(1) 回收 key，記憶體釋放丟到背景執行緒 |
 | `FLUSHALL` / `FLUSHDB` | O(N) | 加 `ASYNC` |

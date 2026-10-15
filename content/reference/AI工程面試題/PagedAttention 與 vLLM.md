@@ -126,9 +126,9 @@ vLLM 論文：在相同延遲下，吞吐量是當時 SOTA（FasterTransformer�
 
 ## ⚠️ 注意 / 什麼時候不適用
 
-- **block size 要調**。太小 → block table 大、kernel 開銷高；太大 → 內部碎片回來。vLLM 預設 16，長序列場景有時 32 更好。**要量，不要猜。**
-- **前綴快取不是免費的**。hash 計算與查表有開銷；**前綴不重複的流量會純虧**。vLLM 需要顯式開啟（`--enable-prefix-caching`）是有原因的。
-- **`gpu_memory_utilization` 設太高會 OOM**。它是「權重之外 vLLM 可用的比例」，還要留啟動值與 CUDA context 的空間。0.9 通常是上限。
+- **block size 要調**。太小 → block table 大、kernel 開銷高；太大 → 內部碎片回來。vLLM 預設 16（`CacheConfig.DEFAULT_BLOCK_SIZE`，v0.31.0；查證 2026-10-15），長序列場景有時 32 更好。**要量，不要猜。**
+- **前綴快取不是免費的**。hash 計算與查表有開銷；**前綴不重複的流量會純虧**。V0 引擎時代要顯式 `--enable-prefix-caching` 才開；V1 引擎改為**預設開啟**（v0.31.0 `enable_prefix_caching: bool = True`；查證 2026-10-15），流量前綴幾乎不重複時可用 `--no-enable-prefix-caching` 關掉。
+- **`gpu_memory_utilization` 設太高會 OOM**。它是「這個 vLLM 實例可用的整張卡顯存比例」（權重＋activation＋KV cache 都算在內），剩下的要留給 CUDA context 與同卡其他程序。預設值 V0 時代是 0.9、v0.31.0 已改為 0.92（查證 2026-10-15）；再往上調就容易 OOM。
 - **preemption 仍然會發生**。分頁減少浪費，但沒有變出顯存。**看到 log 裡大量 preemption 就是該加卡或降 `max_num_seqs` 的訊號**——這是 p99 惡化最常見的根因。
 - **這是服務層優化，不改變模型**。品質完全不變，也不會讓單一請求更快（batch 1 沒有增益）。
 - **TensorRT-LLM 有等價機制**（paged KV cache），不是 vLLM 獨有。選型見 [[服務棧選型與降本]]。

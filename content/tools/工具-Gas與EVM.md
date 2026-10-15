@@ -245,7 +245,7 @@ Ch.13 的 "Disassembling the Bytecode"（p.560–565）把 `Faucet.sol` 的 runt
 - **The Merge / PoS**——本章結尾說「接下來 Chapter 14 要看以太坊達成去中心化共識的機制」，書中脈絡是**礦工（miners）**、挖礦程式（Ethminer）、`DIFFICULTY` opcode、區塊受益者（block beneficiary）。本卡通篇沿用「礦工」。
 - **Layer 2 / rollup / blob（EIP-4844）** 等擴容方案——書談的擴容只有「礦工投票調整 block gas limit（每次 ±1/1,024）」。
 - **後來新增或改語意的 opcode**（如 `CHAINID`、`SELFBALANCE`、`BASEFEE`、`PUSH0`、`SHL`/`SHR`/`SAR` 位移指令、transient storage `TLOAD`/`TSTORE`）——上面的 7 類 opcode 表**就是書中列的那些**，一個沒加。
-- **`SELFDESTRUCT` 退款已被移除、`SSTORE` 退款上限改成 1/5** 等後續調整——本卡照書寫 24,000 / 15,000 與「一半」的上限。
+- **EIP-3529（London 升級，主網 2021-08-05 啟用）移除 `SELFDESTRUCT` 退款、把清除 storage 的 `SSTORE` 退款降到 4,800、單筆交易退款上限從 gas_used 的 1/2 改成 1/5** 等後續調整（查證 2026-10-15，eips.ethereum.org／execution-specs）——本卡照書寫 24,000 / 15,000 與「一半」的上限。
 
 ## 🔗 相關工具
 - [[工具-以太坊帳戶與交易]] —— 同書：那張講一筆交易送出了哪些欄位（含 `gasPrice`／`gasLimit`）與簽章；本卡接手講這些欄位進了 EVM 之後怎麼被消耗。

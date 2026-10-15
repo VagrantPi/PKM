@@ -114,7 +114,7 @@ AgentCore 是 AWS 為 AI agent 提供的**一組託管基礎設施服務**，可
 | 刪掉它，agent 會**變笨／變危險**還是**跑不起來**？ | 變笨或越權 | 直接跑不起來 |
 
 延伸兩條同樣好用的判準：
-- **鉤子歸誰，看它回答什麼問題，不看它用了多少系統資源**。掛在語意事件上（`before_tool_call` 做審查）是策略；掛在系統事件上（`on_oom`、`on_crash_restart`）是執行。上面 AgentCore 的四個 lifecycle hook 全部是前者——所以它們只能 allow/deny，不能改寫內容。
+- **鉤子歸誰，看它回答什麼問題，不看它用了多少系統資源**。掛在語意事件上（`before_tool_call` 做審查）是策略；掛在系統事件上（`on_oom`、`on_crash_restart`）是執行。上面 AgentCore 的四個 lifecycle hook 全部是前者；另外，官方文件限制 hook 只能回傳 allow／deny，不能改寫內容。
 - **工具橫跨兩層**：Schema、選擇策略、權限白名單、審計紀錄是策略；實際執行、超時、沙箱、憑證注入是執行。
 
 #### ★ 兩種 checkpoint 必須分開存
@@ -125,7 +125,7 @@ AgentCore 是 AWS 為 AI agent 提供的**一組託管基礎設施服務**，可
 | 生命週期 | 跨 session，天／月 | session 內，秒／分 |
 | 存哪 | 資料庫、檔案、Git | 記憶體、本機碟、Redis |
 
-原文提出的失效情境（設計推演，非具名事故）：**執行層崩潰後從 checkpoint 恢復，但審批紀錄跟著執行狀態一起丟了**——agent 不知道自己剛批准過什麼，要嘛重複跟使用者要核准，要嘛直接執行。根因是兩種狀態放在同一個儲存、套同一條清理策略。在 AgentCore 上的對應：inline function 的核准結果是**呼叫端**提供的，要自己持久化，不能指望 microVM 的 session 狀態替你記住。
+原文提出的失效情境（設計推演，非具名事故）：**執行層崩潰後從 checkpoint 恢復，但審批紀錄跟著執行狀態一起丟了**——agent 不知道自己剛批准過什麼，要嘛重複跟使用者要核准，要嘛直接執行。根因是兩種狀態放在同一個儲存、套同一條清理策略。在 AgentCore 上的對應（我的推論）：inline function 的核准結果是**呼叫端**提供的，要自己持久化，不能指望 microVM 的 session 狀態替你記住。
 
 > ❌ **這篇原文有兩處別採用**：
 > 1. 「Loop 是第三類，不要塞進 Harness」——和它自己列的 Harness 職責（第 1 項就是 agent loop）矛盾，也和微軟、AWS 的定義相反。
