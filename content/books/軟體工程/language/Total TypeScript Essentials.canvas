@@ -1,0 +1,164 @@
+{
+	"nodes": [
+		{
+			"id": "center",
+			"type": "text",
+			"text": "# 📘 Total TypeScript Essentials",
+			"x": -140,
+			"y": -40,
+			"width": 280,
+			"height": 80,
+			"color": "6"
+		},
+		{
+			"id": "cat0",
+			"type": "text",
+			"text": "**🧩 型別塑形**",
+			"x": 320,
+			"y": -370,
+			"width": 220,
+			"height": 60,
+			"color": "5"
+		},
+		{
+			"id": "cat0_l0",
+			"type": "file",
+			"file": "tools/工具-判別聯集.md",
+			"x": 620,
+			"y": -395,
+			"width": 320,
+			"height": 110
+		},
+		{
+			"id": "cat1",
+			"type": "text",
+			"text": "**🎯 推論與標註**",
+			"x": 320,
+			"y": -130,
+			"width": 220,
+			"height": 60,
+			"color": "5"
+		},
+		{
+			"id": "cat1_l0",
+			"type": "file",
+			"file": "tools/工具-satisfies與型別標註.md",
+			"x": 620,
+			"y": -225,
+			"width": 320,
+			"height": 110
+		},
+		{
+			"id": "cat1_l1",
+			"type": "file",
+			"file": "tools/工具-as-const與推論寬窄.md",
+			"x": 620,
+			"y": -85,
+			"width": 320,
+			"height": 110
+		},
+		{
+			"id": "cat2",
+			"type": "text",
+			"text": "**🗂 型別怎麼組織**",
+			"x": 320,
+			"y": 110,
+			"width": 220,
+			"height": 60,
+			"color": "5"
+		},
+		{
+			"id": "cat2_l0",
+			"type": "file",
+			"file": "tools/工具-型別推導還是解耦.md",
+			"x": 620,
+			"y": 85,
+			"width": 320,
+			"height": 110
+		},
+		{
+			"id": "cat3",
+			"type": "text",
+			"text": "**⚙️ 專案設定**",
+			"x": 320,
+			"y": 310,
+			"width": 220,
+			"height": 60,
+			"color": "5"
+		},
+		{
+			"id": "cat3_l0",
+			"type": "file",
+			"file": "tools/工具-tsconfig基準設定.md",
+			"x": 620,
+			"y": 285,
+			"width": 320,
+			"height": 110
+		}
+	],
+	"edges": [
+		{
+			"id": "e_c_cat0",
+			"fromNode": "center",
+			"toNode": "cat0",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_cat0_l0",
+			"fromNode": "cat0",
+			"toNode": "cat0_l0",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_c_cat1",
+			"fromNode": "center",
+			"toNode": "cat1",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_cat1_l0",
+			"fromNode": "cat1",
+			"toNode": "cat1_l0",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_cat1_l1",
+			"fromNode": "cat1",
+			"toNode": "cat1_l1",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_c_cat2",
+			"fromNode": "center",
+			"toNode": "cat2",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_cat2_l0",
+			"fromNode": "cat2",
+			"toNode": "cat2_l0",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_c_cat3",
+			"fromNode": "center",
+			"toNode": "cat3",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_cat3_l0",
+			"fromNode": "cat3",
+			"toNode": "cat3_l0",
+			"fromSide": "right",
+			"toSide": "left"
+		}
+	]
+}

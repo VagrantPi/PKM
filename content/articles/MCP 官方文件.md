@@ -12,6 +12,9 @@ read_status: read
 ## 📌 30 秒摘要
 > MCP 是「AI 應用的 USB-C」——一套開放標準，讓 Claude、ChatGPT 這類 AI 應用用統一介面連上外部的資料、工具與工作流。核心是 **Host／Client／Server 架構** ＋ **JSON-RPC 資料層** ＋ 三大伺服器原語（**Tools／Resources／Prompts**）與三大用戶端原語（**Sampling／Elicitation／Roots**）；傳輸走 **stdio（本地）** 或 **Streamable HTTP（遠端，OAuth 授權）**。
 
+## 🗺 心智圖（Canvas）
+![[MCP 官方文件.canvas]]
+
 ## 🎯 為什麼存這套文件 / 未來想拿它做什麼
 - 想把自己的 API／資料源包成 MCP server，讓 AI 應用即插即用時的權威依據。
 - 搞懂「tools / resources / prompts / sampling / elicitation / roots」到底各自幹嘛、誰控制。

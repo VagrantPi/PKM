@@ -12,6 +12,9 @@ read_status: read
 ## 📌 30 秒摘要
 > 同事用 `INSERT ... ON DUPLICATE KEY UPDATE`（upsert）去修一個 race condition，diff 本身沒錯，但作者在 review 時追問「為什麼這裡會需要 upsert」，一路追到真正的 root cause：**message sender 把發送 MQ 包在 DB transaction 裡、還沒 commit 就發訊息**，導致 worker 比 commit 更早收到訊息、查不到資料。upsert 只是掩蓋症狀（還會造出殘缺資料與 rollback 幽靈記錄）。正解是 **Transactional Outbox Pattern + 下游 retry + 消費端 idempotent**。核心體悟：**reasoning 比 coding 更值錢。**
 
+## 🗺 心智圖（Canvas）
+![[擋下用Upsert修RaceCondition的PR.canvas]]
+
 ## 🎯 為什麼存這篇 / 未來想拿它做什麼
 - 當團隊出現「用 upsert / 加 retry / try-catch」這類「直覺修法」時，用它提醒自己**先追 root cause**。
 - 設計「DB 寫入 + 發事件」的流程時，當作 Outbox pattern 的實戰參考。

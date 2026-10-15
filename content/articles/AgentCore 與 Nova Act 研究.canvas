@@ -1,0 +1,279 @@
+{
+	"nodes": [
+		{
+			"id": "center",
+			"type": "text",
+			"text": "# ☁️ AgentCore\n與 Nova Act 研究",
+			"x": -140,
+			"y": -40,
+			"width": 280,
+			"height": 80,
+			"color": "6"
+		},
+		{
+			"id": "cat0",
+			"type": "text",
+			"text": "**🏗 平台選擇**",
+			"x": 320,
+			"y": -740,
+			"width": 220,
+			"height": 60,
+			"color": "5"
+		},
+		{
+			"id": "cat0_l0",
+			"type": "file",
+			"file": "tools/工具-agent平台自建還是用代管.md",
+			"x": 620,
+			"y": -765,
+			"width": 320,
+			"height": 110
+		},
+		{
+			"id": "cat1",
+			"type": "text",
+			"text": "**🔐 身分、入口與授權**",
+			"x": 320,
+			"y": -430,
+			"width": 220,
+			"height": 60,
+			"color": "5"
+		},
+		{
+			"id": "cat1_l0",
+			"type": "file",
+			"file": "tools/工具-agent代使用者存取的身分設計.md",
+			"x": 620,
+			"y": -595,
+			"width": 320,
+			"height": 110
+		},
+		{
+			"id": "cat1_l1",
+			"type": "file",
+			"file": "tools/工具-讓Gateway當agent唯一入口.md",
+			"x": 620,
+			"y": -455,
+			"width": 320,
+			"height": 110
+		},
+		{
+			"id": "cat1_l2",
+			"type": "file",
+			"file": "tools/工具-把業務規則從prompt搬到授權層.md",
+			"x": 620,
+			"y": -315,
+			"width": 320,
+			"height": 110
+		},
+		{
+			"id": "cat2",
+			"type": "text",
+			"text": "**🧪 品質**",
+			"x": 320,
+			"y": -120,
+			"width": 220,
+			"height": 60,
+			"color": "5"
+		},
+		{
+			"id": "cat2_l0",
+			"type": "file",
+			"file": "tools/工具-agent的測試金字塔.md",
+			"x": 620,
+			"y": -145,
+			"width": 320,
+			"height": 110
+		},
+		{
+			"id": "cat3",
+			"type": "text",
+			"text": "**📖 型錄：全局與執行**",
+			"x": 320,
+			"y": 80,
+			"width": 220,
+			"height": 60,
+			"color": "5"
+		},
+		{
+			"id": "cat3_t",
+			"type": "text",
+			"text": "[[AgentCore 總覽與Harness vs Runtime]]\n[[AgentCore 框架整合]]\n[[AgentCore Runtime]]、[[AgentCore Memory]]\n[[AgentCore Built-in Tools]]",
+			"x": 620,
+			"y": 46,
+			"width": 320,
+			"height": 128
+		},
+		{
+			"id": "cat4",
+			"type": "text",
+			"text": "**📖 型錄：入口、身分、授權**",
+			"x": 320,
+			"y": 280,
+			"width": 220,
+			"height": 60,
+			"color": "5"
+		},
+		{
+			"id": "cat4_t",
+			"type": "text",
+			"text": "[[AgentCore Gateway]]、[[AgentCore Identity]]\n[[AgentCore Policy]]、[[AgentCore Payments]]",
+			"x": 620,
+			"y": 268,
+			"width": 320,
+			"height": 84
+		},
+		{
+			"id": "cat5",
+			"type": "text",
+			"text": "**📖 型錄：品質與營運**",
+			"x": 320,
+			"y": 480,
+			"width": 220,
+			"height": 60,
+			"color": "5"
+		},
+		{
+			"id": "cat5_t",
+			"type": "text",
+			"text": "[[AgentCore Observability]]\n[[AgentCore Evaluations與Optimization]]",
+			"x": 620,
+			"y": 468,
+			"width": 320,
+			"height": 84
+		},
+		{
+			"id": "cat6",
+			"type": "text",
+			"text": "**📖 型錄：Nova Act**",
+			"x": 320,
+			"y": 680,
+			"width": 220,
+			"height": 60,
+			"color": "5"
+		},
+		{
+			"id": "cat6_t",
+			"type": "text",
+			"text": "[[Nova Act 總覽與SDK]]\n[[Nova Act 部署維運與HITL]]\n[[Nova Act 與AgentCore整合及安全]]",
+			"x": 620,
+			"y": 657,
+			"width": 320,
+			"height": 106
+		}
+	],
+	"edges": [
+		{
+			"id": "e_c_cat0",
+			"fromNode": "center",
+			"toNode": "cat0",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_cat0_l0",
+			"fromNode": "cat0",
+			"toNode": "cat0_l0",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_c_cat1",
+			"fromNode": "center",
+			"toNode": "cat1",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_cat1_l0",
+			"fromNode": "cat1",
+			"toNode": "cat1_l0",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_cat1_l1",
+			"fromNode": "cat1",
+			"toNode": "cat1_l1",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_cat1_l2",
+			"fromNode": "cat1",
+			"toNode": "cat1_l2",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_c_cat2",
+			"fromNode": "center",
+			"toNode": "cat2",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_cat2_l0",
+			"fromNode": "cat2",
+			"toNode": "cat2_l0",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_c_cat3",
+			"fromNode": "center",
+			"toNode": "cat3",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_cat3_t",
+			"fromNode": "cat3",
+			"toNode": "cat3_t",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_c_cat4",
+			"fromNode": "center",
+			"toNode": "cat4",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_cat4_t",
+			"fromNode": "cat4",
+			"toNode": "cat4_t",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_c_cat5",
+			"fromNode": "center",
+			"toNode": "cat5",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_cat5_t",
+			"fromNode": "cat5",
+			"toNode": "cat5_t",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_c_cat6",
+			"fromNode": "center",
+			"toNode": "cat6",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_cat6_t",
+			"fromNode": "cat6",
+			"toNode": "cat6_t",
+			"fromSide": "right",
+			"toSide": "left"
+		}
+	]
+}

@@ -1,0 +1,163 @@
+{
+	"nodes": [
+		{
+			"id": "center",
+			"type": "text",
+			"text": "# 🐹 Go Blog 經典六篇",
+			"x": -140,
+			"y": -40,
+			"width": 280,
+			"height": 80,
+			"color": "6"
+		},
+		{
+			"id": "cat0",
+			"type": "text",
+			"text": "**🧯 錯誤與清理**",
+			"x": 320,
+			"y": -310,
+			"width": 220,
+			"height": 60,
+			"color": "5"
+		},
+		{
+			"id": "cat0_l0",
+			"type": "file",
+			"file": "tools/工具-defer-panic-recover.md",
+			"x": 620,
+			"y": -405,
+			"width": 320,
+			"height": 110
+		},
+		{
+			"id": "cat0_l1",
+			"type": "file",
+			"file": "tools/工具-Go現代錯誤處理.md",
+			"x": 620,
+			"y": -265,
+			"width": 320,
+			"height": 110
+		},
+		{
+			"id": "cat1",
+			"type": "text",
+			"text": "**🧱 資料與反射**",
+			"x": 320,
+			"y": -30,
+			"width": 220,
+			"height": 60,
+			"color": "5"
+		},
+		{
+			"id": "cat1_l0",
+			"type": "file",
+			"file": "tools/工具-Go切片的共享與陷阱.md",
+			"x": 620,
+			"y": -125,
+			"width": 320,
+			"height": 110
+		},
+		{
+			"id": "cat1_l1",
+			"type": "file",
+			"file": "tools/工具-Go反射三法則.md",
+			"x": 620,
+			"y": 15,
+			"width": 320,
+			"height": 110
+		},
+		{
+			"id": "cat2",
+			"type": "text",
+			"text": "**🔀 並行**",
+			"x": 320,
+			"y": 250,
+			"width": 220,
+			"height": 60,
+			"color": "5"
+		},
+		{
+			"id": "cat2_l0",
+			"type": "file",
+			"file": "tools/工具-select超時與競速.md",
+			"x": 620,
+			"y": 155,
+			"width": 320,
+			"height": 110
+		},
+		{
+			"id": "cat2_l1",
+			"type": "file",
+			"file": "tools/工具-用race偵測器抓資料競爭.md",
+			"x": 620,
+			"y": 295,
+			"width": 320,
+			"height": 110
+		}
+	],
+	"edges": [
+		{
+			"id": "e_c_cat0",
+			"fromNode": "center",
+			"toNode": "cat0",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_cat0_l0",
+			"fromNode": "cat0",
+			"toNode": "cat0_l0",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_cat0_l1",
+			"fromNode": "cat0",
+			"toNode": "cat0_l1",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_c_cat1",
+			"fromNode": "center",
+			"toNode": "cat1",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_cat1_l0",
+			"fromNode": "cat1",
+			"toNode": "cat1_l0",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_cat1_l1",
+			"fromNode": "cat1",
+			"toNode": "cat1_l1",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_c_cat2",
+			"fromNode": "center",
+			"toNode": "cat2",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_cat2_l0",
+			"fromNode": "cat2",
+			"toNode": "cat2_l0",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_cat2_l1",
+			"fromNode": "cat2",
+			"toNode": "cat2_l1",
+			"fromSide": "right",
+			"toSide": "left"
+		}
+	]
+}

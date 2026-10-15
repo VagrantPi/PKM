@@ -12,6 +12,9 @@ read_status: read
 ## 📌 30 秒摘要（讀完用自己的話寫一句）
 > 這篇在講：Go 官方的慣用寫法指南——但它**寫於 2009 年、官方明說不再主動更新**。它今天的價值不在語法，而在**解釋 Go 為什麼長成這樣**：為什麼介面要小、為什麼用嵌入不用繼承、為什麼「靠通訊共享記憶體」。**心智模型的部分沒過期，語法與函式庫的部分過期了。**
 
+## 🗺 心智圖（Canvas）
+![[Effective Go.canvas]]
+
 ## ⚠️ 時效性（先讀這段再讀其他）
 官方在文件頂端自己標了警語，原文照抄：
 > "Note: This document was written for Go's release in **2009** and **is not actively updated**. While it **remains a good guide for using the core language**, it **does not cover significant changes to the language (generics), ecosystem (modules), or libraries added since.** See issue 28782 for context."

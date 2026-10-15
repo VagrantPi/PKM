@@ -1,0 +1,131 @@
+{
+	"nodes": [
+		{
+			"id": "center",
+			"type": "text",
+			"text": "# 🐹 Effective Go",
+			"x": -140,
+			"y": -40,
+			"width": 280,
+			"height": 80,
+			"color": "6"
+		},
+		{
+			"id": "cat0",
+			"type": "text",
+			"text": "**🏷 命名與介面**",
+			"x": 320,
+			"y": -230,
+			"width": 220,
+			"height": 60,
+			"color": "5"
+		},
+		{
+			"id": "cat0_l0",
+			"type": "file",
+			"file": "tools/工具-Go命名慣例.md",
+			"x": 620,
+			"y": -325,
+			"width": 320,
+			"height": 110
+		},
+		{
+			"id": "cat0_l1",
+			"type": "file",
+			"file": "tools/工具-Go介面小而隱式.md",
+			"x": 620,
+			"y": -185,
+			"width": 320,
+			"height": 110
+		},
+		{
+			"id": "cat1",
+			"type": "text",
+			"text": "**🧩 組合**",
+			"x": 320,
+			"y": 10,
+			"width": 220,
+			"height": 60,
+			"color": "5"
+		},
+		{
+			"id": "cat1_l0",
+			"type": "file",
+			"file": "tools/工具-Go嵌入機制.md",
+			"x": 620,
+			"y": -15,
+			"width": 320,
+			"height": 110
+		},
+		{
+			"id": "cat2",
+			"type": "text",
+			"text": "**🔀 並行**",
+			"x": 320,
+			"y": 210,
+			"width": 220,
+			"height": 60,
+			"color": "5"
+		},
+		{
+			"id": "cat2_l0",
+			"type": "file",
+			"file": "tools/工具-靠通訊共享記憶體.md",
+			"x": 620,
+			"y": 185,
+			"width": 320,
+			"height": 110
+		}
+	],
+	"edges": [
+		{
+			"id": "e_c_cat0",
+			"fromNode": "center",
+			"toNode": "cat0",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_cat0_l0",
+			"fromNode": "cat0",
+			"toNode": "cat0_l0",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_cat0_l1",
+			"fromNode": "cat0",
+			"toNode": "cat0_l1",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_c_cat1",
+			"fromNode": "center",
+			"toNode": "cat1",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_cat1_l0",
+			"fromNode": "cat1",
+			"toNode": "cat1_l0",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_c_cat2",
+			"fromNode": "center",
+			"toNode": "cat2",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_cat2_l0",
+			"fromNode": "cat2",
+			"toNode": "cat2_l0",
+			"fromSide": "right",
+			"toSide": "left"
+		}
+	]
+}

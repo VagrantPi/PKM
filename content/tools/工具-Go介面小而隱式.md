@@ -4,7 +4,7 @@ name: "Go 介面小而隱式"
 source: "[[Effective Go]]"
 source_type: article
 tags: [software, go, language, design]
-triggers: [Go的介面該怎麼設計, 介面要定義在哪一邊, 為什麼回傳的error不等於nil, 該用介面還是泛型, 介面抽太多變成噪音]
+triggers: [Go的介面該怎麼設計, 為什麼回傳的error不等於nil, 該用介面還是泛型, 介面抽太多變成噪音]
 ---
 
 ## 🎯 什麼情境該想到我

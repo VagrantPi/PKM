@@ -4,7 +4,7 @@ name: "Go 錯誤該包還是該轉"
 source: "[[Google Go 風格指南]]"
 source_type: article
 tags: [software, go, error-handling, design]
-triggers: [不知道該用%v還是%w, 錯誤訊息一層層疊起來又臭又長, 同一個錯誤被記了好幾次log, 設計錯誤時要不要讓呼叫端能分辨種類, 對外的API該不該暴露內部錯誤]
+triggers: [不知道該用%v還是%w, 錯誤訊息一層層疊起來又臭又長, 錯誤往上傳時要不要加上下文, 設計錯誤時要不要讓呼叫端能分辨種類, 對外的API該不該暴露內部錯誤]
 ---
 
 ## 🎯 什麼情境該想到我

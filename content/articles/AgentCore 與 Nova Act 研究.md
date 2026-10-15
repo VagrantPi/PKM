@@ -18,6 +18,9 @@ read_status: read
 >
 > 研究的價值不在翻譯文件，而在三件事：**每篇開頭的判斷**、**踩雷清單**，以及**官方文件自相矛盾之處**（例如 IAM ARN 格式、區域、配額前後不一）。
 
+## 🗺 心智圖（Canvas）
+![[AgentCore 與 Nova Act 研究.canvas]]
+
 ## 🗺 架構速覽
 ```text
 User Request → Runtime → Gateway → Policy (Cedar) → Backend / Tools

@@ -1,0 +1,98 @@
+{
+	"nodes": [
+		{
+			"id": "center",
+			"type": "text",
+			"text": "# 🛑 擋下用 Upsert\n修 Race Condition 的 PR",
+			"x": -140,
+			"y": -40,
+			"width": 280,
+			"height": 80,
+			"color": "6"
+		},
+		{
+			"id": "cat0",
+			"type": "text",
+			"text": "**🔧 正確的修法**",
+			"x": 320,
+			"y": -130,
+			"width": 220,
+			"height": 60,
+			"color": "5"
+		},
+		{
+			"id": "cat0_l0",
+			"type": "file",
+			"file": "tools/工具-Transactional-Outbox-Pattern.md",
+			"x": 620,
+			"y": -225,
+			"width": 320,
+			"height": 110
+		},
+		{
+			"id": "cat0_l1",
+			"type": "file",
+			"file": "tools/工具-MQ消費端防禦三原則.md",
+			"x": 620,
+			"y": -85,
+			"width": 320,
+			"height": 110
+		},
+		{
+			"id": "cat1",
+			"type": "text",
+			"text": "**🔍 怎麼審這種修法**",
+			"x": 320,
+			"y": 110,
+			"width": 220,
+			"height": 60,
+			"color": "5"
+		},
+		{
+			"id": "cat1_l0",
+			"type": "file",
+			"file": "tools/工具-區分修復與掩蓋症狀.md",
+			"x": 620,
+			"y": 85,
+			"width": 320,
+			"height": 110
+		}
+	],
+	"edges": [
+		{
+			"id": "e_c_cat0",
+			"fromNode": "center",
+			"toNode": "cat0",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_cat0_l0",
+			"fromNode": "cat0",
+			"toNode": "cat0_l0",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_cat0_l1",
+			"fromNode": "cat0",
+			"toNode": "cat0_l1",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_c_cat1",
+			"fromNode": "center",
+			"toNode": "cat1",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "e_cat1_l0",
+			"fromNode": "cat1",
+			"toNode": "cat1_l0",
+			"fromSide": "right",
+			"toSide": "left"
+		}
+	]
+}

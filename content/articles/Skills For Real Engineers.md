@@ -12,6 +12,9 @@ read_status: read
 ## 📌 30 秒摘要（讀完用自己的話寫一句）
 > 這篇在講：Matt Pocock 每天在用的 agent skill（2026-08 收錄時約 24 個；**2026-10-13 依 v1.3.1 重新拆解，共 38 個**，見下方〈全部 38 個 skill 拆解〉）。它的論點是**反 GSD／BMAD／Spec-Kit 那種「接管整個流程」的做法**——那類框架奪走你的控制權，流程出錯還很難修；他主張 skill 要**小、好改、可組合**。而他組織這套 skill 的方式（**user-invoked 負責編排、model-invoked 持有可複用紀律**）比任何單一 skill 都值得抄。
 
+## 🗺 心智圖（Canvas）
+![[Skills For Real Engineers.canvas]]
+
 ## 🎯 為什麼存這篇 / 未來想拿它做什麼
 - 我自己在寫 skill（`/ingest-book`、`/ingest-skill`…），這份 repo 的 `CLAUDE.md` 是**怎麼把 skill 集合維護到不腐爛**的實戰範本。
 - 它的四個失敗模式，恰好是我知識庫裡既有工具卡的 agent 版對照——**可以直接複用我已經懂的東西**。
