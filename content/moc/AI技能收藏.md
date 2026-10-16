@@ -33,6 +33,8 @@ tags: [moc, ai, skills, agent, tooling]
 | [codegraph](#codegraph) | MCP | 多平台 | 本機碼圖譜，讀流程強、caller 會漏 | [repo↗](https://github.com/colbymchenry/codegraph) | ✅ 📊 |
 | [codebase-memory-mcp](#codebase-memory-mcp) | MCP | 多平台 | 同路線，caller 完整、只給名稱無 body | [repo↗](https://github.com/DeusData/codebase-memory-mcp) | ✅ 📊 |
 | [graphify](#graphify) | skill | 多平台 | 程式碼＋文件＋PDF 建成一張圖，每條邊標可信度（EXTRACTED／INFERRED／AMBIGUOUS） | [repo↗](https://github.com/Graphify-Labs/graphify) | ⬜ |
+| [GitNexus](#gitnexus) | MCP | 多平台 | 程式碼圖資料庫＋19 個 MCP 工具（影響分析、執行流、改名），**非商用授權** | [repo↗](https://github.com/abhigyanpatwari/GitNexus) | ⬜ |
+| [Understand-Anything](#understand-anything) | plugin | Claude Code・多平台 | 多 agent 分析 codebase → 互動式儀表板＋導覽，給新人看懂專案 | [repo↗](https://github.com/Egonex-AI/Understand-Anything) | ✅ 已安裝 |
 
 ---
 
@@ -544,6 +546,14 @@ cp -r ELI5/skills/eli5 ~/.claude/skills/eli5
 > 📊 **實測顯示互補、不是二選一**：影響分析（誰呼叫我）用 codebase-memory；讀流程／快速讀懂機制用 codegraph → [[moc/AI技能評比|AI 技能評比]]（2026-08-05）。
 >
 > ~~同時裝兩套沒有意義，選一套即可。~~ ← 我自己的推論，已被實測推翻，留著當紀錄。
+>
+> **四個以上的工具怎麼分（依各自 README 整理，查證 2026-10-16）**：差別在「圖要給誰用」和「素材有哪些」。
+> - 給 agent 當索引、少讀檔、做影響分析 → [codegraph](#codegraph)、[codebase-memory-mcp](#codebase-memory-mcp)
+> - agent 要做自動化重構、追執行流、跑 Cypher → [GitNexus](#gitnexus)（注意非商用授權）
+> - 程式碼以外還有文件、SQL、PDF 要一起進圖 → [graphify](#graphify)
+> - 給人看、新人 onboarding、架構導覽 → [Understand-Anything](#understand-anything)
+>
+> 程式碼部分四者都用 tree-sitter／AST 做確定性抽取，差在要不要呼叫 LLM：codegraph、GitNexus 不需要（GitNexus 的 embedding 是選配）；graphify 只在文件、媒體上用；Understand-Anything 每個檔案都會用 LLM 寫摘要和導覽，所以 token 成本最高。來源文章：替代方案有限公司〈Understand-Anything vs. GitNexus vs. CodeGraph vs. graphify〉（<https://altsol.tw/understand-anything-gitnexus-codegraph-comparison>，評比見 `_meta/來源評比紀錄.md`），文中把 graphify 說成「非 MCP Server」不正確（它有選配的 MCP stdio server），也沒提 GitNexus 的授權限制。
 
 ### codegraph
 `MCP` · 多平台 · MIT · ★74.2k（2026-10-15） · ✅ 已在用 · 📊
@@ -623,6 +633,72 @@ graphify install               # 偵測你的 agent 並註冊 /graphify skill
 **🧪 工作坊**：Neo Hsu 的 Graphify 工作坊整理成筆記 → [[讓AI讀懂你的系統（Graphify工作坊）]]，裡面有可信度分級怎麼用、降噪、多 repo 的 bridge doc、從小開始，以及查證表。方法本身抽成 [[工具-用知識圖譜幫agent找對context]]。
 
 **🔗 相關**：[codegraph](#codegraph)、[codebase-memory-mcp](#codebase-memory-mcp) —— 只看程式碼的同類工具。[[工具-讓LLM維護的個人Wiki]] —— 同樣是「先建好結構、查詢時不必重撈原始檔」的想法。
+
+---
+
+### GitNexus
+`MCP` · Claude Code・Cursor・Codex・Antigravity 等 · **PolyForm Noncommercial** · ★47.9k（2026-10-16）· ⬜ 待試
+
+**做什麼**：把 codebase 建成一張存在嵌入式圖資料庫裡的知識圖譜，再透過 MCP 工具給 agent 查。自我定位是「像 DeepWiki，但更深：DeepWiki 幫你理解，GitNexus 讓你分析」。另有瀏覽器版 Web UI（不用安裝）。
+
+**核心**
+- **儲存**：LadybugDB（前身 KuzuDB）。CLI 用原生版、持久化；Web UI 用 WASM 版、只在記憶體裡、每個 session 重建。
+- **解析**：tree-sitter；社群分群用 Leiden；本機 embedding 是選配（預設不裝）。
+- **19 個 MCP 工具**，比同類多出「會動手」的那一層：`impact`（影響範圍，依深度分組並附信心）、`trace`（兩個符號間的有向最短路徑）、`detect_changes`（把 git diff 對到受影響的執行流）、`rename`（語意改名，預設只預覽）、`cypher`（直接下 Cypher）、`route_map`／`api_impact`（API 路由與改動影響）、`pdg_query`（敘述層級的控制與資料依賴，要另外建 `--pdg` 索引）。
+- `gitnexus analyze --skills` 會依分群結果幫每個功能區產生一份專案 skill（`.claude/skills/gitnexus-area-<name>/`）。
+
+**裝**
+```bash
+npx gitnexus analyze    # 在 repo 根目錄：建索引
+npx gitnexus setup      # 一次性：自動偵測編輯器並寫入 MCP 設定
+```
+npm 11 會在安裝時崩潰（README 寫的已知問題），改用 pnpm 或 `npm i -g gitnexus`。全域安裝也能避免 `npx` 冷啟動超過 Claude Code 的 MCP 逾時（約 30 秒）。
+
+**用**：`gitnexus query`／`context`／`impact`／`trace`／`cypher` 在終端機下的用法和 MCP 工具同名。`gitnexus analyze --watch` 會監看檔案、增量更新（需要 git repo）。
+
+**⚠️ 注意**
+- 🔴 **授權是 PolyForm Noncommercial**：開源版只能非商業使用，公司內使用要另外買授權（README：commercial use … with proper licensing）。這是跟另外三個工具最大的差別。
+- **`analyze` 會改你的 repo**：除了建索引，還會安裝 agent skills、註冊 Claude Code hooks、建立 `AGENTS.md`／`CLAUDE.md`。要移除用 `gitnexus uninstall`（預設只預覽，加 `--force` 才執行）。
+- 來源文章示範的 `gitnexus impact --function processPayment`，README 沒有 `--function` 這個參數；`impact` 指令是有的，參數以 `gitnexus impact --help` 為準。
+
+**🔗 相關**：[codegraph](#codegraph)、[codebase-memory-mcp](#codebase-memory-mcp) —— 同樣是給 agent 用的程式碼圖譜；GitNexus 多了改名、Cypher、PDG 這些重度功能，代價是授權限制。
+
+---
+
+### Understand-Anything
+`plugin` · Claude Code（另支援 Codex、Cursor、Copilot、Gemini CLI 等）· MIT · ★86.5k（2026-10-16）· ✅ 已安裝 v2.7.6（未實測）
+
+**做什麼**：用多 agent 流程分析整個專案，把每個檔案、函式、類別、依賴建成知識圖譜（存在 `.ua/knowledge-graph.json`），再提供**互動式儀表板**讓人點著看，附白話摘要和導覽路線。定位是「給人看懂專案」，不是給 agent 省 token。2026 年從 `Lum1104/Understand-Anything` 移到 `Egonex-AI` 組織，舊網址會轉址。
+
+**核心**
+- **tree-sitter＋LLM 分工**：tree-sitter 做確定性的結構抽取（import、export、定義、呼叫、繼承），同樣的輸入每次產出同樣的邊；LLM 讀結構和原始碼，寫出解析器給不了的東西：白話摘要、標籤、架構層、業務領域對應、導覽。
+- **多 agent 流程**：`/understand` 由 5 個 agent 組成：project-scanner、file-analyzer、architecture-analyzer、tour-builder、graph-reviewer。file-analyzer 平行跑，最多 5 個、每批 20–30 個檔。`/understand-domain`、`/understand-knowledge` 各再加 1 個 agent。支援增量更新，只重分析改過的檔。
+- `/understand-knowledge` 能吃 **Karpathy 式的 LLM wiki**，畫出知識庫的力導向圖和社群分群 → [[LLM Wiki（Karpathy）]]。
+
+**裝**
+```
+/plugin marketplace add Egonex-AI/Understand-Anything
+/plugin install understand-anything
+```
+
+**用**
+```
+/understand                      # 分析整個專案（--language zh-TW 產繁中內容；--auto-update 自動更新）
+/understand-dashboard            # 開互動式儀表板
+/understand-chat 付款流程怎麼跑？
+/understand-diff                 # 分析目前的改動
+/understand-explain src/auth/login.ts
+/understand-onboard              # 產新人導覽
+/understand-domain               # 抽業務領域與流程
+/understand-knowledge ~/path/to/wiki
+```
+
+**⚠️ 注意**
+- **第一次 `/understand` 很吃 token**：README 明說大專案會用掉大量 token，建議先從子目錄開始（`/understand src/frontend`）。四個工具裡它的 LLM 成本最高。
+- **程式碼內容會送給模型**：摘要由 LLM 產生。公司 codebase 要用時，README 建議改接本機模型（如 Ollama）。
+- 儀表板本身可以在內網用 Node 起服務瀏覽，但**建圖那一步一定要 LLM**；來源文章說「不呼叫 LLM」只對瀏覽成立。
+
+**🔗 相關**：[graphify](#graphify) —— 同樣混合 tree-sitter 和 LLM，但 graphify 只在文件上用 LLM、程式碼完全本機；Understand-Anything 是每個檔都用 LLM 寫摘要。
 
 ---
 
