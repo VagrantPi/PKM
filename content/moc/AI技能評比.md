@@ -17,6 +17,7 @@ tags: [moc, ai, skills, benchmark]
 | 2026-08-05 | 任務系統解說題：四組對照評分 | base・ponytail・i-have-adhd・兩個同開 | [報告 ↗](https://vagrantpi.github.io/PKM/static/skill-eval/2026-08-05-ponytail-vs-i-have-adhd/) |
 | 2026-08-05 | backend 索引能力：真值裁判對決 | codegraph・codebase-memory-pro | [報告 ↗](https://vagrantpi.github.io/PKM/static/skill-eval/2026-08-05-codegraph-vs-codebase-memory/) |
 | 2026-10-17 | 給人看的地圖 vs 給 agent 查的索引 | Understand-Anything・codegraph | [報告 ↗](https://vagrantpi.github.io/PKM/static/skill-eval/2026-10-17-understand-anything-vs-codegraph/) |
+| 2026-10-17 | 程式碼圖譜四方評比：寫法決定一切 | codegraph・GitNexus・graphify・Understand-Anything | [報告 ↗](https://vagrantpi.github.io/PKM/static/skill-eval/2026-10-17-code-graph-four-way/) |
 
 ---
 
@@ -125,6 +126,51 @@ codegraph 漏的都是**巢狀函式與 singleton 實例方法**；codebase-memo
   跟一鍵跑 `/understand` 的結果可能有差。
 - **評分由本次實驗的執行者自評**；第 ⑤ 維只抽查 10 條事實，兩份答案的差距在雜訊內。
 - 8 月結果重現不出來的**原因未查證**。
+
+---
+
+## 2026-10-17 · 程式碼圖譜四方評比：寫法決定一切
+
+<a href="https://vagrantpi.github.io/PKM/static/skill-eval/2026-10-17-code-graph-four-way/" target="_blank" rel="noopener"><strong>開啟完整報告 ↗</strong></a>
+
+**受測**：
+- [[moc/AI技能收藏#codegraph|codegraph]] CLI 1.4.1
+- [[moc/AI技能收藏#gitnexus|GitNexus]] 1.6.12（`--index-only`）
+- [[moc/AI技能收藏#graphify|graphify]] 0.9.92（`--code-only`）
+- [[moc/AI技能收藏#understand-anything|Understand-Anything]] 2.9.7（沿用上一份）
+
+**標的**：同上一份，`backend/src/services` 加上 tsconfig，四個工具吃同一份碼。
+
+**方法**：
+- 沿用 grep 真值。
+- 新增「隨機抽 30 個跨檔 singleton 呼叫點」的召回率測試，以及 3 檔的最小重現。
+- 抽 30 條邊驗精確度、重建一次比對邊。
+- 四個工具各答一次同一題流程解說。
+
+**一句話結論**：**先看你的 codebase 怎麼寫，再挑程式碼圖譜。** 三個確定性工具的精確度和重現性都滿分，但各有解析不了的呼叫寫法。這個 codebase 大量用 `export default new XService()`，GitNexus 和 graphify 因此幾乎看不到跨 service 的呼叫。
+
+**關鍵證據**
+
+| 發現 | 數字 | 為什麼可信 |
+|---|---|---|
+| singleton 跨檔呼叫的召回率天差地別 | codegraph 30/30、UA 24/30（class 層級）、GitNexus 0/30、graphify 0/30 | 從 265 個不重複的真實呼叫點隨機抽 30 個（seed 7），逐一查各工具的邊 |
+| 盲點各不相同 | default 實例只有 codegraph 抓得到；具名 `export const` 實例只有 GitNexus 抓得到；一般函式三個都抓得到 | 3 檔的最小重現，排除 codebase 其他因素 |
+| 確定性工具不捏造、不飄 | 精確度三個都 30/30；重建後的邊 Jaccard 都是 1.0 | 固定 seed 抽樣；graphify 的 28 條 INFERRED 逐條人工看過 |
+| 解說題四份都 10/10，差在成本 | GitNexus 11.2 萬 token、17 次工具呼叫最貴；其他三個 7.8–8.5 萬 | 工具查不到的關係由答題 agent 讀碼補上，準確度被補平，代價轉成成本 |
+| `handleUserText` 的 caller 名稱 | GitNexus 最精確（寫到巢狀的 `onMessage@179`） | 跟真值的外層函式逐一對照 |
+
+**怎麼用**
+1. **第 0 步每次都做**：用自己 codebase 最常見的 2–3 種呼叫寫法做 3 檔最小重現，看各工具能不能建出邊。
+2. 影響分析用寫法沒撞到盲點的那個確定性工具。這個 codebase 是 codegraph。
+3. GitNexus 的 `impact` 查不到時會回 `risk: UNKNOWN`，**這時要用 grep 確認**，不要當成沒人呼叫。
+4. graphify 的強項是文件也能進圖；純程式碼時要先驗跨檔召回率。
+
+**⚠️ 限制（報告照抄）**
+- **單一 codebase、單一範圍**，結論高度依賴這個 codebase 的寫法；最小重現只測了 3 種寫法。
+- **N=1**：每個工具只答一次解說題，重現性也只做一次重建。
+- **graphify 只測 `--code-only`**，語意抽取沒測。
+- **GitNexus 用 `--index-only`**：沒有 embedding，全文搜尋也沒裝起來，MCP 工具沒測，查詢能力可能被低估。授權是 PolyForm Noncommercial，用在公司程式碼上是否構成商業使用由使用者自行判斷。
+- **評分由本次實驗執行者自評**；事實抽查每份只有 10 條。
 
 ---
 

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>程式碼圖譜四方評比</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#0E1A2B; --grid:#1C2E45; --ink:#EAF2F8; --muted:#8FA3BA; --panel:#0c1726cc;
+    --cg:#F2A65A; --gn:#4FC3F7; --gf:#7BD88F; --ua:#B48CFF;
+    --ok:#5fd39b; --no:#ff7a85; --warn:#f2c94c;
+    --disp:"Space Grotesk",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+    --body:"Space Grotesk",-apple-system,"Noto Sans TC","PingFang TC",sans-serif;
+  }
+  @media (prefers-color-scheme: light){
+    :root:not([data-theme="dark"]){
+      --paper:#F6F8FB; --grid:#E3E9F1; --ink:#14202F; --muted:#56677C; --panel:#ffffffdd;
+      --cg:#B5651D; --gn:#0277BD; --gf:#2E7D32; --ua:#6A3FD1;
+      --ok:#1f8a57; --no:#c23542; --warn:#9a7300;
+    }
+  }
+  :root[data-theme="light"]{
+    --paper:#F6F8FB; --grid:#E3E9F1; --ink:#14202F; --muted:#56677C; --panel:#ffffffdd;
+    --cg:#B5651D; --gn:#0277BD; --gf:#2E7D32; --ua:#6A3FD1;
+    --ok:#1f8a57; --no:#c23542; --warn:#9a7300;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.7;
+    background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:46px 46px}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 16px}
+  .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mono{font-family:var(--mono);font-size:.92em}
+  header{padding:72px 0 28px;text-align:center}
+  h1{font-family:var(--disp);font-weight:700;font-size:clamp(27px,4.8vw,44px);line-height:1.15;letter-spacing:-.02em;margin:18px auto 0;max-width:22ch}
+  .lede{color:var(--muted);max-width:62ch;margin:18px auto 0}
+  section{margin:44px 0}
+  h2{font-family:var(--disp);font-size:22px;margin:0 0 6px}
+  .sub{color:var(--muted);font-size:13.5px;margin:0 0 16px}
+  .panel{background:var(--panel);border:1px solid var(--grid);border-radius:14px;padding:18px 20px}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+  .card{background:var(--panel);border:1px solid var(--grid);border-radius:12px;padding:14px 16px}
+  .card .k{font-family:var(--mono);font-size:12px;letter-spacing:.06em}
+  .card .big{font-family:var(--disp);font-size:26px;font-weight:700;line-height:1.15;margin:4px 0}
+  .cg{color:var(--cg)} .gn{color:var(--gn)} .gf{color:var(--gf)} .ua{color:var(--ua)}
+  .ok{color:var(--ok)} .no{color:var(--no)} .warn{color:var(--warn)}
+  .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:640px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--grid);vertical-align:top}
+  th{font-family:var(--mono);font-size:12px;letter-spacing:.05em;font-weight:600}
+  td.n{font-family:var(--mono)}
+  .insight{border-left:3px solid var(--warn);padding:4px 0 4px 14px;margin:16px 0}
+  .insight b{display:block;margin-bottom:2px}
+  ul{padding-left:20px} li{margin:4px 0}
+  footer{color:var(--muted);font-size:12.5px;text-align:center;padding:28px 0 60px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">2026-10-17 · 四方實測 · 同一份 232 檔</div>
+  <h1>先看你的 codebase 怎麼寫，再挑程式碼圖譜</h1>
+  <p class="lede">同一份 <span class="mono">ai_family_backend</span>（commit a6fb1d3e，<span class="mono">backend/src/services</span> 加上 tsconfig），四個工具吃同一份碼，用同一份 grep 真值、同一題流程解說。最大的發現不在哪個工具比較強，而在於<b>每個確定性工具都有自己解析不了的寫法</b>。這個 codebase 剛好大量使用其中一種，兩個工具因此幾乎看不到跨 service 的呼叫。</p>
+</header>
+
+<section>
+  <h2>最重要的發現 · 呼叫寫法決定一切</h2>
+  <p class="sub">services 裡 232 個檔有 183 個用 <span class="mono">export default new XService()</span>，別處再 <span class="mono">import xService</span> 呼叫方法。我從原始碼隨機抽 30 個這類跨檔呼叫點（共 265 個不重複點，seed 7），逐一檢查每個工具有沒有建出那條邊。</p>
+  <div class="cards">
+    <div class="card"><div class="k cg">CODEGRAPH</div><div class="big ok">30/30</div>方法層級全中</div>
+    <div class="card"><div class="k ua">UNDERSTAND-ANYTHING</div><div class="big warn">24/30</div>只到 class 層級（LLM 讀碼建邊）</div>
+    <div class="card"><div class="k gn">GITNEXUS</div><div class="big no">0/30</div>跨檔 calls 邊全庫只有 151 條</div>
+    <div class="card"><div class="k gf">GRAPHIFY</div><div class="big no">0/30</div>跨檔 calls 邊全庫只有 87 條</div>
+  </div>
+  <p class="sub" style="margin-top:12px">對照：codegraph 的跨檔 calls 邊有 854 條。</p>
+  <div class="panel scroll" style="margin-top:14px">
+    <p style="margin-top:0"><b>最小重現</b>：在 3 個檔裡各放一種寫法，由同一個函式呼叫，看各工具建出哪些邊。</p>
+    <table>
+      <tr><th>呼叫形式</th><th class="cg">codegraph</th><th class="gn">GitNexus</th><th class="gf">graphify</th></tr>
+      <tr><td class="mono">export default new X()</td><td class="ok">✅</td><td class="no">❌</td><td class="no">❌</td></tr>
+      <tr><td class="mono">export const x = new X()</td><td class="no">❌</td><td class="ok">✅</td><td class="no">❌</td></tr>
+      <tr><td class="mono">export function f()</td><td class="ok">✅</td><td class="ok">✅</td><td class="ok">✅</td></tr>
+    </table>
+  </div>
+  <div class="insight"><b>這不是排名，是「你的寫法撞不撞到它的盲點」</b>換成大量使用 <span class="mono">export const x = new X()</span> 的 codebase，codegraph 和 GitNexus 的結果可能整個對調。選工具前，先用自己 codebase 最常見的 2–3 種呼叫寫法做一個 3 檔的最小重現，每個工具跑一次只要幾秒。</div>
+</section>
+
+<section>
+  <h2>總表</h2>
+  <p class="sub">不加總分。UA 的數字沿用同日的雙方報告（範圍相同）。</p>
+  <div class="panel scroll">
+  <table>
+    <tr><th></th><th class="cg">codegraph</th><th class="gn">GitNexus</th><th class="gf">graphify</th><th class="ua">Understand-Anything</th></tr>
+    <tr><td>版本</td><td class="n">CLI 1.4.1</td><td class="n">1.6.12</td><td class="n">0.9.92（--code-only）</td><td class="n">2.9.7</td></tr>
+    <tr><td>建圖時間／LLM token</td><td class="n">2.1 秒／0</td><td class="n">22 秒／0</td><td class="n">4.2 秒／0</td><td class="n">約 10 分鐘／約 156 萬</td></tr>
+    <tr><td>節點／邊</td><td class="n">3,405／6,271</td><td class="n">4,038／8,061</td><td class="n">2,058／4,440</td><td class="n">519／1,061</td></tr>
+    <tr><td>顆粒度</td><td>方法</td><td>方法＋屬性＋執行流＋分群</td><td>方法＋可信度標記</td><td>檔案／class＋摘要＋分層＋導覽</td></tr>
+    <tr><td><span class="mono">assertWithinQuota</span> caller（真值 5）</td><td class="ok">5/5</td><td class="no">0/5</td><td class="no">0/5</td><td class="warn">class 層級 4/5，另有 2 個假陽性</td></tr>
+    <tr><td><span class="mono">handleUserText</span> caller（真值 2）</td><td class="ok">2/2</td><td class="ok">2/2（精確到巢狀的 onMessage／onUserTurn）</td><td class="warn">1/2（抓到的那條標 INFERRED）</td><td class="ok">class 層級 2/2</td></tr>
+    <tr><td>singleton 跨檔呼叫（抽 30）</td><td class="ok">30</td><td class="no">0</td><td class="no">0</td><td class="warn">24（class 層級）</td></tr>
+    <tr><td>邊的精確度（抽 30 條 calls）</td><td class="ok">30/30</td><td class="ok">30/30</td><td class="ok">30/30（INFERRED 28/28）</td><td class="ok">30/30</td></tr>
+    <tr><td>重現性（重建一次比對邊）</td><td class="ok">1.0</td><td class="ok">1.0</td><td class="ok">1.0</td><td class="warn">0.79（calls 邊）</td></tr>
+    <tr><td>介面 dispatch（<span class="mono">transport.isOpen／sendJson</span>）</td><td>沒列</td><td>沒列</td><td>沒列（另外有把 callback 介面成員以 INFERRED 指到宣告）</td><td>沒有邊</td></tr>
+    <tr><td>流程解說：事實抽查</td><td class="ok">10/10</td><td class="ok">10/10</td><td class="ok">10/10</td><td class="ok">10/10</td></tr>
+    <tr><td>流程解說：token／工具呼叫</td><td class="n">8.5 萬／7</td><td class="n">11.2 萬／17</td><td class="n">7.9 萬／10</td><td class="n">7.8 萬／10</td></tr>
+  </table>
+  </div>
+</section>
+
+<section>
+  <h2>各自的觀察</h2>
+  <div class="cards">
+    <div class="card"><div class="k cg">CODEGRAPH</div>
+      <ul>
+        <li>在這個 codebase 上的 caller 召回率最高。答流程題最省，6 次指令就夠，只讀 1 個檔。</li>
+        <li>盲點：<span class="mono">export const x = new X()</span> 這種具名實例（最小重現已確認）。</li>
+        <li>8 月報告說它「漏巢狀 caller」，這次重現不出來。</li>
+      </ul></div>
+    <div class="card"><div class="k gn">GITNEXUS</div>
+      <ul>
+        <li><span class="mono">impact</span> 會依深度分組，並標出受影響的執行流。查不到 caller 時回 <span class="mono">risk: UNKNOWN</span>，還附註「沒有邊不代表沒人用，請用文字搜尋確認」，說的是實話。</li>
+        <li>caller 名稱最精確，會寫到巢狀的 <span class="mono">onMessage@179</span>。</li>
+        <li>這次踩到的限制：
+          <ul>
+            <li>全文搜尋要連網下載擴充，沒裝起來就停用。</li>
+            <li>562 個入口候選裡有 362 個沒有追成執行流（它自己警告的）。</li>
+            <li><span class="mono">rename</span> 在 1.6.12 的 CLI 裡沒有，只有 MCP 有。</li>
+            <li>README 上的 <span class="mono">--skip-embeddings</span> 這版不存在。</li>
+            <li>答題 agent 有 3 次 cypher 語法不支援。</li>
+          </ul></li>
+        <li>非商用授權。</li>
+      </ul></div>
+    <div class="card"><div class="k gf">GRAPHIFY</div>
+      <ul>
+        <li>每條邊都標可信度：4,412 條 EXTRACTED、28 條 INFERRED，抽查的 INFERRED 都正確。</li>
+        <li><span class="mono">path</span> 遇到呼叫邊斷掉時，會改走 import 邊連到檔案層級。</li>
+        <li>盲點：兩種 singleton 都解析不了；barrel <span class="mono">index.ts</span> 建不出符號；<span class="mono">.proto</span> 直接跳過。</li>
+        <li>這次只測純程式碼模式，它真正的強項（文件也進圖）在這裡用不到。</li>
+      </ul></div>
+    <div class="card"><div class="k ua">UNDERSTAND-ANYTHING</div>
+      <ul>
+        <li>唯一由 LLM 讀碼建邊的工具，所以它不受寫法盲點影響（24/30），但只到 class 層級，重跑也會飄。</li>
+        <li>有分層、導覽和每檔摘要，適合給人看全貌。</li>
+        <li>成本高了好幾個數量級。</li>
+      </ul></div>
+  </div>
+</section>
+
+<section>
+  <h2>給新人看懂 · 同一題四份答案</h2>
+  <p class="sub">題目：「解說一通語音通話從接通到結束、講話怎麼變成語音回覆、額度在哪裡檢查和扣」。每份答案抽 10 條事實用 grep 驗證，四份都是 10/10。</p>
+  <div class="panel">
+    <ul style="margin:0">
+      <li><b>答案品質差不多</b>，差別在要繞多少路。工具查不到的關係，答題 agent 就回頭讀原始碼補，所以準確度被讀碼補平了，代價轉成 token 和工具呼叫次數。</li>
+      <li><b class="gn">GitNexus 最貴</b>（11.2 萬、17 次）。額度檢查、計時、token 驗證這些全走 default singleton，它一條都查不到，只能讀 13 段原始碼補。</li>
+      <li><b class="gf">graphify</b> 的第一次 query 就找到所有入口，但「額度在哪裡檢查」也只能靠 import 邊加讀碼。</li>
+      <li><b class="ua">UA</b> 靠導覽選了較新的 WebRTC 路徑，涵蓋面最廣；<b class="cg">codegraph</b> 在單一路徑上答得最深，讀碼最少。</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>怎麼選</h2>
+  <div class="cards">
+    <div class="card"><div class="k">第 0 步 · 每次都要做</div>用自己 codebase 最常見的呼叫寫法做 3 檔最小重現，看每個工具能不能建出邊。只花幾秒，卻決定了下面的選擇還成不成立。</div>
+    <div class="card"><div class="k cg">AGENT 做影響分析</div>寫法沒撞到盲點的那個確定性工具。這個 codebase 是 codegraph。</div>
+    <div class="card"><div class="k gn">要執行流、Cypher、改名預覽</div>GitNexus，前提是你的寫法它解析得了，而且授權允許。</div>
+    <div class="card"><div class="k gf">文件、需求也要進圖</div>graphify，可信度標記好用。純程式碼時，跨檔呼叫的召回率要先驗過。</div>
+    <div class="card"><div class="k ua">給人看全貌</div>Understand-Anything，前提是建圖成本分攤得掉。不要拿它問方法層級的 caller。</div>
+  </div>
+</section>
+
+<section>
+  <h2>條件與限制</h2>
+  <div class="panel">
+  <ul style="margin:0">
+    <li><b>單一 codebase、單一範圍</b>（232 個 TS 檔，大量使用 default singleton）。結論高度依賴這個 codebase 的寫法，換一個 codebase 排序可能完全不同。最小重現只測了 3 種寫法。</li>
+    <li><b>N=1</b>：流程題每個工具只答一次。重現性只做了一次重建（確定性工具）或一批重跑（UA）。</li>
+    <li><b>graphify 只測 <span class="mono">--code-only</span></b>，它的語意抽取（文件、PDF、圖片，需要 LLM）沒測。</li>
+    <li><b>GitNexus 用 <span class="mono">--index-only</span> 跑</b>（不裝 skills、hooks、AGENTS.md）。沒有 embedding，全文搜尋也沒裝起來，查詢能力可能被低估。MCP 工具（例如 rename）沒測。授權是 PolyForm Noncommercial，用在公司程式碼上是否構成商業使用由使用者自行判斷。</li>
+    <li><b>codegraph 是 CLI 1.4.1</b>（已有 1.6.2）；Understand-Anything 的管線是手動照 SKILL.md 編排的，細節見同日的雙方報告。</li>
+    <li><b>評分由本次實驗執行者自評</b>；事實抽查每份只有 10 條，不是全文查證。</li>
+  </ul>
+  </div>
+</section>
+
+<footer>每個數字都有對應的判定表或 grep 證據（檔名:行號），留在本機 · 不含原始碼本體與架構摘要 · 同日雙方報告：Understand-Anything vs codegraph</footer>
+</div>
+</body>
+</html>

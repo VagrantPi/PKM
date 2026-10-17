@@ -32,8 +32,8 @@ tags: [moc, ai, skills, agent, tooling]
 | [eli5](#eli5) | skill | Claude Code | 依聽眾（5 歲／主管／工程師／家人）換一套講法解釋同一件事 | [repo↗](https://github.com/DreambigOu/ELI5) | ⬜ |
 | [codegraph](#codegraph) | MCP | 多平台 | 本機碼圖譜，讀流程強；caller 10 月重測全中 | [repo↗](https://github.com/colbymchenry/codegraph) | ✅ 📊 |
 | [codebase-memory-mcp](#codebase-memory-mcp) | MCP | 多平台 | 同路線，caller 完整、只給名稱無 body | [repo↗](https://github.com/DeusData/codebase-memory-mcp) | ✅ 📊 |
-| [graphify](#graphify) | skill | 多平台 | 程式碼＋文件＋PDF 建成一張圖，每條邊標可信度（EXTRACTED／INFERRED／AMBIGUOUS） | [repo↗](https://github.com/Graphify-Labs/graphify) | ⬜ |
-| [GitNexus](#gitnexus) | MCP | 多平台 | 程式碼圖資料庫＋19 個 MCP 工具（影響分析、執行流、改名），**非商用授權** | [repo↗](https://github.com/abhigyanpatwari/GitNexus) | ⬜ |
+| [graphify](#graphify) | skill | 多平台 | 程式碼＋文件＋PDF 建成一張圖，每條邊標可信度（EXTRACTED／INFERRED／AMBIGUOUS） | [repo↗](https://github.com/Graphify-Labs/graphify) | ⬜ 📊 |
+| [GitNexus](#gitnexus) | MCP | 多平台 | 程式碼圖資料庫＋19 個 MCP 工具（影響分析、執行流、改名），**非商用授權** | [repo↗](https://github.com/abhigyanpatwari/GitNexus) | ⬜ 📊 |
 | [Understand-Anything](#understand-anything) | plugin | Claude Code・多平台 | 多 agent 分析 codebase → 互動式儀表板＋導覽，給新人看懂專案 | [repo↗](https://github.com/Egonex-AI/Understand-Anything) | ✅ 📊 |
 
 ---
@@ -554,6 +554,18 @@ cp -r ELI5/skills/eli5 ~/.claude/skills/eli5
 > - 程式碼以外還有文件、SQL、PDF 要一起進圖 → [graphify](#graphify)
 > - 給人看、新人 onboarding、架構導覽 → [Understand-Anything](#understand-anything)
 >
+> 📊 **四方實測（2026-10-17）推翻了「照用途挑」這個順序：要先看你的呼叫寫法撞不撞到工具的盲點** → [[moc/AI技能評比|評比]]。
+> - 同一個 codebase（大量用 `export default new XService()`），隨機抽 30 個跨檔的 singleton 呼叫，各工具建出的邊數：
+>   - codegraph 30/30
+>   - Understand-Anything 24/30（class 層級）
+>   - GitNexus 0/30
+>   - graphify 0/30
+> - 最小重現顯示三個確定性工具的盲點各不相同：
+>   - `export default new X()`：只有 codegraph 抓得到。
+>   - `export const x = new X()`：只有 GitNexus 抓得到。
+>   - 一般具名函式：三個都抓得到。
+> - 選之前先用自己最常見的 2–3 種寫法，做一個 3 檔的最小重現，每個工具跑一次只要幾秒。
+>
 > 程式碼部分四者都用 tree-sitter／AST 做確定性抽取，差在要不要呼叫 LLM：codegraph、GitNexus 不需要（GitNexus 的 embedding 是選配）；graphify 只在文件、媒體上用；Understand-Anything 每個檔案都會用 LLM 寫摘要和導覽，所以 token 成本最高。實測（2026-10-17）還發現，Understand-Anything 的 `calls` 邊也是 LLM 寫的，不是解析器產出 → [[moc/AI技能評比|評比]]。來源文章：替代方案有限公司〈Understand-Anything vs. GitNexus vs. CodeGraph vs. graphify〉（<https://altsol.tw/understand-anything-gitnexus-codegraph-comparison>，評比見 `_meta/來源評比紀錄.md`），文中把 graphify 說成「非 MCP Server」不正確（它有選配的 MCP stdio server），也沒提 GitNexus 的授權限制。
 
 ### codegraph
@@ -575,6 +587,7 @@ auto-sync 預設開，改檔即更新。本機 v1.4.1，官方最新 v1.6.2（20
 - 2026-08-05：讀流程、快速讀懂勝出，但 **caller 會漏**（巢狀函式、singleton 方法）。
 - 2026-10-17：同一個 repo、同兩個符號重測，CLI 1.4.1 查新、舊兩份索引都是 **2/2、5/5 全中**，8 月的漏抓重現不出來，原因未查證。
 - 兩次都一樣：介面型別的 dispatch 解不出來，涉及介面多型的邊仍要用 grep 收尾。
+- 2026-10-17 四方實測：`export default new X()` 的 singleton 呼叫抽 30 個全中，四個工具裡最好。但最小重現發現，**具名的 `export const x = new X()` 透過實例呼叫方法，它建不出邊**；這種寫法多的 codebase 要先驗。
 
 → [[moc/AI技能評比|評比]]
 
@@ -601,7 +614,7 @@ curl -fsSL https://raw.githubusercontent.com/DeusData/codebase-memory-mcp/main/i
 ---
 
 ### graphify
-`skill` · Claude Code・Cursor・Codex・Gemini CLI・Copilot 等 20+ · Apache-2.0 · ★126.7k（2026-10-15）· ⬜ 待試
+`skill` · Claude Code・Cursor・Codex・Gemini CLI・Copilot 等 20+ · Apache-2.0 · ★126.7k（2026-10-15）· ⬜ 未安裝（用 `uvx` 臨時跑過 0.9.92）· 📊
 
 **做什麼**：把整個資料夾（程式碼、文件、SQL schema、設定、PDF、圖片、影片）建成一張**可查詢的知識圖譜**，用「沿著關係走」取代 grep。跟上面兩個的差別：它不只看程式碼，**文件和需求也進同一張圖**，所以能問「這個需求對應到哪些 module」。
 
@@ -635,6 +648,18 @@ graphify install               # 偵測你的 agent 並註冊 /graphify skill
 - **推論的邊只能當線索**：`INFERRED`／`AMBIGUOUS` 要回原始碼確認；動態派發、runtime 設定、feature flag、外部服務呼叫，AST 也看不到。
 - **README 一直在推付費的 Graphify Cloud**（宣稱「agent token 省 80%」，未驗證）；開源版是本機 CLI 加 skill。
 - 跟 codegraph／codebase-memory 功能重疊，差別在**文件也進圖**、而且有可信度標記；純看程式碼結構時，那兩個已經夠用。
+- 🔴 **singleton 呼叫解析不了**（0.9.92 實測）：
+  - `export default new X()` 和 `export const x = new X()` 兩種寫法，透過實例呼叫方法都建不出呼叫邊，只剩檔案層級的 import 邊。
+  - 大量用 service singleton 的後端，跨檔呼叫幾乎都看不到：232 檔只有 87 條跨檔 calls 邊。
+  - barrel `index.ts` 建不出符號，`.proto` 直接跳過。
+- 不想全域安裝的話，可以用 `uvx --from graphifyy graphify extract <path> --code-only --out <dir>` 臨時跑；產出寫到 `--out` 指定的位置，不會動到原 repo。
+
+**📊 實測（2026-10-17，`--code-only`）**：
+- 232 個 TS 檔：4.2 秒、0 token，2,058 節點、4,440 邊，重建結果完全一樣。
+- 抽 30 條 calls 邊都正確；28 條 INFERRED 也都對，有些是把 callback 介面的呼叫指到介面裡的宣告。
+- 流程解說題 10/10，但「額度在哪裡檢查」只能靠 import 邊加讀原始碼。
+
+→ [[moc/AI技能評比|評比]]
 
 **🧪 工作坊**：Neo Hsu 的 Graphify 工作坊整理成筆記 → [[讓AI讀懂你的系統（Graphify工作坊）]]，裡面有可信度分級怎麼用、降噪、多 repo 的 bridge doc、從小開始，以及查證表。方法本身抽成 [[工具-用知識圖譜幫agent找對context]]。
 
@@ -643,7 +668,7 @@ graphify install               # 偵測你的 agent 並註冊 /graphify skill
 ---
 
 ### GitNexus
-`MCP` · Claude Code・Cursor・Codex・Antigravity 等 · **PolyForm Noncommercial** · ★47.9k（2026-10-16）· ⬜ 待試
+`MCP` · Claude Code・Cursor・Codex・Antigravity 等 · **PolyForm Noncommercial** · ★47.9k（2026-10-16）· ⬜ 未安裝（用 `npx` 臨時跑過 1.6.12）· 📊
 
 **做什麼**：把 codebase 建成一張存在嵌入式圖資料庫裡的知識圖譜，再透過 MCP 工具給 agent 查。自我定位是「像 DeepWiki，但更深：DeepWiki 幫你理解，GitNexus 讓你分析」。另有瀏覽器版 Web UI（不用安裝）。
 
@@ -666,6 +691,24 @@ npm 11 會在安裝時崩潰（README 寫的已知問題），改用 pnpm 或 `n
 - 🔴 **授權是 PolyForm Noncommercial**：開源版只能非商業使用，公司內使用要另外買授權（README：commercial use … with proper licensing）。這是跟另外三個工具最大的差別。
 - **`analyze` 會改你的 repo**：除了建索引，還會安裝 agent skills、註冊 Claude Code hooks、建立 `AGENTS.md`／`CLAUDE.md`。要移除用 `gitnexus uninstall`（預設只預覽，加 `--force` 才執行）。
 - 來源文章示範的 `gitnexus impact --function processPayment`，README 沒有 `--function` 這個參數；`impact` 指令是有的，參數以 `gitnexus impact --help` 為準。
+- **只想建索引、不想被改 repo**：`GITNEXUS_HOME=<自訂目錄> npx gitnexus analyze <path> --index-only`（不是 git repo 的話再加 `--skip-git`）。1.6.12 實測只寫 `.gitnexus/`，不裝 skills、hooks、AGENTS.md，也不寫 `~/.gitnexus`。
+- 🔴 **`export default new X()` 的 singleton 解析不了**（1.6.12 實測）：
+  - 透過預設匯出的實例呼叫方法，建不出呼叫邊；具名的 `export const x = new X()` 可以。
+  - 大量用 service singleton 的後端會漏掉大部分跨檔呼叫：232 檔只有 151 條跨檔 calls 邊，`assertWithinQuota` 的 caller 是 0/5。
+  - 好在 `impact` 查不到時回 `risk: UNKNOWN`，並附註「沒有邊不代表沒人用，請用文字搜尋確認」，不會假裝安全。
+- **README 和 npm 版本不同步**：
+  - README 上的 `--skip-embeddings`，1.6.12 沒有（embedding 預設本來就不開）。
+  - `rename` 在 1.6.12 的 CLI 裡沒有，只有 MCP 有。
+  - 全文搜尋需要連網下載 LadybugDB 的 FTS 擴充，下載失敗就停用。
+
+**📊 實測（2026-10-17，`--index-only`）**：
+- 232 個 TS 檔：22 秒、0 token，4,038 節點、8,061 邊、236 條執行流。
+- 562 個入口候選裡有 362 個沒有追成執行流，這是它自己警告的。
+- 抽 30 條 calls 邊都正確，重建結果完全一樣。
+- `handleUserText` 的 caller 2/2，而且精確指到巢狀的 `onMessage`／`onUserTurn`，是四個工具裡最準的。
+- 流程解說題 10/10，但最貴：11.2 萬 token、17 次工具呼叫，因為 singleton 呼叫都要回頭讀碼。
+
+→ [[moc/AI技能評比|評比]]
 
 **🔗 相關**：[codegraph](#codegraph)、[codebase-memory-mcp](#codebase-memory-mcp) —— 同樣是給 agent 用的程式碼圖譜；GitNexus 多了改名、Cypher、PDG 這些重度功能，代價是授權限制。
 
