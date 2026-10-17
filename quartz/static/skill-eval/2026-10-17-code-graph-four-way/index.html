@@ -68,6 +68,16 @@
 </header>
 
 <section>
+  <div class="insight" style="border-color:var(--no)"><b>⚠️ 2026-10-17 再驗證修正（細節見同日的跨 repo 報告）</b>獨立 subagent 改用 TypeScript type checker 當真值重新驗證後：
+    <ul>
+      <li>「邊的精確度都是 30/30」<b>被推翻</b>。原判定只檢查名稱有沒有出現在那一行，抓不到同名錯連。嚴格判定後：codegraph 1.4.1 整體 76%、跨檔 60%（1.6.2：90%／76%），GitNexus 99%，graphify 87%。</li>
+      <li>「codegraph 抓不到 <span class="mono">export const x = new X()</span>」只限 1.4.1，<b>1.6.2 已修好</b>。</li>
+      <li>default singleton 召回率的結論成立：另抽 50 個，結果 49／0／0／37。</li>
+    </ul>
+  原文保留，下面被推翻的格子都已就地標註。</div>
+</section>
+
+<section>
   <h2>最重要的發現 · 呼叫寫法決定一切</h2>
   <p class="sub">services 裡 232 個檔有 183 個用 <span class="mono">export default new XService()</span>，別處再 <span class="mono">import xService</span> 呼叫方法。我從原始碼隨機抽 30 個這類跨檔呼叫點（共 265 個不重複點，seed 7），逐一檢查每個工具有沒有建出那條邊。</p>
   <div class="cards">
@@ -82,7 +92,7 @@
     <table>
       <tr><th>呼叫形式</th><th class="cg">codegraph</th><th class="gn">GitNexus</th><th class="gf">graphify</th></tr>
       <tr><td class="mono">export default new X()</td><td class="ok">✅</td><td class="no">❌</td><td class="no">❌</td></tr>
-      <tr><td class="mono">export const x = new X()</td><td class="no">❌</td><td class="ok">✅</td><td class="no">❌</td></tr>
+      <tr><td class="mono">export const x = new X()</td><td class="no">❌（1.4.1；1.6.2 已修）</td><td class="ok">✅</td><td class="no">❌</td></tr>
       <tr><td class="mono">export function f()</td><td class="ok">✅</td><td class="ok">✅</td><td class="ok">✅</td></tr>
     </table>
   </div>
@@ -102,7 +112,7 @@
     <tr><td><span class="mono">assertWithinQuota</span> caller（真值 5）</td><td class="ok">5/5</td><td class="no">0/5</td><td class="no">0/5</td><td class="warn">class 層級 4/5，另有 2 個假陽性</td></tr>
     <tr><td><span class="mono">handleUserText</span> caller（真值 2）</td><td class="ok">2/2</td><td class="ok">2/2（精確到巢狀的 onMessage／onUserTurn）</td><td class="warn">1/2（抓到的那條標 INFERRED）</td><td class="ok">class 層級 2/2</td></tr>
     <tr><td>singleton 跨檔呼叫（抽 30）</td><td class="ok">30</td><td class="no">0</td><td class="no">0</td><td class="warn">24（class 層級）</td></tr>
-    <tr><td>邊的精確度（抽 30 條 calls）</td><td class="ok">30/30</td><td class="ok">30/30</td><td class="ok">30/30（INFERRED 28/28）</td><td class="ok">30/30</td></tr>
+    <tr><td>邊的精確度（抽 30 條 calls）<br><span class="no">⚠️ 已被推翻（判定太鬆）</span></td><td class="warn">原 30/30 → 嚴格判定 24/30；整體 76%、跨檔 60%</td><td class="ok">30/30 → 整體 99%</td><td class="warn">30/30 → 整體 87%（INFERRED 28/28 成立）</td><td class="ok">30/30（class 層級，未重驗）</td></tr>
     <tr><td>重現性（重建一次比對邊）</td><td class="ok">1.0</td><td class="ok">1.0</td><td class="ok">1.0</td><td class="warn">0.79（calls 邊）</td></tr>
     <tr><td>介面 dispatch（<span class="mono">transport.isOpen／sendJson</span>）</td><td>沒列</td><td>沒列</td><td>沒列（另外有把 callback 介面成員以 INFERRED 指到宣告）</td><td>沒有邊</td></tr>
     <tr><td>流程解說：事實抽查</td><td class="ok">10/10</td><td class="ok">10/10</td><td class="ok">10/10</td><td class="ok">10/10</td></tr>
@@ -117,7 +127,7 @@
     <div class="card"><div class="k cg">CODEGRAPH</div>
       <ul>
         <li>在這個 codebase 上的 caller 召回率最高。答流程題最省，6 次指令就夠，只讀 1 個檔。</li>
-        <li>盲點：<span class="mono">export const x = new X()</span> 這種具名實例（最小重現已確認）。</li>
+        <li>盲點：<span class="mono">export const x = new X()</span> 這種具名實例（1.4.1；1.6.2 已修）。同名方法會退化成名稱比對，跨檔精確度只有 60%（1.6.2 是 76%），常見名稱的 caller 要用 grep 篩。</li>
         <li>8 月報告說它「漏巢狀 caller」，這次重現不出來。</li>
       </ul></div>
     <div class="card"><div class="k gn">GITNEXUS</div>

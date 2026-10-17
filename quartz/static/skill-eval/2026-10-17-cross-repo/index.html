@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>跨 repo 程式碼圖譜</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#0E1A2B; --grid:#1C2E45; --ink:#EAF2F8; --muted:#8FA3BA; --panel:#0c1726cc;
+    --cg:#F2A65A; --gn:#4FC3F7; --gf:#7BD88F; --ua:#B48CFF;
+    --ok:#5fd39b; --no:#ff7a85; --warn:#f2c94c;
+    --disp:"Space Grotesk",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+    --body:"Space Grotesk",-apple-system,"Noto Sans TC","PingFang TC",sans-serif;
+  }
+  @media (prefers-color-scheme: light){
+    :root:not([data-theme="dark"]){
+      --paper:#F6F8FB; --grid:#E3E9F1; --ink:#14202F; --muted:#56677C; --panel:#ffffffdd;
+      --cg:#B5651D; --gn:#0277BD; --gf:#2E7D32; --ua:#6A3FD1;
+      --ok:#1f8a57; --no:#c23542; --warn:#9a7300;
+    }
+  }
+  :root[data-theme="light"]{
+    --paper:#F6F8FB; --grid:#E3E9F1; --ink:#14202F; --muted:#56677C; --panel:#ffffffdd;
+    --cg:#B5651D; --gn:#0277BD; --gf:#2E7D32; --ua:#6A3FD1;
+    --ok:#1f8a57; --no:#c23542; --warn:#9a7300;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.7;
+    background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:46px 46px}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 16px}
+  .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mono{font-family:var(--mono);font-size:.92em}
+  header{padding:72px 0 28px;text-align:center}
+  h1{font-family:var(--disp);font-weight:700;font-size:clamp(27px,4.8vw,44px);line-height:1.15;letter-spacing:-.02em;margin:18px auto 0;max-width:22ch}
+  .lede{color:var(--muted);max-width:62ch;margin:18px auto 0}
+  section{margin:44px 0}
+  h2{font-family:var(--disp);font-size:22px;margin:0 0 6px}
+  .sub{color:var(--muted);font-size:13.5px;margin:0 0 16px}
+  .panel{background:var(--panel);border:1px solid var(--grid);border-radius:14px;padding:18px 20px}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+  .card{background:var(--panel);border:1px solid var(--grid);border-radius:12px;padding:14px 16px}
+  .card .k{font-family:var(--mono);font-size:12px;letter-spacing:.06em}
+  .card .big{font-family:var(--disp);font-size:26px;font-weight:700;line-height:1.15;margin:4px 0}
+  .cg{color:var(--cg)} .gn{color:var(--gn)} .gf{color:var(--gf)} .ua{color:var(--ua)}
+  .ok{color:var(--ok)} .no{color:var(--no)} .warn{color:var(--warn)}
+  .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:640px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--grid);vertical-align:top}
+  th{font-family:var(--mono);font-size:12px;letter-spacing:.05em;font-weight:600}
+  td.n{font-family:var(--mono)}
+  .insight{border-left:3px solid var(--warn);padding:4px 0 4px 14px;margin:16px 0}
+  .insight b{display:block;margin-bottom:2px}
+  ul{padding-left:20px} li{margin:4px 0}
+  footer{color:var(--muted);font-size:12.5px;text-align:center;padding:28px 0 60px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">2026-10-17 · 跨 repo 實測＋再驗證 · TS ↔ Go</div>
+  <h1>跨 repo：工具自動連上的是 0 條，grep 一樣全對</h1>
+  <p class="lede">TypeScript backend 透過 HTTP（42 個呼叫點、41 個端點）和 gRPC（1 條）呼叫一個 Go 服務。三個程式碼圖譜工具都沒能自動接上任何一條跨 repo 呼叫。4 題跨 repo 實戰題，只用 grep 的 agent 和有工具的 agent 一樣全對，而且這次最便宜（N=1，token 差 6–33%）。同時，獨立的再驗證推翻了上一份四方報告的「精確度都滿分」。</p>
+</header>
+
+<section>
+  <h2>跨 repo 自動連結 · 對照真值</h2>
+  <p class="sub">真值：backend 打 Go 服務的 42 個 HTTP 呼叫點（每個都對到路由行和 handler），加上 1 條 gRPC。全部用 grep 驗證過。</p>
+  <div class="panel scroll">
+  <table>
+    <tr><th>工具</th><th>HTTP（42）</th><th>gRPC（1）</th><th>為什麼</th></tr>
+    <tr><td class="gn">GitNexus group（自動）</td><td class="no n">0</td><td class="no n">0</td><td>抽出 183 個合約、只配對到 1 條，而且是錯連（Go 服務自己的 e2e test 連到 backend 的 proto 副本）。Go 端的 extractor 只認 <span class="mono">x.GET()</span>／<span class="mono">http.HandleFunc()</span>，認不得 Go 1.22 的 <span class="mono">mux.Handle("POST /path")</span>，Go 服務的 Route 節點數是 0。TS 端要求 axios receiver 是單一識別字，<span class="mono">this.client.post()</span> 不算。gRPC client 是執行期 <span class="mono">protoLoader</span> 載入，偵測不到。</td></tr>
+    <tr><td class="gn">GitNexus＋手寫 manifest</td><td class="warn n">清單 41/41，但掛到符號 0</td><td class="warn n">1（部分）</td><td>HTTP 沒有 Route 節點可掛，manifest 只是一份清單，impact 用不上。gRPC 解到產生出來的 <span class="mono">Unimplemented…Server.Chat</span> stub；從 stub 往上游跑 impact 能跨 repo，從真正的 handler 跑還是 0。</td></tr>
+    <tr><td class="gf">graphify merge-graphs</td><td class="no n">0</td><td class="no n">0</td><td>兩張圖之間沒有任何直接相連的邊；<span class="mono">.proto</span> 不解析；<span class="mono">path</span> 用名稱查詢會撞到 4 個同名節點。</td></tr>
+    <tr><td class="cg">codegraph</td><td class="no n">0</td><td class="no n">0</td><td>每個 repo 一份索引，設計上沒有跨 repo 連結。</td></tr>
+  </table>
+  </div>
+  <div class="insight"><b>文件寫「支援」不等於支援你的寫法</b>GitNexus 的文件列了 net/http、axios、gRPC 的合約抽取。實際讀它的 extractor 規則才發現，這組 repo 的三種寫法它一種都不認得。導入前要拿自己的 code 跑一次 <span class="mono">group sync</span>，看抽出幾個合約。</div>
+</section>
+
+<section>
+  <h2>4 題跨 repo 實戰題 · 4 個分組</h2>
+  <p class="sub">題目：proto 欄位改名的兩邊影響；HTTP 端點正向追到應用層；回傳格式改變的反向影響；列出全部端點。每組 1 個 agent 依序作答，依真值表評分。</p>
+  <div class="panel scroll">
+  <table>
+    <tr><th>分組</th><th>Q1（必改 6）</th><th>Q2（7 項）</th><th>Q3（9 項）</th><th>Q4（41）</th><th>token</th><th>工具呼叫</th><th>秒</th></tr>
+    <tr><td><b>只用 grep</b></td><td class="ok">6/6</td><td class="ok">7/7</td><td class="ok">9/9</td><td class="ok">41/41</td><td class="n"><b>101,771</b></td><td class="n">33</td><td class="n">205</td></tr>
+    <tr><td class="cg">codegraph（兩份索引）</td><td class="ok">6/6</td><td class="ok">7/7</td><td class="ok">9/9</td><td class="ok">41/41</td><td class="n">107,775</td><td class="n">約 35</td><td class="n">224</td></tr>
+    <tr><td class="gn">GitNexus（group）</td><td class="ok">6/6（1 處行號差 2）</td><td class="ok">7/7</td><td class="ok">9/9</td><td class="ok">41/41</td><td class="n">116,504</td><td class="n">39</td><td class="n">265</td></tr>
+    <tr><td class="gf">graphify（合併圖）</td><td class="ok">6/6</td><td class="ok">7/7</td><td class="ok">9/9</td><td class="ok">41/41</td><td class="n">135,682</td><td class="n">41</td><td class="n">290</td></tr>
+  </table>
+  </div>
+  <ul>
+    <li><b>四組的跨 repo 銜接都是靠 grep 完成的</b>：URL 字面值對路由字串、proto 副本對 stub。工具只在 repo 內的呼叫鏈上幫了忙，總成本反而比 grep 高。</li>
+    <li>grep 組在 Q3 找到兩個我初版真值表漏掉的呼叫者，已補進真值。我當初用 <span class="mono">grep -v director</span> 想排除 director 端點，結果把檔名含 director 的檔一起濾掉了。</li>
+    <li>這組 repo 的命名很規律（同一個前綴的 service 檔、路徑都寫成字面值），<b>對 grep 特別有利</b>，見限制。</li>
+  </ul>
+</section>
+
+<section>
+  <h2>再驗證 · 推翻與修正上一份四方報告</h2>
+  <p class="sub">獨立的 subagent 拿到資料位置、沒有拿到結論。它改用 <b>TypeScript type checker</b> 當真值（1,635 個呼叫點、557 個跨檔），並在 scratchpad 本機裝了 codegraph 1.6.2 對照（沒有動到全域安裝）。</p>
+  <div class="panel scroll">
+  <table>
+    <tr><th>原結論</th><th>判定</th><th>修正後</th></tr>
+    <tr><td>default singleton 跨檔召回率 30/30、0、0、24</td><td class="ok">成立</td><td>另抽 50 個：codegraph 49/50、GitNexus 0/50、graphify 0/50、UA 37/50（class 層級）。全部 344 個：339／0／0／269。</td></tr>
+    <tr><td>codegraph 抓不到 <span class="mono">export const x = new X()</span></td><td class="warn">只限 1.4.1</td><td>1.4.1 會連到常數本身、不是方法；<b>1.6.2 修好了</b>。</td></tr>
+    <tr><td>邊的精確度三個工具都是 30/30</td><td class="no">推翻</td><td>原判定只檢查「名稱有沒有出現在那一行」，抓不到同名錯連。嚴格判定後：codegraph 1.4.1 整體 76%、跨檔 60%（1.6.2：90%／76%），GitNexus 99%，graphify 87%。codegraph 的錯多半是同名退化，例如 <span class="mono">activityRepository.findById</span> 被連到 <span class="mono">SystemConfigService.findById</span>。</td></tr>
+    <tr><td>重建後的邊 Jaccard 1.0</td><td class="ok">成立</td><td>三個確定性工具都是 1.0。</td></tr>
+    <tr><td>跨檔 calls 邊數 854／151／87</td><td class="warn">數字對，但會誤導</td><td>三者的計數單位不同。其中正確的邊是 515／149／85。</td></tr>
+  </table>
+  </div>
+  <div class="cards" style="margin-top:14px">
+    <div class="card"><div class="k">TS 跨檔召回率（557）</div>codegraph 1.4.1 <b>92%</b>、1.6.2 <b>98%</b>、GitNexus <b>24%</b>、graphify <b>13%</b></div>
+    <div class="card"><div class="k">取捨</div>codegraph 召回高、精確度中等（同名會亂連）；GitNexus 精確度高、TS 召回低。<b>前者要用 grep 篩假陽性，後者要用 grep 補漏</b>。</div>
+    <div class="card"><div class="k">Go（8 種寫法）</div>codegraph 和 GitNexus 表現一樣；graphify 在 8 種 Go 寫法裡漏了 5 種 receiver 方法呼叫（合成小樣本，每種只有 1 個例子）；三個都漏「存在 struct 欄位裡的函式值」。</div>
+    <div class="card"><div class="k cg">codegraph · Go 的 route → handler</div>41 條只有 <b class="no">8 條對</b>。<span class="mono">cfg.V1XHandler.Method</span> 被用方法名配到別的 handler，甚至配到測試 stub。</div>
+  </div>
+</section>
+
+<section>
+  <h2>團隊導入前要知道的事</h2>
+  <div class="panel">
+  <ul style="margin:0">
+    <li><b>授權</b>：GitNexus 是 PolyForm Noncommercial，公司使用要另外買授權；另外三個是 MIT 或 Apache-2.0。</li>
+    <li><b>會寫進開發機的東西</b>：
+      <ul>
+        <li>codegraph：MCP 設定、auto-allow 規則、<span class="mono">UserPromptSubmit</span> hook。</li>
+        <li>GitNexus：<span class="mono">analyze</span> 預設會寫 skills、hooks、AGENTS.md（加 <span class="mono">--index-only</span> 可關）。</li>
+        <li>graphify：PreToolUse hook。</li>
+        <li>UA：兩個 hook，會叫 agent「不用問使用者」直接重分析。</li>
+      </ul></li>
+    <li><b>網路</b>：
+      <ul>
+        <li>codegraph：匿名使用統計預設開（含 machine id、版本、OS、agent 名稱、各工具每日次數等，不含程式碼與路徑；可用 <span class="mono">DO_NOT_TRACK=1</span> 關），跟它 README 寫的「No external services」不一致。</li>
+        <li>GitNexus：每 24 小時檢查一次 npm 更新。</li>
+        <li>graphify：處理文件時會自動挑環境裡找到的 LLM key。</li>
+      </ul></li>
+    <li><b>共享索引</b>：
+      <ul>
+        <li>GitNexus：有 <span class="mono">mcp --http</span>（綁 localhost 以外的位址才強制要 token；<span class="mono">serve</span> 本身沒有驗證）、Docker、auto-sync。</li>
+        <li>graphify、UA：可以把圖 commit 進 repo。</li>
+        <li>codegraph：只能每人在本機建，SQLite 跟作業系統綁定。</li>
+      </ul></li>
+    <li><b>版本與文件不同步</b>：GitNexus 的 README 是 main 分支（<span class="mono">--skip-embeddings</span> 在 1.6.12 會直接報 unknown option）；graphify 8 天出了 10 版；UA 2.9.7 沒有對應的 tag。</li>
+    <li><b>跨 repo 實際可行的做法</b>：用腳本從兩邊的程式碼產生一份機器可讀的合約表（呼叫點 → 路由 → handler），在 CI 檢查，再讓 agent 先查表。proto 收斂成單一來源：這次兩份副本已經只差在註解上不同步。</li>
+  </ul>
+  </div>
+</section>
+
+<section>
+  <h2>條件與限制</h2>
+  <div class="panel">
+  <ul style="margin:0">
+    <li><b>只測了一組 repo</b>（TS ↔ Go，41 個端點，命名非常規律），對 grep 特別有利。換成動態組 URL、命名不規律或端點多很多的系統，結論可能不同。</li>
+    <li><b>N=1</b>：4 題每組只答一次；評分由主線依真值表自評。真值表在實驗中修正過一次（補上 2 個漏列的呼叫者）。</li>
+    <li>版本：GitNexus 1.6.12（<span class="mono">--index-only</span>，沒有 embedding，全文搜尋沒裝起來，MCP 工具沒測）、graphify 0.9.92（<span class="mono">--code-only</span>）、codegraph CLI 1.4.1（1.6.2 在再驗證中跑過 TS 全量和 TS／Go 小型重現；跨 repo 和 Go route → handler 沒有在 1.6.2 上重跑）。</li>
+    <li>由 7 個 subagent 分工：再驗證、文件研究、跨 repo 機制實驗、4 個實戰題分組。最後由獨立的對抗式驗證逐條核對，挑出 12 處不精確，已全部修正。</li>
+  </ul>
+  </div>
+</section>
+
+<footer>所有數字都有對應的判定表或 grep 證據，留在本機 · 不含原始碼本體與架構摘要 · 前一份：程式碼圖譜四方評比</footer>
+</div>
+</body>
+</html>
