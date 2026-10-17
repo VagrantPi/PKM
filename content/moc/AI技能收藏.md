@@ -30,11 +30,11 @@ tags: [moc, ai, skills, agent, tooling]
 | [go-modern-guidelines](#go-modern-guidelines) | plugin | 多平台 | 給 agent 一份現代 Go 對照表，別再產出過時寫法 | [repo↗](https://github.com/JetBrains/go-modern-guidelines) | ⬜ |
 | [karpathy-guidelines](#karpathy-guidelines) | plugin | Claude Code・Cursor | 四條原則治 LLM 寫碼的老毛病：亂假設、過度設計、順手亂改 | [repo↗](https://github.com/multica-ai/andrej-karpathy-skills) | ⬜ |
 | [eli5](#eli5) | skill | Claude Code | 依聽眾（5 歲／主管／工程師／家人）換一套講法解釋同一件事 | [repo↗](https://github.com/DreambigOu/ELI5) | ⬜ |
-| [codegraph](#codegraph) | MCP | 多平台 | 本機碼圖譜，讀流程強、caller 會漏 | [repo↗](https://github.com/colbymchenry/codegraph) | ✅ 📊 |
+| [codegraph](#codegraph) | MCP | 多平台 | 本機碼圖譜，讀流程強；caller 10 月重測全中 | [repo↗](https://github.com/colbymchenry/codegraph) | ✅ 📊 |
 | [codebase-memory-mcp](#codebase-memory-mcp) | MCP | 多平台 | 同路線，caller 完整、只給名稱無 body | [repo↗](https://github.com/DeusData/codebase-memory-mcp) | ✅ 📊 |
 | [graphify](#graphify) | skill | 多平台 | 程式碼＋文件＋PDF 建成一張圖，每條邊標可信度（EXTRACTED／INFERRED／AMBIGUOUS） | [repo↗](https://github.com/Graphify-Labs/graphify) | ⬜ |
 | [GitNexus](#gitnexus) | MCP | 多平台 | 程式碼圖資料庫＋19 個 MCP 工具（影響分析、執行流、改名），**非商用授權** | [repo↗](https://github.com/abhigyanpatwari/GitNexus) | ⬜ |
-| [Understand-Anything](#understand-anything) | plugin | Claude Code・多平台 | 多 agent 分析 codebase → 互動式儀表板＋導覽，給新人看懂專案 | [repo↗](https://github.com/Egonex-AI/Understand-Anything) | ✅ 已安裝 |
+| [Understand-Anything](#understand-anything) | plugin | Claude Code・多平台 | 多 agent 分析 codebase → 互動式儀表板＋導覽，給新人看懂專案 | [repo↗](https://github.com/Egonex-AI/Understand-Anything) | ✅ 📊 |
 
 ---
 
@@ -544,6 +544,7 @@ cp -r ELI5/skills/eli5 ~/.claude/skills/eli5
 > **兩者表面做同一件事**：本機把 codebase 建成知識圖譜（symbol、呼叫邊、依賴），一次呼叫拿到相關源碼＋呼叫路徑，取代「grep → 逐檔讀」的迴圈。都主打 100% 本機、碼不外流。
 >
 > 📊 **實測顯示互補、不是二選一**：影響分析（誰呼叫我）用 codebase-memory；讀流程／快速讀懂機制用 codegraph → [[moc/AI技能評比|AI 技能評比]]（2026-08-05）。
+> ⚠️ 2026-10-17 重測，codegraph 的 caller 在同兩個符號上全中，「影響分析用 codebase-memory」的理由變弱了；codebase-memory 這次沒重測，它獨有的 Cypher、複雜度指標、語意搜尋仍成立。
 >
 > ~~同時裝兩套沒有意義，選一套即可。~~ ← 我自己的推論，已被實測推翻，留著當紀錄。
 >
@@ -553,7 +554,7 @@ cp -r ELI5/skills/eli5 ~/.claude/skills/eli5
 > - 程式碼以外還有文件、SQL、PDF 要一起進圖 → [graphify](#graphify)
 > - 給人看、新人 onboarding、架構導覽 → [Understand-Anything](#understand-anything)
 >
-> 程式碼部分四者都用 tree-sitter／AST 做確定性抽取，差在要不要呼叫 LLM：codegraph、GitNexus 不需要（GitNexus 的 embedding 是選配）；graphify 只在文件、媒體上用；Understand-Anything 每個檔案都會用 LLM 寫摘要和導覽，所以 token 成本最高。來源文章：替代方案有限公司〈Understand-Anything vs. GitNexus vs. CodeGraph vs. graphify〉（<https://altsol.tw/understand-anything-gitnexus-codegraph-comparison>，評比見 `_meta/來源評比紀錄.md`），文中把 graphify 說成「非 MCP Server」不正確（它有選配的 MCP stdio server），也沒提 GitNexus 的授權限制。
+> 程式碼部分四者都用 tree-sitter／AST 做確定性抽取，差在要不要呼叫 LLM：codegraph、GitNexus 不需要（GitNexus 的 embedding 是選配）；graphify 只在文件、媒體上用；Understand-Anything 每個檔案都會用 LLM 寫摘要和導覽，所以 token 成本最高。實測（2026-10-17）還發現，Understand-Anything 的 `calls` 邊也是 LLM 寫的，不是解析器產出 → [[moc/AI技能評比|評比]]。來源文章：替代方案有限公司〈Understand-Anything vs. GitNexus vs. CodeGraph vs. graphify〉（<https://altsol.tw/understand-anything-gitnexus-codegraph-comparison>，評比見 `_meta/來源評比紀錄.md`），文中把 graphify 說成「非 MCP Server」不正確（它有選配的 MCP stdio server），也沒提 GitNexus 的授權限制。
 
 ### codegraph
 `MCP` · 多平台 · MIT · ★74.2k（2026-10-15） · ✅ 已在用 · 📊
@@ -570,7 +571,12 @@ auto-sync 預設開，改檔即更新。本機 v1.4.1，官方最新 v1.6.2（20
 
 **用**：只在有 `.codegraph/` 目錄的 repo 用（建索引我自己決定，不讓 agent 代跑 `init`）。已寫進全域 `CLAUDE.md`。
 
-**📊 實測**：讀流程／快速讀懂贏；**caller 會漏**（巢狀函式、singleton 方法），影響分析別只信它 → [[moc/AI技能評比|評比]]
+**📊 實測**：
+- 2026-08-05：讀流程、快速讀懂勝出，但 **caller 會漏**（巢狀函式、singleton 方法）。
+- 2026-10-17：同一個 repo、同兩個符號重測，CLI 1.4.1 查新、舊兩份索引都是 **2/2、5/5 全中**，8 月的漏抓重現不出來，原因未查證。
+- 兩次都一樣：介面型別的 dispatch 解不出來，涉及介面多型的邊仍要用 grep 收尾。
+
+→ [[moc/AI技能評比|評比]]
 
 **宣稱數字**（README，未驗證）：工具呼叫 −89%、token −69%、7 repo 檔案讀取全部歸零；但小 repo 有地板效應、強模型直接 grep wall-clock 更快（只是燒 5–10 倍 token）。
 
@@ -588,7 +594,7 @@ curl -fsSL https://raw.githubusercontent.com/DeusData/codebase-memory-mcp/main/i
 
 **⚠️ 注意**：它**會讀你的 codebase、也會寫你的 agent 設定檔**；跨 client 共用一個 coordination daemon（無 opt-in，第一個 session 啟動、最後一個關掉）；所有 CBM process 版本**必須完全一致**，否則被 admission barrier 擋下。
 
-**📊 實測**：**caller 完整性全勝**（type-aware LSP）；Cypher／跨程序迴圈深度／語意搜尋／co-change 耦合是它獨有；但只給名稱清單、無 body → [[moc/AI技能評比|評比]]（實測用 **pro 版**，與開源版功能集是否相同未查證）
+**📊 實測**：**caller 完整性全勝**（type-aware LSP；但 10 月重測 codegraph 也全中，這項優勢有待重比）；Cypher／跨程序迴圈深度／語意搜尋／co-change 耦合是它獨有；但只給名稱清單、無 body → [[moc/AI技能評比|評比]]（實測用 **pro 版**，與開源版功能集是否相同未查證）
 
 **宣稱數字**（README，未驗證）：Linux kernel 28M LOC 3 分鐘建完、結構查詢 <1ms；preprint arXiv:2603.27277，31 repo：品質 83%、token 少 10×、工具呼叫少 2.1×。
 
@@ -666,13 +672,16 @@ npm 11 會在安裝時崩潰（README 寫的已知問題），改用 pnpm 或 `n
 ---
 
 ### Understand-Anything
-`plugin` · Claude Code（另支援 Codex、Cursor、Copilot、Gemini CLI 等）· MIT · ★86.5k（2026-10-16）· ✅ 已安裝 v2.7.6（未實測）
+`plugin` · Claude Code（另支援 Codex、Cursor、Copilot、Gemini CLI 等）· MIT · ★86.5k（2026-10-16）· ✅ 已安裝 v2.9.7 · 📊
 
 **做什麼**：用多 agent 流程分析整個專案，把每個檔案、函式、類別、依賴建成知識圖譜（存在 `.ua/knowledge-graph.json`），再提供**互動式儀表板**讓人點著看，附白話摘要和導覽路線。定位是「給人看懂專案」，不是給 agent 省 token。2026 年從 `Lum1104/Understand-Anything` 移到 `Egonex-AI` 組織，舊網址會轉址。
 
 **核心**
-- **tree-sitter＋LLM 分工**：tree-sitter 做確定性的結構抽取（import、export、定義、呼叫、繼承），同樣的輸入每次產出同樣的邊；LLM 讀結構和原始碼，寫出解析器給不了的東西：白話摘要、標籤、架構層、業務領域對應、導覽。
-- **多 agent 流程**：`/understand` 由 5 個 agent 組成：project-scanner、file-analyzer、architecture-analyzer、tour-builder、graph-reviewer。file-analyzer 平行跑，最多 5 個、每批 20–30 個檔。`/understand-domain`、`/understand-knowledge` 各再加 1 個 agent。支援增量更新，只重分析改過的檔。
+- **tree-sitter＋LLM 分工**：README 的說法是 tree-sitter 做確定性的結構抽取（import、export、定義、呼叫、繼承），LLM 寫解析器給不了的東西（白話摘要、標籤、架構層、業務領域對應、導覽）。⚠️ 實測 2.9.7 的情況不同：
+  - 只有 import、檔案與 class 節點是腳本產生的。
+  - **`calls` 邊是 file-analyzer 讀碼後由 LLM 寫的**，同一批重跑會變（Jaccard 0.79）。
+  - 節點以檔案、匯出的 class／函式為主，class 方法幾乎不建。
+- **多 agent 流程**：`/understand` 由 5 個 agent 組成：project-scanner、file-analyzer、architecture-analyzer、tour-builder、graph-reviewer。file-analyzer 平行跑，最多 5 個；實測每批 3–25 個檔，零散的小檔會合併成 misc 批。`/understand-domain`、`/understand-knowledge` 各再加 1 個 agent。支援增量更新，只重分析改過的檔。
 - `/understand-knowledge` 能吃 **Karpathy 式的 LLM wiki**，畫出知識庫的力導向圖和社群分群 → [[LLM Wiki（Karpathy）]]。
 
 **裝**
@@ -694,9 +703,13 @@ npm 11 會在安裝時崩潰（README 寫的已知問題），改用 pnpm 或 `n
 ```
 
 **⚠️ 注意**
-- **第一次 `/understand` 很吃 token**：README 明說大專案會用掉大量 token，建議先從子目錄開始（`/understand src/frontend`）。四個工具裡它的 LLM 成本最高。
+- **第一次 `/understand` 很吃 token**：README 明說大專案會用掉大量 token，建議先從子目錄開始（`/understand src/frontend`）。四個工具裡它的 LLM 成本最高。實測 232 個 TS 檔約用了 156 萬 token、10 分鐘；codegraph 同範圍 1.7 秒、0 token。
+- 🔴 **把子目錄當專案根，會悄悄漏掉路徑別名**：`tsconfig.json` 落在範圍外，`@/` 別名就解析不了。實測 import 邊只剩 128 條（正確是 278 條）。file-analyzer 又只依 import 資料建 `calls` 邊，跨檔呼叫跟著被丟掉，而且不會報錯。縮小範圍時，專案根要包含 tsconfig，再用 `--exclude` 排除不要的目錄。
+- **別拿它回答「誰呼叫這個方法」**：它是 class 層級的圖。實測問「誰呼叫 `assertWithinQuota`」，漏了 1 個、多了 2 個假陽性（同一個 class 呼叫的其實是別的方法）。抽樣 30 條 `calls` 邊沒有捏造的，它的問題是漏和不穩。
 - **程式碼內容會送給模型**：摘要由 LLM 產生。公司 codebase 要用時，README 建議改接本機模型（如 Ollama）。
 - 儀表板本身可以在內網用 Node 起服務瀏覽，但**建圖那一步一定要 LLM**；來源文章說「不呼叫 LLM」只對瀏覽成立。
+
+**📊 實測（2026-10-17）**：拿同一題流程解說比較，以它的圖當地圖的 agent 和用 codegraph 的 agent 答得一樣準（事實抽查都是 10/10），每題都花約 8 萬 token。它的分層和導覽讓答案涵蓋面較廣。結論：它是給人看的地圖，codegraph 是給 agent 查的索引 → [[moc/AI技能評比|評比]]
 
 **🔗 相關**：[graphify](#graphify) —— 同樣混合 tree-sitter 和 LLM，但 graphify 只在文件上用 LLM、程式碼完全本機；Understand-Anything 是每個檔都用 LLM 寫摘要。
 

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>實測 · Understand-Anything vs codegraph</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#0E1A2B; --grid:#1C2E45; --ink:#EAF2F8; --muted:#8FA3BA;
+    --ua:#B48CFF; --ua-dim:#3f2f66;   /* Understand-Anything — violet */
+    --cg:#F2A65A; --cg-dim:#6b4a26;   /* codegraph — amber（沿用 8 月報告） */
+    --ok:#5fd39b; --no:#ff7a85; --warn:#f2c94c;
+    --panel:#0c1726cc;
+    --disp:"Space Grotesk",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+    --body:"Space Grotesk",-apple-system,"Noto Sans TC","PingFang TC",sans-serif;
+  }
+  @media (prefers-color-scheme: light){
+    :root:not([data-theme="dark"]){
+      --paper:#F6F8FB; --grid:#E3E9F1; --ink:#14202F; --muted:#56677C;
+      --ua:#6A3FD1; --ua-dim:#e3d8fb; --cg:#B5651D; --cg-dim:#f6e1cb;
+      --ok:#1f8a57; --no:#c23542; --warn:#9a7300; --panel:#ffffffdd;
+    }
+  }
+  :root[data-theme="light"]{
+    --paper:#F6F8FB; --grid:#E3E9F1; --ink:#14202F; --muted:#56677C;
+    --ua:#6A3FD1; --ua-dim:#e3d8fb; --cg:#B5651D; --cg-dim:#f6e1cb;
+    --ok:#1f8a57; --no:#c23542; --warn:#9a7300; --panel:#ffffffdd;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.7;
+    background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+    background-size:46px 46px}
+  .wrap{max-width:980px;margin:0 auto;padding:0 16px}
+  .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mono,code{font-family:var(--mono);font-size:.92em}
+  header{padding:72px 0 28px;text-align:center}
+  h1{font-family:var(--disp);font-weight:700;font-size:clamp(28px,5vw,46px);line-height:1.12;letter-spacing:-.02em;margin:18px auto 0;max-width:20ch}
+  h1 .u{color:var(--ua)} h1 .g{color:var(--cg)}
+  .lede{color:var(--muted);max-width:60ch;margin:18px auto 0}
+  section{margin:44px 0}
+  h2{font-family:var(--disp);font-size:22px;margin:0 0 6px}
+  h2 + .sub{color:var(--muted);font-size:13.5px;margin:0 0 18px}
+  .panel{background:var(--panel);border:1px solid var(--grid);border-radius:14px;padding:20px 22px}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+  .card{background:var(--panel);border:1px solid var(--grid);border-radius:12px;padding:16px 18px}
+  .card .k{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.08em}
+  .card .big{font-family:var(--disp);font-size:30px;font-weight:700;line-height:1.1;margin:6px 0}
+  .ua{color:var(--ua)} .cg{color:var(--cg)} .ok{color:var(--ok)} .no{color:var(--no)} .warn{color:var(--warn)}
+  .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:560px}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--grid);vertical-align:top}
+  th{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--muted);font-weight:500}
+  .bar{display:flex;align-items:center;gap:8px;margin:4px 0}
+  .bar .lbl{width:150px;font-family:var(--mono);font-size:12.5px;flex:none}
+  .bar .track{flex:1;height:10px;border-radius:6px;background:var(--grid);overflow:hidden}
+  .bar .fill{height:100%}
+  .bar .n{width:30px;text-align:right;font-family:var(--mono);font-size:13px}
+  .dim{margin:14px 0 18px}
+  .dim .t{font-weight:700}
+  .dim .why{color:var(--muted);font-size:13.5px}
+  .insight{border-left:3px solid var(--ua);padding:4px 0 4px 14px;margin:14px 0}
+  .insight.g{border-color:var(--cg)} .insight.w{border-color:var(--warn)}
+  .insight b{display:block;margin-bottom:2px}
+  ul{padding-left:20px} li{margin:4px 0}
+  footer{color:var(--muted);font-size:12.5px;text-align:center;padding:28px 0 60px}
+  @media (max-width:560px){ .bar .lbl{width:104px;font-size:11.5px} .panel{padding:16px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">2026-10-17 · 實測評比 · services/ 範圍</div>
+  <h1><span class="u">Understand-Anything</span> 是給人看的地圖，<span class="g">codegraph</span> 是給 agent 查的索引</h1>
+  <p class="lede">同一份 <span class="mono">ai_family_backend</span>（commit a6fb1d3e，只取 <span class="mono">backend/src/services</span>，232 個 TS 檔）。沿用 8 月報告的 grep 真值，再加上三個 8 月沒測過的維度：LLM 建出來的邊會不會捏造、重跑穩不穩、給新人看懂的效果。</p>
+</header>
+
+<section>
+  <h2>建圖成本</h2>
+  <p class="sub">兩邊都對同一份 232 檔建圖；UA 是正確設定那一輪的數字（第一輪設定錯誤作廢，見最後一段）。</p>
+  <div class="cards">
+    <div class="card"><div class="k">CODEGRAPH · 冷啟索引</div><div class="big cg">1.7 秒</div>0 LLM token · 3,405 節點 · 6,268 邊（calls 1,919 條）· 方法／函式層級</div>
+    <div class="card"><div class="k">UNDERSTAND-ANYTHING · 建圖</div><div class="big ua">≈156 萬 token</div>17 批 file-analyzer＋審查、分層、導覽，共 20 個 agent · 5 併發約 10 分鐘（agent 累計 26 分鐘）· 519 節點 · 1,061 邊（calls 208 條）· 以 class 層級為主</div>
+  </div>
+  <p class="sub" style="margin-top:12px">差距是 0 對 156 萬 token、1.7 秒對 10 分鐘。UA 的節點數少，是因為 file-analyzer 依「顯著性門檻」只為檔案、匯出的 class／函式建節點，class 方法幾乎不建。</p>
+</section>
+
+<section>
+  <h2>分維度計分</h2>
+  <p class="sub">各 0–10，由本次實驗執行者自評。<b>不加總</b>：兩個工具的圖顆粒度不同，總分沒有意義。</p>
+  <div class="panel">
+    <div class="dim"><div class="t">① 建圖成本</div>
+      <div class="bar"><span class="lbl cg">codegraph</span><span class="track"><span class="fill" style="width:100%;background:var(--cg)"></span></span><span class="n">10</span></div>
+      <div class="bar"><span class="lbl ua">Understand-Anything</span><span class="track"><span class="fill" style="width:30%;background:var(--ua)"></span></span><span class="n">3</span></div>
+      <div class="why">確定性解析 vs 每 10–25 檔一個 LLM agent。</div></div>
+    <div class="dim"><div class="t">② 呼叫者完整性（方法層級問題）</div>
+      <div class="bar"><span class="lbl cg">codegraph</span><span class="track"><span class="fill" style="width:100%;background:var(--cg)"></span></span><span class="n">10</span></div>
+      <div class="bar"><span class="lbl ua">Understand-Anything</span><span class="track"><span class="fill" style="width:40%;background:var(--ua)"></span></span><span class="n">4</span></div>
+      <div class="why">codegraph 2/2、5/5；UA 沒有方法節點，只能退到 class 層級回答，漏 1 個、多 2 個假陽性。</div></div>
+    <div class="dim"><div class="t">③ 邊的精確度（抽樣 30 條 calls）</div>
+      <div class="bar"><span class="lbl cg">codegraph</span><span class="track"><span class="fill" style="width:100%;background:var(--cg)"></span></span><span class="n">10</span></div>
+      <div class="bar"><span class="lbl ua">Understand-Anything</span><span class="track"><span class="fill" style="width:100%;background:var(--ua)"></span></span><span class="n">10</span></div>
+      <div class="why">兩邊都 30/30，沒有捏造的邊。</div></div>
+    <div class="dim"><div class="t">④ 重現性</div>
+      <div class="bar"><span class="lbl cg">codegraph</span><span class="track"><span class="fill" style="width:100%;background:var(--cg)"></span></span><span class="n">10</span></div>
+      <div class="bar"><span class="lbl ua">Understand-Anything</span><span class="track"><span class="fill" style="width:60%;background:var(--ua)"></span></span><span class="n">6</span></div>
+      <div class="why">UA 同一批重跑，calls 邊 Jaccard 0.79。</div></div>
+    <div class="dim"><div class="t">⑤ 給新人看懂（同一題流程解說）</div>
+      <div class="bar"><span class="lbl cg">codegraph</span><span class="track"><span class="fill" style="width:80%;background:var(--cg)"></span></span><span class="n">8</span></div>
+      <div class="bar"><span class="lbl ua">Understand-Anything</span><span class="track"><span class="fill" style="width:90%;background:var(--ua)"></span></span><span class="n">9</span></div>
+      <div class="why">事實抽查兩邊都 10/10；UA 的分層＋導覽讓答案涵蓋面較廣。差距小，N=1。</div></div>
+  </div>
+</section>
+
+<section>
+  <h2>關鍵證據 · 呼叫者完整性</h2>
+  <p class="sub">真值在 a6fb1d3e 上用 grep 重建：每個呼叫點都找到外層函式。</p>
+  <div class="panel scroll">
+  <table>
+    <tr><th>外層函式（真值）</th><th>形式</th><th class="cg">codegraph</th><th class="ua">UA（class 層級）</th></tr>
+    <tr><td colspan="4" class="mono" style="color:var(--muted)">assertWithinQuota 的 caller · 真值 5</td></tr>
+    <tr><td class="mono">VitalsMeasurementService.uploadAndAnalyze</td><td>class method</td><td class="ok">✅</td><td class="no">❌ 有 import 邊、沒 calls 邊</td></tr>
+    <tr><td class="mono">VoiceCallWsGateway.handleConnection → onMessage</td><td>巢狀 arrow fn</td><td class="ok">✅（歸到 handleConnection）</td><td class="ok">✅</td></tr>
+    <tr><td class="mono">VoiceCallService.start</td><td>class method</td><td class="ok">✅</td><td class="ok">✅</td></tr>
+    <tr><td class="mono">registerWebrtcConnectionHandler → onUserTurn</td><td>巢狀 async fn</td><td class="ok">✅（列為 onUserTurn）</td><td class="ok">✅</td></tr>
+    <tr><td class="mono">VoiceCallWebrtcService.init</td><td>class method</td><td class="ok">✅</td><td class="ok">✅</td></tr>
+    <tr><td class="mono">CostModeService · CostStreamService</td><td>呼叫的是 getUsage</td><td>—（正確未列）</td><td class="warn">⚠ 列為 QuotaService 的 caller（class 層級為真，方法層級是假陽性）</td></tr>
+    <tr><td colspan="4" class="mono" style="color:var(--muted)">handleUserText 的 caller · 真值 2</td></tr>
+    <tr><td class="mono">onMessage（ws gateway）· onUserTurn（webrtc）</td><td>兩個都是巢狀函式</td><td class="ok">2/2</td><td class="ok">2/2（指向 VoiceCallSession class）</td></tr>
+  </table>
+  </div>
+  <div class="insight g"><b>8 月的結論在這裡重現不出來</b>8 月報告寫 codegraph「漏巢狀函式與 singleton 實例方法」（1/2、3/5）。這次用 CLI 1.4.1 查兩份索引：今天在 scratchpad 新建的，以及 7/18 建、原 repo 裡的舊索引副本。兩份都是 2/2、5/5；舊索引的範圍含 tests，連 tests 裡的 caller 都列了出來。8 月的差異從何而來，這次沒查到原因（可能是查詢方式或當時的 server 版本）。8 月那條「影響分析用 codebase-memory」的分工理由，至少對這兩個符號不成立。</div>
+  <div class="insight w"><b>介面 dispatch 仍是共同盲點</b><span class="mono">handleUserText</span> 的 5 個 callee 裡，<span class="mono">transport.isOpen／sendJson</span> 走介面型別。codegraph 這次範圍沒有 mock 可誤指，所以直接沒列（4 個 callee 裡也沒有它們）；UA 沒有方法節點，<span class="mono">VoiceCallSession</span> 也沒有任何指向 transport 的邊。兩邊都沒解出介面多型。</div>
+</section>
+
+<section>
+  <h2>關鍵證據 · LLM 建的圖：不捏造，但會漏、會飄</h2>
+  <div class="cards">
+    <div class="card"><div class="k">精確度 · 抽 30 條 calls（seed 42）</div><div class="big"><span class="ua">30/30</span> · <span class="cg">30/30</span></div>UA 自動判定有 2 條要人工確認：一條經 barrel 匯入，一條放進陣列後經由介面呼叫。人工確認後兩條都是真的。</div>
+    <div class="card"><div class="k">重現性 · voice-call 那批（17 檔）重跑</div><div class="big ua">0.79</div>節點、imports、contains 完全相同（這部分由腳本產生）。calls 邊 33 vs 35 條，聯集 38 條裡有 8 條只出現在其中一次，例如 <span class="mono">VoiceCallWsGateway → VoiceCallDurationService</span> 只有第二次有。</div>
+    <div class="card"><div class="k">漏邊型態</div><div class="big ua">「少說」</div>漏掉的都是「有 import、有呼叫，LLM 沒寫成 calls 邊」，例如 Vitals → Quota。抽樣裡沒看到「憑空多出一條」。</div>
+  </div>
+</section>
+
+<section>
+  <h2>關鍵證據 · 給新人看懂</h2>
+  <p class="sub">題目：「解說一通語音通話從接通到結束的流程、使用者講話怎麼變成語音回覆、額度在哪裡檢查和扣」。兩個 subagent 各答一次：一個以 UA 的 knowledge-graph.json 當地圖，一個以 codegraph CLI 當地圖，兩邊都可以回頭讀原始碼。</p>
+  <div class="panel scroll">
+  <table>
+    <tr><th></th><th class="ua">以 UA 圖為主</th><th class="cg">以 codegraph 為主</th></tr>
+    <tr><td>token／工具呼叫</td><td>7.8 萬 · 10 次（圖查詢 3、讀原始碼 5）</td><td>8.5 萬 · 7 次（codegraph 6、讀檔 1）</td></tr>
+    <tr><td>事實抽查（grep 驗證 10 條）</td><td class="ok">10/10（含 3 條只靠節點摘要、沒回原始碼確認的）</td><td class="ok">10/10（「sweepStale 在索引內無 caller」正確，真正的 caller 在範圍外的 worker/，它有註明）</td></tr>
+    <tr><td>選的路徑</td><td>較新的 WebRTC 路徑，從導覽第 13–14 步切入</td><td>舊的 WebSocket 路徑，從 explore 結果切入</td></tr>
+    <tr><td>強項</td><td>涵蓋面廣：Call Center、KVS 通道池、STT 簡轉繁、兩種計量分開</td><td>單一路徑更深：路由、狀態碼、token 格式、1006 斷線的結束時間判定</td></tr>
+    <tr><td>風險</td><td>答案裡有 7 處標明「只來自圖摘要」，摘要錯了會直接寫進答案</td><td>範圍外的呼叫者看不到，要靠答題者自己註明</td></tr>
+  </table>
+  </div>
+  <div class="insight"><b>答題成本相同，差別在建圖那筆錢</b>兩邊答一題都花約 8 萬 token、品質相當。UA 的優勢（分層、導覽、每個檔案都有摘要）是用 156 萬 token 預先買來的。同一個 repo 會被很多人反覆問「這專案在幹嘛」時才划算；agent 自己改 code 時，codegraph 每次查詢的成本低得多，結果還是確定的。</div>
+</section>
+
+<section>
+  <h2>踩到的坑 · 範圍設成子目錄會悄悄漏掉別名 import</h2>
+  <div class="panel">
+    <p style="margin-top:0">第一輪我直接對 <span class="mono">backend/src/services</span> 跑，<span class="mono">tsconfig.json</span> 不在範圍內，<span class="mono">@/</span> 路徑別名就解析不了。services 裡 997 個 import 用別名、只有 250 個是相對路徑，結果 import 邊只建出 <b class="no">128</b> 條。file-analyzer 又被規定「只能依 import 資料建 calls 邊」，<span class="mono">quotaService</span> 這類跨檔呼叫就這樣被丟掉了。工具沒報錯，只有一個 agent 在回報裡提到。</p>
+    <p>改成專案根設為 <span class="mono">backend/</span>，用 exclude 只留 <span class="mono">src/services/**</span> 和 tsconfig 之後，import 邊回到 <b class="ok">278</b> 條。第一輪跑了 11 批、約 89 萬 token，全部作廢。</p>
+    <p style="margin-bottom:0"><b>用法</b>：UA 的範圍要包含 tsconfig（或其他路徑別名設定），縮小範圍用 <span class="mono">--exclude</span>，不要直接把子目錄當專案根。</p>
+  </div>
+</section>
+
+<section>
+  <h2>怎麼選</h2>
+  <div class="cards">
+    <div class="card"><div class="k cg">AGENT 改 CODE · 影響分析</div><b>codegraph</b><br>方法層級、確定性、1.7 秒建完、每次查詢便宜。這次 caller 全中。</div>
+    <div class="card"><div class="k ua">新人 ONBOARDING · 給人看全貌</div><b>Understand-Anything</b><br>分層、導覽、每檔摘要，適合反覆被問「這專案在幹嘛」的 repo。先算建圖成本：這次 232 檔約 156 萬 token。</div>
+    <div class="card"><div class="k warn">不要</div>拿 UA 的圖回答「誰呼叫這個方法」。它是 class 層級的圖，LLM 推的邊會漏、重跑會變。</div>
+  </div>
+</section>
+
+<section>
+  <h2>條件與限制</h2>
+  <div class="panel">
+  <ul style="margin:0">
+    <li><b>N=1</b>：只有 voice-call 那一批重跑過一次（N=2），其他都只跑一次，不做統計顯著性宣稱。</li>
+    <li><b>範圍只有 services/</b>（232 個 TS 檔）。controllers、worker、tests 都不在範圍內，任何「範圍外的 caller」兩邊都看不到。</li>
+    <li><b>顆粒度不同</b>：codegraph 是方法層級，UA 是 class 層級，第 ② 維本質上是在拿 UA 回答它設計上不擅長的問題。</li>
+    <li><b>UA 管線是我手動編排的</b>：照 <span class="mono">/understand</span> 2.9.7 的 SKILL.md 逐階段派 agent，但有三處偏離。
+      <ul>
+        <li>批次參數放在檔案裡傳，沒有直接寫進 prompt。</li>
+        <li>第二輪的 scan 步驟用它附的腳本直接組出來，沒有派 project-scanner agent。</li>
+        <li>跳過 Phase 7 的 fingerprint。</li>
+      </ul>
+      跟一鍵跑 <span class="mono">/understand</span> 的結果可能有差。</li>
+    <li><b>版本</b>：Understand-Anything 2.9.7；codegraph CLI 1.4.1（已有 1.6.2，未升級）。</li>
+    <li><b>評分由本次實驗執行者自評</b>；第 ⑤ 維只抽查 10 條事實，不是全文查證，兩份答案的品質差距在雜訊內。</li>
+    <li>8 月結果重現不出來的原因<b>未查證</b>。</li>
+  </ul>
+  </div>
+</section>
+
+<footer>每個準確率數字都有對應的 grep 證據（檔名:行號），判定表留在本機 · 不含原始碼本體與架構摘要 · 對比標的 ai_family_backend（backend/src/services）</footer>
+</div>
+</body>
+</html>

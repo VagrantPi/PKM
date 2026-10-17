@@ -16,6 +16,7 @@ tags: [moc, ai, skills, benchmark]
 |---|---|---|---|
 | 2026-08-05 | 任務系統解說題：四組對照評分 | base・ponytail・i-have-adhd・兩個同開 | [報告 ↗](https://vagrantpi.github.io/PKM/static/skill-eval/2026-08-05-ponytail-vs-i-have-adhd/) |
 | 2026-08-05 | backend 索引能力：真值裁判對決 | codegraph・codebase-memory-pro | [報告 ↗](https://vagrantpi.github.io/PKM/static/skill-eval/2026-08-05-codegraph-vs-codebase-memory/) |
+| 2026-10-17 | 給人看的地圖 vs 給 agent 查的索引 | Understand-Anything・codegraph | [報告 ↗](https://vagrantpi.github.io/PKM/static/skill-eval/2026-10-17-understand-anything-vs-codegraph/) |
 
 ---
 
@@ -78,6 +79,52 @@ codegraph 漏的都是**巢狀函式與 singleton 實例方法**；codebase-memo
 - 節點數差異（12,509 vs 17,187）是**建模哲學不同**（codegraph 把 import／constant／enum_member 也物化成節點），**不是覆蓋率高低**。
 - **冷啟索引只有 codebase-memory 實測 9s，codegraph 未重測**——那一維的 8 vs 7 沒有對等實測基礎。
 - 受測的是 **codebase-memory-pro**，與收藏頁的開源版是否同一功能集未查證。
+- ⚠️ **2026-10-17 重測推翻了「codegraph 漏 caller」這一條**：同 commit、同兩個符號，codegraph 2/2、5/5 全中（見下一份報告）。
+
+---
+
+## 2026-10-17 · 給人看的地圖 vs 給 agent 查的索引
+
+<a href="https://vagrantpi.github.io/PKM/static/skill-eval/2026-10-17-understand-anything-vs-codegraph/" target="_blank" rel="noopener"><strong>開啟完整報告 ↗</strong></a>
+
+**受測**：[[moc/AI技能收藏#understand-anything|Understand-Anything]] 2.9.7・[[moc/AI技能收藏#codegraph|codegraph]] CLI 1.4.1
+**標的**：`ai_family_backend` 的 `backend/src/services`（232 個 TS 檔，commit 同 8 月）
+**方法**：
+- 沿用 8 月的 grep 真值。
+- 另外加測三項：抽 30 條邊驗精確度、同一批重跑看重現性、兩邊各答一次同一題流程解說。
+
+**一句話結論**：兩者不是同一類工具。**Understand-Anything 是給人看的地圖，codegraph 是給 agent 查的索引。**
+
+**關鍵證據**
+
+| 發現 | 數字 | 為什麼可信 |
+|---|---|---|
+| 建圖成本差四個數量級以上 | UA 約 156 萬 token、10 分鐘；codegraph 1.7 秒、0 token | 同範圍同 commit，UA 用的是正確設定那一輪 |
+| UA 答不了方法層級的問題 | 問「誰呼叫 `assertWithinQuota`」：UA 漏 1 個、多 2 個假陽性；codegraph 5/5 | UA 只有 class 層級的 `calls` 邊，每處都用 grep 對到外層函式 |
+| LLM 建的邊不會捏造，但會漏、會飄 | 抽樣精確度兩邊都 30/30；UA 同批重跑，`calls` 邊 Jaccard 0.79 | 抽樣用固定 seed；重跑時節點與 imports 完全相同，只有 LLM 寫的 `calls` 邊會變 |
+| 給新人看懂，兩邊一樣準 | 事實抽查都 10/10，答一題都花約 8 萬 token | UA 的導覽與分層讓答案涵蓋面較廣，codegraph 在單一路徑上答得更深 |
+| 8 月的「codegraph 漏巢狀 caller」重現不出來 | 新、舊兩份索引都是 2/2、5/5 | 舊索引是 7/18 建在原 repo 的那份副本 |
+
+**踩到的坑**：第一次把 `services/` 當專案根直接跑。`tsconfig` 落在範圍外，`@/` 別名解析不了，import 邊只剩 128 條，正確應該是 278 條，跨檔呼叫跟著被丟掉，而且不會報錯。這一輪約 89 萬 token 全部作廢。**縮小範圍時，專案根要包含 tsconfig，再用 `--exclude` 排除。**
+
+**怎麼用**
+1. **agent 改 code、做影響分析** → codegraph：方法層級、結果確定、幾乎免費。
+2. **很多人會反覆問「這專案在幹嘛」的 repo** → Understand-Anything：建圖那筆錢分攤得掉，分層和導覽才划算。
+3. **不要**拿 Understand-Anything 回答「誰呼叫這個方法」。
+4. 介面型別的 dispatch 兩邊都解不出來，仍要用 grep 收尾。
+
+**⚠️ 限制（報告照抄）**
+- **N=1**：只有 voice-call 那一批重跑過一次，不做統計顯著性宣稱。
+- **範圍只有 services/**，範圍外的 caller 兩邊都看不到。
+- **顆粒度不同**：第 ② 維本質上是拿 UA 回答它不擅長的問題。
+- **UA 管線是手動照 SKILL.md 編排的**，有三處偏離：
+  - 批次參數用檔案傳。
+  - 第二輪的 scan 由腳本組出。
+  - 跳過 fingerprint。
+  
+  跟一鍵跑 `/understand` 的結果可能有差。
+- **評分由本次實驗的執行者自評**；第 ⑤ 維只抽查 10 條事實，兩份答案的差距在雜訊內。
+- 8 月結果重現不出來的**原因未查證**。
 
 ---
 
