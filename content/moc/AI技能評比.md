@@ -188,7 +188,7 @@ codegraph 漏的都是**巢狀函式與 singleton 實例方法**；codebase-memo
 - [[moc/AI技能收藏#graphify|graphify]] 0.9.92
 - 只用 grep 的基線
 
-**標的**：一組真實的 TS backend ↔ Go 服務，backend 用 stage 分支 HEAD、Go 服務用 main HEAD，完整範圍。兩邊之間有 75 個 HTTP 端點和 1 條 gRPC。
+**標的**：一組真實的 TS backend ↔ Go 服務，兩邊都用量測當時工作分支的 HEAD，完整範圍。兩邊之間有 75 個 HTTP 端點和 1 條 gRPC。
 
 **方法**：由多個 subagent 分工：
 - 串接盤點，當作真值。
@@ -215,6 +215,8 @@ codegraph 漏的都是**巢狀函式與 singleton 實例方法**；codebase-memo
 1. repo 內導航用 codegraph 1.6.2。caller 只當候選，常見方法名要用 grep 篩；Go 的 router 直接讀原始碼。
 2. 跨 repo 用腳本產生合約表，在 CI 雙向檢查（含 SSE 事件名稱），再讓 agent 先查表。
 3. codebase-memory 這個 build 不建議導入：TS 漏抓嚴重、每次 session 都會連 GitHub、UI 沒有驗證。等它出簽章過的 release、並支援 Go 1.22 路由後再重評。
+
+選型建議（脫敏的團隊版：導入步驟、合約表做法、試點與退場條件）→ [[程式碼圖譜工具選型（跨 repo 實測後的建議）]]
 
 **⚠️ 限制（報告照抄）**
 - **只測一組 repo**：命名規律、URL 多寫成字面值，對 grep 有利。

@@ -65,7 +65,7 @@
 <header>
   <div class="eyebrow">2026-10-18 · 跨 repo 實測 · TS backend ↔ Go 服務</div>
   <h1>四個工具，跨 repo 自動連上的都是 0 條</h1>
-  <p class="lede">codebase-memory、codegraph、GitNexus、graphify 四個工具，放在一組真實的 TS ↔ Go 服務上測（backend 用 stage 分支 HEAD、Go 服務用 main HEAD，完整範圍）。兩邊之間有 75 個 HTTP 端點、1 條 gRPC。沒有任何工具自動接上任何一條。5 題跨 repo 實戰題，四個工具組和只用 grep 的基線幾乎都答對，跨 repo 的銜接全靠 grep。工具真正有差的地方在 repo 內：那裡 codegraph 1.6.2 明顯領先。</p>
+  <p class="lede">codebase-memory、codegraph、GitNexus、graphify 四個工具，放在一組真實的 TS ↔ Go 服務上測（兩邊都用量測當時工作分支的 HEAD，完整範圍）。兩邊之間有 75 個 HTTP 端點、1 條 gRPC。沒有任何工具自動接上任何一條。5 題跨 repo 實戰題，四個工具組和只用 grep 的基線幾乎都答對，跨 repo 的銜接全靠 grep。工具真正有差的地方在 repo 內：那裡 codegraph 1.6.2 明顯領先。</p>
 </header>
 
 <section>
@@ -74,7 +74,7 @@
     <div class="card"><div class="k">HTTP</div><div class="big">75</div>個端點（其中 2 個是 SSE），呼叫點分布在 12 個 client 檔。Go 服務的 v1 路由共 130 條，backend 用了其中 75 條。</div>
     <div class="card"><div class="k">gRPC</div><div class="big">1</div>條 server-stream。backend 在執行期用 protoLoader 載入一份手抄的 proto，沒有 TS stub。</div>
     <div class="card"><div class="k">反向呼叫／共用基礎設施</div><div class="big">0</div>Go 服務不會回呼 backend，也沒有共用 DB、Redis、queue。</div>
-    <div class="card"><div class="k">順便查到的合約漂移</div><div class="big warn">2 類</div>SSE 事件：Go 端會送、TS 端沒處理的有 7 種。DTO：next-speaker 回應的型別有 4 處不一致。細節不公開。</div>
+    <div class="card"><div class="k">順便查到的合約漂移</div><div class="big warn">2 類</div>SSE 事件：Go 端會送、TS 端沒處理的有 7 種。DTO：某個回應的型別有 4 處不一致。細節不公開。</div>
   </div>
 </section>
 
@@ -115,7 +115,7 @@
 
 <section>
   <h2>repo 內呼叫圖 · TS type checker 當真值</h2>
-  <p class="sub">新 HEAD 的 backend <span class="mono">src/services</span>，4,495 個呼叫與 new 運算式（召回分母 4,126），跨檔 1,395 個。嚴格判定：目標必須是 type checker 解析到的那個宣告。</p>
+  <p class="sub">新 HEAD 的 backend service 層，4,495 個呼叫與 new 運算式（召回分母 4,126），跨檔 1,395 個。嚴格判定：目標必須是 type checker 解析到的那個宣告。</p>
   <div class="panel scroll">
   <table>
     <tr><th>工具</th><th>跨檔召回</th><th>default singleton（894）</th><th>具名 const 實例（68）</th><th>跨檔精確度</th><th>主要錯誤</th></tr>
@@ -127,7 +127,7 @@
   </table>
   </div>
   <ul>
-    <li>兩個方法的 caller：<span class="mono">assertWithinQuota</span>（6 處）只有 codegraph 6/6，其他三個都是 0；<span class="mono">handleUserText</span>（4 處）codegraph 和 GitNexus 都 4/4，graphify 1/4，codebase-memory 0/4。</li>
+    <li>抽兩個方法查 caller：方法 X（6 處）只有 codegraph 6/6，其他三個都是 0；方法 Y（4 處）codegraph 和 GitNexus 都 4/4，graphify 1/4，codebase-memory 0/4。</li>
     <li>codebase-memory 的最小重現：TS 約 5/15、Go 7/8，Go 好很多（但部分靠名稱啟發式）。</li>
     <li><b>8 月報告的「codebase-memory caller 5/5」重現不出來</b>：同一個 dev build 在 8 月那個 commit 上也是 0/5，節點數也不同。8 月那次很可能不是這個 build，那份報告的這一條已加註。</li>
   </ul>
