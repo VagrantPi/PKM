@@ -565,7 +565,7 @@ cp -r ELI5/skills/eli5 ~/.claude/skills/eli5
 >   - `export const x = new X()`：只有 GitNexus 抓得到（codegraph 1.4.1 的盲點，1.6.2 已修）。
 >   - 一般具名函式：三個都抓得到。
 > - 選之前先用自己最常見的 2–3 種寫法，做一個 3 檔的最小重現，每個工具跑一次只要幾秒。
-> - **跨 repo（2026-10-17 實測 TS ↔ Go）**：三個工具自動連上的跨 repo 呼叫都是 0。4 題跨 repo 實戰題，只用 grep 的 agent 一樣全對、這次最便宜。跨 repo 要自己用腳本維護一份「呼叫點 → 路由 → handler」的合約表，並在 CI 檢查。
+> - **跨 repo（2026-10-18 實測，真實的 TS ↔ Go，75 個 HTTP 端點、1 條 gRPC）**：codebase-memory、codegraph、GitNexus、graphify 自動連上的跨 repo 呼叫**都是 0**。5 題實戰題各組都靠 grep 完成跨 repo 的銜接。跨 repo 要自己用腳本維護「呼叫點 → 路由 → handler」的合約表，並在 CI 檢查 → [[moc/AI技能評比|評比]]
 >
 > 程式碼部分四者都用 tree-sitter／AST 做確定性抽取，差在要不要呼叫 LLM：codegraph、GitNexus 不需要（GitNexus 的 embedding 是選配）；graphify 只在文件、媒體上用；Understand-Anything 每個檔案都會用 LLM 寫摘要和導覽，所以 token 成本最高。實測（2026-10-17）還發現，Understand-Anything 的 `calls` 邊也是 LLM 寫的，不是解析器產出 → [[moc/AI技能評比|評比]]。來源文章：替代方案有限公司〈Understand-Anything vs. GitNexus vs. CodeGraph vs. graphify〉（<https://altsol.tw/understand-anything-gitnexus-codegraph-comparison>，評比見 `_meta/來源評比紀錄.md`），文中把 graphify 說成「非 MCP Server」不正確（它有選配的 MCP stdio server），也沒提 GitNexus 的授權限制。
 
@@ -589,10 +589,9 @@ auto-sync 預設開，改檔即更新。本機 v1.4.1，官方最新 v1.6.2（20
 - 2026-10-17：同一個 repo、同兩個符號重測，CLI 1.4.1 查新、舊兩份索引都是 **2/2、5/5 全中**，8 月的漏抓重現不出來，原因未查證。
 - 兩次都一樣：介面型別的 dispatch 解不出來，涉及介面多型的邊仍要用 grep 收尾。
 - 2026-10-17 四方實測：`export default new X()` 的 singleton 呼叫抽 30 個全中，四個工具裡最好。但最小重現發現，**具名的 `export const x = new X()` 透過實例呼叫方法，1.4.1 建不出邊**（1.6.2 已修）。
-- 2026-10-17 再驗證（type checker 當真值）＋跨 repo 實測：
+- 2026-10-18 重測（新 HEAD，type checker 真值）：TS 跨檔召回／精確度 1.4.1 是 91%／64%，**1.6.2 是 97%／81%**，四個工具裡最好。Go 服務的 route → handler（`cfg.X.Method` 寫法）130 條只有 53 條對，其餘連到同名方法，包括測試替身。沒有跨 repo 連結（2026-10-18 跨 repo 實測）。
+- 2026-10-17 再驗證（type checker 當真值）：
   - 精確度不如原本以為的高：1.4.1 整體 76%、跨檔 60%（1.6.2：90%／76%）。錯誤多半是同名退化，例如 `xxxRepository.findById` 被連到別的 service 的 `findById`；常見方法名的 caller 要用 grep 篩。
-  - **Go 的 route → handler 不可信**：`cfg.V1XHandler.Method` 這種寫法，41 條只有 8 條對。
-  - 沒有跨 repo 連結，每個 repo 一份索引。
 
 → [[moc/AI技能評比|評比]]
 
@@ -612,7 +611,20 @@ curl -fsSL https://raw.githubusercontent.com/DeusData/codebase-memory-mcp/main/i
 
 **⚠️ 注意**：它**會讀你的 codebase、也會寫你的 agent 設定檔**；跨 client 共用一個 coordination daemon（無 opt-in，第一個 session 啟動、最後一個關掉）；所有 CBM process 版本**必須完全一致**，否則被 admission barrier 擋下。
 
-**📊 實測**：**caller 完整性全勝**（type-aware LSP；但 10 月重測 codegraph 也全中，這項優勢有待重比）；Cypher／跨程序迴圈深度／語意搜尋／co-change 耦合是它獨有；但只給名稱清單、無 body → [[moc/AI技能評比|評比]]（實測用 **pro 版**，與開源版功能集是否相同未查證）
+**📊 實測（2026-10-18，本機 7 月 5 日編譯的 dev build，也就是 8 月報告寫的「pro」）**：
+- **TS 漏抓嚴重**：跨檔召回率 25%，`export default new X()` 的 singleton 只有 4%，具名 const 實例 0%。兩個測試方法的 caller 是 0/6、0/4。精確度 83%。Go 小型重現 7/8，明顯比 TS 好。
+- **跨 repo**：要另外手動跑 `index_repository` 的 `cross-repo-intelligence` 模式。實測產生 136 條連結，**全錯**：
+  - Go 1.22 的 `mux.Handle("POST /path")` 被丟棄，因為解析器要求路徑以 `/` 開頭。
+  - TS 的純字串 URL 漏掉，只認得樣板字串。
+  - 邊上沒有 README 說的 confidence。
+  - 重新索引會清掉 CROSS 邊。
+- **8 月的「caller 完整性全勝」重現不出來**：同一個 build，在 a6fb1d3e（10-17 報告記為與 8 月同一個 commit；8 月報告本身沒記 commit）重測是 0/5。
+- **團隊導入風險**：
+  - 這個 build 之後已發布 14 個 release（含 2 個 pre-release），沒有官方簽章。
+  - 每次 MCP 初始化都會連 GitHub 檢查版本，沒辦法關，跟 README 寫的不一致。
+  - UI 在 127.0.0.1:9749 監聽，沒有驗證，也沒有檢查 Host header。
+  - `install` 會改寫多個全域設定與 hooks。
+- 原本的紀錄（8 月）：Cypher／跨程序迴圈深度／語意搜尋／co-change 耦合是它獨有；但只給名稱清單、無 body → [[moc/AI技能評比|評比]]（實測用 **pro 版**，與開源版功能集是否相同未查證）
 
 **宣稱數字**（README，未驗證）：Linux kernel 28M LOC 3 分鐘建完、結構查詢 <1ms；preprint arXiv:2603.27277，31 repo：品質 83%、token 少 10×、工具呼叫少 2.1×。
 
@@ -663,8 +675,8 @@ graphify install               # 偵測你的 agent 並註冊 /graphify skill
 - 232 個 TS 檔：4.2 秒、0 token，2,058 節點、4,440 邊，重建結果完全一樣。
 - 抽 30 條 calls 邊用名稱判定都正確，但嚴格再驗證後整體精確度是 87%（跨檔 98%，不過跨檔的邊很少）；28 條 INFERRED 都對。
 - Go 的 receiver 方法呼叫，8 種寫法漏了 5 種（合成小樣本）。
-- 跨 repo：`merge-graphs` 後兩張圖之間 0 條直接邊，`.proto` 不解析（2026-10-17 實測）。
 - 流程解說題 10/10，但「額度在哪裡檢查」只能靠 import 邊加讀原始碼。
+- 跨 repo：`merge-graphs` 後兩張圖之間 0 條直接邊（2026-10-18 實測 TS ↔ Go）。repo 內 TS 跨檔召回率 22%。
 
 → [[moc/AI技能評比|評比]]
 
@@ -712,11 +724,11 @@ npm 11 會在安裝時崩潰（README 寫的已知問題），改用 pnpm 或 `n
 - 232 個 TS 檔：22 秒、0 token，4,038 節點、8,061 邊、236 條執行流。
 - 562 個入口候選裡有 362 個沒有追成執行流，這是它自己警告的。
 - 抽 30 條 calls 邊都正確，嚴格再驗證後精確度 99%；但 TS 跨檔召回率只有 24%。重建結果完全一樣。
-- **跨 repo `group`（2026-10-17 實測 TS ↔ Go）**：
-  - 自動模式下 HTTP 0/42、gRPC 0/1。原因是 Go extractor 只認 `x.GET()`／`http.HandleFunc()`，不認得 Go 1.22 的 `mux.Handle("POST /path")`；TS 端也不認得 `this.client.post()`。
-  - 手寫 manifest 只救回 gRPC 的一部分：它解到 stub，從 stub 往上游的 impact 能跨 repo。
 - `handleUserText` 的 caller 2/2，而且精確指到巢狀的 `onMessage`／`onUserTurn`，是四個工具裡最準的。
 - 流程解說題 10/10，但最貴：11.2 萬 token、17 次工具呼叫，因為 singleton 呼叫都要回頭讀碼。
+- **跨 repo `group`（2026-10-18 實測 TS ↔ Go）**：
+  - 自動模式下 HTTP 0/75、gRPC 0/1。Go 服務的 HTTP provider 數是 0，推測是認不得 Go 1.22 的 `mux.Handle("POST /path")`（10-17 那輪讀過它 npx 快取裡的 extractor 原始碼才得出這個結論，這次沒有重讀）。
+  - 手寫 manifest 宣告了 75 條，但兩端都對不到程式碼符號；gRPC 解到產生出來的 stub。
 
 → [[moc/AI技能評比|評比]]
 

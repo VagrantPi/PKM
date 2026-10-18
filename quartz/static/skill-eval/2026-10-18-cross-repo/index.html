@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>跨 repo 程式碼圖譜</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#0E1A2B; --grid:#1C2E45; --ink:#EAF2F8; --muted:#8FA3BA; --panel:#0c1726cc;
+    --cg:#F2A65A; --gn:#4FC3F7; --gf:#7BD88F; --ua:#B48CFF; --cm:#38E1D6;
+    --ok:#5fd39b; --no:#ff7a85; --warn:#f2c94c;
+    --disp:"Space Grotesk",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+    --body:"Space Grotesk",-apple-system,"Noto Sans TC","PingFang TC",sans-serif;
+  }
+  @media (prefers-color-scheme: light){
+    :root:not([data-theme="dark"]){
+      --paper:#F6F8FB; --grid:#E3E9F1; --ink:#14202F; --muted:#56677C; --panel:#ffffffdd;
+      --cg:#B5651D; --gn:#0277BD; --gf:#2E7D32; --ua:#6A3FD1; --cm:#00838F;
+      --ok:#1f8a57; --no:#c23542; --warn:#9a7300;
+    }
+  }
+  :root[data-theme="light"]{
+    --paper:#F6F8FB; --grid:#E3E9F1; --ink:#14202F; --muted:#56677C; --panel:#ffffffdd;
+    --cg:#B5651D; --gn:#0277BD; --gf:#2E7D32; --ua:#6A3FD1; --cm:#00838F;
+    --ok:#1f8a57; --no:#c23542; --warn:#9a7300;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.7;
+    background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:46px 46px}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 16px}
+  .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mono{font-family:var(--mono);font-size:.92em}
+  header{padding:72px 0 28px;text-align:center}
+  h1{font-family:var(--disp);font-weight:700;font-size:clamp(27px,4.8vw,44px);line-height:1.15;letter-spacing:-.02em;margin:18px auto 0;max-width:22ch}
+  .lede{color:var(--muted);max-width:62ch;margin:18px auto 0}
+  section{margin:44px 0}
+  h2{font-family:var(--disp);font-size:22px;margin:0 0 6px}
+  .sub{color:var(--muted);font-size:13.5px;margin:0 0 16px}
+  .panel{background:var(--panel);border:1px solid var(--grid);border-radius:14px;padding:18px 20px}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+  .card{background:var(--panel);border:1px solid var(--grid);border-radius:12px;padding:14px 16px}
+  .card .k{font-family:var(--mono);font-size:12px;letter-spacing:.06em}
+  .card .big{font-family:var(--disp);font-size:26px;font-weight:700;line-height:1.15;margin:4px 0}
+  .cg{color:var(--cg)} .gn{color:var(--gn)} .gf{color:var(--gf)} .ua{color:var(--ua)}
+  .ok{color:var(--ok)} .no{color:var(--no)} .warn{color:var(--warn)}
+  .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:640px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--grid);vertical-align:top}
+  th{font-family:var(--mono);font-size:12px;letter-spacing:.05em;font-weight:600}
+  td.n{font-family:var(--mono)}
+  .insight{border-left:3px solid var(--warn);padding:4px 0 4px 14px;margin:16px 0}
+  .insight b{display:block;margin-bottom:2px}
+  ul{padding-left:20px} li{margin:4px 0}
+  footer{color:var(--muted);font-size:12.5px;text-align:center;padding:28px 0 60px}
+</style>
+<style>.cm{color:var(--cm)}</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">2026-10-18 · 跨 repo 實測 · TS backend ↔ Go 服務</div>
+  <h1>四個工具，跨 repo 自動連上的都是 0 條</h1>
+  <p class="lede">codebase-memory、codegraph、GitNexus、graphify 四個工具，放在一組真實的 TS ↔ Go 服務上測（backend 用 stage 分支 HEAD、Go 服務用 main HEAD，完整範圍）。兩邊之間有 75 個 HTTP 端點、1 條 gRPC。沒有任何工具自動接上任何一條。5 題跨 repo 實戰題，四個工具組和只用 grep 的基線幾乎都答對，跨 repo 的銜接全靠 grep。工具真正有差的地方在 repo 內：那裡 codegraph 1.6.2 明顯領先。</p>
+</header>
+
+<section>
+  <h2>真值：兩個 repo 之間到底有哪些串接</h2>
+  <div class="cards">
+    <div class="card"><div class="k">HTTP</div><div class="big">75</div>個端點（其中 2 個是 SSE），呼叫點分布在 12 個 client 檔。Go 服務的 v1 路由共 130 條，backend 用了其中 75 條。</div>
+    <div class="card"><div class="k">gRPC</div><div class="big">1</div>條 server-stream。backend 在執行期用 protoLoader 載入一份手抄的 proto，沒有 TS stub。</div>
+    <div class="card"><div class="k">反向呼叫／共用基礎設施</div><div class="big">0</div>Go 服務不會回呼 backend，也沒有共用 DB、Redis、queue。</div>
+    <div class="card"><div class="k">順便查到的合約漂移</div><div class="big warn">2 類</div>SSE 事件：Go 端會送、TS 端沒處理的有 7 種。DTO：next-speaker 回應的型別有 4 處不一致。細節不公開。</div>
+  </div>
+</section>
+
+<section>
+  <h2>跨 repo 自動連結</h2>
+  <div class="panel scroll">
+  <table>
+    <tr><th>工具</th><th>跨 repo 連結</th><th>HTTP /75</th><th>gRPC /1</th><th>Go 服務 route → handler /130</th><th>為什麼</th></tr>
+    <tr><td class="cm">codebase-memory（只建索引）</td><td class="n">0</td><td class="no">0</td><td class="no">0</td><td class="no">0</td><td>一般索引不會產生跨 repo 連結。</td></tr>
+    <tr><td class="cm">codebase-memory（加跑 cross-repo pass）</td><td class="n">136</td><td class="no">0</td><td class="no">0</td><td class="no">0</td><td><b>136 條全錯</b>：來源全是 Go 服務的測試、scripts、web，目標是 backend 的 benchmark 假 handler（91 條）、泛用路由（44 條）或 middleware（1 條）。Go 1.22 的 <span class="mono">mux.Handle("POST /path")</span> 被丟棄（解析器要求路徑以 <span class="mono">/</span> 開頭），router 產生 0 個 Route。backend 只認得樣板字串 URL（50/75），純字串的一律漏掉；邊上沒有 README 說的 confidence。</td></tr>
+    <tr><td class="cg">codegraph 1.4.1</td><td class="n">—</td><td class="no">0</td><td class="no">0</td><td class="warn"><b>53</b></td><td>沒有跨 repo 功能。route → handler 有 77 條連到同名方法，包括測試替身。</td></tr>
+    <tr><td class="gn">GitNexus group</td><td class="n">2</td><td class="no">0</td><td class="no">0</td><td class="no">0</td><td>2 條都錯（一條其實在 backend 內部，一條方向相反）。Go 服務的 HTTP provider 數是 0，推測是因為認不得 Go 1.22 的寫法（沒有讀它的原始碼確認）。手寫 manifest 宣告了 75 條，但兩端都對不到程式碼符號；gRPC 解到產生出來的 stub。</td></tr>
+    <tr><td class="gf">graphify merge</td><td class="n">0</td><td class="no">0</td><td class="no">0</td><td class="no">0</td><td>兩張圖之間 0 條直接邊，只有 10 個同時連到兩邊的外部節點（標準函式庫和幾個未解析的參照）。</td></tr>
+  </table>
+  </div>
+  <div class="insight"><b>文件寫「支援跨服務連結」不等於支援你的寫法</b>codebase-memory 和 GitNexus 都宣稱能配對 HTTP 路由和呼叫點，但兩者在 Go 服務端都抽不出路由。codebase-memory 已從原始碼確認是認不得 Go 1.22 把 HTTP 方法寫在路徑字串裡的寫法，GitNexus 推測是同一個原因；codebase-memory 也認不得 <span class="mono">this.client.post("/path")</span> 這種純字串加父類別 baseURL 的寫法。導入前要拿自己的 code 跑一次。</div>
+</section>
+
+<section>
+  <h2>5 題跨 repo 實戰題 · 5 個分組</h2>
+  <p class="sub">題目：proto 欄位改名的兩邊影響、worker → Go 服務應用層的正向追蹤、回傳格式改變的反向影響、列出全部 75 個端點、找出 SSE 事件和 DTO 的合約漂移。每組 1 個 agent，依真值表評分。</p>
+  <div class="panel scroll">
+  <table>
+    <tr><th>分組</th><th>Q1（6）</th><th>Q2（7）</th><th>Q3（10）</th><th>Q4（75）</th><th>Q5a（7）</th><th>Q5b（4）</th><th>錯</th><th>token</th><th>工具呼叫</th></tr>
+    <tr><td><b>只用 grep</b></td><td class="ok">6</td><td class="ok">7</td><td class="ok">10</td><td class="ok">75</td><td class="ok">7</td><td class="ok">4</td><td class="n">1</td><td class="n">162,414</td><td class="n">49</td></tr>
+    <tr><td class="cg">codegraph</td><td class="ok">6</td><td class="ok">7</td><td class="ok">10</td><td class="ok">75</td><td class="ok">7</td><td class="ok">4</td><td class="n">1</td><td class="n">155,351</td><td class="n">53</td></tr>
+    <tr><td class="gn">GitNexus</td><td class="ok">6</td><td class="ok">7</td><td class="ok">10</td><td class="ok">75</td><td class="ok">7</td><td class="ok">4</td><td class="n">1</td><td class="n">177,576</td><td class="n">66</td></tr>
+    <tr><td class="gf">graphify</td><td class="ok">6</td><td class="ok">7</td><td class="ok">10</td><td class="ok">75</td><td class="ok">7</td><td class="ok">4</td><td class="n">0</td><td class="n">154,966</td><td class="n">59</td></tr>
+    <tr><td class="cm">codebase-memory</td><td class="ok">6</td><td class="ok">7</td><td class="ok">10</td><td class="ok">75</td><td class="warn">5</td><td class="ok">4</td><td class="n">1</td><td class="n">200,628</td><td class="n">71</td></tr>
+  </table>
+  </div>
+  <ul>
+    <li><b>每一組都說 HTTP 路由字串、proto、SSE 事件名稱是用 grep 找的</b>。工具只在 repo 內的呼叫鏈和符號定位上幫了忙。token 相對 grep 基線在 −5%～+24% 之間，codebase-memory 組最貴。</li>
+    <li>「錯 1」的四組都多列了一個只在 switch 裡有型別對應、卻沒有任何地方產生的事件。graphify 組是唯一正確排除它的。</li>
+    <li>真值表在實驗中被這些 agent 修正了兩次：第一次補上我漏掉、經其他 emitter 送出的事件，第二次排除那個不會送的事件。</li>
+  </ul>
+</section>
+
+<section>
+  <h2>repo 內呼叫圖 · TS type checker 當真值</h2>
+  <p class="sub">新 HEAD 的 backend <span class="mono">src/services</span>，4,495 個呼叫與 new 運算式（召回分母 4,126），跨檔 1,395 個。嚴格判定：目標必須是 type checker 解析到的那個宣告。</p>
+  <div class="panel scroll">
+  <table>
+    <tr><th>工具</th><th>跨檔召回</th><th>default singleton（894）</th><th>具名 const 實例（68）</th><th>跨檔精確度</th><th>主要錯誤</th></tr>
+    <tr><td class="cg">codegraph 1.4.1</td><td class="n">91%</td><td class="n">96%</td><td class="no">0%</td><td class="warn">64%</td><td>同名退化、只連到接收者常數</td></tr>
+    <tr><td class="cg"><b>codegraph 1.6.2</b></td><td class="ok"><b>97%</b></td><td class="n">95%</td><td class="ok">100%</td><td class="ok"><b>81%</b></td><td>範圍外 repository／第三方函式庫的同名猜測</td></tr>
+    <tr><td class="cm">codebase-memory</td><td class="no">25%</td><td class="no">4%</td><td class="no">0%</td><td class="n">83%</td><td>漏抓：匯入的 singleton 幾乎沒有 CALLS 邊</td></tr>
+    <tr><td class="gn">GitNexus</td><td class="no">34%</td><td class="no">0%</td><td class="ok">100%</td><td class="ok">97%</td><td>漏 default singleton；介面 dispatch 會連到所有實作</td></tr>
+    <tr><td class="gf">graphify</td><td class="no">22%</td><td class="no">0%</td><td class="no">0%</td><td class="ok">98%</td><td>漏所有成員呼叫；少數同名錯連</td></tr>
+  </table>
+  </div>
+  <ul>
+    <li>兩個方法的 caller：<span class="mono">assertWithinQuota</span>（6 處）只有 codegraph 6/6，其他三個都是 0；<span class="mono">handleUserText</span>（4 處）codegraph 和 GitNexus 都 4/4，graphify 1/4，codebase-memory 0/4。</li>
+    <li>codebase-memory 的最小重現：TS 約 5/15、Go 7/8，Go 好很多（但部分靠名稱啟發式）。</li>
+    <li><b>8 月報告的「codebase-memory caller 5/5」重現不出來</b>：同一個 dev build 在 8 月那個 commit 上也是 0/5，節點數也不同。8 月那次很可能不是這個 build，那份報告的這一條已加註。</li>
+  </ul>
+</section>
+
+<section>
+  <h2>團隊導入前要知道的事（codebase-memory 補充）</h2>
+  <div class="panel">
+  <ul style="margin:0">
+    <li><b>受測的是 7 月 5 日從 main 自己編譯的 dev build</b>（v0.8.1 之後的開發版），之後已發布 14 個 release（含 2 個 pre-release），而且沒有官方簽章。</li>
+    <li><b>「不傳遙測、不連外」不實</b>：這個 build 每次 MCP 初始化都會連 GitHub 檢查最新版本，沒辦法關（上游已移除）。</li>
+    <li><b>UI 在 127.0.0.1:9749 監聽，沒有驗證，也沒有檢查 Host header</b>（上游已補上）。它開放 RPC、刪除專案等操作，理論上有 DNS rebinding 風險（讀碼推論）。</li>
+    <li><b>跨 repo 要另外手動跑 cross-repo pass</b>，只在同一個 cache 有效，重新索引就會被清掉。</li>
+    <li>其他三個工具的導入事項（授權、會寫進開發機的東西、遙測、共享方式）見 10-17 的四方報告與工具卡。</li>
+  </ul>
+  </div>
+</section>
+
+<section>
+  <h2>怎麼選</h2>
+  <div class="cards">
+    <div class="card"><div class="k cg">repo 內導航</div><b>codegraph 1.6.2</b>：召回率和精確度都最好。常見方法名的 caller 只當候選，要用 grep 篩。Go 的 route → handler 不要信它，直接讀 router。</div>
+    <div class="card"><div class="k">跨 repo</div><b>不靠工具</b>。用腳本從兩邊程式碼產生一份「呼叫點 → 路由 → handler」的合約表，在 CI 雙向檢查，SSE 事件名稱也一起比對；再讓 agent 先查表。</div>
+    <div class="card"><div class="k cm">codebase-memory</div>等它支援 Go 1.22 路由和純字串 URL，再用簽章過的 release 重評。</div>
+    <div class="card"><div class="k gn">GitNexus／<span class="gf">graphify</span></div>GitNexus 授權非商用，TS 召回率低；graphify 只有文件也要進圖時才考慮。</div>
+  </div>
+</section>
+
+<section>
+  <h2>條件與限制</h2>
+  <div class="panel">
+  <ul style="margin:0">
+    <li><b>只測一組 repo</b>：命名規律、URL 多寫成字面值，對 grep 有利。換成動態組 URL 或端點更多的系統，結論可能不同。</li>
+    <li><b>N=1</b>：5 題每組只答一次，由主線依真值自評。真值在實驗中修正過兩次。</li>
+    <li><b>版本</b>：
+      <ul>
+        <li>codebase-memory：7 月 5 日的 dev build，最新 release 沒測。</li>
+        <li>codegraph：1.4.1；1.6.2 只測過 repo 內的 TS 和小型重現。</li>
+        <li>GitNexus：1.6.12，<span class="mono">--index-only</span>，沒有 embedding 和 MCP 工具。</li>
+        <li>graphify：0.9.92，<span class="mono">--code-only</span>。</li>
+      </ul></li>
+    <li><b>codebase-memory 組作答時，同一個 store 正在跑 cross-repo pass</b>：那組回報「沒有 CROSS 邊」，應該是在 pass 之前查的。pass 產生的連結全錯，不影響結論。</li>
+    <li>這份取代 10-17 的跨 repo 報告（受測工具不同、用舊 commit，已下架）。最後由獨立的對抗式驗證逐條核對。</li>
+  </ul>
+  </div>
+</section>
+
+<footer>所有數字都有對應的真值表、判定腳本或 grep 證據，留在本機 · 不含原始碼本體、架構摘要與漂移細節</footer>
+</div>
+</body>
+</html>

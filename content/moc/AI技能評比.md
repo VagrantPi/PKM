@@ -18,7 +18,7 @@ tags: [moc, ai, skills, benchmark]
 | 2026-08-05 | backend 索引能力：真值裁判對決 | codegraph・codebase-memory-pro | [報告 ↗](https://vagrantpi.github.io/PKM/static/skill-eval/2026-08-05-codegraph-vs-codebase-memory/) |
 | 2026-10-17 | 給人看的地圖 vs 給 agent 查的索引 | Understand-Anything・codegraph | [報告 ↗](https://vagrantpi.github.io/PKM/static/skill-eval/2026-10-17-understand-anything-vs-codegraph/) |
 | 2026-10-17 | 程式碼圖譜四方評比：寫法決定一切 | codegraph・GitNexus・graphify・Understand-Anything | [報告 ↗](https://vagrantpi.github.io/PKM/static/skill-eval/2026-10-17-code-graph-four-way/) |
-| 2026-10-17 | 跨 repo（TS ↔ Go）＋四方再驗證 | codegraph・GitNexus・graphify・grep 基線 | [報告 ↗](https://vagrantpi.github.io/PKM/static/skill-eval/2026-10-17-cross-repo/) |
+| 2026-10-18 | 跨 repo（TS ↔ Go）：四個工具都連不上 | codebase-memory・codegraph・GitNexus・graphify・grep 基線 | [報告 ↗](https://vagrantpi.github.io/PKM/static/skill-eval/2026-10-18-cross-repo/) |
 
 ---
 
@@ -70,6 +70,8 @@ tags: [moc, ai, skills, benchmark]
 | `handleUserText` callers | 2 | **2/2** | 1/2（漏巢狀 async fn） |
 | `assertWithinQuota` callers | 5 | **5/5** | 3/5（漏巢狀 async fn 與一個普通 class method） |
 
+> ⚠️ **2026-10-18 重現不出來**：使用者確認的「pro」就是本機 7 月 5 日編譯的 codebase-memory-mcp dev build。拿它在 a6fb1d3e 重建索引（10-17 報告記為與 8 月同一個 commit；8 月報告本身沒記 commit），`assertWithinQuota`、`handleUserText` 的 caller 都是 **0**，節點數也不同（16,090 對 17,187）。這兩行的 codebase-memory 數字可能來自另一個 build，原因未查證。codegraph 那欄在 10-17 也重現不出來（重測是全中）。
+
 codegraph 漏的都是**巢狀函式與 singleton 實例方法**；codebase-memory 的 type-aware LSP 全中 → **影響分析（誰呼叫我）用 codebase-memory**。反過來**讀流程用 codegraph**：trace 回傳整條路徑並 **inline 每一跳源碼**，codebase-memory 只給名稱清單、無 body。
 
 **只有一邊做得到**：任意 Cypher 查詢、複雜度／效能指標（跨程序 `transitive_loop_depth`）、語意向量搜尋、co-change 耦合、Leiden 社群偵測——這幾件 codegraph **完全沒有對應能力**。
@@ -103,7 +105,7 @@ codegraph 漏的都是**巢狀函式與 singleton 實例方法**；codebase-memo
 |---|---|---|
 | 建圖成本差四個數量級以上 | UA 約 156 萬 token、10 分鐘；codegraph 1.7 秒、0 token | 同範圍同 commit，UA 用的是正確設定那一輪 |
 | UA 答不了方法層級的問題 | 問「誰呼叫 `assertWithinQuota`」：UA 漏 1 個、多 2 個假陽性；codegraph 5/5 | UA 只有 class 層級的 `calls` 邊，每處都用 grep 對到外層函式 |
-| LLM 建的邊不會捏造，但會漏、會飄 | 抽樣精確度兩邊都 30/30（⚠️ codegraph 這格已被同日再驗證推翻，見跨 repo 報告）；UA 同批重跑，`calls` 邊 Jaccard 0.79 | 抽樣用固定 seed；重跑時節點與 imports 完全相同，只有 LLM 寫的 `calls` 邊會變 |
+| LLM 建的邊不會捏造，但會漏、會飄 | 抽樣精確度兩邊都 30/30（⚠️ codegraph 這格已被再驗證推翻，見 10-18 跨 repo 報告）；UA 同批重跑，`calls` 邊 Jaccard 0.79 | 抽樣用固定 seed；重跑時節點與 imports 完全相同，只有 LLM 寫的 `calls` 邊會變 |
 | 給新人看懂，兩邊一樣準 | 事實抽查都 10/10，答一題都花約 8 萬 token | UA 的導覽與分層讓答案涵蓋面較廣，codegraph 在單一路徑上答得更深 |
 | 8 月的「codegraph 漏巢狀 caller」重現不出來 | 新、舊兩份索引都是 2/2、5/5 | 舊索引是 7/18 建在原 repo 的那份副本 |
 
@@ -148,7 +150,7 @@ codegraph 漏的都是**巢狀函式與 singleton 實例方法**；codebase-memo
 - 抽 30 條邊驗精確度、重建一次比對邊。
 - 四個工具各答一次同一題流程解說。
 
-**一句話結論**：**先看你的 codebase 怎麼寫，再挑程式碼圖譜。** 三個確定性工具的重現性都滿分，但各有解析不了的呼叫寫法（⚠️ 原本寫「精確度也滿分」，已被同日再驗證推翻：codegraph 1.4.1 只有 76%，見下一份報告）。這個 codebase 大量用 `export default new XService()`，GitNexus 和 graphify 因此幾乎看不到跨 service 的呼叫。
+**一句話結論**：**先看你的 codebase 怎麼寫，再挑程式碼圖譜。** 三個確定性工具的重現性都滿分，但各有解析不了的呼叫寫法（⚠️ 原本寫「精確度也滿分」，已被再驗證推翻：codegraph 1.4.1 只有 76%，見 10-18 跨 repo 報告）。這個 codebase 大量用 `export default new XService()`，GitNexus 和 graphify 因此幾乎看不到跨 service 的呼叫。
 
 **關鍵證據**
 
@@ -175,47 +177,51 @@ codegraph 漏的都是**巢狀函式與 singleton 實例方法**；codebase-memo
 
 ---
 
-## 2026-10-17 · 跨 repo（TS ↔ Go）＋四方再驗證
+## 2026-10-18 · 跨 repo（TS ↔ Go）：四個工具都連不上
 
-<a href="https://vagrantpi.github.io/PKM/static/skill-eval/2026-10-17-cross-repo/" target="_blank" rel="noopener"><strong>開啟完整報告 ↗</strong></a>
+<a href="https://vagrantpi.github.io/PKM/static/skill-eval/2026-10-18-cross-repo/" target="_blank" rel="noopener"><strong>開啟完整報告 ↗</strong></a>
 
 **受測**：
-- [[moc/AI技能收藏#codegraph|codegraph]]（兩份索引）
-- [[moc/AI技能收藏#gitnexus|GitNexus]] `group`
-- [[moc/AI技能收藏#graphify|graphify]] `merge-graphs`
+- [[moc/AI技能收藏#codebase-memory-mcp|codebase-memory]]（本機 dev build）
+- [[moc/AI技能收藏#codegraph|codegraph]] 1.4.1（repo 內另測 1.6.2）
+- [[moc/AI技能收藏#gitnexus|GitNexus]] 1.6.12
+- [[moc/AI技能收藏#graphify|graphify]] 0.9.92
 - 只用 grep 的基線
 
-**標的**：TS backend 打 Go 服務，有 42 個 HTTP 呼叫點（41 個端點）和 1 條 gRPC。
+**標的**：一組真實的 TS backend ↔ Go 服務，backend 用 stage 分支 HEAD、Go 服務用 main HEAD，完整範圍。兩邊之間有 75 個 HTTP 端點和 1 條 gRPC。
 
-**方法**：由 7 個 subagent 分工：
-- 獨立再驗證：用 TypeScript type checker 當真值。
-- 文件研究。
+**方法**：由多個 subagent 分工：
+- 串接盤點，當作真值。
 - 跨 repo 機制實驗。
-- 4 個實戰題分組。
+- repo 內再驗證，用 TS type checker 當真值。
+- 文件研究。
+- 5 組實戰題，每組 5 題。
 
-最後由對抗式驗證逐條核對，挑出 12 處不精確，已修正。
+最後由對抗式驗證逐條核對。
 
-**一句話結論**：**跨 repo 的呼叫，工具自動連上的是 0 條；4 題跨 repo 實戰題，只用 grep 的 agent 一樣全對，而且這次最便宜。** 工具的價值在 repo 內，跨 repo 要自己維護一份機器可讀的合約表。
+**一句話結論**：**跨 repo 的呼叫，四個工具自動連上的都是 0 條；5 題實戰題，各組都靠 grep 完成跨 repo 的銜接。** 工具的差異在 repo 內，那裡 codegraph 1.6.2 明顯領先。
 
 **關鍵證據**
 
 | 發現 | 數字 | 為什麼可信 |
 |---|---|---|
-| 跨 repo 自動連結全部是 0 | HTTP 0/42、gRPC 0/1。GitNexus 抽出 183 個合約，只配對到 1 條，還是錯連；graphify 合併圖兩邊之間 0 條直接邊；codegraph 沒有跨 repo 的設計 | 真值逐條用 grep 驗證；GitNexus 的原因讀過它的 extractor 原始碼（Go 1.22 的 `mux.Handle("POST /path")`、`this.client.post()` 都不認得） |
-| 實戰題四組都全對，差在成本 | grep 10.2 萬、codegraph 10.8 萬、GitNexus 11.7 萬、graphify 13.6 萬 token | 四組的跨 repo 銜接都是靠 grep 完成的 |
-| 再驗證推翻「精確度都滿分」 | 嚴格判定：codegraph 1.4.1 整體 76%、跨檔 60%（1.6.2：90%／76%）；GitNexus 99%；graphify 87% | type checker 真值有 1,635 個呼叫點；原判定只檢查名稱有沒有出現在那一行 |
-| TS 跨檔召回率 | codegraph 92%（1.6.2 是 98%）、GitNexus 24%、graphify 13% | 557 個跨檔呼叫點全量計算 |
-| codegraph 的 Go route → handler | 41 條只有 8 條對 | `cfg.V1XHandler.Method` 被用方法名配到別的 handler，甚至配到測試 stub |
+| 跨 repo 自動連結全部是 0 | HTTP 0/75、gRPC 0/1。codebase-memory 跑完 cross-repo pass 產生 136 條，**全錯**；GitNexus 2 條全錯；graphify 0 條；codegraph 沒有這個功能 | 真值由腳本產生、逐條驗證；codebase-memory 認不得 Go 1.22 的 `mux.Handle("POST /path")` 和純字串 URL（讀過原始碼確認），GitNexus 推測是同一個原因 |
+| 實戰題各組幾乎全對，token 相對 grep 基線 −5%～+24% | grep 16.2 萬、codegraph 15.5 萬、graphify 15.5 萬、GitNexus 17.8 萬、codebase-memory 20.1 萬 token；codebase-memory 組 Q5a 只有 5/7 | 每一組都說跨 repo 的部分是靠 grep |
+| repo 內呼叫圖 codegraph 1.6.2 最好 | TS 跨檔召回／精確度：codegraph 1.6.2 97%／81%、1.4.1 91%／64%、codebase-memory 25%／83%、GitNexus 34%／97%、graphify 22%／98% | type checker 真值，跨檔 1,395 個呼叫點，嚴格判定 |
+| Go 服務 route → handler | codegraph 53/130，其他工具都是 0 | 對照 `cfg.X.Method` 的定義 |
+| 8 月「codebase-memory caller 5/5」重現不出來 | 同一個 build，在 a6fb1d3e（10-17 報告記為與 8 月同一個 commit）重測是 0/5 | 見上一段的 8 月報告加註 |
 
 **怎麼用**
-1. repo 內導航用 codegraph，先升級到 ≥1.6.2。常見方法名的 caller 只當候選，要用 grep 篩；Go 的路由直接讀 router。
-2. 跨 repo 不要靠工具的自動連結。用腳本產生一份「呼叫點 → 路由 → handler」的合約表，在 CI 檢查，再讓 agent 先查表。
-3. 導入前拿自己的 code 跑一次各工具的合約抽取。文件寫「支援」不等於支援你的寫法。
+1. repo 內導航用 codegraph 1.6.2。caller 只當候選，常見方法名要用 grep 篩；Go 的 router 直接讀原始碼。
+2. 跨 repo 用腳本產生合約表，在 CI 雙向檢查（含 SSE 事件名稱），再讓 agent 先查表。
+3. codebase-memory 這個 build 不建議導入：TS 漏抓嚴重、每次 session 都會連 GitHub、UI 沒有驗證。等它出簽章過的 release、並支援 Go 1.22 路由後再重評。
 
 **⚠️ 限制（報告照抄）**
-- **只測了一組 repo**（41 個端點、命名非常規律），對 grep 特別有利。
-- **N=1**：每組只答一次，由主線依真值表自評；真值表在實驗中修正過一次。
-- GitNexus 用 `--index-only` 跑（沒有 embedding、全文搜尋、MCP 工具）；graphify 只測 `--code-only`；codegraph 1.6.2 沒有在跨 repo 上重跑。
+- **只測一組 repo**：命名規律、URL 多寫成字面值，對 grep 有利。
+- **N=1**：每組只答一次，由主線依真值自評；真值在實驗中修正過兩次。
+- 版本限制：codebase-memory 測的是 7 月 5 日的 dev build；codegraph 1.6.2 只測過 repo 內的 TS；GitNexus 用 `--index-only`；graphify 只測 `--code-only`。
+- codebase-memory 組作答時，同一個 store 正在跑 cross-repo pass，不過那些連結全錯，不影響結論。
+- 這份取代已下架的 10-17 跨 repo 報告。
 
 ---
 

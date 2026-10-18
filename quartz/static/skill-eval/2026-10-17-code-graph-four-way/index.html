@@ -68,7 +68,7 @@
 </header>
 
 <section>
-  <div class="insight" style="border-color:var(--no)"><b>⚠️ 2026-10-17 再驗證修正（細節見同日的跨 repo 報告）</b>獨立 subagent 改用 TypeScript type checker 當真值重新驗證後：
+  <div class="insight" style="border-color:var(--no)"><b>⚠️ 2026-10-17 再驗證修正（細節見 10-18 的跨 repo 報告）</b>獨立 subagent 改用 TypeScript type checker 當真值重新驗證後：
     <ul>
       <li>「邊的精確度都是 30/30」<b>被推翻</b>。原判定只檢查名稱有沒有出現在那一行，抓不到同名錯連。嚴格判定後：codegraph 1.4.1 整體 76%、跨檔 60%（1.6.2：90%／76%），GitNexus 99%，graphify 87%。</li>
       <li>「codegraph 抓不到 <span class="mono">export const x = new X()</span>」只限 1.4.1，<b>1.6.2 已修好</b>。</li>
