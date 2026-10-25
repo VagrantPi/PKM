@@ -7,6 +7,8 @@ tags: [ai, llm, roleplay, sillytavern, token-budget, context-window]
 triggers: [聊天越聊越長 prompt 超過模型上限, 不知道舊訊息該從哪裡開始砍, 固定提示和聊天紀錄要怎麼分配空間, 某些控制訊息一定要塞得進去不能被擠掉, 不同模型同一段字 token 數差很多]
 ---
 
+> 版本依據：本卡的預設值已對照 SillyTavern **1.19.0** 原始碼（commit `7e8663c`，2026-09-14）核對，查證 2026-10-25；不符處已就地更正並註明原卡寫法。
+
 ## 🎯 什麼情境該想到我
 當你「要把角色設定、世界觀、聊天紀錄全擠進一個有限的 context window，還得決定誰先被犧牲」的時候。
 
@@ -34,7 +36,7 @@ triggers: [聊天越聊越長 prompt 超過模型上限, 不知道舊訊息該�
 
 #### 四個階段
 1. **Reserve（預留）**：先扣掉之後一定要放的東西——每則 assistant 回應的格式標記（3）、控制提示（impersonate / quiet / continue）、`[Start a new Chat]`（分隔對話範例與正式聊天）、群組引導（如 `[Write the next reply only as Alice.]`）、工具定義與呼叫空間。
-2. **Add（加入固定內容）**：依序加入 main、worldInfoBefore、personaDescription、charDescription、charPersonality、scenario、worldInfoAfter、jailbreak。任何一項超過剩餘預算 → 拋出 `TokenBudgetExceededError`。
+2. **Add（加入固定內容）**：依序加入 worldInfoBefore、main、worldInfoAfter、charDescription、charPersonality、scenario、personaDescription，接著預留控制提示，再加 nsfw、jailbreak 與使用者自訂 prompt。任何一項超過剩餘預算 → 拋出 `TokenBudgetExceededError`。（1.19.0 原始碼；原卡的順序是 main、worldInfoBefore、personaDescription…。另外實際上 Reserve 和 Add 是交錯進行的，並不是全部預留完才開始加入，四個階段是概念上的分法。）
 3. **Fill（填聊天）**：把所有聊天訊息**從最新往舊**逐則放入，放不下就停。這是 LIFO：最新的最先保留。
 4. **Free + Insert（釋放並歸位）**：釋放 newChat 的預留、把它插到聊天歷史開頭；釋放 groupNudge、插到聊天歷史結尾；釋放控制提示、加到最後。
 
@@ -123,14 +125,14 @@ WI 預算 = max_context × world_info_budget%
 | LLAMA3 | Llama 3 | WebTokenizer |
 | MISTRAL | Mistral | SentencePiece |
 | BEST_MATCH | 自動 | 依目前 API 與模型選擇 |
-| NONE | 後備 | 粗估每 3.35 字元 ≈ 1 token |
+| NONE | 後備 | 粗估每 3.35 **位元組**（UTF-8）≈ 1 token |
 
 Token 計數是高頻操作（每次組 prompt 要算數十次），因此用 per-chat 快取：key = tokenizer 類型 + 字串 hash + 模型 hash + padding，存在瀏覽器本地（localforage）。
 
 ## ⚠️ 注意 / 什麼時候不適用
 - **固定內容太大會直接失敗**：Add 階段超額是拋錯，不是自動裁切。角色卡＋WI 過肥時，聊天歷史會被壓到只剩幾則甚至放不下。
 - **LIFO 是硬切**：Message 4 放不下就整則丟掉，不會截半；後面更舊但更短的訊息也不會被撿回來（Fill 遇到第一個放不下的就停止）。被砍掉的遠期記憶要靠摘要或向量記憶補回。
-- **NONE 的 3.35 字元估法對中文很不準**，中文一個字常常就是一個以上 token；上線產品應接真實 tokenizer。
+- **NONE 的估法對中文很不準**：它是拿 UTF-8 位元組數除以 3.35（1.19.0 原始碼；原卡誤寫成字元）。中文一字 3 位元組，會被估成約 0.9 token；但真實 tokenizer 下中文一個字常常就是一個以上 token，所以會低估。上線產品應接真實 tokenizer。
 - **剩餘緩衝不等於浪費**：例子裡最後剩 394，是因為下一則訊息 500 太大；緩衝大小取決於訊息粒度。
 - 原文件的階段圖把 personaDescription 排在 main 之後，數值範例卻把它排在 scenario 之後；總和不受影響，但實際順序以程式為準。
 

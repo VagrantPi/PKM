@@ -20,6 +20,7 @@ triggers: [MCP要用stdio還是HTTP, 本地server跟遠端server怎麼選, MCP�
    - 支援**遠端**、可同時服務**多個 client**。
    - 支援標準 HTTP 認證（bearer token、API key、自訂 header），**MCP 建議用 OAuth 取得 token**。
    - 適合：雲端託管、多使用者、需授權的 server。
+   - （依 MCP 規格 2026-07-28 核對，查證 2026-10-25：每則訊息是一個 POST，伺服器逐個請求決定回單一 JSON 或該請求專屬的 SSE 串流；HTTP 傳輸「應該」照規格的授權章節走 OAuth 2.1，stdio 則「不應該」走它，改從環境變數取憑證。這版還要求每個 POST 帶 `MCP-Protocol-Version` header。）
 3. **決策捷徑**：本地／單人／要快 → **stdio**；遠端／多人／要認證 → **Streamable HTTP + OAuth**。傳輸層對資料層透明，換傳輸不影響 JSON-RPC 訊息格式。
 
 ### ★ 決策表

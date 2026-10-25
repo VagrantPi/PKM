@@ -7,6 +7,8 @@ tags: [ai, llm, roleplay, sillytavern, world-info, lorebook, context-injection]
 triggers: [世界觀設定太多塞不進 prompt, 想讓 AI 聊到某個地名才想起相關設定, 設定條目之間要能互相帶出, 同類設定每次只想出現一個像天氣輪替, 某段設定只想在特定回合數內生效]
 ---
 
+> 版本依據：本卡的預設值已對照 SillyTavern **1.19.0** 原始碼（commit `7e8663c`，2026-09-14）核對，查證 2026-10-25；不符處已就地更正並註明原卡寫法。
+
 ## 🎯 什麼情境該想到我
 當你「手上有幾百條世界觀設定，但每次對話只想把真的被聊到的那幾條塞進 prompt」的時候。
 
@@ -105,7 +107,7 @@ stateDiagram-v2
 同一 `group` 的條目若同時被激活，只能留一個。勝出順序：
 1. 有 sticky 條目 → sticky 直接勝出（避免正在持續的狀態被中途換掉）；
 2. 否則若啟用 `groupScoring` → 計算主鍵＋次鍵命中數，最高分勝；
-3. 否則若有 `groupOverride` → 依 `order` 排序，最小者勝；
+3. 否則若有 `groupOverride` → 取 `order` **最大者**勝（1.19.0 原始碼依 order 降冪排序後取第一個；原卡寫「最小者勝」）；
 4. 否則 → 依 `groupWeight` 做加權隨機。
 
 典型用途是天氣系統：晴天、雨天、雪天放同一組，每次只會出現一種。

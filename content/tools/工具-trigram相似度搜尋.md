@@ -47,6 +47,7 @@ ORDER BY dist LIMIT 10;
 對應的還有 `<<->`（word）與 `<<<->`（strict word）。
 
 ### 4. 調門檻用 GUC，不要用舊函式
+（三個預設值依 PostgreSQL 18 官方文件核對，查證 2026-10-25。）
 ```sql
 SET pg_trgm.similarity_threshold = 0.3;              -- % 用，預設 0.3
 SET pg_trgm.word_similarity_threshold = 0.6;         -- <% 用，預設 0.6

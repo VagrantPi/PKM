@@ -54,6 +54,8 @@ func (h *Handler) Handle(ctx context.Context, msg Message) error {
 
 **關鍵是同一個交易**：如果「記錄 ID」和「業務寫入」分開提交，兩者之間當機，就會出現「記了 ID 但沒做事」或「做了事但沒記 ID」。
 
+**去重鍵用 `msg.ID` 只在「同一則訊息被重送」時有效**。如果會從 DLQ 重放或人工回填，同一件事可能換了一個新的訊息 ID，這時要改用業務鍵（例如 `order_id + event_type`），見 [[冪等接收者]]。
+
 **做法 B：讓操作本身冪等**——用條件更新推進狀態機，例如 `UPDATE orders SET status='shipped' WHERE id=$1 AND status='paid'`，第二次執行影響 0 列。詳見 [[工具-用條件更新做狀態機冪等]]。
 
 ### ★ 重試要有上限與退避

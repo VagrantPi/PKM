@@ -33,8 +33,8 @@ LLM 的權重與激活分布**接近鐘形但有長尾**，所以「靠近 0 精
 | **FP32** | 1-8-23 | ~$10^{\pm38}$ | 最高 | 全部 |
 | **FP16** | 1-**5**-10 | **±65,504**，最小正規值 ~$6\times10^{-5}$ | 較高 | Volta+ |
 | **BF16** | 1-**8**-7 | **與 FP32 相同** | **低**（只有 7 bit 尾數） | Ampere+ |
-| **FP8 E4M3** | 1-4-3 | ±448 | 尚可 | Hopper+ |
-| **FP8 E5M2** | 1-5-2 | ±57,344 | 很低 | Hopper+ |
+| **FP8 E4M3** | 1-4-3 | ±448 | 尚可 | Ada／Hopper 以上 |
+| **FP8 E5M2** | 1-5-2 | ±57,344 | 很低 | Ada／Hopper 以上 |
 | **INT8** | — | 由 scale 決定 | 均勻 256 格 | 很久以前就有 |
 | **INT4** | — | 由 scale 決定 | 均勻 16 格 | 靠 kernel 解包 |
 | **FP4 (E2M1)** | 1-2-1 | 由 block scale 決定 | 只有 **16 個值** | Blackwell (NVFP4/MXFP4) |
@@ -103,7 +103,7 @@ Dettmers et al. (2022, *LLM.int8()*) 的關鍵發現：
 | 降到 | 省多少 | 會壞什麼 |
 |---|---|---|
 | **FP32 → BF16/FP16** | 50% | **推論幾乎無損**。訓練用 FP16 要 loss scaling；**累加（reduction）務必用 FP32**，否則長序列的加總誤差會累積 |
-| **→ FP8** | 再 50% | 要決定 per-tensor / per-channel scaling 策略。E4M3 給前向、E5M2 給梯度。**長生成會開始出現緩慢漂移**；需要 Hopper+ |
+| **→ FP8** | 再 50% | 要決定 per-tensor / per-channel scaling 策略。E4M3 給前向、E5M2 給梯度。**長生成會開始出現緩慢漂移**；需要 Ada／Hopper 以上 |
 | **→ INT8 weight-only** | 再 50% | **通常近乎無損**，是最安全的一級 |
 | **→ INT8 W8A8** | 同上但加速更多 | **離群值問題浮現**。沒做 SmoothQuant 或混合精度就會明顯掉 |
 | **→ INT4 weight-only** | 再 50% | 必須 **group-wise scale（常見 group=128）+ 校準**。⚠️ **perplexity 看起來只掉一點，但長上下文、多語言（含中文）、多步推理、工具呼叫格式的退化遠大於 benchmark 顯示的** |
@@ -122,7 +122,7 @@ Dettmers et al. (2022, *LLM.int8()*) 的關鍵發現：
 ## ⚠️ 注意 / 什麼時候不適用
 
 - **省的顯存只有權重那一塊**。KV cache 要另外量化，activation 與框架開銷不受影響。W4 的 70B 不是 35 GB 就夠——還要 KV（見 [[GPU 記憶體估算]]）。
-- **硬體支援要確認**。FP8 要 Hopper+，FP4 要 Blackwell。沒有原生支援時框架會**模擬**——更慢，而且你不會收到警告。
+- **硬體支援要確認**。FP8 要 Ada、Hopper 或 Blackwell；NVFP4、MXFP8 要 Blackwell（依 NVIDIA Transformer Engine 文件，查證 2026-10-25）。沒有原生支援時框架會**模擬**——更慢，而且你不會收到警告。
 - **量化格式與推論框架綁定**。GPTQ/AWQ/GGUF/FP8 各有支援矩陣，換框架可能要重新量化。
 - **MoE 對量化更敏感**。專家被激活得少、校準資料覆蓋不足，容易有某些專家品質特別差。
 - **別在量化模型上微調後又期待原精度的品質**。要嘛 QLoRA（見 [[LoRA 與 QLoRA]]），要嘛先微調再量化。

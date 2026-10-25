@@ -77,6 +77,7 @@ SELECT * FROM outbox
  FOR UPDATE SKIP LOCKED;
 ```
 **`SKIP LOCKED` 是這裡的關鍵**——它讓多個 worker 各自取走不同的一批，**不會互相阻塞也不會重複。**
+代價是**順序**（推論）：同一個 aggregate 的事件可能被不同 relay 拿走、先後送出。需要順序時，依 `aggregate_id` 分片給固定的 relay，或改用 CDC。PG 官方也說明 SKIP LOCKED 給的是不一致的資料視圖，只適合這種佇列用途（見 [[悲觀離線鎖]]）。
 
 ### 兩種變體
 

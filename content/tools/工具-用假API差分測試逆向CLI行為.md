@@ -20,6 +20,50 @@ triggers: [想知道CLI到底送了什麼給API, 懷疑設定沒生效但看不�
 5. **用大小當粗訊號、用字串比對做確認**：請求從 113 KB 掉到 73 KB 是強訊號，但仍要指出**消失的是哪一段**。
 6. **把版本釘死**：記下版本號與執行檔的 SHA-256。行為宣稱只對那個 build 有效。
 
+### 最小實作（以 Claude Code 為例）
+
+**① 假伺服器**（14 行，只聽 127.0.0.1，收到什麼就原封不動存成檔案；檔名會去掉 `?beta=true` 這類 query string）：
+
+```python
+import json, sys, time
+from http.server import BaseHTTPRequestHandler, HTTPServer
+OUT = sys.argv[1] if len(sys.argv) > 1 else "."
+class H(BaseHTTPRequestHandler):
+    def do_POST(self):
+        body = self.rfile.read(int(self.headers.get("Content-Length", 0)))
+        name = f"{OUT}/{time.time_ns()}{self.path.split('?')[0].replace('/', '_')}.json"
+        open(name, "wb").write(body)                      # 原封不動存下請求
+        resp = json.dumps({"id": "msg_fake", "type": "message", "role": "assistant",
+            "model": "fake", "content": [{"type": "text", "text": "ok"}],
+            "stop_reason": "end_turn", "usage": {"input_tokens": 0, "output_tokens": 1}}).encode()
+        self.send_response(200); self.send_header("Content-Type", "application/json")
+        self.send_header("Content-Length", str(len(resp))); self.end_headers(); self.wfile.write(resp)
+HTTPServer(("127.0.0.1", 18787), H).serve_forever()      # 只聽 loopback
+```
+
+- 2026-10-25 我用 curl 打過一次，確認請求 body 會逐字存進 `out/`，例如 `…_v1_messages.json`。
+- 請求是在回應**之前**就存檔的。所以即使 CLI 不接受這個假回應，例如它要的是串流格式，差分要用的請求也已經拿到了。
+- 埠號自己挑一個沒被占用的。
+
+**② 把 CLI 導過來**：Claude Code 官方文件說明可以用 `ANTHROPIC_BASE_URL` 指定 API 端點（LLM gateway 那一節，查證 2026-10-25）。
+
+```bash
+mkdir -p out && python3 fake_api.py out &
+ANTHROPIC_BASE_URL=http://127.0.0.1:18787 ANTHROPIC_API_KEY=dummy \
+  claude -p "hi"                      # A 組：不設要測的變數
+ANTHROPIC_BASE_URL=http://127.0.0.1:18787 ANTHROPIC_API_KEY=dummy SOME_FLAG=0 \
+  claude -p "hi"                      # B 組：只多一個變數
+```
+
+**③ 比對**：先比大小（`ls -l out/`），再用 `jq '.system'` 抽出兩份的 system prompt，跑 `diff`，指出到底少了哪一段。
+
+**④ positive control 長什麼樣**：
+- 要證明「設了 X 之後，段落 S 消失」，同一輪要先確認：
+  - **不設 X 時，S 確實出現在請求裡**。
+  - 而且這次請求確實走到會產生 S 的那條路。例如 S 是某個 skill 的說明，就要確認那個 skill 有被載入。
+- 只有「控制組有 S、實驗組沒有 S」才算數。兩邊都沒有 S，代表那段程式根本沒執行，什麼都證明不了。
+- 原文的寫法是：每個 negative test 都配一個 positive control，避免把「字串不存在」誤讀成「程式路徑沒跑到」。
+
 ## 🧪 我實際套用的紀錄
 - 2026-08-23：（待填）
 

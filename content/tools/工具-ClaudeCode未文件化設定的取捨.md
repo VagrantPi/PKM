@@ -21,7 +21,7 @@ triggers: [想用官方文件沒寫的設定, 看到別人分享的隱藏設定�
    | 拆執行檔挖出來的 | ❌ 只代表「這支 binary 讀得到」，**不等於支援、穩定、安全、或有意讓你設定** |
 
 2. **有官方設定就用官方的**。同一件事若已有 top-level key（`includeGitInstructions`、`disableWorkflows`、`autoMemoryEnabled`、`fileCheckpointingEnabled`…），不要改用環境變數別名。
-3. **按風險決定要不要碰**（以 v2.1.239 那 21 個未索引 key 為例）：
+3. **按風險決定要不要碰**（以 v2.1.239 那 21 個未索引 key 為例；來源擷取 2026-08-23，新版可能已增刪）：
    - **低風險、可以玩**：`breakReminder`、`quietHours`、`showMessageTimestamps`、`modelSettings`（存 per-model `effortLevel`）、`precomputeCompactionEnabled`。
    - **會改變 agent 行為，想清楚再開**：`doneMeansMerged`（要求做到 PR 可合併才算完成——會拉長任務與自主性）、`todoFeatureEnabled`、`feedbackDrafts`、`autoDreamEnabled`、`autoContinueAtUsageLimit`（可能延長無人看管的執行時間）。
    - **牽涉隱私／憑證／權限，別亂碰**：`autoUploadSessions`（把本機 session 鏡像到 claude.ai）、`proxyAuthHelper`（產生 `Proxy-Authorization` 標頭）、`policyHelpers`、`xaaIdp`、`skipWorkflowUsageWarning`（這是**同意紀錄**，不該預先塞值）。

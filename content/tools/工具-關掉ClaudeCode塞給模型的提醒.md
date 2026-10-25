@@ -20,7 +20,7 @@ triggers: [覺得agent被一堆內建提醒綁手綁腳, 想關掉某個內建�
    | `bool` 串在 `env \|\| model \|\| remoteGate` | ❌ **關不掉**，只是「單向 force-on」 |
    | `str`/`enum`/`int` | ⚠️ 無效值多半 fallback 回預設，不是關掉 |
 
-3. **這些是實測有效的「真 off 開關」**（v2.1.239）：
+3. **這些是實測有效的「真 off 開關」**（v2.1.239，原作者實測；來源擷取 2026-08-23）：
    ```bash
    CLAUDE_CODE_THRIFTY_SONIC=0          # 關掉「改用 Bash 讀寫搜尋」的指示
    CLAUDE_CODE_ACT_DONT_REDERIVE=0      # 關掉「別重推已確立的事」那段

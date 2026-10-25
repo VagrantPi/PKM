@@ -74,12 +74,12 @@ Host（Claude Code / VS Code）
 ```jsonc
 // client → server
 { "method": "initialize", "params": {
-    "protocolVersion": "2025-xx-xx",
+    "protocolVersion": "2025-11-25",
     "capabilities": { "roots": { "listChanged": true }, "sampling": {} }
 }}
 // server → client
 { "result": {
-    "protocolVersion": "2025-xx-xx",          // ★ 協商出單一版本，不相容就終止
+    "protocolVersion": "2025-11-25",          // ★ 協商出單一版本，不相容就終止
     "capabilities": {
       "tools":     { "listChanged": true },   // ★ 我會在工具變動時通知你
       "resources": { "subscribe": true },     // ★ 我支援訂閱資源變更
@@ -88,6 +88,7 @@ Host（Claude Code / VS Code）
 }}
 ```
 ★ **協商的是「雙方各自支援哪些可選功能」**，而不只是版本號。
+（上面是規格 2025-11-25 的握手形式。最新的 2026-07-28 版拿掉了 `initialize`，改成每個請求在 `_meta` 裡帶版本與能力，見 [[工具-MCP用戶端原語]]；查證 2026-10-25。）
 → **所以 client 不能假設 server 支援 `listChanged`**，要看協商結果再決定要不要監聽通知。
 
 ### ★ 通知（notification）：為什麼需要它

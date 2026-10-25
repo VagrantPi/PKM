@@ -33,14 +33,14 @@ read_status: read
 **三個模組（開源狀態不同）**
 - **H3-Context-IR**：把自由形式的多模態輸入解析成結構化中介表示（Context Intermediate Representation）餵給 Base，過程含指令解析、跨模態關聯、時序理解、複雜邏輯推理。**多階段、依賴多個託管服務，未開源**；官方給 API，或照 Prompting Guidance 自建。官方強烈建議把它納入生成流程，品質關鍵。
 - **H3-Base**：吃 Context-IR 產 **768p** 影音。**已開源**。
-- **H3-Regenerate-2K**：把 768p 結果 ＋ 原始 context 餵回 H3，**in-context 自我重生成 2K**（不是傳統超解析度模組，能還原小字與細節）。**尚未開源**，先給 API 驗證。
+- **H3-Regenerate-2K**：把 768p 結果 ＋ 原始 context 餵回 H3，**in-context 自我重生成 2K**（不是傳統超解析度模組，能還原小字與細節）。**尚未開源**，先給 API 驗證（截至來源擷取 2026-08-09）。
 
 **架構**
 - 各模態各自 encoder／VAE → 組成統一 packed multimodal sequence → **MM-RoPE**（t,h,w 三維）→ **H3-Omni-Transformer** 聯合預測 video／audio latent → 各自解碼成影片與立體聲。
 - **H3-Encoder**：用 **Qwen3-VL-32B** 完整權重，取其**第 50 層** hidden state；tokenizer 加了 `<d>` 等特殊 token（必須用 repo 附的 tokenizer 與設定）。
 - **H3-VisualVAE**：時間因果影片 autoencoder，`f16t4d24`（空間 16×、時間 4×、24 channel），再 patchify 1×2×2 → 有效空間降採樣 32×、時間維持 4×；另訓 ViT decoder 降解碼成本。
 - **H3-AudioVAE**：左右聲道共用 encoder／decoder 但各自獨立處理，32kHz 壓成 40Hz latent，支援立體聲進出。
-- **H3-Omni-Transformer**：**33B dense 單流**，其中約 **13B 在 AdaLN 分支**（modulation 輸出可預算快取，inference-only 可不載）；attention／FFN 無模態專屬結構，模態專屬只在 I/O 層與 AdaLN。訓練末期引入 **native sparse attention**，但**開源版目前只給 full attention**，sparse 之後才放。
+- **H3-Omni-Transformer**：**33B dense 單流**，其中約 **13B 在 AdaLN 分支**（modulation 輸出可預算快取，inference-only 可不載）；attention／FFN 無模態專屬結構，模態專屬只在 I/O 層與 AdaLN。訓練末期引入 **native sparse attention**，但**開源版目前只給 full attention**，sparse 之後才放（截至來源擷取 2026-08-09）。
 
 **其他**
 - 授權：**MiniMax H3 Community License**；輸入與強化後 prompt 會過自動內容審核 guardrail。

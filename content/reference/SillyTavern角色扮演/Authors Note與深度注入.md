@@ -7,6 +7,8 @@ tags: [ai, llm, roleplay, sillytavern, authors-note, depth-injection, extension-
 triggers: [寫在系統提示的規則聊久了 AI 就忘了, 想臨時改變劇情氛圍又不想改角色卡, 摘要或記憶檢索結果要插在 prompt 哪裡, 多個外掛都想往 prompt 裡塞東西, 想讓某句指令靠近 AI 回答的位置]
 ---
 
+> 版本依據：本卡的預設值已對照 SillyTavern **1.19.0** 原始碼（commit `7e8663c`，2026-09-14）核對，查證 2026-10-25；不符處已就地更正並註明原卡寫法。
+
 ## 🎯 什麼情境該想到我
 當你「發現寫在最前面的指令，聊了幾十輪後 AI 就不理了，想把提醒插到靠近最新訊息的地方」的時候。
 
@@ -27,7 +29,7 @@ Author's Note（AN，作者註）是一段**不固定在 prompt 開頭**、而�
 | `prompt` | 「增加描述細節」 | 注入內容 |
 | `depth` | 4 | 從聊天底部往上數第幾則的位置插入 |
 | `interval` | 1 | 每幾則使用者訊息插入一次 |
-| `position` | 0 / 1 / 2 | 0 = 場景後、1 = 聊天中（in-chat）、2 = 場景前 |
+| `position` | 1 | 0 = Main Prompt／Story String 之後、1 = 聊天中（In-chat @ Depth，預設）、2 = Main Prompt／Story String 之前（依 1.19.0 介面標籤；slash 指令另有 `scenario`／`before_scenario` 別名） |
 | `role` | 0 / 1 / 2 | 0 = system、1 = user、2 = assistant |
 | `allowWIScan` | false | 是否讓 World Info 掃描 AN 內容找關鍵詞 |
 
@@ -120,7 +122,7 @@ AN 其實只是 Extension Prompts 中的一種。Extension Prompts 是一個通�
 - **role 選 user/assistant 可能有副作用**（經驗推論，非原文件結論）：模型可能把它當成真實對話的一部分而回應或模仿；中性的指令用 system 較安全（但部分 API 對聊天中段的 system 訊息支援度不同，需實測）。
 - **深度注入跟著聊天被裁切**（推論）：Token 預算不足時聊天從舊的砍起，注入點附近的訊息若被砍，位置會移動；極端情況下整段聊天放不下時注入也沒地方放。
 - **多個擴展同時 IN_CHAT 注入同一深度**會擠在一起，順序只依角色優先序決定，彼此的前後關係不一定是你要的。
-- 原文件中 AN 的 `position=2` 描述為「場景前」，而 Extension Prompts 的值 2（BEFORE_PROMPT）描述為「整個 prompt 之前」，兩處說法不一致，實作前以程式碼為準。
+- 原文件中 AN 的 `position=2` 描述為「場景前」，而 Extension Prompts 的值 2（BEFORE_PROMPT）描述為「整個 prompt 之前」。1.19.0 原始碼是把 AN 的 position 直接傳進 extension prompt，所以 2 就等於 BEFORE_PROMPT。
 
 ## 🧪 我實際套用的紀錄
 - （尚無）

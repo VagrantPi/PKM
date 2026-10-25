@@ -7,6 +7,8 @@ tags: [ai, llm, roleplay, sillytavern, prompt-engineering, attention]
 triggers: [角色扮演的prompt各段該怎麼排先後, 放在中間的設定模型好像都沒在看, 模型把範例對話當成真的聊天內容, 群聊時模型一次扮演好幾個角色, 想讓模型代替使用者寫下一句]
 ---
 
+> 版本依據：本卡的預設值已對照 SillyTavern **1.19.0** 原始碼（commit `7e8663c`，2026-09-14）核對，查證 2026-10-25；不符處已就地更正並註明原卡寫法。
+
 ## 🎯 什麼情境該想到我
 當你「要設計一個角色扮演 prompt 的結構——每段放什麼、依什麼順序、用什麼格式包裝、控制指令怎麼跟對話內容分開」的時候。
 
@@ -137,7 +139,7 @@ Chat Completion 的 `personality_format`、`scenario_format` 預設就是 `{{per
 
 ### 比 prompt 更底層的控制
 
-- **Logit Bias**：把字 tokenize 成 ID，放進 `logit_bias` 參數直接調機率。預設 anti-bond bias：`bond -50、future -50、bonding -50、connection -25`，壓制某些模型過度使用「羈絆」類詞彙的偏差。
+- **Logit Bias**：把字 tokenize 成 ID，放進 `logit_bias` 參數直接調機率。內建的 Anti-bond preset：`bond -50、future -50、bonding -50、connection -25`（1.19.0 原始碼預設選的是不加任何 bias 的 `Default (none)`，Anti-bond 要自己選；原卡寫成「預設」），壓制某些模型過度使用「羈絆」類詞彙的偏差。
 - **Assistant Prefill**：在 messages 末尾放一條 `{role: "assistant", content: "Alice:"}`，模型會順著這個開頭接寫——群聊時用來明確「現在是誰在說話」。
 - **send_if_empty**：歷史最後一條是 assistant 時，有些 API 要求有 user message 才肯繼續，自動補一條避免報錯。
 
