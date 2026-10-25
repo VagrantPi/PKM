@@ -87,11 +87,9 @@ PostgreSQL 的 MVCC 讓 UPDATE 實際上是「寫新版本 + 標記舊版本」�
 | **B+Tree vs B-Tree** | ★ B+Tree 只在葉節點存資料且葉節點互相鏈結 → **範圍掃描快得多**，實務上都是 B+Tree |
 
 ### 🏭 在真實產品裡長這樣
-- **MySQL InnoDB：B+Tree 原地更新資料頁，靠 doublewrite buffer 防「寫到一半」**
-  問題：原地覆寫一個資料頁時當機，這一頁可能只寫了一半（torn page），成了一個壞掉的頁。
-  取捨：寫進資料檔之前，先把頁面寫進 doublewrite buffer 並 fsync，之後才寫到正式位置；當機後從 doublewrite buffer 找回完好的副本。資料寫了兩次，但 doublewrite 是一大段循序寫入、只要一次 fsync，所以 I/O 成本沒有加倍。多數情況預設開啟（`innodb_doublewrite=ON`；8.0.30 起多了只偵測、不修復的 `DETECT_ONLY`）。
-  對照：另一條路是 copy-on-write B+Tree，改節點時複製整條路徑、舊版本不動。當機恢復很簡單，還順便拿到快照隔離，但每次更新要複製 O(log N) 個節點，寫入放大比原地更新高（原地更新多半只碰一個葉節點）。
-  （出處：Build Your Own Database from Scratch〈B-Tree & Crash Recovery〉，作者點名這種做法在 MySQL 叫 double-write；InnoDB 行為依 MySQL 8.0 參考手冊，查證 2026-10-25）
+- **MySQL InnoDB：B+Tree 原地更新資料頁，刷頁前先寫 doublewrite buffer 防頁面寫到一半**
+  取捨：資料寫兩次，但 doublewrite 是一大段循序寫入、一次 fsync，I/O 沒有加倍；多數情況預設開啟。對照本卡：B-Tree 原地更新的寫入放大又多一份，換到不怕半頁寫；copy-on-write B+Tree 則改成每次複製整條路徑。
+  （〈B-Tree & Crash Recovery〉，Build Your Own Database from Scratch；教程把 double-write 當提交點，InnoDB 的提交靠 redo log，doublewrite 只在刷頁時用；MySQL 8.0 參考手冊，查證 2026-10-25）
 
 ## 🧪 我實際套用的紀錄
 - 2026-07-15：（待填）

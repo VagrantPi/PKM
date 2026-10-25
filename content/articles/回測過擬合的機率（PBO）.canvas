@@ -1,0 +1,115 @@
+{
+ "nodes": [
+  {
+   "id": "c",
+   "type": "text",
+   "text": "# 回測過擬合的機率（PBO）",
+   "x": -140,
+   "y": -40,
+   "width": 280,
+   "height": 80,
+   "color": "6"
+  },
+  {
+   "id": "k0",
+   "type": "text",
+   "text": "🧠 為什麼挑冠軍會灌水",
+   "x": 320,
+   "y": -250.0,
+   "width": 220,
+   "height": 60,
+   "color": "5"
+  },
+  {
+   "id": "l00",
+   "type": "file",
+   "file": "tools/工具-試越多次冠軍越不可信.md",
+   "x": 640,
+   "y": -275.0,
+   "width": 320,
+   "height": 110
+  },
+  {
+   "id": "k1",
+   "type": "text",
+   "text": "📐 怎麼量化：CSCV 與 PBO",
+   "x": 320,
+   "y": -30.0,
+   "width": 220,
+   "height": 60,
+   "color": "5"
+  },
+  {
+   "id": "l10",
+   "type": "file",
+   "file": "tools/工具-回測過擬合機率PBO.md",
+   "x": 640,
+   "y": -55.0,
+   "width": 320,
+   "height": 110
+  },
+  {
+   "id": "k2",
+   "type": "text",
+   "text": "⚠️ 限制與誤用",
+   "x": 320,
+   "y": 190.0,
+   "width": 220,
+   "height": 60,
+   "color": "5"
+  },
+  {
+   "id": "t2",
+   "type": "text",
+   "text": "- 不檢查回測本身對錯\n- 要交出所有試過的組合\n- 別拿 PBO 當目標函數",
+   "x": 640,
+   "y": 165.0,
+   "width": 320,
+   "height": 110
+  }
+ ],
+ "edges": [
+  {
+   "id": "e0",
+   "fromNode": "c",
+   "toNode": "k0",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e00",
+   "fromNode": "k0",
+   "toNode": "l00",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e1",
+   "fromNode": "c",
+   "toNode": "k1",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e10",
+   "fromNode": "k1",
+   "toNode": "l10",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e2",
+   "fromNode": "c",
+   "toNode": "k2",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e2t",
+   "fromNode": "k2",
+   "toNode": "t2",
+   "fromSide": "right",
+   "toSide": "left"
+  }
+ ]
+}
