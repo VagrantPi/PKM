@@ -82,3 +82,4 @@ triggers: [Redis記憶體吃太兇, 存物件該用Hash還是JSON字串, Redis�
 - [[工具-Redis單執行緒下的阻塞風險]] — 結構選對了，指令還是可能把你卡住
 - [[工具-延遲任務方案選型]] — ZSet 當延遲佇列時，記憶體估算就是靠這張卡
 - [[雜湊表|雜湊表 Hash Table]] — 對照組：CLRS 的理論 vs Redis 的漸進式 rehash 實作
+- [[產品-Redis]] —— Redis 的其他設計取捨
