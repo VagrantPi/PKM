@@ -8,7 +8,7 @@ tags: [moc, ai, skills, agent, tooling]
 >
 > ⚠️ **這頁收的是外部現成工具**（不是我從書裡萃取的心法）。每張卡記「做什麼、裝哪、怎麼用、我試了沒」；**我自己跑的對照實測結論在 [[moc/AI技能評比|AI 技能評比]]**，這裡只放一句話 + 連結，不重抄。
 
-**圖例**　型態：`skill` `plugin` `MCP`　狀態：⬜ 待試・✅ 已在用・📊 已跑實測
+**圖例**　型態：`skill` `plugin` `MCP` `資源`（不用安裝、給 agent 當參考或提示詞來源的網站）　狀態：⬜ 待試・✅ 已在用・📊 已跑實測
 （★ 為查看當時概數，非即時。）
 
 ## 📇 快速索引
@@ -21,6 +21,7 @@ tags: [moc, ai, skills, agent, tooling]
 | [MiniMax-H3 skills](#minimax-h3-skills) | skill | npx skills | H3 全模態影音模型附的九個 prompt／影片生成 skill | [repo↗](https://github.com/MiniMax-AI/MiniMax-H3) | ⬜ |
 | [ai-short-drama-screenwriter](#ai-short-drama-screenwriter) | skill | Codex | 繁中短劇編劇：八階段流程＋可拍性檢查，只做劇本不越界 | [repo↗](https://github.com/POUND0423/AI-drama-pound) | ⬜ |
 | [scroll-world](#scroll-world) | skill | Claude Code・Codex・多平台 | 生成 AI 場景＋鏡頭影片，做捲動穿梭的沉浸式落地頁（**會扣真錢**） | [repo↗](https://github.com/oso95/scroll-world) | ⬜ |
+| [Motion Library 動態收藏](#motion-library-動態收藏) | 資源 | 網頁 | 327 種網頁動效圖鑑，可交叉篩選、每格附可複製的 AI 提示詞 | [網站↗](https://kittenjam-motion-library.vercel.app/) | ⬜ |
 | [superpowers](#superpowers) | plugin | 15+ harness | 一整套強制執行的開發方法論：腦力激盪→計劃→TDD→subagent 執行→審查 | [repo↗](https://github.com/obra/superpowers) | ⬜ |
 | [Skills For Real Engineers](#skills-for-real-engineers) | plugin | Claude Code・多平台 | Matt Pocock 的 38 個 skill（v1.3.1）：拷問→規格→票→實作→審查→PR→回顧 | [repo↗](https://github.com/mattpocock/skills) | ⬜ |
 | [archify](#archify) | skill | 多平台 | codebase／描述 → 會自我驗證的互動架構圖 HTML | [repo↗](https://github.com/tt-a1i/archify) | ⬜ |
@@ -203,6 +204,24 @@ npx skills add oso95/scroll-world -a codex
 - macOS 的 bash 3.2 沒有 `declare -A`，SKILL.md 自己有標這個坑。
 
 **📐 值得抄的兩件事**：→ [[工具-會花錢的skill該怎麼設計]]、[[工具-該問開放題還是選擇題]]（它的訪談段明講：**主題要開放地問，絕不給捏造的多選題**）。
+
+---
+
+### Motion Library 動態收藏
+`資源` · 網頁（Hannah，UI/UX Designer 整理） · 327 種（2026-10-29） · ⬜ 待試
+
+**做什麼**：一本網頁動態效果的圖鑑。想在頁面上加動效、卻說不出要什麼樣子時，先在這裡挑，再把描述丟給 agent 照做。
+- **三軸交叉篩選**：「元件」（文字 105、按鈕、卡片、背景、游標…）×「時機」（進場、退場、切換、循環待機、懸停點擊、捲動觸發、拖曳）×「情境」（標題 Hero、強調重點、數字資訊、轉場…），例如「按鈕 × 懸停」。另可依技術篩：CSS 194、GSAP 119、Canvas 14。
+- **每格都有可試玩的預覽**，互動類可以直接用滑鼠移動、捲動、拖曳。
+- **「複製 AI 提示詞」複製的是外觀與節奏的描述，不是程式碼**。例如閃電砸落：「先閃兩下強光並出現一道閃電線，文字從 2 倍大瞬間砸下縮回原尺寸，落地時輕微震動……整段約 2.4 秒」，最後一律加上「配色請依照網站既有的主題色」。
+
+**怎麼用**：篩到想要的效果 → 複製提示詞 → 貼給 Claude Code 等 agent，並說明要套在哪個元件、用 CSS 還是 GSAP。描述裡的秒數、縮放倍率就是驗收時對照的規格。
+
+**⚠️ 注意**
+- **預覽是作者重製的示意**，名稱與描述來自 Threads 上其他人的整理。網站自述「僅供個人參考學習」，不要整段照抄到商用作品。
+- **提示詞只描述外觀，沒有效能與無障礙要求**。實作時要自己補（我的建議）：尊重 `prefers-reduced-motion`、只動 `transform`／`opacity`，避免觸發重排。
+- GSAP 類的效果是用 GSAP 3.13 示範的。
+- 我還沒實際拿提示詞讓 agent 做過，產出品質未驗證。
 
 ---
 
