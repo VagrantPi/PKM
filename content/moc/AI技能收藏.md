@@ -13,7 +13,11 @@ tags: [moc, ai, skills, agent, tooling]
 
 ## 📇 快速索引
 
-| Skill | 型態 | 平台 | 一句話 | 來源 | 狀態 |
+依下方分段分組；每組點名稱跳到卡片。
+
+**🎨 影像與內容創作**（7）
+
+| 名稱 | 型態 | 平台 | 一句話 | 來源 | 狀態 |
 |---|---|---|---|---|---|
 | [gc-minimal-zine-poster](#gc-minimal-zine-poster) | skill | Codex | 主題／照片 → 極簡 zine 風海報，直接生圖 | [repo↗](https://github.com/LiamGvchi/gc-minimal-zine-poster) | ⬜ |
 | [editorial-vision-studio](#editorial-vision-studio) | skill | Codex | 視覺導演引擎：決策管線＋可換模型 adapter | [repo↗](https://github.com/Yu-0312/editorial-vision-studio) | ⬜ |
@@ -22,15 +26,40 @@ tags: [moc, ai, skills, agent, tooling]
 | [ai-short-drama-screenwriter](#ai-short-drama-screenwriter) | skill | Codex | 繁中短劇編劇：八階段流程＋可拍性檢查，只做劇本不越界 | [repo↗](https://github.com/POUND0423/AI-drama-pound) | ⬜ |
 | [scroll-world](#scroll-world) | skill | Claude Code・Codex・多平台 | 生成 AI 場景＋鏡頭影片，做捲動穿梭的沉浸式落地頁（**會扣真錢**） | [repo↗](https://github.com/oso95/scroll-world) | ⬜ |
 | [Motion Library 動態收藏](#motion-library-動態收藏) | 資源 | 網頁 | 327 種網頁動效圖鑑，可交叉篩選、每格附可複製的 AI 提示詞 | [網站↗](https://kittenjam-motion-library.vercel.app/) | ⬜ |
-| [superpowers](#superpowers) | plugin | 15+ harness | 一整套強制執行的開發方法論：腦力激盪→計劃→TDD→subagent 執行→審查 | [repo↗](https://github.com/obra/superpowers) | ⬜ |
-| [Skills For Real Engineers](#skills-for-real-engineers) | plugin | Claude Code・多平台 | Matt Pocock 的 38 個 skill（v1.3.1）：拷問→規格→票→實作→審查→PR→回顧 | [repo↗](https://github.com/mattpocock/skills) | ⬜ |
+
+**📐 架構圖與技術溝通**（2）
+
+| 名稱 | 型態 | 平台 | 一句話 | 來源 | 狀態 |
+|---|---|---|---|---|---|
 | [archify](#archify) | skill | 多平台 | codebase／描述 → 會自我驗證的互動架構圖 HTML | [repo↗](https://github.com/tt-a1i/archify) | ⬜ |
 | [architecture-diagram-generator](#architecture-diagram-generator) | skill | Claude.ai・Claude Code | 描述 → 深色主題架構圖 HTML；純 prompt＋設計規範，**不驗證** | [repo↗](https://github.com/Cocoon-AI/architecture-diagram-generator) | ⬜ |
+
+**🛠 工程工作流**（2）
+
+| 名稱 | 型態 | 平台 | 一句話 | 來源 | 狀態 |
+|---|---|---|---|---|---|
+| [superpowers](#superpowers) | plugin | 15+ harness | 一整套強制執行的開發方法論：腦力激盪→計劃→TDD→subagent 執行→審查 | [repo↗](https://github.com/obra/superpowers) | ⬜ |
+| [Skills For Real Engineers](#skills-for-real-engineers) | plugin | Claude Code・多平台 | Matt Pocock 的 38 個 skill（v1.3.1）：拷問→規格→票→實作→審查→PR→回顧 | [repo↗](https://github.com/mattpocock/skills) | ⬜ |
+
+**🧠 回應風格與寫碼紀律**（4）
+
+| 名稱 | 型態 | 平台 | 一句話 | 來源 | 狀態 |
+|---|---|---|---|---|---|
 | [i-have-adhd](#i-have-adhd) | plugin | Claude・Codex | 逼 agent 答案先講、不鋪陳客套 | [repo↗](https://github.com/ayghri/i-have-adhd) | ⬜ 📊 |
 | [ponytail](#ponytail) | plugin | 多平台 | 寫碼前爬「該不該寫」階梯，砍過度設計 | [repo↗](https://github.com/dietrichgebert/ponytail) | ⬜ 📊 |
 | [go-modern-guidelines](#go-modern-guidelines) | plugin | 多平台 | 給 agent 一份現代 Go 對照表，別再產出過時寫法 | [repo↗](https://github.com/JetBrains/go-modern-guidelines) | ⬜ |
 | [karpathy-guidelines](#karpathy-guidelines) | plugin | Claude Code・Cursor | 四條原則治 LLM 寫碼的老毛病：亂假設、過度設計、順手亂改 | [repo↗](https://github.com/multica-ai/andrej-karpathy-skills) | ⬜ |
+
+**🗣 解釋與表達**（1）
+
+| 名稱 | 型態 | 平台 | 一句話 | 來源 | 狀態 |
+|---|---|---|---|---|---|
 | [eli5](#eli5) | skill | Claude Code | 依聽眾（5 歲／主管／工程師／家人）換一套講法解釋同一件事 | [repo↗](https://github.com/DreambigOu/ELI5) | ⬜ |
+
+**🔍 程式碼理解（MCP）**（5）
+
+| 名稱 | 型態 | 平台 | 一句話 | 來源 | 狀態 |
+|---|---|---|---|---|---|
 | [codegraph](#codegraph) | MCP | 多平台 | 本機碼圖譜，讀流程強；caller 10 月重測全中 | [repo↗](https://github.com/colbymchenry/codegraph) | ✅ 📊 |
 | [codebase-memory-mcp](#codebase-memory-mcp) | MCP | 多平台 | 同路線，caller 完整、只給名稱無 body | [repo↗](https://github.com/DeusData/codebase-memory-mcp) | ✅ 📊 |
 | [graphify](#graphify) | skill | 多平台 | 程式碼＋文件＋PDF 建成一張圖，每條邊標可信度（EXTRACTED／INFERRED／AMBIGUOUS） | [repo↗](https://github.com/Graphify-Labs/graphify) | ⬜ 📊 |
