@@ -6,16 +6,18 @@ tags: [moc, ai, skills, agent, tooling]
 
 > 收藏值得一試的 **AI agent 外掛**——skill、plugin、MCP server 都收（Claude Code / Codex / 其他平台）。
 >
+> 📌 **只收「裝進 agent 裡用的」**。自己打開來用的網站、本機應用、素材庫（就算背後有 AI）收在 [[moc/工具收藏|工具收藏]]。
+>
 > ⚠️ **這頁收的是外部現成工具**（不是我從書裡萃取的心法）。每張卡記「做什麼、裝哪、怎麼用、我試了沒」；**我自己跑的對照實測結論在 [[moc/AI技能評比|AI 技能評比]]**，這裡只放一句話 + 連結，不重抄。
 
-**圖例**　型態：`skill` `plugin` `MCP` `資源`（不用安裝、給 agent 當參考或提示詞來源的網站）　狀態：⬜ 待試・✅ 已在用・📊 已跑實測
+**圖例**　型態：`skill` `plugin` `MCP`　狀態：⬜ 待試・✅ 已在用・📊 已跑實測
 （★ 為查看當時概數，非即時。）
 
 ## 📇 快速索引
 
 依下方分段分組；每組點名稱跳到卡片。
 
-**🎨 影像與內容創作**（7）
+**🎨 影像與內容創作**（6）
 
 | 名稱 | 型態 | 平台 | 一句話 | 來源 | 狀態 |
 |---|---|---|---|---|---|
@@ -25,14 +27,14 @@ tags: [moc, ai, skills, agent, tooling]
 | [MiniMax-H3 skills](#minimax-h3-skills) | skill | npx skills | H3 全模態影音模型附的九個 prompt／影片生成 skill | [repo↗](https://github.com/MiniMax-AI/MiniMax-H3) | ⬜ |
 | [ai-short-drama-screenwriter](#ai-short-drama-screenwriter) | skill | Codex | 繁中短劇編劇：八階段流程＋可拍性檢查，只做劇本不越界 | [repo↗](https://github.com/POUND0423/AI-drama-pound) | ⬜ |
 | [scroll-world](#scroll-world) | skill | Claude Code・Codex・多平台 | 生成 AI 場景＋鏡頭影片，做捲動穿梭的沉浸式落地頁（**會扣真錢**） | [repo↗](https://github.com/oso95/scroll-world) | ⬜ |
-| [Motion Library 動態收藏](#motion-library-動態收藏) | 資源 | 網頁 | 327 種網頁動效圖鑑，可交叉篩選、每格附可複製的 AI 提示詞 | [網站↗](https://kittenjam-motion-library.vercel.app/) | ⬜ |
 
-**📐 架構圖與技術溝通**（2）
+**📐 架構圖與技術溝通**（3）
 
 | 名稱 | 型態 | 平台 | 一句話 | 來源 | 狀態 |
 |---|---|---|---|---|---|
 | [archify](#archify) | skill | 多平台 | codebase／描述 → 會自我驗證的互動架構圖 HTML | [repo↗](https://github.com/tt-a1i/archify) | ⬜ |
 | [architecture-diagram-generator](#architecture-diagram-generator) | skill | Claude.ai・Claude Code | 描述 → 深色主題架構圖 HTML；純 prompt＋設計規範，**不驗證** | [repo↗](https://github.com/Cocoon-AI/architecture-diagram-generator) | ⬜ |
+| [diagram-design](#diagram-design) | skill | Claude Code・Codex・多平台 | 描述 → 套你品牌色的編輯風圖表 HTML（45 種，含架構、時序、ER、甘特、Sankey），能把 Mermaid／draw.io 重畫 | [repo↗](https://github.com/cathrynlavery/diagram-design) | ⬜ |
 
 **🛠 工程工作流**（2）
 
@@ -236,24 +238,6 @@ npx skills add oso95/scroll-world -a codex
 
 ---
 
-### Motion Library 動態收藏
-`資源` · 網頁（Hannah，UI/UX Designer 整理） · 327 種（2026-10-29） · ⬜ 待試
-
-**做什麼**：一本網頁動態效果的圖鑑。想在頁面上加動效、卻說不出要什麼樣子時，先在這裡挑，再把描述丟給 agent 照做。
-- **三軸交叉篩選**：「元件」（文字 105、按鈕、卡片、背景、游標…）×「時機」（進場、退場、切換、循環待機、懸停點擊、捲動觸發、拖曳）×「情境」（標題 Hero、強調重點、數字資訊、轉場…），例如「按鈕 × 懸停」。另可依技術篩：CSS 194、GSAP 119、Canvas 14。
-- **每格都有可試玩的預覽**，互動類可以直接用滑鼠移動、捲動、拖曳。
-- **「複製 AI 提示詞」複製的是外觀與節奏的描述，不是程式碼**。例如閃電砸落：「先閃兩下強光並出現一道閃電線，文字從 2 倍大瞬間砸下縮回原尺寸，落地時輕微震動……整段約 2.4 秒」，最後一律加上「配色請依照網站既有的主題色」。
-
-**怎麼用**：篩到想要的效果 → 複製提示詞 → 貼給 Claude Code 等 agent，並說明要套在哪個元件、用 CSS 還是 GSAP。描述裡的秒數、縮放倍率就是驗收時對照的規格。
-
-**⚠️ 注意**
-- **預覽是作者重製的示意**，名稱與描述來自 Threads 上其他人的整理。網站自述「僅供個人參考學習」，不要整段照抄到商用作品。
-- **提示詞只描述外觀，沒有效能與無障礙要求**。實作時要自己補（我的建議）：尊重 `prefers-reduced-motion`、只動 `transform`／`opacity`，避免觸發重排。
-- GSAP 類的效果是用 GSAP 3.13 示範的。
-- 我還沒實際拿提示詞讓 agent 做過，產出品質未驗證。
-
----
-
 ## 📐 架構圖與技術溝通
 
 > 跟上面的生圖 skill 差在**輸出的正確性有沒有人管**：那些產的是美術品，好看就是成功；這類產的是**技術陳述**，畫得漂亮但接錯線就是有害。所以要看的重點是「它會不會驗自己」。
@@ -320,6 +304,49 @@ Claude.ai：**Customize → Skills → + → Create skill → Upload a skill** �
 - 介紹文（掘金 MacroZheng，2026-08-27）寫 ★6.3k，查證時（2026-09-27）已 ★7.3k。
 
 **🔗 相關**：[archify](#archify) —— 同類但會自我驗證，產出要拿去對外溝通時優先選它。
+
+---
+
+### diagram-design
+`skill`（Claude Code／Codex 另有 plugin 包，帶斜線指令） · Claude Code・Codex・Qoder・多平台（skills CLI） · MIT · ★62.8k · v2.6.136（2026-10-30） · ⬜ 待試
+
+**做什麼**：用一句話叫 agent 畫圖，產出**一個自足的 HTML＋內嵌 SVG 檔**，雙擊就能開，而且套的是**你網站的品牌色與字型**。涵蓋 45 種圖：架構、架構前後對照、時序、狀態機、ER、甘特、Sankey、魚骨、Wardley map 等，每種都有淺色、深色、完整編輯版三種變體。作者的出發點是「模型懂內容，缺的是品味」，所以把品味寫成規則。
+
+**核心**
+- **一套寫死的設計系統**：只用一個強調色，標在讀者該先看的 1–2 個元素；1px 細線、不用陰影、圓角最多 10px；**所有座標都要能被 4 整除**，作者說這條「不可妥協，是讓圖不像 AI 畫的關鍵」；目標密度 4/10，「最有品質的動作通常是刪除」。
+- **先說計畫再畫**：agent 動筆前要先講選了哪種圖、版面多大、打算刪掉什麼。每次只載入一份圖型參考檔，以及最多兩份核心參考，不把 45 種全讀進 context。
+- **品牌 onboarding**：說「onboard diagram-design to https://你的網站」，它會抓首頁的配色與字型，對應到 paper、ink、accent 等角色，先給你看 diff，同意後才寫入 `style-guide.md`，並先檢查 WCAG AA 對比。之後在新專案第一次畫圖時，如果風格檔還是預設值，它會先停下來問你。也可以存成多個品牌 profile，用專案裡的 `.diagram-design` 標記檔切換。
+- **重畫既有的圖**：可匯入 `.drawio`、Mermaid、Excalidraw，有四個參數：格式、尺寸、細節（`faithful` ≤24 節點／`balanced` ≤12／`simplified` ≤7）、受眾（`engineer`／`mixed`／`executive`，會改標籤用詞）。最後附一份清單，列出哪些節點被合併、哪些被丟掉。
+
+**裝**
+```bash
+# 任何支援 Agent Skills 的 host（Cursor、Codex、Copilot、Gemini CLI…）
+npx skills add cathrynlavery/diagram-design
+```
+```text
+# Claude Code（有斜線指令、可自動更新）
+/plugin marketplace add cathrynlavery/diagram-design
+/plugin install diagram-design@diagram-design
+```
+```bash
+# Codex
+codex plugin marketplace add cathrynlavery/diagram-design
+codex plugin add diagram-design@diagram-design
+```
+- Claude Code 對第三方 marketplace 預設**不自動更新**。要自己在 `/plugin` → Marketplaces → diagram-design 開 **Enable auto-update**。
+- 用 `npx skills add` 裝的**只有 skill 本體**，沒有 `/export-diagram`、`/import-mermaid` 這些指令。
+
+**用**：直接講白話，例如「幫我的 app 畫架構圖：前端、後端、資料庫、Redis」。指令有 `/diagram-design:import-drawio`、`import-mermaid`、`import-excalidraw`、`export-diagram`（輸出 SVG 或 PNG，可加 `--scale=3`）、`profile`、`doctor`。
+
+**⚠️ 注意**
+- **它驗的是「檔案合格」，不是「圖畫對」**：安裝後附的 `self_check.py` 只檢查無障礙標記、有沒有載入外部資源、檔案是否完整、內容有沒有超出 viewBox。節點重疊的幾何檢查要在 repo checkout 裡才能跑。**接錯線不會被抓到**，對外用之前要自己對一遍。作者自己也承認，同一句 prompt 兩次排版可能不同。
+- **輸出不是可編輯的原始格式**：PR 裡沒有文字可以 diff，也沒有畫布可以拖。作者明說，放在 Git 裡、每個 sprint 都會改的文件圖，Mermaid 還是比較適合。這個 skill 適合「要發表的那張圖」。
+- **預設會連 Google Fonts**（字型），這是唯一的網路請求；要求改用系統字型就完全不連網。品牌 onboarding 會讓 agent 去抓你指定的網站。PRIVACY.md 寫明它沒有伺服器、沒有 telemetry。
+- **PNG 匯出要先裝 Playwright**：`pip install playwright && playwright install chromium`。
+- **版本跳很快**：每次 merge 都會自動升 patch 版，目前在 2.6.x。
+- 作者列的不該用的時機：清單、前後對照，用表格就好；只有一個框的圖，直接寫一句話。動筆前先問：讀者從這張圖學到的，會比一段好文字多嗎？
+
+**🔗 相關**：[archify](#archify) —— 同樣要拿去對外的技術圖，但 archify 有驗證閘，比較在意「畫得對」；diagram-design 圖型多很多、能套品牌，比較在意「畫得好看」。[architecture-diagram-generator](#architecture-diagram-generator) —— 一樣不驗接線，但只有深色一種風格。
 
 ---
 

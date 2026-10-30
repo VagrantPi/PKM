@@ -20,7 +20,8 @@ title: 我的知識庫
 - [[moc/DevOps|DevOps（交付流程與維運）]]
 - [[moc/AI工程|AI工程]]
 - [[moc/MCP|MCP（Model Context Protocol）]]
-- [[moc/AI技能收藏|AI 技能收藏]]（外部現成工具，非知識萃取）／ [[moc/AI技能評比|AI 技能評比]]（自己跑的對照實測）
+- [[moc/AI技能收藏|AI 技能收藏]]（裝進 agent 的 skill／plugin／MCP）／ [[moc/AI技能評比|AI 技能評比]]（自己跑的對照實測）
+- [[moc/工具收藏|工具收藏]]（自己打開來用的網站、本機應用、素材庫）
 - [[moc/Claude Code 深度使用|Claude Code 深度使用]]（做自己的工具／驗證／調校內建行為）
 - [[區塊鏈]]
 - [[moc/名言集|名言集]]（一句話的原文、出處查證與背景故事）
