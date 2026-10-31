@@ -1,0 +1,163 @@
+{
+ "nodes": [
+  {
+   "id": "c",
+   "type": "text",
+   "text": "# 微信運動排行榜推送的系統設計推演",
+   "x": -140,
+   "y": -40,
+   "width": 280,
+   "height": 100,
+   "color": "6"
+  },
+  {
+   "id": "k0",
+   "type": "text",
+   "text": "🚀 難點一：1 億條怎麼發",
+   "x": 320,
+   "y": -340,
+   "width": 220,
+   "height": 60,
+   "color": "5"
+  },
+  {
+   "id": "l00",
+   "type": "file",
+   "x": 620,
+   "y": -410,
+   "width": 320,
+   "height": 110,
+   "file": "tools/工具-整點批量任務的調度與錯峰.md"
+  },
+  {
+   "id": "l01",
+   "type": "text",
+   "x": 620,
+   "y": -270,
+   "width": 320,
+   "height": 110,
+   "text": "調度只送進佇列\n分片 uid % N\n錯峰 hash(uid) % 60"
+  },
+  {
+   "id": "k1",
+   "type": "text",
+   "text": "🏆 難點二：每人一份好友榜",
+   "x": 320,
+   "y": 0,
+   "width": 220,
+   "height": 60,
+   "color": "5"
+  },
+  {
+   "id": "l10",
+   "type": "file",
+   "x": 620,
+   "y": -70,
+   "width": 320,
+   "height": 110,
+   "file": "tools/工具-每人一份的結果要預算還是現算.md"
+  },
+  {
+   "id": "l11",
+   "type": "text",
+   "x": 620,
+   "y": 70,
+   "width": 320,
+   "height": 110,
+   "text": "看 k 的分布 × 存取頻率 f\n不看平均值"
+  },
+  {
+   "id": "k2",
+   "type": "text",
+   "text": "🤔 難點三：真的要先算嗎",
+   "x": 320,
+   "y": 340,
+   "width": 220,
+   "height": 60,
+   "color": "5"
+  },
+  {
+   "id": "l20",
+   "type": "text",
+   "x": 620,
+   "y": 270,
+   "width": 320,
+   "height": 110,
+   "text": "推播只帶自己的步數\n點開才排名（少一個數量級）"
+  },
+  {
+   "id": "l21",
+   "type": "text",
+   "x": 620,
+   "y": 410,
+   "width": 320,
+   "height": 110,
+   "text": "代價：讀取洪峰、冷啟動、\n依賴放大 → 準備降級"
+  }
+ ],
+ "edges": [
+  {
+   "id": "ec0",
+   "fromNode": "c",
+   "toNode": "k0",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e00",
+   "fromNode": "k0",
+   "toNode": "l00",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e01",
+   "fromNode": "k0",
+   "toNode": "l01",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "ec1",
+   "fromNode": "c",
+   "toNode": "k1",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e10",
+   "fromNode": "k1",
+   "toNode": "l10",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e11",
+   "fromNode": "k1",
+   "toNode": "l11",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "ec2",
+   "fromNode": "c",
+   "toNode": "k2",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e20",
+   "fromNode": "k2",
+   "toNode": "l20",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e21",
+   "fromNode": "k2",
+   "toNode": "l21",
+   "fromSide": "right",
+   "toSide": "left"
+  }
+ ]
+}
