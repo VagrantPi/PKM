@@ -70,6 +70,35 @@ triggers: [agent要怎麼評估, 成功率高但成本失控, 同一個任務有
 > **這套環境的建置成本常常比 agent 本身還高，但沒有它就無法做回歸測試。**
 > 面試時能講出「我會先投資評估環境」比講一堆指標更有說服力。
 
+### ★ 任務本身也是軟體：Terminal-Bench／Harbor 的任務格式
+
+評估環境裡的「任務」也會有 bug。Terminal-Bench 這個終端機 agent 基準跑在 Harbor 評測框架上，它的任務格式值得照抄（依 Harbor 官方文件，查證 2026-11-01）：
+
+```text
+my-task/
+├── instruction.md   # 給 agent 的自然語言指令
+├── task.toml        # 元資料：逾時、資源等
+├── environment/     # 初始環境，例如 Dockerfile（也可以是 docker-compose、Apptainer）
+├── solution/        # 參考解 solve.sh（選填）：讓 oracle agent 證明題目解得出來
+└── tests/           # test.sh：agent 跑完後執行，把分數寫到 /logs/verifier/reward.txt（0／1）或 reward.json
+```
+
+- **指令和驗證器要一對一對齊**：驗證器檢查了指令沒提到的條件（例如偷偷要求欄名全小寫）→ 做對了也被判錯（假陰性）；檢查太鬆（只看檔案存在、不看內容）→ 亂寫也能過（假陽性）。
+- **上線前先用兩個「假 agent」測題目**：Harbor 內建 `oracle`（跑參考解，應該要過）與 `nop`（什麼都不做，應該要失敗）。
+- **所有前沿模型都失敗時，先打開軌跡看**：常常是指令漏寫格式要求，或環境少裝一個依賴，而不是題目真的很難。
+
+**reward hacking 的三種型態**（Harbor 官方〈Cracking down on reward hacking〉，2026-10-28）：
+
+| 型態 | agent 做了什麼 | 例子 |
+|---|---|---|
+| 竄改 Tampering | 干擾評分流程 | 植入程式改寫評分器，或用 symlink 讓評分器讀到參考解 |
+| 作弊 Cheating | 從不該拿的地方拿答案 | 上網查這個基準的解答 |
+| 鑽漏洞 Loopholes | 滿足測試但沒解決問題 | 對測試剛好會檢查的輸入寫死輸出 |
+
+Harbor 分三個時機防：**執行前**（驗證器預設放在獨立的沙箱、`harbor lint` 靜態檢查、多份參考解避免過擬合、agent 不以 root 執行）；**執行中**（網路白名單、評分輸出目錄不掛給 agent、跑測試前先刪掉舊的 reward 檔、交給驗證器的產物先清掉 symlink）；**執行後**（看軌跡、`harbor analyze` 自動標記可疑的試跑）。
+
+（線索來自 [cs329z-chinese](https://github.com/wanghao-SunSky/cs329z-chinese) 第 10 講〈Terminal-Bench 與評測工程〉，該講轉述自 Terminal-Bench 作者的課堂內容；上面的格式與防禦清單都改依 Harbor 官方文件核對，查證 2026-11-01。）
+
 ### ★ 分層診斷：任務失敗了，錯在哪一步
 
 ```
