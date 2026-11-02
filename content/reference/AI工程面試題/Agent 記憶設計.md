@@ -121,7 +121,7 @@ ttl:        null                 # 會過期嗎
 | 壓力來源 | 解法 | 適用時機 |
 |---|---|---|
 | 一開始就載入的大量工具定義 | **Tool search**：只給一個搜尋工具，其餘定義按需載入 | 工具約 20 個以上、多數回合用不到 |
-| 一連串 `tool_use`／`tool_result` 來回 | **Programmatic tool calling**：模型寫一段腳本一次呼叫完，中間結果不進對話 | 可以批次跑的小呼叫鏈 |
+| 一連串 `tool_use`／`tool_result` 來回 | **Programmatic tool calling**：模型寫一段腳本一次呼叫完，中間結果不進對話（做法見 [[工具-讓模型寫程式一次呼叫多個工具]]） | 可以批次跑的小呼叫鏈 |
 | 重複送出的穩定工具定義 | **Prompt caching**：**不減少 context 佔用**，只降成本（見 [[前綴快取 Prompt Caching]]） | 工具集大但固定 |
 | 歷史裡過期的 `tool_result` | **Context editing**：清掉用完的舊工具結果，不必重開對話 | 長對話、早期結果已不相關 |
 

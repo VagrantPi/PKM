@@ -32,6 +32,9 @@ tags: [moc, ai, llm, engineering]
 
 ## 🤖 進階
 - 讓模型自主用工具完成多步任務 → [[工具-AI-Agent設計]]
+- 一次呼叫做不好，想拆成幾步（串接、分流、平行、自我修正）→ [[工具-agent工作流的基本模式]]
+- 工具回傳太大、逐筆查很花 token → [[工具-讓模型寫程式一次呼叫多個工具]]
+- agent 上線後帳單太高，想省錢又怕品質掉 → [[工具-agent成本最佳化清單]]
 
 ## 🏗 把 agent 上線：平台、身分與治理
 - 要自己架還是用雲端代管、會被綁多深 → [[工具-agent平台自建還是用代管]]
@@ -57,4 +60,4 @@ tags: [moc, ai, llm, engineering]
 - 讓 agent 安全連上外部資料/工具的標準協定 → 見主題 [[moc/MCP|MCP]]
 
 ## 📚 來源
-[[books/軟體工程/ai/AI工程|AI工程]]、[[LLM Course 課程文件]]、[[SillyTavern 角色扮演系統技術文件]]、[[AgentCore 與 Nova Act 研究]]、[[大模型基礎]]
+[[books/軟體工程/ai/AI工程|AI工程]]、[[LLM Course 課程文件]]、[[SillyTavern 角色扮演系統技術文件]]、[[AgentCore 與 Nova Act 研究]]、[[大模型基礎]]、[[Claude Cookbooks]]
