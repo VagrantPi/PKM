@@ -52,7 +52,7 @@ RAG 有兩段：**檢索**和**生成**。答錯時要先判斷是哪一段：
 
 ### ★ 動手之前先問：這個知識庫還需不需要 RAG？
 
-（補充自 <https://juejin.cn/post/7690218295266066441>，原始出處 Anthropic *Introducing Contextual Retrieval*，逐字查證 2026-09-28）
+（補充自 <https://juejin.cn/post/7690218295266066441>，原始出處 Anthropic *Introducing Contextual Retrieval*，逐字查證 2026-09-28；原文筆記見 [[Contextual Retrieval（Anthropic）]]）
 
 > 「If your knowledge base is smaller than **200,000 tokens (about 500 pages of material)**, you can just include the entire knowledge base in the prompt that you give the model, **with no need for RAG**.」
 

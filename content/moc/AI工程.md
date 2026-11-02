@@ -60,4 +60,4 @@ tags: [moc, ai, llm, engineering]
 - 讓 agent 安全連上外部資料/工具的標準協定 → 見主題 [[moc/MCP|MCP]]
 
 ## 📚 來源
-[[books/軟體工程/ai/AI工程|AI工程]]、[[LLM Course 課程文件]]、[[SillyTavern 角色扮演系統技術文件]]、[[AgentCore 與 Nova Act 研究]]、[[大模型基礎]]、[[Claude Cookbooks]]
+[[books/軟體工程/ai/AI工程|AI工程]]、[[LLM Course 課程文件]]、[[SillyTavern 角色扮演系統技術文件]]、[[AgentCore 與 Nova Act 研究]]、[[大模型基礎]]、[[Claude Cookbooks]]、[[Contextual Retrieval（Anthropic）]]
