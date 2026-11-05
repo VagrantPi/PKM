@@ -17,7 +17,7 @@ tags: [moc, ai, skills, agent, tooling]
 
 依下方分段分組；每組點名稱跳到卡片。
 
-**🎨 影像與內容創作**（7）
+**🎨 影像與內容創作**（8）
 
 | 名稱 | 型態 | 平台 | 一句話 | 來源 | 狀態 |
 |---|---|---|---|---|---|
@@ -28,6 +28,7 @@ tags: [moc, ai, skills, agent, tooling]
 | [ai-short-drama-screenwriter](#ai-short-drama-screenwriter) | skill | Codex | 繁中短劇編劇：八階段流程＋可拍性檢查，只做劇本不越界 | [repo↗](https://github.com/POUND0423/AI-drama-pound) | ⬜ |
 | [scroll-world](#scroll-world) | skill | Claude Code・Codex・多平台 | 生成 AI 場景＋鏡頭影片，做捲動穿梭的沉浸式落地頁（**會扣真錢**） | [repo↗](https://github.com/oso95/scroll-world) | ⬜ |
 | [video-shotcraft](#video-shotcraft) | skill | Claude Code・Codex・npx skills | 用自己產品的真實截圖＋124 張動效配方卡，以 Remotion 程式碼做出可再編輯的產品宣傳片 MP4（不是 AI 生影片） | [repo↗](https://github.com/Vincentwei1021/video-shotcraft) | ⬜ |
+| [drama-skills](#drama-skills) | skill | Claude Code・Codex・npx skills | 12 個 skill 串起 AI 短劇／漫劇整條產線：原著→劇本→分鏡→圖／影片提示詞→確認後才花錢生成→剪成片；腳本檢查跨鏡一致性 | [repo↗](https://github.com/zenstory-ai/drama-skills) | ⬜ |
 
 **📐 架構圖與技術溝通**（3）
 
@@ -285,6 +286,52 @@ ln -s "$(pwd)" ~/.codex/skills/video-shotcraft    # Codex
 **🔗 相關**
 - [[moc/工具收藏#Motion Library 動態收藏|Motion Library 動態收藏]] —— 同樣是「動效圖鑑＋複製名稱給 AI」的思路；那邊是網頁 UI 動效，這邊是影片鏡頭。
 - [scroll-world](#scroll-world) —— 同樣產出產品展示影像，但 scroll-world 用付費影片模型生成畫面，這張全部用程式碼畫、不花生成費。
+
+
+### drama-skills
+`skill`（12 個一組） · Claude Code・Codex・npx skills · MIT · ★3.8k · v0.10.2（2026-11-05） · ⬜ 待試
+
+**做什麼**：AI 短劇／漫劇從點子或原著一路做到成片的整套流程：原著分析 → 分集劇本 → 視覺設定 → 圖片提示詞與分鏡 → 影片提示詞 → 確認後生產 → 剪成片 → 審查。寫作用的就是你 agent 本身的模型；生成圖片、影片、配音、音樂才呼叫外部供應商。作者是 ZenStory 的漫劇工作室，說這套是把他們 2025 年以來上千個專案的工程與提示詞蒸餾出來的（README 自述，未驗證）。
+
+**核心**（靈魂是**用檔案當唯一事實來源，再用腳本核對**）
+- **五份 Markdown 各管一層**：`劇本.md`（發生什麼）、`視覺設定.md`（造型與場景）、`分鏡.md`（每鏡的起點、終點、運鏡理由、凍結關鍵幀）、`圖片提示詞.md`、`影片提示詞.md`（只寫起點到終點之間的動作）；剪片時再加 `剪輯單.md`。創作決定一律以這些文件為準。
+- ⭐ **連續性鎖**：要跨鏡頭保持的造型寫成一條能**原樣貼進提示詞**的短語（例 `LOCK-JIANGCHEN-DRESS` · 鎖面 `pine-green lapel service jacket`），並列出用到它的鏡頭。`creator_markdown_check.py` 會核對五份文件之間的引用：例如關鍵幀提示詞寫到某個人物、但「視覺依據」沒列他，或分鏡時長和影片提示詞時長不一致，都會直接報錯並指出哪一鏡。
+- **參考圖分三種編號**：`IMG-*` 是要生成的參考板、`PLAN-*` 是「這鏡該掛哪幾張、什麼順序、各管什麼」的計畫、`REF-*` 只留給專案裡**真的存在並檢查過**的圖。參考圖你在別的介面自己出也行，照樣產出圖生影片提示詞，不會偷偷改成文生影片。
+- **先預覽、明確確認，才花錢**：生產 skill 先在檔案裡列出這批任務的準確數量、內容、參考圖、參數與 adapter，你確認後才呼叫外部 API。供應商憑證不進專案。提交後斷線時用 `audit` 找出已付費的孤兒任務、`collect` 取回結果，**不重投**。
+- **剪輯也寫理由**：每段的入點出點為什麼選在那裡寫進剪輯單，字幕逐字取自劇本，統一響度後渲染；核對與量測腳本只回報事實，不下判斷。
+
+**裝**（照抄 README）
+```bash
+npx skills add zenstory-ai/drama-skills -y -g   # -g 全域；拿掉只裝在目前目錄。更新就重跑同一行
+```
+```bash
+# 手動：可以全裝，也可以只連需要的那幾個
+git clone https://github.com/zenstory-ai/drama-skills.git && cd drama-skills
+mkdir -p "$HOME/.claude/skills"
+for skill in skills/*; do
+  ln -s "$PWD/$skill" "$HOME/.claude/skills/$(basename "$skill")"
+done
+# Codex 改連到 "${CODEX_HOME:-$HOME/.codex}/skills"
+```
+腳本要 Python 3.9 以上；剪片要 `ffmpeg`／`ffprobe` 在 PATH 上。不需要 GPU。
+
+**用**：Claude Code 用 `/short-drama`，Codex 用 `$short-drama`，也可以直接講自然語言。
+- `short-drama`：初始化專案、路由、視覺方向、本機創作台（`/short-drama dashboard`，只聽本機）。
+- `novel-analyze`（原著抽樣快評、值不值得拆）、`breakdown`（量對標劇的集長、鏡長、對白密度並對照）、`develop`（改編與分集地圖）、`write`、`assets`、`image-prompts`、`storyboard`、`video-prompts`、`produce`、`edit`、`review`。
+- 靜態漫劇（關鍵幀切換＋配音）可以跳過影片提示詞，直接從關鍵幀進生產。
+- 匯出：`project_tool.py export <project> --out <專案外目錄>`，加 `--no-media` 只交文字。
+
+**⚠️ 注意**
+- 🔴 **生成媒體要花真錢**，走你自己的供應商帳號（內建 adapter 支援 Seedance、GPT Image 2、MiniMax H3 影片、MiniMax Music）。README 的 68 秒樣片，影片生成成本約 40 元人民幣（作者自述）。
+- **升級後既有專案要重跑檢查**：規則會收緊（例如 v0.7.0 起時長不一致直接報錯），每集要重跑 `creator_markdown_check.py`，剪過的要再跑 `edit_tool.py check`。
+- **H3 的眉角是小樣本觀察**：中文對白約 4.1 個字／秒，太密會趕讀或被截斷；口型可能落到畫面裡更顯眼的那張臉上。作者自己標了樣本小。
+- 改編原著要有權利：README 的範例明寫「我擁有或獲准改編的」。
+- 文件以簡體中文為主；更新很頻繁（403 commits、25 tags）。
+
+**🔗 相關**
+- [ai-short-drama-screenwriter](#ai-short-drama-screenwriter) —— 同領域。那張只寫劇本、刻意不碰分鏡；這套從劇本一路管到成片。只要劇本可以用那張，要整條產線用這套。
+- [MiniMax-H3 skills](#minimax-h3-skills) —— 這套的影片提示詞有 MiniMax H3 專用寫法，生產也能直接接 H3。
+- [[工具-會花錢的skill該怎麼設計]] —— 「先預覽、確認才花錢、斷線不重投」是那張卡的實例。
 
 ---
 
