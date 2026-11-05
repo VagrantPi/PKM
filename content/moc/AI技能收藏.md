@@ -17,7 +17,7 @@ tags: [moc, ai, skills, agent, tooling]
 
 依下方分段分組；每組點名稱跳到卡片。
 
-**🎨 影像與內容創作**（6）
+**🎨 影像與內容創作**（7）
 
 | 名稱 | 型態 | 平台 | 一句話 | 來源 | 狀態 |
 |---|---|---|---|---|---|
@@ -27,6 +27,7 @@ tags: [moc, ai, skills, agent, tooling]
 | [MiniMax-H3 skills](#minimax-h3-skills) | skill | npx skills | H3 全模態影音模型附的九個 prompt／影片生成 skill | [repo↗](https://github.com/MiniMax-AI/MiniMax-H3) | ⬜ |
 | [ai-short-drama-screenwriter](#ai-short-drama-screenwriter) | skill | Codex | 繁中短劇編劇：八階段流程＋可拍性檢查，只做劇本不越界 | [repo↗](https://github.com/POUND0423/AI-drama-pound) | ⬜ |
 | [scroll-world](#scroll-world) | skill | Claude Code・Codex・多平台 | 生成 AI 場景＋鏡頭影片，做捲動穿梭的沉浸式落地頁（**會扣真錢**） | [repo↗](https://github.com/oso95/scroll-world) | ⬜ |
+| [video-shotcraft](#video-shotcraft) | skill | Claude Code・Codex・npx skills | 用自己產品的真實截圖＋124 張動效配方卡，以 Remotion 程式碼做出可再編輯的產品宣傳片 MP4（不是 AI 生影片） | [repo↗](https://github.com/Vincentwei1021/video-shotcraft) | ⬜ |
 
 **📐 架構圖與技術溝通**（3）
 
@@ -235,6 +236,55 @@ npx skills add oso95/scroll-world -a codex
 - macOS 的 bash 3.2 沒有 `declare -A`，SKILL.md 自己有標這個坑。
 
 **📐 值得抄的兩件事**：→ [[工具-會花錢的skill該怎麼設計]]、[[工具-該問開放題還是選擇題]]（它的訪談段明講：**主題要開放地問，絕不給捏造的多選題**）。
+
+
+### video-shotcraft
+`skill` · Claude Code・Codex・npx skills · Apache-2.0 · ★17.0k（2026-11-05） · ⬜ 待試
+
+**做什麼**：跟 agent 說「幫我的產品做支宣傳片」，它會截你產品的真實頁面、從鏡頭庫挑動效、排分鏡、用 **Remotion** 寫成動畫、卡 BGM 節拍、配音效、逐格檢查，交出 **1920×1080／30fps 的 MP4 加上整個 Remotion 專案原始碼**。它**不是影片生成模型**：每一格都是程式碼用你的截圖和文案畫出來的，所以畫面清楚、跟品牌一致、之後還能改。
+
+**核心**（靈魂是**鏡頭配方卡＋調好的 demo 原始碼**，不是 prompt）
+- **124 張鏡頭配方卡、150 個鏡頭、10 類**（開場、運鏡、轉場、字體、UI 進場、互動、數據、光效、節奏、收尾），每張卡在 `references/shots/`，對應的 Remotion 實作在 `demos/`。[Gallery](https://vincentwei1021.github.io/video-shotcraft/) 可以先看動態樣片、直接複製卡名。
+- ⭐ **SKILL.md 規定用卡一定要讀準確的 demo 原始碼**：卡上只有語意和參數表，demo 才是調校過的參數（緩動、時值、已知坑）。「憑卡名重寫＝放棄全部調校」，卡上標為命門的參數不准降檔。
+- **視覺語言從產品本身長出來**：先從產品的設計系統／原始碼抽出字體、字級、間距、圓角、配色寫成 spec，片中所有字卡、轉場、光效都沿用；模板只繼承鏡頭結構與節奏，外觀要依目標產品重新上皮。
+- **三種模式不混用**：直接套 Ink Press 模板／agent 自主一路做完／共同創作（產品簡報、視覺方向、鏡頭對應、分鏡逐關讓你確認）。沒選模式前，它只做一次唯讀的產品檢查，然後問你要哪種。
+- **節奏規則很具體**：品牌字標落定後停 ≥1 秒、批量動效收尾留 0.5 秒靜止；強節奏 BGM 先做拍點分析，轉場卡在拍上，成片回測切點誤差 ≤3 格；整個畫面的節拍衝擊全片最多 3 處。
+- **交付前一定派乾淨 context 的 subagent 做獨立終檢**，要附帶格號的證據；渲染必須可重現（禁 `Date.now()`／`Math.random()`，亂數用固定種子）。
+
+**裝**（照抄 README）
+```bash
+# 最簡單：把連結丟給 agent
+#   Install this skill for me: https://github.com/Vincentwei1021/video-shotcraft
+npx skills add Vincentwei1021/video-shotcraft
+```
+```bash
+# 手動
+git clone https://github.com/Vincentwei1021/video-shotcraft.git
+cd video-shotcraft
+ln -s "$(pwd)" ~/.claude/skills/video-shotcraft   # Claude Code
+ln -s "$(pwd)" ~/.codex/skills/video-shotcraft    # Codex
+```
+需要 Node.js＋npm、`ffmpeg`／`ffprobe`；`uv` 只有分析 BGM 節拍時要；puppeteer 在截圖時才自動安裝。Remotion 第一次渲染會自己下載 headless Chrome。作者在 macOS 測過；headless Linux 要加 `--concurrency=1`、改用 `chrome-headless-shell`，連不到 `remotion.media` 時用 `--browser-executable` 指定本機瀏覽器。
+
+**用**：不用指令，直接描述，例如：
+- `Use video-shotcraft to make a promo for my product.`
+- `Make a launch film for this repo with the Ink Press template.`（點名模板就不再問模式）
+- `Use the deck-deal-flyin and row-embed shot cards to present this feature.`（從 Gallery 複製卡名指定鏡頭）
+- 只想幫既有影片找音效也行：它只搜 Freesound 候選，不下載、不改畫面。
+
+交付後會**主動開一個類似剪映的瀏覽器編輯器**（Motion Workbench，`node workbench/scripts/open.mjs <專案>`），可以改文案、字級、顏色、剪輯片段、換鏡頭再匯出。也可選擇匯出剪映草稿（作者在剪映專業版 11.2 macOS 驗證過）。
+
+**⚠️ 注意**
+- **會碰你的專案**：要截真實頁面會起你專案的本機 dev server、用 headless 瀏覽器截全頁。SKILL.md 要求客戶、個人、內部、金鑰等資料先換成虛構或去識別化內容，但截圖前還是自己確認畫面上沒有敏感資料。
+- **Remotion 有自己的授權**：個人與小團隊免費，**公司可能要付費授權**（README 原文）。做公司的宣傳片前先查。
+- **交付後會自動開 dev server（5198 port）**，不用的話記得關。
+- **可選的社群發布**會透過 Upload-Post 的 API 發到 TikTok、YouTube、X 等平台；只有你要求才會做，而且先確認文案、先 dry-run。
+- 音效從 Freesound 下載，各自有授權，CC BY 的要保留出處清單並標示作者。
+- README 有贊助商廣告（API 中轉平台等），跟 skill 功能無關。
+
+**🔗 相關**
+- [[moc/工具收藏#Motion Library 動態收藏|Motion Library 動態收藏]] —— 同樣是「動效圖鑑＋複製名稱給 AI」的思路；那邊是網頁 UI 動效，這邊是影片鏡頭。
+- [scroll-world](#scroll-world) —— 同樣產出產品展示影像，但 scroll-world 用付費影片模型生成畫面，這張全部用程式碼畫、不花生成費。
 
 ---
 
