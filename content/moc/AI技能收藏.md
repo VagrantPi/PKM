@@ -1260,9 +1260,6 @@ claude plugin install sales@knowledge-work-plugins
 - **connector 會連到外部服務**：Slack、HubSpot、Jira、Notion、Snowflake 等，接上之後 Claude 讀得到這些系統的資料，權限要自己把關。
 - 預設內容是通用的，不客製就只是「一般水準的職能助手」。
 
-**🔗 相關**
-- [[Claude Cookbooks]] —— 同為 Anthropic 官方 repo；cookbooks 是 API 範例，這邊是現成可裝的職能 plugin
-
 ---
 
 ## 🔗 相關
