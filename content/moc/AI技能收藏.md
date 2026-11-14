@@ -17,7 +17,7 @@ tags: [moc, ai, skills, agent, tooling]
 
 依下方分段分組；每組點名稱跳到卡片。
 
-**🎨 影像與內容創作**（10）
+**🎨 影像與內容創作**（11）
 
 | 名稱 | 型態 | 平台 | 一句話 | 來源 | 狀態 |
 |---|---|---|---|---|---|
@@ -30,6 +30,7 @@ tags: [moc, ai, skills, agent, tooling]
 | [video-shotcraft](#video-shotcraft) | skill | Claude Code・Codex・npx skills | 用自己產品的真實截圖＋124 張動效配方卡，以 Remotion 程式碼做出可再編輯的產品宣傳片 MP4（不是 AI 生影片） | [repo↗](https://github.com/Vincentwei1021/video-shotcraft) | ⬜ |
 | [drama-skills](#drama-skills) | skill | Claude Code・Codex・npx skills | 12 個 skill 串起 AI 短劇／漫劇整條產線：原著→劇本→分鏡→圖／影片提示詞→確認後才花錢生成→剪成片；腳本檢查跨鏡一致性 | [repo↗](https://github.com/zenstory-ai/drama-skills) | ⬜ |
 | [awesome-short-drama-skills](#awesome-short-drama-skills) | skill（＋清單） | 多平台（npx skills） | 86 個 AI 短劇／漫劇 skill 的人工核對清單，附三輪盲比實測（劇本、選題、全劇骨架各哪幾個贏過「不裝 skill」）；本身也是幫你挑 skill 的 skill | [repo↗](https://github.com/UnderleveledBuilder/awesome-short-drama-skills) | ⬜ |
+| [漫劇老李 manju-laoli-skill](#漫劇老李-manju-laoli-skill) | skill（1 總控＋10 子技能） | OpenClaw・通用 agent | Seedance 專用的漫劇導演規則庫：5 道前置鎖逼你先選定、資產先鎖再分鏡、七段式提示詞，出稿前跑腳本機檢 | [repo↗](https://github.com/lixiaoxiao9888-create/manju-laoli-skill) | ⬜ |
 | [Agent Sprite Forge](#agent-sprite-forge) | plugin | Claude Code・Codex・Grok | 一張角色定稿圖 → 每個動作各生一段影片 → Python 工具去背、選循環、調節奏，打包成 Godot／Aseprite／網頁可用的遊戲 sprite（**接付費 API 會花錢**） | [repo↗](https://github.com/0x0funky/agent-sprite-forge) | ⬜ |
 
 **📐 架構圖與技術溝通**（3）
@@ -79,6 +80,18 @@ tags: [moc, ai, skills, agent, tooling]
 | [GitNexus](#gitnexus) | MCP | 多平台 | 程式碼圖資料庫＋19 個 MCP 工具（影響分析、執行流、改名），**非商用授權** | [repo↗](https://github.com/abhigyanpatwari/GitNexus) | ⬜ 📊 |
 | [Understand-Anything](#understand-anything) | plugin | Claude Code・多平台 | 多 agent 分析 codebase → 互動式儀表板＋導覽，給新人看懂專案 | [repo↗](https://github.com/Egonex-AI/Understand-Anything) | ✅ 📊 |
 | [Floorplan](#floorplan) | plugin | Claude Code・Codex | 給「用 AI 做出 app 但沒讀過程式碼」的人：白話的互動式 app 地圖，前後端請求跨 repo 對上，附常見資安漏洞健檢與「AI 剛改了什麼」 | [repo↗](https://github.com/haydenschmitty/floorplan) | ⬜ |
+
+**🎮 遊戲開發**（1）
+
+| 名稱 | 型態 | 平台 | 一句話 | 來源 | 狀態 |
+|---|---|---|---|---|---|
+| [awesome-gamedev-agent-skills](#awesome-gamedev-agent-skills) | skill（79 個＋router） | 多平台（npx skills）・Claude Code plugin | 12 個遊戲引擎的 79 個 skill，router 依專案檔案判斷引擎、只載入 2–3 個相關的；版本釘在官方文件 | [repo↗](https://github.com/gamedev-skills/awesome-gamedev-agent-skills) | ⬜ |
+
+**💼 職能與知識工作**（1）
+
+| 名稱 | 型態 | 平台 | 一句話 | 來源 | 狀態 |
+|---|---|---|---|---|---|
+| [Knowledge Work Plugins](#knowledge-work-plugins) | plugin（11 個） | Claude Cowork・Claude Code | Anthropic 官方：業務、客服、PM、行銷、法務、財務、資料等職能各一個 plugin，全是 markdown＋JSON，要改成自家流程才好用 | [repo↗](https://github.com/anthropics/knowledge-work-plugins) | ⬜ |
 
 ---
 
@@ -420,6 +433,37 @@ npx skills add UnderleveledBuilder/awesome-short-drama-skills   # 裝上 short-d
 - [drama-skills](#drama-skills) —— 清單裡的精選之一，也是第一輪劇本評測勝過對照組的 4 個之一
 - [ai-short-drama-screenwriter](#ai-short-drama-screenwriter) —— 繁中短劇編劇 skill，這份清單沒收
 - [[工具-AI改動的AB對照評測]] —— 「有不裝 skill 的對照組、多跑幾次、雙評審盲比」正是那張卡的做法
+
+
+### 漫劇老李 manju-laoli-skill
+`skill`（1 總控 `short-drama-director`＋10 個 `sd-*-engine` 子技能） · OpenClaw・WorkBuddy・扣子(Coze)・Dify 等 · MIT · ★2.1k · V7.5.0-SLIM（2026-11-14） · ⬜ 待試
+
+**做什麼**：AI 短劇、漫劇（也適用廣告片、分鏡預演、打戲設計）從立項、劇本、資產、分鏡到**影片模型提示詞**與質檢的規則庫。它**不產圖**，交付的是「提示詞＋接線說明書」，圖由你在即夢、Seedance、豆包等平台自己生成。
+
+**核心**（靈魂是**硬門檻**：「使用者看到 5 個步驟，AI 內部跑 100 條規則」）
+- ⭐ **五道前置鎖＋畫風鎖，任何一道沒選就停下來問**：素材來源（原創／改編／對標爆款／熱點速成）、模型版本（**Seedance 2.5 或 2.0 二選一**，語法完全分流）、畫幅、交付形態、多段之間怎麼銜接。README 明寫「禁止預設跳過、禁止替使用者推斷」。
+- **資產先鎖再分鏡（Asset-First）**：角色、場景、道具先建台帳並鎖定，再進分鏡，避免跨鏡頭、跨集漂移。
+- **七段式提示詞**：畫幅風格 → 場景資產 → 核心人物 → 站位聲明 → 時間軸分鏡 → 音效 → 強制禁止項。它對「模型對否定詞不敏感」的處理是換詞、改句式、移除觸發詞，禁止項只放負面清單。
+- **出稿前腳本機檢**：`gate_check.py` 一次跑完投餵層閘門與 C 系列檢查，FAIL 清零才交付；另有 `audit_contract.py` 檢查「該交的東西交了沒」、`build_board_lite.py` 把專案 md 轉成單檔離線分鏡看板。
+- 打戲分三個專門子技能：通用、玄幻仙俠、真人寫實。
+
+**裝／用**（照抄 README）
+```bash
+openclaw skills install ./short-drama-director --as short-drama-director   # 總控＋10 子技能同級部署
+python3 short-drama-director/scripts/check_package.py                      # 包級自檢
+python3 sd-feed-engine/scripts/gate_check.py <稿>.md --model 2.5 --aspect 16:9
+```
+只支援單一 SKILL.md 的平台，以 `short-drama-director/SKILL.md` 為入口，子技能放同一層。常用指令：`/寫劇本`、`/做分鏡`、`/生成視頻提示詞`、`/看板`、`/審查`。
+
+**⚠️ 注意**
+- **只支援 Seedance 一條模型線**；README 列的 agent 平台以 OpenClaw、國內平台為主，沒有寫 Claude Code 的安裝方式。
+- [awesome-short-drama-skills](#awesome-short-drama-skills) 的標註：**作者標為測試版，整合了其他開源內容**。
+- README 有贊助商廣告（漫劇平台、IP 庫），與規則本身無關。
+- 規則量很大（48 份規則庫、C1–C41 檢查碼），文件為簡體中文。
+
+**🔗 相關**
+- [drama-skills](#drama-skills) —— 同樣管整條短劇產線、也用腳本核對；drama-skills 用檔案事實核對跨鏡一致性、支援多家模型，這套鎖死 Seedance、規則更細
+- [awesome-short-drama-skills](#awesome-short-drama-skills) —— 收錄並標記這套的清單
 
 ---
 
@@ -1148,6 +1192,76 @@ codex plugin add floorplan@floorplan
 **🔗 相關**
 - [Understand-Anything](#understand-anything) —— README 自己做了對照：Understand-Anything 給開發者逐函式讀懂大 codebase；Floorplan 給不讀程式碼的人看懂、檢查自己的 app
 - [archify](#archify) —— 同一張對照表：archify 是為文件或簡報畫一張清楚的圖；README 建議先用 Floorplan 看懂，再用 archify 畫一條流程去報告
+
+---
+
+## 🎮 遊戲開發
+
+> 遊戲引擎版本變動快、API 改名頻繁，agent 最容易寫出舊版寫法。這類 skill 要看的是**有沒有釘版本、有沒有在真的引擎上跑過**。
+
+### awesome-gamedev-agent-skills
+`skill`（79 個＋router） · 多平台（npx skills）・Claude Code plugin · Apache-2.0 · ★8.8k（2026-11-14） · ⬜ 待試
+
+**做什麼**：讓 coding agent 用你原本的引擎做遊戲。涵蓋 12 個引擎（Godot、Unity、Unreal、Ebitengine、Phaser、PixiJS、three.js、Bevy、pygame、LÖVE、Defold、Roblox）共 79 個 skill，分引擎、領域（AI、shader、存檔）、遊戲類型（平台跳躍、roguelike）、發布流程（game jam、Steam、itch）。
+
+**核心**
+- ⭐ **router 自動挑 skill**：從專案檔判斷引擎（有 `project.godot` 就是 Godot、`*.uproject` 是 Unreal，判斷不出來就問），再從需求判斷主題與類型，**只載入 2–3 個**：引擎基礎 → 主題 → 類型。例如「幫我的 Godot 角色加二段跳」只載 `godot-2d-movement`＋`platformer`。引擎互斥，其他可疊加。
+- **版本釘在官方文件**：Godot 4.7.2、Unity 6.3 LTS、Unreal 5.8、Phaser 4.2.1、three.js r187 等（作者查證 2026-11-11）；作者說 12 個引擎裡有 10 個的範例程式在真的工具鏈上跑過或編譯過，366 個盲測 prompt 中 98.7% 載入了正確的 skill（作者自述，未驗證）。
+- **美術流程**：先鎖定視覺目標、做成系列、用確定性的方式正規化，再在遊戲裡檢查，而不是一張一張生。
+
+**裝**（照抄 README）
+```bash
+npx skills add gamedev-skills/awesome-gamedev-agent-skills   # 全裝；--list 先預覽、-g 全域、-a claude-code 指定 agent（需 Node.js 22.20+）
+```
+```bash
+# Claude Code plugin：只做一種引擎時裝 router＋該引擎就好
+claude plugin marketplace add gamedev-skills/awesome-gamedev-agent-skills
+claude plugin install router@awesome-gamedev-agent-skills
+claude plugin install godot@awesome-gamedev-agent-skills   # 或 unity、unreal、ebitengine、web-engines、other-engines
+```
+
+**⚠️ 注意**
+- ⭐ **skill 裝太多，描述會被截掉**：README 提醒 agent 列出 skill 描述有長度上限，Claude Code 是 context 的 1%，超過的描述會被截，正確的 skill 就更難被挑中。已經裝很多 skill 的人，只裝 router＋自己的引擎；或用 `skillListingBudgetFraction`（例如 0.02）、環境變數 `SLASH_COMMAND_TOOL_CHAR_BUDGET` 調高上限（README 說法，未驗證）。
+- README 有贊助位廣告，作者說贊助不影響 router 選 skill。
+
+**🔗 相關**
+- [Agent Sprite Forge](#agent-sprite-forge) —— 做 2D 遊戲角色動畫素材；這套管遊戲程式碼和美術流程
+- [[工具-skill集合的分層與維護]] —— skill 一多會互相搶觸發；這套用 router 只載入少數幾個，是同一個問題的一種解法
+
+---
+
+## 💼 職能與知識工作
+
+> 不是寫程式用的，是把 Claude 變成某個職能的助手（業務、客服、法務、財務…）。這類 plugin 的價值多半在**接上公司自己的工具和流程之後**，開箱只是起點。
+
+### Knowledge Work Plugins
+`plugin`（11 個） · Claude Cowork・Claude Code · Anthropic 官方 · Apache-2.0 · ★35.7k（2026-11-14） · ⬜ 待試
+
+**做什麼**：Anthropic 開源的 11 個職能 plugin，主要給 Claude Cowork 用，也相容 Claude Code。每個 plugin 打包了該職能的 skill、slash 指令、子代理和 connector（MCP）：
+- **productivity**：任務、行事曆、日常流程、個人背景
+- **sales**：研究客戶、準備會議、檢視 pipeline、寫開發信、競品對照卡
+- **customer-support**：分類工單、草擬回覆、整理升級案、把解決的問題寫成知識庫文章
+- **product-management**：寫規格、排 roadmap、整理使用者研究、更新利害關係人
+- **marketing**、**legal**（合約、NDA、合規）、**finance**（分錄、對帳、財報、結帳）、**data**（SQL、統計、儀表板，分享前先驗證）、**enterprise-search**（跨 email、聊天、文件一次搜）、**bio-research**（文獻、基因體、標的排序）
+- **cowork-plugin-management**：幫你建新的 plugin 或客製既有的
+
+**核心**
+- **全部是檔案**：`.claude-plugin/plugin.json`（manifest）、`.mcp.json`（工具連線）、`commands/`（手動觸發的指令）、`skills/`（自動引用的領域知識），只有 markdown 和 JSON，沒有程式碼、不用 build。
+- **客製才是重點**：README 自己說這些是通用起點，要換掉 `.mcp.json` 接上自家工具、把公司術語與流程寫進 skill、照團隊實際做法改流程。也可以當成「一個職能 plugin 該怎麼切」的範本來看。
+
+**裝／用**
+```bash
+claude plugin marketplace add anthropics/knowledge-work-plugins
+claude plugin install sales@knowledge-work-plugins
+```
+裝好後 skill 會自動觸發，指令例如 `/sales:call-prep`、`/data:write-query`、`/finance:reconciliation`、`/product-management:write-spec`。Cowork 使用者從 claude.com/plugins 安裝。
+
+**⚠️ 注意**
+- **connector 會連到外部服務**：Slack、HubSpot、Jira、Notion、Snowflake 等，接上之後 Claude 讀得到這些系統的資料，權限要自己把關。
+- 預設內容是通用的，不客製就只是「一般水準的職能助手」。
+
+**🔗 相關**
+- [[Claude Cookbooks]] —— 同為 Anthropic 官方 repo；cookbooks 是 API 範例，這邊是現成可裝的職能 plugin
 
 ---
 
