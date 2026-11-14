@@ -1,0 +1,82 @@
+{
+ "nodes": [
+  {
+   "id": "c",
+   "type": "text",
+   "text": "# Claude Code 的記憶機制",
+   "x": -140,
+   "y": -40,
+   "width": 280,
+   "height": 80,
+   "color": "6"
+  },
+  {
+   "id": "k1",
+   "type": "text",
+   "text": "📍 放對地方\nCLAUDE.md／rules／skill／hook／auto memory",
+   "x": 320,
+   "y": -150,
+   "width": 240,
+   "height": 80,
+   "color": "5"
+  },
+  {
+   "id": "k2",
+   "type": "text",
+   "text": "🔍 沒生效怎麼查\n/context、/memory、大小上限、compact",
+   "x": 320,
+   "y": 70,
+   "width": 240,
+   "height": 80,
+   "color": "5"
+  },
+  {
+   "id": "l1",
+   "type": "file",
+   "file": "tools/工具-ClaudeCode指示該放哪一層.md",
+   "x": 660,
+   "y": -165,
+   "width": 320,
+   "height": 110
+  },
+  {
+   "id": "l2",
+   "type": "file",
+   "file": "tools/工具-CLAUDE.md沒生效時怎麼查.md",
+   "x": 660,
+   "y": 55,
+   "width": 320,
+   "height": 110
+  }
+ ],
+ "edges": [
+  {
+   "id": "e1",
+   "fromNode": "c",
+   "toNode": "k1",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e2",
+   "fromNode": "c",
+   "toNode": "k2",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e3",
+   "fromNode": "k1",
+   "toNode": "l1",
+   "fromSide": "right",
+   "toSide": "left"
+  },
+  {
+   "id": "e4",
+   "fromNode": "k2",
+   "toNode": "l2",
+   "fromSide": "right",
+   "toSide": "left"
+  }
+ ]
+}

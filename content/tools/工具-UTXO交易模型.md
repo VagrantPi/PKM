@@ -4,11 +4,12 @@ name: "UTXO 交易模型"
 source: "[[精通比特幣]]"
 source_type: book
 tags: [blockchain, bitcoin, transactions, accounting]
-triggers: [比特幣怎麼記帳, UTXO是什麼, 帳戶餘額還是輸出, 交易怎麼驗證, 找零機制, 帳戶模型vs UTXO]
+triggers: [比特幣怎麼記帳, UTXO是什麼, 帳戶餘額還是輸出, 交易怎麼驗證, 找零機制]
 ---
 
 ## 🎯 什麼情境該想到我
 當你想理解「比特幣帳本到底怎麼記帳、一筆交易如何構成與驗證」時。
+其他說法：帳戶模型vs UTXO。
 
 ## ⚙️ 怎麼用（理解模型）
 1. **帳本不存餘額，存 UTXO**：Unspent Transaction Output——一堆「還沒被花掉的輸出」。你的「餘額」＝你能花的所有 UTXO 總和。

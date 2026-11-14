@@ -4,7 +4,7 @@ name: "Gas 與 EVM Gas & the Ethereum Virtual Machine"
 source: "[[精通以太坊]]"
 source_type: book
 tags: [blockchain, ethereum, evm, gas]
-triggers: [gas費是什麼, 交易為何要付手續費, 鏈上運算怎麼計費, 合約為何要省gas, 交易失敗還扣錢, EVM原理]
+triggers: [gas費是什麼, 交易為何要付手續費, 鏈上運算怎麼計費, 合約為何要省gas, 交易失敗還扣錢]
 ---
 
 ## 🎯 什麼情境該想到我
@@ -12,6 +12,7 @@ triggers: [gas費是什麼, 交易為何要付手續費, 鏈上運算怎麼計�
 當你想搞懂「以太坊上的成本到底從哪來」時——為什麼每個運算都要收費、為什麼寫 storage 特別貴、為什麼交易失敗了錢還是不見、為什麼一個無窮迴圈不會把整條鏈弄死。
 
 本卡完全依據《Mastering Ethereum》(O'Reilly, 2018) Ch.13「The Ethereum Virtual Machine」。
+其他說法：EVM原理。
 
 ## ⚙️ 怎麼用（理解機制）
 

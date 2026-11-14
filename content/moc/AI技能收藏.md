@@ -39,12 +39,19 @@ tags: [moc, ai, skills, agent, tooling]
 | [architecture-diagram-generator](#architecture-diagram-generator) | skill | Claude.ai・Claude Code | 描述 → 深色主題架構圖 HTML；純 prompt＋設計規範，**不驗證** | [repo↗](https://github.com/Cocoon-AI/architecture-diagram-generator) | ⬜ |
 | [diagram-design](#diagram-design) | skill | Claude Code・Codex・多平台 | 描述 → 套你品牌色的編輯風圖表 HTML（45 種，含架構、時序、ER、甘特、Sankey），能把 Mermaid／draw.io 重畫 | [repo↗](https://github.com/cathrynlavery/diagram-design) | ⬜ |
 
-**🛠 工程工作流**（2）
+**🖌 前端與 UI 設計**（1）
+
+| 名稱 | 型態 | 平台 | 一句話 | 來源 | 狀態 |
+|---|---|---|---|---|---|
+| [UI UX Pro Max](#ui-ux-pro-max) | plugin／skill | Claude Code・20+ 平台 | 做 UI 前先依產品類型查出一整套設計系統（版型、風格、配色、字體、該避免的寫法、交付前檢查清單），再照著寫 | [repo↗](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | ⬜ |
+
+**🛠 工程工作流**（3）
 
 | 名稱 | 型態 | 平台 | 一句話 | 來源 | 狀態 |
 |---|---|---|---|---|---|
 | [superpowers](#superpowers) | plugin | 15+ harness | 一整套強制執行的開發方法論：腦力激盪→計劃→TDD→subagent 執行→審查 | [repo↗](https://github.com/obra/superpowers) | ⬜ |
 | [Skills For Real Engineers](#skills-for-real-engineers) | plugin | Claude Code・多平台 | Matt Pocock 的 38 個 skill（v1.3.1）：拷問→規格→票→實作→審查→PR→回顧 | [repo↗](https://github.com/mattpocock/skills) | ⬜ |
+| [code-modernization](#code-modernization) | plugin | Claude Code | Anthropic 官方：舊系統現代化的整套流程（評估→抽業務規則→計畫→改寫→**用腳本證明新舊行為一致**），人在 6 個關卡拍板 | [repo↗](https://github.com/anthropics/claude-plugins-official/tree/main/plugins/code-modernization) | ⬜ |
 
 **🧠 回應風格與寫碼紀律**（4）
 
@@ -494,6 +501,46 @@ codex plugin add diagram-design@diagram-design
 
 ---
 
+## 🖌 前端與 UI 設計
+
+> 讓 agent 寫前端時**先決定設計再寫碼**。這類工具多半是一大份設計知識庫加上搜尋腳本；要看的是它的建議能不能被檢查（對比、焦點、響應式），還是只是風格偏好。
+
+### UI UX Pro Max
+`plugin`／`skill` · Claude Code（marketplace）・Cursor、Codex、Gemini CLI 等 20 多個平台（CLI 安裝） · MIT · ★149k（2026-11-14） · ⬜ 待試
+
+**做什麼**：你請 agent 做 UI（「幫我的美容 SPA 做 landing page」），它先用內建的搜尋引擎查出一整套**設計系統**：版型（Hero＋社群證明、CTA 放哪）、風格、配色（含色碼）、字體搭配（附 Google Fonts）、主要效果、**這個產業該避免的寫法**、交付前檢查清單，然後才照著寫程式。
+
+**核心**
+- **資料庫＋規則**：192 種產品類型的推理規則（每種產業對應版型、風格、配色、字體與反模式，例如銀行不要用「AI 紫粉漸層」）、80 種可搜尋的 UI 風格（51 種預設啟用）、192 組配色、74 組字體搭配、34 種 landing 版型、25 種圖表、22 個技術棧的寫法、120 條 UX 準則。用 BM25 排序，搜尋腳本只用 Python 標準函式庫、不連網。
+- **交付前檢查清單值得抄**：不用 emoji 當圖示（改用 SVG）、可點的元素有 `cursor-pointer`、淺色模式文字對比至少 4.5:1、鍵盤焦點看得到、尊重 `prefers-reduced-motion`、文字與標籤在窄寬度不被裁掉、在 375／768／1024／1440px 都檢查。
+- **改既有 app 的主題有一套流程**：先盤點寫死的顏色值 → 對應到既有的語意 token（background、primary、border…），缺的才新增 → 一次改一小批元件 → 每批都檢查對比、焦點、響應式與深淺色。README 提醒：**只改 token 不會影響寫死樣式的元件**。
+
+**裝**（照抄 README）
+```bash
+# Claude Code（marketplace）
+/plugin marketplace add nextlevelbuilder/ui-ux-pro-max-skill
+/plugin install ui-ux-pro-max@ui-ux-pro-max-skill
+```
+```bash
+# CLI（官方推薦），套件名是 ui-ux-pro-max-cli，指令仍叫 uipro
+npm install -g ui-ux-pro-max-cli
+cd /path/to/your/project
+uipro init --ai claude            # 或 cursor、codex、gemini…；--global 裝到 ~/.claude/skills/
+```
+眉角：需要 Python 3；舊的 `uipro-cli` 套件已經過時，不要裝。`uipro init --dry-run` 可以先看會寫哪些檔。
+
+**用**：Claude Code 裝好後自動觸發，直接說「Build a landing page for my SaaS product」即可；Kiro、Roo Code 等用 `/ui-ux-pro-max ...`。
+
+**⚠️ 注意**
+- **開源版與付費版**：這個 repo 是基本版；品牌識別、logo、簡報、AI 生圖素材、企業級 design token 在付費的 Premium 版（uupm.cc）。
+- **它給的是設計建議，不是驗證**：README 說搜尋結果只提供指引、不會自動改你的 app；生成的配色與檢查清單仍要自己在瀏覽器裡驗（例如實際量對比）。
+- ★149k、開放的 issue 與 PR 各 40 多個（2026-11-14），更新很頻繁。
+
+**🔗 相關**
+- [[moc/工具收藏#Fontshare|Fontshare]]、[[moc/工具收藏#PulsoIcon|PulsoIcon]] —— 它推薦的字體與「用 SVG 圖示、別用 emoji」可以直接換成這兩個素材來源
+
+---
+
 ## 🛠 工程工作流
 
 > 這類不是改語氣、也不是給單一新能力，而是**把整條開發流程包起來**：對齊 → 規格 → 拆票 → 實作 → 審查。
@@ -561,6 +608,41 @@ npx skills@latest add mattpocock/skills
 - **四個失敗模式的解法都是既有的軟體工程基本功**（見下方筆記的對照表），不是新發明。作者自己就說 "Software engineering fundamentals matter more than ever"。
 
 **🔗 相關**：[[Skills For Real Engineers]] —— **詳細筆記在那裡**：四個失敗模式對應到我既有工具卡的表、集合分層規則、以及 `CLAUDE.md` 裡那組維護紀律（含「會說謊的路由」）。
+
+---
+
+### code-modernization
+`plugin` · Claude Code · Anthropic 官方（`claude-plugins-official`） · ⬜ 待試（2026-11-14）
+
+**做什麼**：把 Claude 指向一個舊系統，拿到四樣東西：**看懂它是什麼、你核准的計畫、現代化後的程式碼、新程式碼行為跟舊的一樣的證明**。不限語言，三種方向都支援：同技術升版（uplift，例如 Java 8→17、Spring Boot 2→3）、換技術逐模組改寫（transform，例如 COBOL→Java、PHP→Python）、換架構重建（reimagine）。
+
+**核心**（靈魂是**證明不靠模型的意見，靠腳本檢查得了的證據**）
+- **一步一指令、每步都能停下來審**：`modernize`（說你要什麼，寫成 `INTENT.md`）→ `preflight`（問 5 個只有人能答的問題、證明能 build）→ `assess`（盤點、複雜度、技術債、資安）→ `map`（依賴與資料流的互動地圖）→ `extract-rules`（業務規則寫成 Given/When/Then 卡，附 `file:line`，每張由第二個 agent 複查）→ `review`（人確認或更正）→ `brief`（分階段計畫，**沒核准就不動工**）→ uplift／transform／reimagine → `verify` → `harden`（資安掃描，產出 patch 讓你自己套）。
+- ⭐ **`modernize-verify` 怎麼證明**（最好在新 session 跑，重做一遍、不信前一步留下的筆記）：
+  - 刪掉 build 產物、整套測試重跑，數字取自測試工具自己的結果檔；**一個測試都沒跑或被 skip 算失敗**。
+  - 舊系統能跑時，新舊吃同一組輸入，**腳本逐 byte 比對**；只有時間戳、產生的 id 這類欄位可以遮，遮了什麼都要列出。
+  - **自己再生至少 10 組沒用過的輸入**（邊界、空的、超大、順序怪、格式壞掉的紀錄）再比一次，抓「測試只在模型自選的案例上通過」。
+  - **故意改壞一行（canary），測試必須變紅**；比對本身也用改一個 byte 驗證。
+  - 每條 P0 規則都要有一個**真的跑過且通過**的測試；只被 skip 的測試點到，列為「named, not run」。
+  - 每個模組一個判定：PROVEN／PARTLY PROVEN／NOT PROVEN，由 `scripts/proof_pack.py` 從證據算出，每次重算、不沿用上次。舊系統跑不起來（大型主機、只在正式環境跑）時，**最好只能 PARTLY PROVEN**。
+- **人在 6 個點拍板，plugin 從不代決**：preflight 的 5 個答案、看起來不對的規則、核准計畫、接受新舊差異、簽核證明、套用資安 patch。
+
+**裝／用**
+```bash
+/plugin install code-modernization@claude-plugins-official
+```
+開一個工作資料夾，打 `/code-modernization:modernize`，它問幾個問題後給你第一個指令；或逐步跑 `/code-modernization:modernize-preflight <name> --source <舊程式路徑>`，隨時用 `modernize-status <name>` 看進度與下一步。`--source` 只建連結不複製；所有產出寫到 `analysis/<name>/` 和 `modernized/`，並更新一頁 `REPORT.html`。
+
+**⚠️ 注意**
+- **很耗用量**：重的步驟一次開很多 agent，`extract-rules` 在作者的實測裡開了 50–200 個（大規模執行前會先問）。**先拿一個模組當試點**，百萬行級的系統一次一個模組。
+- **「不改舊碼」只是慣例**：README 建議在工作區的 `.claude/settings.json` 加 `deny: ["Edit(/legacy/**)"]`、只允許寫 `analysis/` 和 `modernized/`；`--source` 建的是 symlink，要另外 deny 它的真實路徑。自己開檔的腳本不受這條規則管，大量 agent 寫檔的兩步要讓 Bash 維持需要確認的權限模式。
+- **舊程式碼當作不可信輸入**：程式裡可能埋「ignore previous instructions」之類的字。README 說 agent 只把檔案內容當資料、列出看起來像指令的文字、不照做；他們用一個故意埋陷阱的 codebase 測過（作者自述）。找到的金鑰會遮蔽，原值放在 gitignore 的檔案。
+- **會送使用統計**：透過 Claude Code 自己的 telemetry 送整數計數（指令、進度、錯誤代碼），README 說不送程式碼、檔名、路徑、prompt；Claude Code 的 telemetry 關掉就不送。
+- README 的實測（AWS CardDemo COBOL→Java、Jetty Java 8→17、osCommerce PHP→Python 等）都是作者跑的，同一個指令跑兩次數字也會不同；而且**多數案例最後是 PARTLY 或 NOT PROVEN**，作者照實寫出來了。
+
+**🔗 相關**
+- [[工具-防止agent造假通過驗收]] —— 「沒跑測試算失敗、故意改壞要變紅、判定由腳本算」正是那張卡的完整實作
+- [[工具-特徵測試]] —— 《修改程式碼的藝術》裡先把現有行為原樣釘住再改的做法；這個 plugin 改用「新舊吃同一組輸入、腳本逐 byte 比對」來釘住行為
 
 ---
 

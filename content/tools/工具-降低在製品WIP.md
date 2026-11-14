@@ -4,11 +4,12 @@ name: "降低在製品 Reduce Work in Process (WIP)"
 source: "[[鳳凰專案]]"
 source_type: book
 tags: [software, devops, flow, lean, productivity]
-triggers: [事情做不完每件都卡住, 同時做太多事, 一直切換context, 交付很慢, 團隊過載, 什麼都在進行中沒有完成]
+triggers: [事情做不完每件都卡住, 同時做太多事, 一直切換context, 交付很慢, 團隊過載]
 ---
 
 ## 🎯 什麼情境該想到我
 當你/團隊「同時開一堆事、每件都在進行中卻沒幾件完成」、一直被打斷切換時。
+其他說法：什麼都在進行中沒有完成。
 
 ## ⚙️ 怎麼用
 1. **限制同時進行的工作數量（WIP limit）**：把看板每一欄的在製品設上限，滿了就不准再拉新工作進來。

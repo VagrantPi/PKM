@@ -4,13 +4,14 @@ name: "MQ 消費端防禦三原則"
 source: "[[擋下用Upsert修RaceCondition的PR]]"
 source_type: article
 tags: [backend, message-queue, idempotency, reliability]
-triggers: [寫MQ worker, 寫message consumer, 處理重複訊息, worker查不到資料, worker收到訊息卻查不到對應資料, at-least-once]
+triggers: [寫MQ worker, 寫message consumer, 處理重複訊息, worker收到訊息卻查不到對應資料, at-least-once]
 ---
 
 ## 🎯 什麼情境該想到我
 > **分工**：這張是消費端的即用清單。各模式的完整展開（含 Kafka、RabbitMQ、SQS 的行為差異）→ [[冪等接收者]]、[[死信通道]]、[[保證投遞]]；用資料庫條件更新做冪等的完整做法 → [[工具-用條件更新做狀態機冪等]]。
 
 當你在寫 message queue 的 consumer / worker，要讓它在真實世界（重複投遞、replica 延遲）下不出錯時。
+其他說法：worker查不到資料。
 
 ## ⚙️ 怎麼用（三件事一起做）
 1. **Idempotent（冪等）**：MQ 是 **at-least-once**，重複投遞是常態 → 同一則訊息處理多次，結果要一致。

@@ -4,11 +4,12 @@ name: "微調與 RAG 的取捨 Fine-tuning vs RAG"
 source: "[[books/軟體工程/ai/AI工程|AI工程]]"
 source_type: book
 tags: [software, ai, llm, fine-tuning]
-triggers: [該不該微調模型, 微調還是RAG, 模型風格不對, 想教模型新知識, 微調成本值得嗎, 提示調不動了]
+triggers: [該不該微調模型, 微調還是RAG, 模型風格不對, 想教模型新知識, 提示調不動了]
 ---
 
 ## 🎯 什麼情境該想到我
 當提示工程與 RAG 都試過還不夠，開始考慮「要不要微調一個模型」時。
+其他說法：微調成本值得嗎。
 
 ## ⚙️ 怎麼用（先分清問題屬於哪一類）
 - **缺「知識/事實」** → 用 **RAG**（換文件即可更新，別微調）。

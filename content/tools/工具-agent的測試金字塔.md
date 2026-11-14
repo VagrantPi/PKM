@@ -4,7 +4,7 @@ name: "agent 的測試金字塔（CI 怎麼擋退化）"
 source: "[[AgentCore 與 Nova Act 研究]]"
 source_type: article
 tags: [software, ai, llm, agent, testing, ci, evaluation]
-triggers: [改了prompt不知道agent有沒有變差, agent的CI測試每次結果都不一樣, 評估很貴不知道哪些每次PR都要跑, 怎麼測agent有沒有呼叫該呼叫的工具]
+triggers: [想在CI擋住agent的退化, agent的CI測試每次結果都不一樣, 評估很貴不知道哪些每次PR都要跑, 怎麼測agent有沒有呼叫該呼叫的工具]
 ---
 
 ## 🎯 什麼情境該想到我

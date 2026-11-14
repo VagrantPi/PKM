@@ -4,7 +4,7 @@ name: "代幣標準與 DApp Token Standards & DApps"
 source: "[[精通以太坊]]"
 source_type: book
 tags: [blockchain, ethereum, token, dapp]
-triggers: [想發代幣, ERC-20是什麼, NFT怎麼運作, 做去中心化應用, DApp架構, 為何要用標準介面]
+triggers: [想發代幣, ERC-20是什麼, NFT怎麼運作, 做去中心化應用, 為何要用標準介面]
 ---
 
 ## 🎯 什麼情境該想到我
@@ -12,6 +12,7 @@ triggers: [想發代幣, ERC-20是什麼, NFT怎麼運作, 做去中心化應用
 當你要「發一個代幣、做 NFT，或是先決定這個專案到底該不該發幣」時。
 
 本卡完全依據《Mastering Ethereum》(O'Reilly, 2018) Ch.10「Tokens」。
+其他說法：DApp架構。
 
 ## ⚙️ 怎麼用
 

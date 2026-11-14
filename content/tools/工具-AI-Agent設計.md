@@ -4,11 +4,12 @@ name: "AI Agent 設計 Agents"
 source: "[[books/軟體工程/ai/AI工程|AI工程]]"
 source_type: book
 tags: [software, ai, llm, agents]
-triggers: [想讓AI自己用工具, 多步驟自動化, agent失控或亂跑, 該不該用agent, LLM呼叫API, 自主完成任務]
+triggers: [想讓AI自己用工具, 多步驟自動化, agent失控或亂跑, 該不該用agent, LLM呼叫API]
 ---
 
 ## 🎯 什麼情境該想到我
 當你想讓模型「自己規劃步驟、呼叫工具、完成多步任務」（而非一問一答）時。
+其他說法：自主完成任務。
 
 ## ⚙️ 怎麼用
 1. **三要素**：規劃（把目標拆成步驟）＋ 工具使用（呼叫 API/函式取得能力）＋ 記憶（跨步驟保留上下文）。

@@ -29,6 +29,8 @@ tags: [moc, ai, llm, tooling]
 > 這兩張要一起用：先確認它**有進 prompt**，再確認它**讓輸出變好**。少一半都不算驗過。
 
 ## 🎛 調校內建行為
+- 不知道規則該寫 CLAUDE.md、rules、skill 還是 hook → [[工具-ClaudeCode指示該放哪一層]]
+- 寫了規則它卻像沒看到、compact 後不見、不知道它自己記了什麼 → [[工具-CLAUDE.md沒生效時怎麼查]]
 - 覺得 agent 被內建提醒綁手綁腳，想關掉 → [[工具-關掉ClaudeCode塞給模型的提醒]]
 - 想用官方文件沒寫的設定，但不確定該不該碰 → [[工具-ClaudeCode未文件化設定的取捨]]
 
@@ -43,6 +45,7 @@ tags: [moc, ai, llm, tooling]
 - [[Claude Code 隱藏設定分析 v2.1.239]] — 拆執行檔比對官方文件，附差分測試
 - [[做一個 ELI5 Skill 的過程]] — 用 skill-creator 從零做一個 skill
 - [[如何評測一個 Claude Code Skill]] — A/B 對照 + LLM-as-judge 的評測管線
+- [[Claude Code 的記憶機制（官方文件）]] — 官方文件：CLAUDE.md 各層、rules、AGENTS.md、auto memory
 - [[Claude Code 團隊怎麼做程式碼審查]] — Anthropic 官方部落格：七層把關、風險分級核准、讓 AI 審查收斂
 
 ## 🔗 相關

@@ -4,7 +4,7 @@ name: "調校 AI 程式碼審查器"
 source: "[[Claude Code 團隊怎麼做程式碼審查]]"
 source_type: article
 tags: [ai, agent, code-review, evaluation, llm]
-triggers: [AI審查一直挑新問題改不完, agent作者和agent審查者無限來回, AI審查留言太多雜訊, 不知道AI審查到底準不準, 改了審查的prompt不知道有沒有變好]
+triggers: [AI審查一直挑新問題改不完, agent作者和agent審查者無限來回, AI審查留言太多雜訊, 不知道AI審查到底準不準, 想拿過去的事故來測AI審查器]
 ---
 
 ## 🎯 什麼情境該想到我

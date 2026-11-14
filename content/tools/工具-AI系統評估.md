@@ -4,11 +4,12 @@ name: "AI 系統評估 Evaluation"
 source: "[[books/軟體工程/ai/AI工程|AI工程]]"
 source_type: book
 tags: [software, ai, llm, evaluation]
-triggers: [不知道AI系統好不好, 改了prompt不知變好變壞, 怎麼評估LLM輸出, 上線後品質難監控, AI回答對不對, 憑感覺調模型]
+triggers: [不知道AI系統好不好, 怎麼評估LLM輸出, 上線後品質難監控, AI回答對不對, 憑感覺調模型]
 ---
 
 ## 🎯 什麼情境該想到我
 當你「改了 prompt/模型/RAG，卻不知道到底變好還變壞」——這是 AI 工程最核心也最被低估的能力。
+這張管「建評估集、選評分方式」的整體做法；只想判斷某次改動前後哪一版好 → [[工具-AI改動的AB對照評測]]；要在 CI 擋住 agent 退化 → [[工具-agent的測試金字塔]]。
 
 ## ⚙️ 怎麼用
 1. **先建一組評估集**：代表性的輸入 + 你要的判準（正確性、相關性、格式、無害…）。
