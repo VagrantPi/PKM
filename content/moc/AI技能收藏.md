@@ -17,7 +17,7 @@ tags: [moc, ai, skills, agent, tooling]
 
 依下方分段分組；每組點名稱跳到卡片。
 
-**🎨 影像與內容創作**（9）
+**🎨 影像與內容創作**（10）
 
 | 名稱 | 型態 | 平台 | 一句話 | 來源 | 狀態 |
 |---|---|---|---|---|---|
@@ -29,6 +29,7 @@ tags: [moc, ai, skills, agent, tooling]
 | [scroll-world](#scroll-world) | skill | Claude Code・Codex・多平台 | 生成 AI 場景＋鏡頭影片，做捲動穿梭的沉浸式落地頁（**會扣真錢**） | [repo↗](https://github.com/oso95/scroll-world) | ⬜ |
 | [video-shotcraft](#video-shotcraft) | skill | Claude Code・Codex・npx skills | 用自己產品的真實截圖＋124 張動效配方卡，以 Remotion 程式碼做出可再編輯的產品宣傳片 MP4（不是 AI 生影片） | [repo↗](https://github.com/Vincentwei1021/video-shotcraft) | ⬜ |
 | [drama-skills](#drama-skills) | skill | Claude Code・Codex・npx skills | 12 個 skill 串起 AI 短劇／漫劇整條產線：原著→劇本→分鏡→圖／影片提示詞→確認後才花錢生成→剪成片；腳本檢查跨鏡一致性 | [repo↗](https://github.com/zenstory-ai/drama-skills) | ⬜ |
+| [awesome-short-drama-skills](#awesome-short-drama-skills) | skill（＋清單） | 多平台（npx skills） | 86 個 AI 短劇／漫劇 skill 的人工核對清單，附三輪盲比實測（劇本、選題、全劇骨架各哪幾個贏過「不裝 skill」）；本身也是幫你挑 skill 的 skill | [repo↗](https://github.com/UnderleveledBuilder/awesome-short-drama-skills) | ⬜ |
 | [Agent Sprite Forge](#agent-sprite-forge) | plugin | Claude Code・Codex・Grok | 一張角色定稿圖 → 每個動作各生一段影片 → Python 工具去背、選循環、調節奏，打包成 Godot／Aseprite／網頁可用的遊戲 sprite（**接付費 API 會花錢**） | [repo↗](https://github.com/0x0funky/agent-sprite-forge) | ⬜ |
 
 **📐 架構圖與技術溝通**（3）
@@ -68,7 +69,7 @@ tags: [moc, ai, skills, agent, tooling]
 |---|---|---|---|---|---|
 | [eli5](#eli5) | skill | Claude Code | 依聽眾（5 歲／主管／工程師／家人）換一套講法解釋同一件事 | [repo↗](https://github.com/DreambigOu/ELI5) | ⬜ |
 
-**🔍 程式碼理解（MCP）**（5）
+**🔍 程式碼理解（MCP）**（6）
 
 | 名稱 | 型態 | 平台 | 一句話 | 來源 | 狀態 |
 |---|---|---|---|---|---|
@@ -77,6 +78,7 @@ tags: [moc, ai, skills, agent, tooling]
 | [graphify](#graphify) | skill | 多平台 | 程式碼＋文件＋PDF 建成一張圖，每條邊標可信度（EXTRACTED／INFERRED／AMBIGUOUS） | [repo↗](https://github.com/Graphify-Labs/graphify) | ⬜ 📊 |
 | [GitNexus](#gitnexus) | MCP | 多平台 | 程式碼圖資料庫＋19 個 MCP 工具（影響分析、執行流、改名），**非商用授權** | [repo↗](https://github.com/abhigyanpatwari/GitNexus) | ⬜ 📊 |
 | [Understand-Anything](#understand-anything) | plugin | Claude Code・多平台 | 多 agent 分析 codebase → 互動式儀表板＋導覽，給新人看懂專案 | [repo↗](https://github.com/Egonex-AI/Understand-Anything) | ✅ 📊 |
+| [Floorplan](#floorplan) | plugin | Claude Code・Codex | 給「用 AI 做出 app 但沒讀過程式碼」的人：白話的互動式 app 地圖，前後端請求跨 repo 對上，附常見資安漏洞健檢與「AI 剛改了什麼」 | [repo↗](https://github.com/haydenschmitty/floorplan) | ⬜ |
 
 ---
 
@@ -340,6 +342,7 @@ done
 - [ai-short-drama-screenwriter](#ai-short-drama-screenwriter) —— 同領域。那張只寫劇本、刻意不碰分鏡；這套從劇本一路管到成片。只要劇本可以用那張，要整條產線用這套。
 - [MiniMax-H3 skills](#minimax-h3-skills) —— 這套的影片提示詞有 MiniMax H3 專用寫法，生產也能直接接 H3。
 - [[工具-會花錢的skill該怎麼設計]] —— 「先預覽、確認才花錢、斷線不重投」是那張卡的實例。
+- [awesome-short-drama-skills](#awesome-short-drama-skills) —— 第三方清單；它的第一輪劇本盲比（2026-10-18）裡，這套是勝過「不裝 skill」對照組的 4 個之一
 
 
 ### Agent Sprite Forge
@@ -386,6 +389,37 @@ python tools/install_skills.py --apply --host codex
 **🔗 相關**
 - [scroll-world](#scroll-world) —— 同樣是「先定稿靜圖、再圖生影片」的管線、同樣會花錢；scroll-world 做網頁捲動背景，這張做遊戲角色。
 - [[工具-會花錢的skill該怎麼設計]] —— 這張的花費紀錄（ledger）和「可能已花錢就不重試」是實例；但它**預設沒有上限、有 key 就不逐次問**，跟那張卡「講出估計總額、拿到 go 才開始生成」的原則相反，用之前自己先設好預算上限。
+
+
+### awesome-short-drama-skills
+`skill`（`short-drama-skill-finder`）＋精選清單 · 多平台（npx skills） · CC0 · ★2.3k（2026-11-14） · ⬜ 待試
+
+**做什麼**：AI 短劇、漫劇 skill 的精選清單（[shortdramaskills.com](https://shortdramaskills.com)），收 86 個 skill 專案和 16 個相關開源平台（元資料更新於 2026-11-02），依類型（全流程、編劇、分鏡與提示詞、IP 評估、編劇基本功、去 AI 味）、創作階段和適配的影片模型（Seedance、可靈、MiniMax H3、通義萬相…）整理。每個條目標了 ★、最後更新日、skill 數、授權，以及「整合了別人的內容卻沒註明」這類備註。
+
+**核心**（比一般 awesome list 多做的事）
+- ⭐ **三輪盲比實測**，都有「不裝 skill」的對照組，兩位 AI 評審（Opus 和 GPT）盲比，只用 claude-opus-5-5 一個模型寫：
+  - **寫劇本**（2026-10-18）：10 個 skill，各寫 3 次。兩位評審都判三次全贏對照組的有 4 個，包括 [drama-skills](#drama-skills)。
+  - **定選題**（2026-10-20）：11 個 skill，兩兩盲比排名；**不裝 skill 的對照組排第 9，有 3 個 skill 排在它後面**。
+  - **寫 60 集全劇骨架**（2026-10-31）：20 個 skill；兩位評審 630 對裡只有 332 對結論一致，有 6 個兩位評審都排在對照組後面。
+  - 每輪都把限制寫出來（評審意見不一、只有一張選題卡、只測一個模型、有些稿件超字數被截斷）。
+- **「人工核對」只代表核對過 README、目錄與分類，不代表實測過效果**，清單自己寫明了。
+- **推薦組合**（例如「小說改編短劇」「用 Seedance 出片」）標明是依 README 搭配、**尚未實測**。
+
+**裝／用**
+```bash
+npx skills add UnderleveledBuilder/awesome-short-drama-skills   # 裝上 short-drama-skill-finder
+```
+裝好後問 agent：「我用 Codex 做小說改編短劇，裝哪個 skill？」。清單裡各 skill 的安裝指令是依 skills CLI 寫的預設，**清單自己標明未逐個驗證**，以各 repo 的 README 為準。
+
+**⚠️ 注意**
+- 清單提醒：**skill 可能附帶腳本，安裝前先讀一遍它的 SKILL.md**。
+- 評測是「交給 AI 從頭拍成片」的標準，評審也是 AI；換題材、換模型，名次可能不同。
+- 收錄的多是簡體中文 skill；有些條目沒有授權（清單有標註）。
+
+**🔗 相關**
+- [drama-skills](#drama-skills) —— 清單裡的精選之一，也是第一輪劇本評測勝過對照組的 4 個之一
+- [ai-short-drama-screenwriter](#ai-short-drama-screenwriter) —— 繁中短劇編劇 skill，這份清單沒收
+- [[工具-AI改動的AB對照評測]] —— 「有不裝 skill 的對照組、多跑幾次、雙評審盲比」正是那張卡的做法
 
 ---
 
@@ -1078,6 +1112,42 @@ npm 11 會在安裝時崩潰（README 寫的已知問題），改用 pnpm 或 `n
 **📊 實測（2026-10-17）**：拿同一題流程解說比較，以它的圖當地圖的 agent 和用 codegraph 的 agent 答得一樣準（事實抽查都是 10/10），每題都花約 8 萬 token。它的分層和導覽讓答案涵蓋面較廣。結論：它是給人看的地圖，codegraph 是給 agent 查的索引 → [[moc/AI技能評比|評比]]
 
 **🔗 相關**：[graphify](#graphify) —— 同樣混合 tree-sitter 和 LLM，但 graphify 只在文件上用 LLM、程式碼完全本機；Understand-Anything 是每個檔都用 LLM 寫摘要。
+
+---
+
+### Floorplan
+`plugin` · Claude Code・Codex · MIT · ★4.2k（2026-11-14） · ⬜ 待試
+
+**做什麼**：讓 Claude 或 Codex 讀你的程式碼，畫出一張**可縮放的互動 app 地圖**：每個部分、檔案、API 都有白話名稱（「結帳時收信用卡款」而不是「Stripe API wrapper」），以及它們之間的連線。對象是**用 AI 做出 app、但自己沒讀過程式碼的人**，答「有人結帳時發生什麼事」「改這個會壞什麼」。
+
+**核心**
+- **腳本做機械活，模型做只有讀者能做的事**：找 repo、解析十幾種語言、把前端的每個請求對到回應它的後端 endpoint（**跨 repo 也行**）、排版，都由無依賴的 Node 腳本做；模型只負責決定 app 分成哪幾塊、用白話描述每個檔案。
+- **從畫面出發**：挑一個你知道的頁面，看它背後的元件、請求、伺服器程式、資料和外部服務。
+- **問地圖**：「退款怎麼回到客人的卡？」回答會附一張只含相關元件的小地圖和逐步說明。
+- **健檢（Health check）**：抓 AI 做的 app 常見的錯：金鑰寫在程式碼裡或送到瀏覽器、任何人都能讀的 Supabase 表、開放的 Firebase 規則、可以偽造的 Stripe webhook、不用登入就能呼叫的 endpoint；每項附可直接貼上的修正 prompt。README 說這是**檢查，不是稽核**。
+- **Recent work**：AI 剛改過的卡片變綠，附上「這次改動怎麼服務你的需求」。更新時只重讀有改的部分。
+- 也能從 PRD 或規格畫出還沒寫的系統藍圖（卡片用虛線標成計畫）。
+
+**裝**（照抄 README，需要 Node.js 18+，不用 API key）
+```bash
+claude plugin marketplace add haydenschmitty/floorplan
+claude plugin install floorplan@floorplan
+```
+```bash
+# Codex（也可以在 Codex app 的 Plugins 介面加 marketplace）
+codex plugin marketplace add haydenschmitty/floorplan
+codex plugin add floorplan@floorplan
+```
+**用**：在專案裡說「Make me a floorplan of this app」（Codex 也可以打 `$floorplan`），地圖會自己打開；之後說「Update the floorplan」。前後端分在不同 repo 時，打開包含兩者的上層資料夾。
+
+**⚠️ 注意**
+- **會在專案裡加東西**：一個 `floorplan/` 資料夾（自己 gitignore 掉）；Claude Code 裡你同意的話，還會在 `CLAUDE.local.md` 加一小段，讓之後的 session 知道有地圖，`CLAUDE.local.md` 放進 clone 的私人忽略清單。不會改 `.gitignore` 或其他追蹤中的檔案。
+- **地圖的問答走你自己的 Claude Code CLI 或 Codex 帳號**（能讀碼、不能改碼）；掃描、地圖和小型本機伺服器都在本機，伺服器只接受本機連線。README 說沒有分析追蹤，只會問一次要不要收 Floorplan Cloud 上線通知。
+- 健檢只顯示密鑰的位置、不顯示值；但它不是完整的資安稽核。
+
+**🔗 相關**
+- [Understand-Anything](#understand-anything) —— README 自己做了對照：Understand-Anything 給開發者逐函式讀懂大 codebase；Floorplan 給不讀程式碼的人看懂、檢查自己的 app
+- [archify](#archify) —— 同一張對照表：archify 是為文件或簡報畫一張清楚的圖；README 建議先用 Floorplan 看懂，再用 archify 畫一條流程去報告
 
 ---
 
