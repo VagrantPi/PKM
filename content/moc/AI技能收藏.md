@@ -17,7 +17,7 @@ tags: [moc, ai, skills, agent, tooling]
 
 依下方分段分組；每組點名稱跳到卡片。
 
-**🎨 影像與內容創作**（8）
+**🎨 影像與內容創作**（9）
 
 | 名稱 | 型態 | 平台 | 一句話 | 來源 | 狀態 |
 |---|---|---|---|---|---|
@@ -29,6 +29,7 @@ tags: [moc, ai, skills, agent, tooling]
 | [scroll-world](#scroll-world) | skill | Claude Code・Codex・多平台 | 生成 AI 場景＋鏡頭影片，做捲動穿梭的沉浸式落地頁（**會扣真錢**） | [repo↗](https://github.com/oso95/scroll-world) | ⬜ |
 | [video-shotcraft](#video-shotcraft) | skill | Claude Code・Codex・npx skills | 用自己產品的真實截圖＋124 張動效配方卡，以 Remotion 程式碼做出可再編輯的產品宣傳片 MP4（不是 AI 生影片） | [repo↗](https://github.com/Vincentwei1021/video-shotcraft) | ⬜ |
 | [drama-skills](#drama-skills) | skill | Claude Code・Codex・npx skills | 12 個 skill 串起 AI 短劇／漫劇整條產線：原著→劇本→分鏡→圖／影片提示詞→確認後才花錢生成→剪成片；腳本檢查跨鏡一致性 | [repo↗](https://github.com/zenstory-ai/drama-skills) | ⬜ |
+| [Agent Sprite Forge](#agent-sprite-forge) | plugin | Claude Code・Codex・Grok | 一張角色定稿圖 → 每個動作各生一段影片 → Python 工具去背、選循環、調節奏，打包成 Godot／Aseprite／網頁可用的遊戲 sprite（**接付費 API 會花錢**） | [repo↗](https://github.com/0x0funky/agent-sprite-forge) | ⬜ |
 
 **📐 架構圖與技術溝通**（3）
 
@@ -332,6 +333,52 @@ done
 - [ai-short-drama-screenwriter](#ai-short-drama-screenwriter) —— 同領域。那張只寫劇本、刻意不碰分鏡；這套從劇本一路管到成片。只要劇本可以用那張，要整條產線用這套。
 - [MiniMax-H3 skills](#minimax-h3-skills) —— 這套的影片提示詞有 MiniMax H3 專用寫法，生產也能直接接 H3。
 - [[工具-會花錢的skill該怎麼設計]] —— 「先預覽、確認才花錢、斷線不重投」是那張卡的實例。
+
+
+### Agent Sprite Forge
+`plugin`（含 `generate2dsprite`、`video2dsprite`、`generate2dmap` 等 skill） · Claude Code（plugin）・Codex・Grok · MIT · ★5.7k · v0.6.0（2026-11-14） · ⬜ 待試
+
+**做什麼**：做 2D 遊戲角色動畫。你先核准**一張角色定稿圖**（master still），agent 再用它替每個動作（待機、走、跑、攻擊、跳、受傷）各生成一段**圖生影片**，最後由**確定性的 Python 工具**把影片去背、對齊、選出循環段、把動作調回遊戲節奏、統一顏色，打包成 Godot、Aseprite 或網頁遊戲能直接用的 sprite。另外也能做地圖（分層地圖、tile、橫向卷軸關卡），匯出到 Tiled、Godot、LDtk。
+
+**核心**（靈魂是**生成交給模型，品質交給可量測的程式**）
+- **先定稿一張，再展開整套**：`master_still.py` 產生 3 個候選，小問題用編輯修（`THE ONLY CHANGE: ...`），核准一張寫進 `master.json`；之後每個動作的提示詞都會重複其中的角色特徵摘要，維持同一個角色。
+- ⭐ **每段影片過一長串關卡才收**：角色大小、腳、身分、縮放、轉身、邊緣、背景、多出的物件、動作量、結束姿勢、顏色滲漏、時間長度；不合格最多重拍 3 次並附上修正指示。但 README 明說**數字看不出武器被換掉或臉被擋住**，所以 agent 接受每個動作前都要看過總覽圖。
+- **把影片模型的毛病修掉**：圖生影片會把快速的攻擊拍成慢動作，`retime.py --auto-oneshot` 剪掉停格、把命中幀釘住（攻擊 4.1 秒 → 0.7 秒）；走路循環依實測挑選，跑速依著地腳量，腳不會滑；「顏色鎖」把快速移動的肢體顏色拉回定稿圖的顏色。
+- **像素風不叫模型畫像素**：模型畫出來的「像素圖」格子大小不一、顏色上萬種。hibit 風格改叫模型畫**平塗無線稿**的圖，再用 8×8 多數決縮小（每格取覆蓋最多的調色盤顏色、不混色）、從角色本身學調色盤、自動描邊；v0.6.0 的 pixel looks 則把模型畫的圖**讀回真正的網格**（例：1254×1254、88,410 色的圖 → 33×55、48 色、2.5 KB，作者實測）。
+- **生成路線依序選**：有設定 API key 就用 API（OpenAI、Gemini、xAI、BytePlus、fal.ai）→ 否則用你已登入的 Codex 或 Grok CLI（吃訂閱額度，不用 API key）→ 最後才用程式畫（會明說是程式畫的）。審查拒絕、或可能已經花錢的失敗，**不會換路線重試**。
+
+**裝**（照抄 README）
+```bash
+# Claude Code（plugin）
+claude plugin marketplace add 0x0funky/agent-sprite-forge --sparse .claude-plugin skills
+claude plugin install agent-sprite-forge@agent-sprite-forge
+python -m pip install "numpy>=1.26" "Pillow>=10.1" "scipy>=1.11"
+```
+```bash
+# Codex（Grok 把 --host 換成 grok）
+git clone https://github.com/0x0funky/agent-sprite-forge.git
+cd agent-sprite-forge
+python -m pip install -r requirements.txt
+python tools/install_skills.py --apply --host codex
+```
+眉角：`--sparse` 只抓 plugin 設定和 skill，不下載展示影片；影片處理要 `ffmpeg` 5.1 以上；裝完要開新的 agent session 才會載入。`install_skills.py --check` 可以檢查已裝版本有沒有被改動。
+
+**用**：
+- `Use $generate2dsprite to make a master still of Aria, ...`（先做定稿圖）
+- `Use $video2dsprite to animate the approved Aria master: idle, walk, run, attack, jump and hurt. Package them for Godot and the web.`
+- 底層是 `sprite_set.py plan → run → review → accept → report`；`run` 中斷後會接著做，**同一段影片不會生成兩次**。
+
+**⚠️ 注意**
+- 🔴 **設定了 API key 就直接花錢、不逐次詢問**：README 原文是「key 就是你的同意」。而且**預設沒有花費上限**，要自己設 `--budget-usd`、`--max-calls` 或 `FORGE_MAX_PAID_REQUESTS`。每次呼叫都會記在 `<專案>/.forge/ledger.jsonl`，`media_ledger.py summary` 看總額。
+- **沒設 key 會用你已登入的 Codex／Grok CLI**，吃的是訂閱額度。
+- **API key 放在使用者設定資料夾**（macOS／Linux：`~/.config/agent-sprite-forge/config.json`，要 `chmod 600`），不要放進專案。README 說 key 只在程序內讀取、不印出、不寫 log、不傳給子程序（未驗證）。
+- **編輯器匯入還沒驗證**：README 自己寫，沒有人實際在 Godot、LDtk、Aseprite 編輯器裡開過 0.4.0 的匯出檔；目前只證明到檔案解析層級的來回轉換。
+- 文中的數字（顏色數、時間、QC 誤判率）都是作者在自己 live run 上量的，未驗證。
+- 用 hibit 特效建議另裝 pixelfx（MIT，需 Node 18+），它的 render 會附上授權檔；Gemini 產圖會帶 SynthID 浮水印。
+
+**🔗 相關**
+- [scroll-world](#scroll-world) —— 同樣是「先定稿靜圖、再圖生影片」的管線、同樣會花錢；scroll-world 做網頁捲動背景，這張做遊戲角色。
+- [[工具-會花錢的skill該怎麼設計]] —— 這張的花費紀錄（ledger）和「可能已花錢就不重試」是實例；但它**預設沒有上限、有 key 就不逐次問**，跟那張卡「講出估計總額、拿到 go 才開始生成」的原則相反，用之前自己先設好預算上限。
 
 ---
 
